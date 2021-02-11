@@ -1,7 +1,9 @@
-# merrow
+# Merrow
 A randomizer/IPS patch generator for Quest 64, and also for generic binary editing use.
 
 ***
+
+# What is Merrow?
 
 Merrow is a tool for generating IPS patches, primarily to be applied to the NA/U dotZ64 version of Quest. It's the first steps of a randomizer test. You'll need an IPS capable patching tool, like Lunar or Ninja. 
 If you don't know what that means, you probably don't need this.
@@ -12,10 +14,12 @@ Merrow is experimental and therefore offered without warranty. Merrow patches ar
 
 Merrow was originally developed in Unity, this repository is the C# Winforms port, to make it more widely available to edit and use.
 
+# Downloads
+
 Latest build available at https://hangedman.itch.io/merrow.
 Thanks to the Eltale Monsters Discord for the data and support.
 
-***
+# License
 
 Merrow is copyright (c) 2021 Jonah Davidson (Hangedman).
 Merrow is made freely available under the MIT License:
