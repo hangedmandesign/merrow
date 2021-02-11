@@ -8,10 +8,11 @@ Merrow is experimental and therefore offered without warranty. Merrow patches ar
 
 Merrow was originally developed in Unity, this repository is the C# Winforms port, to make it more widely available to edit and use.
 
+Thanks to the Eltale Monsters Discord for the data and support.
+
 # Downloads
 
 Latest build available at https://hangedman.itch.io/merrow.
-Thanks to the Eltale Monsters Discord for the data and support.
 
 # License
 
