@@ -12,7 +12,7 @@ Thanks to the Eltale Monsters Discord for the data and support.
 
 # Downloads
 
-Latest build available at https://hangedman.itch.io/merrow.
+Latest build and details available at https://hangedman.itch.io/merrow.
 
 # License
 
