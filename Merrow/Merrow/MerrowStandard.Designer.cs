@@ -25,6 +25,8 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MerrowStandard));
             this.rndGroupBox = new System.Windows.Forms.GroupBox();
+            this.rndDropsDropdown = new System.Windows.Forms.ComboBox();
+            this.rndDropsToggle = new System.Windows.Forms.CheckBox();
             this.rndTextContentDropdown = new System.Windows.Forms.ComboBox();
             this.rndTextContentToggle = new System.Windows.Forms.CheckBox();
             this.rndTextPaletteDropdown = new System.Windows.Forms.ComboBox();
@@ -57,6 +59,8 @@
             // 
             // rndGroupBox
             // 
+            this.rndGroupBox.Controls.Add(this.rndDropsDropdown);
+            this.rndGroupBox.Controls.Add(this.rndDropsToggle);
             this.rndGroupBox.Controls.Add(this.rndTextContentDropdown);
             this.rndGroupBox.Controls.Add(this.rndTextContentToggle);
             this.rndGroupBox.Controls.Add(this.rndTextPaletteDropdown);
@@ -72,6 +76,32 @@
             this.rndGroupBox.TabStop = false;
             this.rndGroupBox.Text = "RANDOMIZATION";
             // 
+            // rndDropsDropdown
+            // 
+            this.rndDropsDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndDropsDropdown.FormattingEnabled = true;
+            this.rndDropsDropdown.Items.AddRange(new object[] {
+            "SHUFFLED",
+            "RANDOM",
+            "RANDOM + WINGS",
+            "RANDOM + GEMS",
+            "CHAOS"});
+            this.rndDropsDropdown.Location = new System.Drawing.Point(160, 125);
+            this.rndDropsDropdown.Name = "rndDropsDropdown";
+            this.rndDropsDropdown.Size = new System.Drawing.Size(157, 21);
+            this.rndDropsDropdown.TabIndex = 13;
+            // 
+            // rndDropsToggle
+            // 
+            this.rndDropsToggle.AutoSize = true;
+            this.rndDropsToggle.Location = new System.Drawing.Point(6, 127);
+            this.rndDropsToggle.Name = "rndDropsToggle";
+            this.rndDropsToggle.Size = new System.Drawing.Size(142, 17);
+            this.rndDropsToggle.TabIndex = 12;
+            this.rndDropsToggle.Text = "Randomize enemy drops";
+            this.rndDropsToggle.UseVisualStyleBackColor = true;
+            this.rndDropsToggle.CheckedChanged += new System.EventHandler(this.rndDropsToggle_CheckedChanged);
+            // 
             // rndTextContentDropdown
             // 
             this.rndTextContentDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -82,7 +112,6 @@
             this.rndTextContentDropdown.Name = "rndTextContentDropdown";
             this.rndTextContentDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndTextContentDropdown.TabIndex = 11;
-            this.rndTextContentDropdown.Visible = false;
             this.rndTextContentDropdown.SelectedIndexChanged += new System.EventHandler(this.rndTextContentDropdown_IndexChanged);
             // 
             // rndTextContentToggle
@@ -94,7 +123,6 @@
             this.rndTextContentToggle.TabIndex = 10;
             this.rndTextContentToggle.Text = "Randomize textboxes";
             this.rndTextContentToggle.UseVisualStyleBackColor = true;
-            this.rndTextContentToggle.Visible = false;
             this.rndTextContentToggle.CheckedChanged += new System.EventHandler(this.rndTextContentToggle_CheckedChanged);
             // 
             // rndTextPaletteDropdown
@@ -301,9 +329,9 @@
             this.labelVersion.Font = new System.Drawing.Font("Georgia", 24F, System.Drawing.FontStyle.Bold);
             this.labelVersion.Location = new System.Drawing.Point(265, 23);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(80, 38);
+            this.labelVersion.Size = new System.Drawing.Size(73, 38);
             this.labelVersion.TabIndex = 3;
-            this.labelVersion.Text = "v1.7";
+            this.labelVersion.Text = "v18";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // expGroupBox
@@ -429,6 +457,8 @@
         private System.Windows.Forms.Button genButton;
         private System.Windows.Forms.TextBox filenameTextBox;
         private System.Windows.Forms.TextBox seedTextBox;
+        private System.Windows.Forms.ComboBox rndDropsDropdown;
+        private System.Windows.Forms.CheckBox rndDropsToggle;
     }
 }
 

@@ -42,6 +42,9 @@ namespace Merrow {
         bool advanced = false;
         bool lastadv = false;
         int[] chests = new int[87];
+        int[] drops = new int[67];
+        int[] texts = new int[208];
+        int[] inntexts = new int[17];
 
         //crash sets and safe lists
         int[] crashset1 = { 3, 9, 12, 45, 46, 50, 51 }; //HA1, HA2, MBL, WC1, WC2, WC3, LC
@@ -81,9 +84,18 @@ namespace Merrow {
             rndSpellDropdown.Items.AddRange(options.ToArray<object>());
 
             //initiate chest content list
-            for (int j = 0; j < chests.Length; j++) {
-                chests[j] = library.chestdata[j * 2 + 1];
-            }
+            for (int j = 0; j < chests.Length; j++) { chests[j] = library.chestdata[j * 2 + 1]; }
+
+            //initiate item drops list
+            for (int k = 0; k < drops.Length; k++) { drops[k] = library.dropdata[k * 2 + 1]; }
+
+            //initiate text lists
+            int lenS = library.singletextdata.Length / 3; //72
+            int lenD = library.doubletextdata.Length / 4; //68
+            for (int m = 0; m < lenS; m++) { texts[m] = library.singletextdata[m * 3 + 2]; } //add single texts
+            for (int m = 0; m < lenD; m++) { texts[lenS + m] = library.doubletextdata[m * 4 + 2]; } //add double texts
+            for (int m = 0; m < lenD; m++) { texts[lenS + lenD + m] = library.doubletextdata[m * 4 + 3]; } //i know this could be tidier but getting it right was annoying
+            for (int m = 0; m < inntexts.Length; m++) { inntexts[m] = library.inntextdata[m * 3 + 2]; } //add inn texts
 
             //now that dropdowns have content, fix them
             PrepareDropdowns();
@@ -97,12 +109,14 @@ namespace Merrow {
             rndChestDropdown.SelectedIndex = 0;
             rndTextPaletteDropdown.SelectedIndex = 0;
             rndTextContentDropdown.SelectedIndex = 0;
+            rndDropsDropdown.SelectedIndex = 0;
             quaAccuracyDropdown.SelectedIndex = 0;
             quaZoomDropdown.SelectedIndex = 0;
             rndSpellDropdown.Visible = false;
             rndChestDropdown.Visible = false;
             rndTextPaletteDropdown.Visible = false;
             rndTextContentDropdown.Visible = false;
+            rndDropsDropdown.Visible = false;
             quaAccuracyDropdown.Visible = false;
             quaZoomDropdown.Visible = false;
         }
@@ -113,6 +127,7 @@ namespace Merrow {
 
             //The reason we reset the seed and reshuffle everything every time, whether they're enabled or not, is because the number of times the random seed is used determines the sequence of random values.
             //So to guarantee the random seed to produce the same results with the same options, it has to do the same number of random checks each time. It might not always be necessary but it prevents errors.
+            //That's also why this doesn't check for checkboxes: checkbox state & dropdown visible state, or not tied to rerolling the RNG so this removes having to know what state every object is in.
 
             //SPELL SHUFFLING
             //first, clear and fill the 'reorg' list in order, then shuffle it
@@ -265,6 +280,76 @@ namespace Merrow {
                     chests[c] = k;
                 }
             }
+
+            //DROP SHUFFLING (based on Item Drops dropdown value)
+            if (rndDropsDropdown.SelectedIndex == 0) { //STANDARD SHUFFLE
+                int c = drops.Length;
+                while (c > 1) {
+                    c--;
+                    int k = SysRand.Next(c + 1);
+                    int temp = drops[k];
+                    drops[k] = drops[c];
+                    drops[c] = temp;
+                }
+            }
+
+            if (rndDropsDropdown.SelectedIndex == 1) { //RANDOM: STANDARD CHEST ITEMS 0-13
+                int c = drops.Length;
+                while (c > 1) {
+                    c--;
+                    int k = SysRand.Next(14);
+                    drops[c] = k;
+                }
+            }
+
+            if (rndDropsDropdown.SelectedIndex == 2) { //RANDOM: STANDARD AND WINGS 0-19
+                int c = drops.Length;
+                while (c > 1) {
+                    c--;
+                    int k = SysRand.Next(20);
+                    drops[c] = k;
+                }
+            }
+
+            if (rndDropsDropdown.SelectedIndex == 3) { //RANDOM: STANDARD AND GEMS 0-13, 20-23
+                int c = drops.Length;
+                while (c > 1) {
+                    c--;
+                    int k = SysRand.Next(18); //produces 0-17
+                    if (k > 13) { k += 6; } //adds 6 if above 13, to get 20-23
+                    drops[c] = k;
+                }
+            }
+
+            if (rndDropsDropdown.SelectedIndex == 4) { //CHAOS: STANDARD, WINGS, GEMS 0-23
+                int c = drops.Length;
+                while (c > 1) {
+                    c--;
+                    int k = SysRand.Next(24);
+                    drops[c] = k;
+                }
+            }
+
+            //TEXT SHUFFLING (May be based on dropdown value more later, text shortening, whatever)
+            if (rndTextContentDropdown.SelectedIndex == 0) {
+                int c = texts.Length;
+                while (c > 1) {
+                    c--;
+                    int k = SysRand.Next(c + 1);
+                    int temp = texts[k];
+                    texts[k] = texts[c];
+                    texts[c] = temp;
+                }
+
+                c = inntexts.Length;
+                while (c > 1) {
+                    c--;
+                    int k = SysRand.Next(c + 1);
+                    int temp = inntexts[k];
+                    inntexts[k] = inntexts[c];
+                    inntexts[c] = temp;
+                }
+            }
         }
 
         public void BuildPatch() { //building Quest patch
@@ -335,7 +420,7 @@ namespace Merrow {
             }
 
             if (rndChestToggle.Checked) { //Chest shuffle
-                //add default chest content
+                //add chest addresses, and new byte
                 for (int i = 0; i < chests.Length; i++) {
                     int temp = library.chestdata[i * 2] + 33; //33 is offset to chest item byte
                     patchcontent += Convert.ToString(temp, 16);
@@ -357,6 +442,68 @@ namespace Merrow {
                 }
                 if (rndChestDropdown.SelectedIndex == 4) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (chaos)." + Environment.NewLine);
+                }
+            }
+
+            if (rndTextContentToggle.Checked) {
+                int temp = 0;
+                //add single text addresses, and new byte
+                for (int i = 0; i < 72; i++) {
+                    temp = library.singletextdata[i * 3] + 8; //text byte at offset 8
+                    patchcontent += Convert.ToString(temp, 16);
+                    patchcontent += "0002";
+                    patchcontent += texts[i].ToString("X4");
+                }
+
+                //add double text addresses, and new byte
+                for (int i = 0; i < 68; i++) {
+                    temp = library.doubletextdata[i * 4] + 8; //first text at offset 8
+                    patchcontent += Convert.ToString(temp, 16);
+                    patchcontent += "0002";
+                    patchcontent += texts[i + 72].ToString("X4");
+
+                    temp = library.doubletextdata[i * 4] + 10; //second text at offset 10
+                    patchcontent += Convert.ToString(temp, 16);
+                    patchcontent += "0002";
+                    patchcontent += texts[i + 72 + 68].ToString("X4");
+                }
+
+                //add inn text addresses, and new byte
+                for (int i = 0; i < inntexts.Length; i++) {
+                    temp = library.inntextdata[i * 3] + 8; //text byte at offset 8
+                    patchcontent += Convert.ToString(temp, 16);
+                    patchcontent += "0002";
+                    patchcontent += inntexts[i].ToString("X4");
+                }
+
+                if (rndTextContentDropdown.SelectedIndex == 0) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text content shuffled." + Environment.NewLine);
+                }
+            }
+
+            if (rndDropsToggle.Checked) { //Item Drop Shuffle
+                //add drop addresses, and new byte
+                for (int i = 0; i < drops.Length; i++) {
+                    int temp = library.dropdata[i * 2]; //don't need to offset because drop list is pre-offset
+                    patchcontent += Convert.ToString(temp, 16);
+                    patchcontent += "0001";
+                    patchcontent += drops[i].ToString("X2");
+                }
+
+                if (rndDropsDropdown.SelectedIndex == 0) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops shuffled." + Environment.NewLine);
+                }
+                if (rndDropsDropdown.SelectedIndex == 1) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (standard)." + Environment.NewLine);
+                }
+                if (rndDropsDropdown.SelectedIndex == 2) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (standard and wings)." + Environment.NewLine);
+                }
+                if (rndDropsDropdown.SelectedIndex == 3) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (standard and gems)." + Environment.NewLine);
+                }
+                if (rndDropsDropdown.SelectedIndex == 4) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (chaos)." + Environment.NewLine);
                 }
             }
 
@@ -438,7 +585,7 @@ namespace Merrow {
             }
 
             //check if nothing is enabled, if not, don't make a patch
-            if (!quaLevelToggle.Checked && !rndSpellToggle.Checked && !rndChestToggle.Checked && !rndTextPaletteToggle.Checked && !rndTextContentToggle.Checked && !quaSoulToggle.Checked && !quaInvalidityToggle.Checked && !quaZoomToggle.Checked && !quaAccuracyToggle.Checked) { return; }
+            if (!rndSpellToggle.Checked && !rndChestToggle.Checked && !rndTextPaletteToggle.Checked && !rndTextContentToggle.Checked && !rndDropsToggle.Checked && !quaLevelToggle.Checked && !quaSoulToggle.Checked && !quaInvalidityToggle.Checked && !quaZoomToggle.Checked && !quaAccuracyToggle.Checked) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
             patchbuild += headerHex;
@@ -539,6 +686,10 @@ namespace Merrow {
 
         private void genButton_Click(object sender, EventArgs e) {
             BuildPatch();
+        }
+
+        private void rndDropsToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndDropsToggle.Checked) { rndDropsDropdown.Visible = true; } else { rndDropsDropdown.Visible = false; }
         }
     }
 }
