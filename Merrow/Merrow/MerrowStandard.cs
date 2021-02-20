@@ -28,7 +28,8 @@ namespace Merrow {
         byte[] patcharray;
         int[] shuffles = new int[60];
         List<int> reorg = new List<int>();
-        string[] spoiler = new string[60];
+        string[] spoilerspells = new string[60];
+        string[] spoilerchests = new string[87];
         int tempaddr;
         string tempstr1;
         string tempstr2;
@@ -45,6 +46,8 @@ namespace Merrow {
         int[] drops = new int[67];
         int[] texts = new int[208];
         int[] inntexts = new int[17];
+        string[] hintnames = new string[60];
+        bool loadfinished = false;
 
         //crash sets and safe lists
         int[] crashset1 = { 3, 9, 12, 45, 46, 50, 51 }; //HA1, HA2, MBL, WC1, WC2, WC3, LC
@@ -67,7 +70,7 @@ namespace Merrow {
             //prepare variables
             if (!Directory.Exists(filePath)) { Directory.CreateDirectory(filePath); }
             shuffles = new int[playerspells];
-            spoiler = new string[playerspells];
+            spoilerspells = new string[playerspells];
             library = new DataStore();
             rngseed = SysRand.Next(100000000, 1000000000); //a 9-digit number
             SysRand = new Random(rngseed);
@@ -102,6 +105,7 @@ namespace Merrow {
 
             //initial shuffle
             Shuffling(true);
+            loadfinished = true;
         }
 
         private void PrepareDropdowns() {
@@ -113,6 +117,7 @@ namespace Merrow {
             quaAccuracyDropdown.SelectedIndex = 0;
             quaZoomDropdown.SelectedIndex = 0;
             rndSpellDropdown.Visible = false;
+            rndSpellNames.Visible = false;
             rndChestDropdown.Visible = false;
             rndTextPaletteDropdown.Visible = false;
             rndTextContentDropdown.Visible = false;
@@ -230,6 +235,15 @@ namespace Merrow {
                 }
 
                 //this should prevent all crashes.
+                Console.WriteLine("Crash protection complete.");
+            }
+
+            //SPELL NAME SHUFFLING (based on shuffles array and existing data)
+            for (int i = 0; i < playerspells; i++) {
+                bool fiftyfifty = SysRand.NextDouble() > 0.5;
+                if(fiftyfifty) { hintnames[i] = library.shuffleNames[i*5] + " " + library.shuffleNames[(shuffles[i] * 5) + 1]; }
+                else { hintnames[i] = library.shuffleNames[shuffles[i] * 5] + " " + library.shuffleNames[(i * 5) + 1]; }
+                //Console.WriteLine(shuffles[i].ToString() + " " + hintnames[i] + "_" + ToHex(hintnames[i]));
             }
 
             //CHEST SHUFFLING (based on Chest Shuffle dropdown value)
@@ -357,13 +371,13 @@ namespace Merrow {
             //start spoiler log and initialize empty patch
             File.WriteAllText(filePath + fileName + "_spoiler.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
             File.AppendAllText(filePath + fileName + "_spoiler.txt", "Seed: " + rngseed.ToString() + Environment.NewLine);
+            File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "PATCH MODIFIERS:" + Environment.NewLine);
             patchbuild = "";
             patchcontent = "";
 
             //RANDOMIZATION FEATURES------------------------------------------------------------------------------------------------------
 
             if (rndSpellToggle.Checked) { //Spell Shuffle
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "SPELL OVERRIDES:" + Environment.NewLine);
                 for (int q = 0; q < playerspells; q++) {
                     int tempq = 0;
 
@@ -384,10 +398,35 @@ namespace Merrow {
                     patchcontent += "0039"; //remaining length, hex for 57
                     patchcontent += tempstr2; //copied remaining data
 
-                    spoiler[q] = library.spells[(q * 4)] + " > " + library.spells[(tempq * 4)];
+                    spoilerspells[q] = library.spells[(q * 4)] + " > " + library.spells[(tempq * 4)];
                 }
 
-                foreach (string line in spoiler) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spells overridden." + Environment.NewLine);
+
+                if (rndSpellNames.Checked && rndSpellDropdown.SelectedIndex == 0) {
+                    //boss spells
+                    patchcontent += library.shuffleBossSpellNames[0];
+                    patchcontent += library.shuffleBossSpellNames[1];
+
+                    //spell pointers
+                    for (int i = 0; i < playerspells; i++) {
+                        patchcontent += library.shuffleNames[(i * 5) + 3]; //pointer location
+                        patchcontent += "0004"; //write four bytes
+                        patchcontent += library.shuffleNames[(i * 5) + 4]; //new pointer data
+                    }
+
+                    //spell names
+                    for (int i = 0; i < playerspells; i++) {
+                        string temps = ToHex(hintnames[i]);
+                        int zeroes = 32 - temps.Length;
+                        patchcontent += library.shuffleNames[(i * 5) + 2];
+                        patchcontent += "0010";
+                        patchcontent += temps;
+                        for (int j = 0; j < zeroes; j++) { patchcontent += "0"; }
+                    }
+
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shuffled spells use hinted names." + Environment.NewLine);
+                }
             }
 
             if (rndTextPaletteToggle.Checked) { //Text Colour
@@ -426,6 +465,8 @@ namespace Merrow {
                     patchcontent += Convert.ToString(temp, 16);
                     patchcontent += "0001";
                     patchcontent += chests[i].ToString("X2");
+
+                    spoilerchests[i] = i.ToString("00") + ": " + library.items[(chests[i] * 3)];
                 }
 
                 if (rndChestDropdown.SelectedIndex == 0) {
@@ -584,6 +625,16 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Soul search applied to all spells." + Environment.NewLine);
             }
 
+            if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED SPELLS:" + Environment.NewLine);
+                foreach (string line in spoilerspells) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+            }
+
+            if (rndChestToggle.Checked) {
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED CHESTS:" + Environment.NewLine);
+                foreach (string line in spoilerchests) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+            }
+
             //check if nothing is enabled, if not, don't make a patch
             if (!rndSpellToggle.Checked && !rndChestToggle.Checked && !rndTextPaletteToggle.Checked && !rndTextContentToggle.Checked && !rndDropsToggle.Checked && !quaLevelToggle.Checked && !quaSoulToggle.Checked && !quaInvalidityToggle.Checked && !quaZoomToggle.Checked && !quaAccuracyToggle.Checked) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
@@ -610,8 +661,21 @@ namespace Merrow {
             return bytes;
         }
 
+        public static string ToHex(string input) {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in input)
+                sb.AppendFormat("{0:X2}", (int)c);
+            return sb.ToString().Trim();
+        }
+
         private void rndSpellToggle_CheckedChanged(object sender, EventArgs e) {
-            if(rndSpellToggle.Checked) { rndSpellDropdown.Visible = true; } else { rndSpellDropdown.Visible = false; }
+            if(rndSpellToggle.Checked) {
+                rndSpellDropdown.Visible = true;
+                rndSpellNames.Visible = true;
+            } else {
+                rndSpellDropdown.Visible = false;
+                rndSpellNames.Visible = false;
+            }
         }
 
         private void rndChestToggle_CheckedChanged(object sender, EventArgs e) {
@@ -671,7 +735,7 @@ namespace Merrow {
         }
 
         private void seedTextBox_TextChanged(object sender, EventArgs e) {
-            if (seedTextBox.Text != "" && seedTextBox.Text != null) {
+            if (seedTextBox.Text != "" && seedTextBox.Text != null && loadfinished) {
                 rngseed = Convert.ToInt32(seedTextBox.Text);
                 Shuffling(true);
             }
@@ -690,6 +754,10 @@ namespace Merrow {
 
         private void rndDropsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndDropsToggle.Checked) { rndDropsDropdown.Visible = true; } else { rndDropsDropdown.Visible = false; }
+        }
+
+        private void rndDropsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+
         }
     }
 }

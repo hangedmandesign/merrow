@@ -25,6 +25,7 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MerrowStandard));
             this.rndGroupBox = new System.Windows.Forms.GroupBox();
+            this.rndSpellNames = new System.Windows.Forms.CheckBox();
             this.rndDropsDropdown = new System.Windows.Forms.ComboBox();
             this.rndDropsToggle = new System.Windows.Forms.CheckBox();
             this.rndTextContentDropdown = new System.Windows.Forms.ComboBox();
@@ -59,6 +60,7 @@
             // 
             // rndGroupBox
             // 
+            this.rndGroupBox.Controls.Add(this.rndSpellNames);
             this.rndGroupBox.Controls.Add(this.rndDropsDropdown);
             this.rndGroupBox.Controls.Add(this.rndDropsToggle);
             this.rndGroupBox.Controls.Add(this.rndTextContentDropdown);
@@ -76,6 +78,20 @@
             this.rndGroupBox.TabStop = false;
             this.rndGroupBox.Text = "RANDOMIZATION";
             // 
+            // rndSpellNames
+            // 
+            this.rndSpellNames.AutoSize = true;
+            this.rndSpellNames.Checked = true;
+            this.rndSpellNames.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.rndSpellNames.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndSpellNames.Location = new System.Drawing.Point(160, 46);
+            this.rndSpellNames.Name = "rndSpellNames";
+            this.rndSpellNames.Size = new System.Drawing.Size(103, 17);
+            this.rndSpellNames.TabIndex = 14;
+            this.rndSpellNames.Text = "Hint spell names";
+            this.rndSpellNames.UseVisualStyleBackColor = true;
+            this.rndSpellNames.Visible = false;
+            // 
             // rndDropsDropdown
             // 
             this.rndDropsDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -86,15 +102,16 @@
             "RANDOM + WINGS",
             "RANDOM + GEMS",
             "CHAOS"});
-            this.rndDropsDropdown.Location = new System.Drawing.Point(160, 125);
+            this.rndDropsDropdown.Location = new System.Drawing.Point(160, 160);
             this.rndDropsDropdown.Name = "rndDropsDropdown";
             this.rndDropsDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndDropsDropdown.TabIndex = 13;
+            this.rndDropsDropdown.SelectedIndexChanged += new System.EventHandler(this.rndDropsDropdown_SelectedIndexChanged);
             // 
             // rndDropsToggle
             // 
             this.rndDropsToggle.AutoSize = true;
-            this.rndDropsToggle.Location = new System.Drawing.Point(6, 127);
+            this.rndDropsToggle.Location = new System.Drawing.Point(6, 162);
             this.rndDropsToggle.Name = "rndDropsToggle";
             this.rndDropsToggle.Size = new System.Drawing.Size(142, 17);
             this.rndDropsToggle.TabIndex = 12;
@@ -108,7 +125,7 @@
             this.rndTextContentDropdown.FormattingEnabled = true;
             this.rndTextContentDropdown.Items.AddRange(new object[] {
             "Shuffled"});
-            this.rndTextContentDropdown.Location = new System.Drawing.Point(160, 98);
+            this.rndTextContentDropdown.Location = new System.Drawing.Point(160, 133);
             this.rndTextContentDropdown.Name = "rndTextContentDropdown";
             this.rndTextContentDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndTextContentDropdown.TabIndex = 11;
@@ -117,7 +134,7 @@
             // rndTextContentToggle
             // 
             this.rndTextContentToggle.AutoSize = true;
-            this.rndTextContentToggle.Location = new System.Drawing.Point(6, 100);
+            this.rndTextContentToggle.Location = new System.Drawing.Point(6, 135);
             this.rndTextContentToggle.Name = "rndTextContentToggle";
             this.rndTextContentToggle.Size = new System.Drawing.Size(127, 17);
             this.rndTextContentToggle.TabIndex = 10;
@@ -135,7 +152,7 @@
             "Blue",
             "White",
             "SHUFFLED (any of above)"});
-            this.rndTextPaletteDropdown.Location = new System.Drawing.Point(160, 71);
+            this.rndTextPaletteDropdown.Location = new System.Drawing.Point(160, 106);
             this.rndTextPaletteDropdown.Name = "rndTextPaletteDropdown";
             this.rndTextPaletteDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndTextPaletteDropdown.TabIndex = 9;
@@ -144,7 +161,7 @@
             // rndTextPaletteToggle
             // 
             this.rndTextPaletteToggle.AutoSize = true;
-            this.rndTextPaletteToggle.Location = new System.Drawing.Point(6, 73);
+            this.rndTextPaletteToggle.Location = new System.Drawing.Point(6, 108);
             this.rndTextPaletteToggle.Name = "rndTextPaletteToggle";
             this.rndTextPaletteToggle.Size = new System.Drawing.Size(97, 17);
             this.rndTextPaletteToggle.TabIndex = 8;
@@ -162,7 +179,7 @@
             "RANDOM + WINGS",
             "RANDOM + GEMS",
             "CHAOS"});
-            this.rndChestDropdown.Location = new System.Drawing.Point(160, 44);
+            this.rndChestDropdown.Location = new System.Drawing.Point(160, 79);
             this.rndChestDropdown.Name = "rndChestDropdown";
             this.rndChestDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndChestDropdown.TabIndex = 7;
@@ -171,7 +188,7 @@
             // rndChestToggle
             // 
             this.rndChestToggle.AutoSize = true;
-            this.rndChestToggle.Location = new System.Drawing.Point(6, 46);
+            this.rndChestToggle.Location = new System.Drawing.Point(6, 81);
             this.rndChestToggle.Name = "rndChestToggle";
             this.rndChestToggle.Size = new System.Drawing.Size(152, 17);
             this.rndChestToggle.TabIndex = 5;
@@ -329,9 +346,9 @@
             this.labelVersion.Font = new System.Drawing.Font("Georgia", 24F, System.Drawing.FontStyle.Bold);
             this.labelVersion.Location = new System.Drawing.Point(265, 23);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(73, 38);
+            this.labelVersion.Size = new System.Drawing.Size(72, 38);
             this.labelVersion.TabIndex = 3;
-            this.labelVersion.Text = "v18";
+            this.labelVersion.Text = "v19";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // expGroupBox
@@ -396,12 +413,12 @@
             // creditLabel
             // 
             this.creditLabel.AutoSize = true;
-            this.creditLabel.Location = new System.Drawing.Point(362, 9);
+            this.creditLabel.Location = new System.Drawing.Point(352, 9);
             this.creditLabel.Name = "creditLabel";
             this.creditLabel.Size = new System.Drawing.Size(199, 52);
             this.creditLabel.TabIndex = 5;
             this.creditLabel.Text = "Developed by Hangedman.\r\nGreetz: Landmine36, Irenepunmaster,\r\nBingchang, Jeville," +
-    " Mallos31, Usedpizza,\r\nall at Rosemary and Rectangles.";
+    " Mallos31, Usedpizza,\r\nKirkq, all at Rosemary and Rectangles.";
             this.creditLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MerrowStandard
@@ -459,6 +476,7 @@
         private System.Windows.Forms.TextBox seedTextBox;
         private System.Windows.Forms.ComboBox rndDropsDropdown;
         private System.Windows.Forms.CheckBox rndDropsToggle;
+        private System.Windows.Forms.CheckBox rndSpellNames;
     }
 }
 
