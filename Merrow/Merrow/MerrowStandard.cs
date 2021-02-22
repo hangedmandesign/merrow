@@ -639,6 +639,11 @@ namespace Merrow {
             if (!rndSpellToggle.Checked && !rndChestToggle.Checked && !rndTextPaletteToggle.Checked && !rndTextContentToggle.Checked && !rndDropsToggle.Checked && !quaLevelToggle.Checked && !quaSoulToggle.Checked && !quaInvalidityToggle.Checked && !quaZoomToggle.Checked && !quaAccuracyToggle.Checked) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
+            patchcontent += "DAC040393C"; //main menu logo address/length
+            patchcontent += library.randologo;
+            patchcontent += "DCE070393C"; //animation logo address/length
+            patchcontent += library.randologo;
+
             patchbuild += headerHex;
             patchbuild += patchcontent;
             patchbuild += footerHex;
