@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace Merrow {
     public partial class MerrowStandard : Form {
@@ -28,8 +29,6 @@ namespace Merrow {
         byte[] patcharray;
         int[] shuffles = new int[60];
         List<int> reorg = new List<int>();
-        string[] spoilerspells = new string[60];
-        string[] spoilerchests = new string[87];
         int tempaddr;
         string tempstr1;
         string tempstr2;
@@ -47,7 +46,11 @@ namespace Merrow {
         int[] texts = new int[208];
         int[] inntexts = new int[17];
         string[] hintnames = new string[60];
+        string[] spoilerspells = new string[60];
+        string[] spoilerchests = new string[87];
+        string[] spoilerdrops = new string[67];
         bool loadfinished = false;
+        bool verboselog = true;
 
         //crash sets and safe lists
         int[] crashset1 = { 3, 9, 12, 45, 46, 50, 51 }; //HA1, HA2, MBL, WC1, WC2, WC3, LC
@@ -116,18 +119,22 @@ namespace Merrow {
             rndDropsDropdown.SelectedIndex = 0;
             quaAccuracyDropdown.SelectedIndex = 0;
             quaZoomDropdown.SelectedIndex = 0;
+
             rndSpellDropdown.Visible = false;
             rndSpellNames.Visible = false;
             rndChestDropdown.Visible = false;
             rndTextPaletteDropdown.Visible = false;
             rndTextContentDropdown.Visible = false;
             rndDropsDropdown.Visible = false;
+            rndWeightedChest.Visible = false;
             quaAccuracyDropdown.Visible = false;
             quaZoomDropdown.Visible = false;
             crcWarningLabel.Visible = false;
         }
 
         public void Shuffling(bool crashpro) {
+            int k = 0;
+
             //REINITIATE RANDOM WITH NEW SEED
             SysRand = new System.Random(rngseed);
 
@@ -142,7 +149,7 @@ namespace Merrow {
             int n = reorg.Count;
             while (n > 1) {
                 n--;
-                int k = SysRand.Next(n + 1);
+                k = SysRand.Next(n + 1);
                 int temp = reorg[k];
                 reorg[k] = reorg[n];
                 reorg[n] = temp;
@@ -248,22 +255,16 @@ namespace Merrow {
             }
 
             //CHEST SHUFFLING (based on Chest Shuffle dropdown value)
-            if (rndChestDropdown.SelectedIndex == 0) { //STANDARD SHUFFLE
-                int c = chests.Length;
-                while (c > 1) {
-                    c--;
-                    int k = SysRand.Next(c + 1);
-                    int temp = chests[k];
-                    chests[k] = chests[c];
-                    chests[c] = temp;
-                }
-            }
-
             if (rndChestDropdown.SelectedIndex == 1) { //RANDOM: STANDARD CHEST ITEMS 0-13
                 int c = chests.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(14);
+                    if(rndWeightedChest.Checked) {
+                        if (c > 14) { k = SysRand.Next(14); } else { k = c - 1; }
+                    }
+                    if (!rndWeightedChest.Checked) {
+                        k = SysRand.Next(14);
+                    }
                     chests[c] = k;
                 }
             }
@@ -272,7 +273,12 @@ namespace Merrow {
                 int c = chests.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(20);
+                    if (rndWeightedChest.Checked) {
+                        if (c > 20) { k = SysRand.Next(20); } else { k = c - 1; }
+                    }
+                    if (!rndWeightedChest.Checked) {
+                        k = SysRand.Next(20);
+                    }
                     chests[c] = k;
                 }
             }
@@ -281,7 +287,12 @@ namespace Merrow {
                 int c = chests.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(18); //produces 0-17
+                    if (rndWeightedChest.Checked) {
+                        if (c > 18) { k = SysRand.Next(18); } else { k = c - 1; }
+                    }
+                    if (!rndWeightedChest.Checked) {
+                        k = SysRand.Next(18); //produces 0-17
+                    }
                     if (k > 13) { k += 6; } //adds 6 if above 13, to get 20-23
                     chests[c] = k;
                 }
@@ -291,9 +302,24 @@ namespace Merrow {
                 int c = chests.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(24);
+                    if (rndWeightedChest.Checked) {
+                        if (c > 24) { k = SysRand.Next(24); } else { k = c - 1; }
+                    }
+                    if (!rndWeightedChest.Checked) {
+                        k = SysRand.Next(24);
+                    }
                     chests[c] = k;
                 }
+            }
+
+            //STANDARD CHEST SHUFFLE (always happens afterwards, or if dropdown index is 0)
+            int d = chests.Length;
+            while (d > 1) {
+                d--;
+                k = SysRand.Next(d + 1);
+                int temp = chests[k];
+                chests[k] = chests[d];
+                chests[d] = temp;
             }
 
             //DROP SHUFFLING (based on Item Drops dropdown value)
@@ -301,7 +327,7 @@ namespace Merrow {
                 int c = drops.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(c + 1);
+                    k = SysRand.Next(c + 1);
                     int temp = drops[k];
                     drops[k] = drops[c];
                     drops[c] = temp;
@@ -312,7 +338,7 @@ namespace Merrow {
                 int c = drops.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(14);
+                    k = SysRand.Next(14);
                     drops[c] = k;
                 }
             }
@@ -321,7 +347,7 @@ namespace Merrow {
                 int c = drops.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(20);
+                    k = SysRand.Next(20);
                     drops[c] = k;
                 }
             }
@@ -330,7 +356,7 @@ namespace Merrow {
                 int c = drops.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(18); //produces 0-17
+                    k = SysRand.Next(18); //produces 0-17
                     if (k > 13) { k += 6; } //adds 6 if above 13, to get 20-23
                     drops[c] = k;
                 }
@@ -340,7 +366,7 @@ namespace Merrow {
                 int c = drops.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(24);
+                    k = SysRand.Next(24);
                     drops[c] = k;
                 }
             }
@@ -350,7 +376,7 @@ namespace Merrow {
                 int c = texts.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(c + 1);
+                    k = SysRand.Next(c + 1);
                     int temp = texts[k];
                     texts[k] = texts[c];
                     texts[c] = temp;
@@ -359,7 +385,7 @@ namespace Merrow {
                 c = inntexts.Length;
                 while (c > 1) {
                     c--;
-                    int k = SysRand.Next(c + 1);
+                    k = SysRand.Next(c + 1);
                     int temp = inntexts[k];
                     inntexts[k] = inntexts[c];
                     inntexts[c] = temp;
@@ -368,6 +394,11 @@ namespace Merrow {
         }
 
         public void BuildPatch() { //building Quest patch
+            //update filename one more time here to avoid errors
+            if (filenameTextBox.Text != "" && filenameTextBox.Text != null) {
+                fileName = string.Join("", filenameTextBox.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
+            }
+            else { fileName = "merrowpatch_" + rngseed.ToString(); }
 
             //start spoiler log and initialize empty patch
             File.WriteAllText(filePath + fileName + "_spoiler.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
@@ -485,6 +516,9 @@ namespace Merrow {
                 if (rndChestDropdown.SelectedIndex == 4) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (chaos)." + Environment.NewLine);
                 }
+                if (rndWeightedChest.Checked) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents weighted (minimum one of each)." + Environment.NewLine);
+                }
             }
 
             if (rndTextContentToggle.Checked) {
@@ -530,6 +564,9 @@ namespace Merrow {
                     patchcontent += Convert.ToString(temp, 16);
                     patchcontent += "0001";
                     patchcontent += drops[i].ToString("X2");
+
+                    if (drops[i] != 255) { spoilerdrops[i] = library.monsternames[i] + ": " + library.items[drops[i] * 3]; }
+                    if (drops[i] == 255) { spoilerdrops[i] = library.monsternames[i] + ": NONE"; }
                 }
 
                 if (rndDropsDropdown.SelectedIndex == 0) {
@@ -564,7 +601,7 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss spell passive invalidity disabled." + Environment.NewLine);
             }
 
-            if(quaAccuracyToggle.Checked) {
+            if (quaAccuracyToggle.Checked) {
                 if (quaAccuracyDropdown.SelectedIndex == 0) { //Spell Accuracy: Status
                     for (int i = 0; i < 17; i++) {
                         string spellloc = library.spells[(statusspells[i] * 4) + 2];
@@ -626,18 +663,34 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Soul search applied to all spells." + Environment.NewLine);
             }
 
-            if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED SPELLS:" + Environment.NewLine);
-                foreach (string line in spoilerspells) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+            if (quaRestlessToggle.Checked) { //Restless NPCs
+                for (int i = 0; i < library.npcmovement.Length; i++) {
+                    patchcontent += Convert.ToString(library.npcmovement[i], 16);
+                    patchcontent += "000102"; //Replace movement byte with 02 to cause wandering
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPCs are restless." + Environment.NewLine);
             }
 
-            if (rndChestToggle.Checked) {
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED CHESTS:" + Environment.NewLine);
-                foreach (string line in spoilerchests) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-            }
+            //Verbose spoiler log down at the bottom just to not hide the enabled options above.
+            if(verboselog) { 
+                if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED SPELLS:" + Environment.NewLine);
+                    foreach (string line in spoilerspells) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                }
 
+                if (rndChestToggle.Checked) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED CHESTS:" + Environment.NewLine);
+                    foreach (string line in spoilerchests) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                }
+
+                if (rndDropsToggle.Checked) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED DROPS:" + Environment.NewLine);
+                    foreach (string line in spoilerdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                }
+            }
             //check if nothing is enabled, if not, don't make a patch
-            if (!rndSpellToggle.Checked && !rndChestToggle.Checked && !rndTextPaletteToggle.Checked && !rndTextContentToggle.Checked && !rndDropsToggle.Checked && !quaLevelToggle.Checked && !quaSoulToggle.Checked && !quaInvalidityToggle.Checked && !quaZoomToggle.Checked && !quaAccuracyToggle.Checked) { return; }
+            if (!rndSpellToggle.Checked && !rndChestToggle.Checked && !rndTextPaletteToggle.Checked && !rndTextContentToggle.Checked && !rndDropsToggle.Checked && !quaLevelToggle.Checked && !quaSoulToggle.Checked && !quaInvalidityToggle.Checked && !quaZoomToggle.Checked && !quaAccuracyToggle.Checked && !quaRestlessToggle.Checked) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
             patchcontent += "DAC040393C"; //main menu logo address/length
@@ -645,6 +698,44 @@ namespace Merrow {
             patchcontent += "DCE070393C"; //animation logo address/length
             patchcontent += library.randologo;
 
+            patchbuild += headerHex;
+            patchbuild += patchcontent;
+            patchbuild += footerHex;
+            patcharray = StringToByteArray(patchbuild);
+            File.WriteAllBytes(filePath + fileName + ".ips", patcharray);
+            filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
+            System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+        }
+
+        public void BuildCustomPatch(string addr, string content) { //building custom IPS
+            //update filename one more time here to avoid errors
+            if (advFilenameText.Text != "" && advFilenameText.Text != null) {
+                fileName = string.Join("", advFilenameText.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
+            }
+            else { fileName = "merrowgenericpatch"; }
+
+            patchbuild = "";
+            patchcontent = "";
+            string lengthhex;
+
+            passcheck = true; //error check reset
+            if (content.Length % 2 != 0) { passcheck = false; } //check that the content is a hex string of multiple 2 len, if not, fail
+            if (addr.Length != 6) { passcheck = false; } //check that the location hex string provided is exactly 6 len, if not, fail
+
+            lengthhex = Convert.ToString(content.Length / 2, 16);
+            if (lengthhex.Length > 4) { passcheck = false; } //that's too long
+
+            //if it failed, get out
+            if (!passcheck) { return; }
+
+            //ASSEMBLE CONTENT
+            patchcontent += addr;
+            if (lengthhex.Length < 4) { for (int p = 0; p < 4 - lengthhex.Length; p++) { patchcontent += "0"; } } //add leading zeroes if IPS record size is too short
+                                                                                                                  //if this breaks it's probably this overwritten function
+            patchcontent += lengthhex; //add the remaining IPS record size in hex to the string
+            patchcontent += content; //add the actual content of the patch
+
+            //ASSEMBLE PATCH FILE
             patchbuild += headerHex;
             patchbuild += patchcontent;
             patchbuild += footerHex;
@@ -685,7 +776,13 @@ namespace Merrow {
         }
 
         private void rndChestToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndChestToggle.Checked) { rndChestDropdown.Visible = true; } else { rndChestDropdown.Visible = false; }
+            if (rndChestToggle.Checked) {
+                rndChestDropdown.Visible = true;
+                rndWeightedChest.Visible = true;
+            } else {
+                rndChestDropdown.Visible = false;
+                rndWeightedChest.Visible = false;
+            }
         }
 
         private void rndTextPaletteToggle_CheckedChanged(object sender, EventArgs e) {
@@ -747,6 +844,10 @@ namespace Merrow {
         }
 
         private void seedTextBox_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to numeric only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9]", "");
+            textboxSender.SelectionStart = cursorPosition;
             if (seedTextBox.Text != "" && seedTextBox.Text != null && loadfinished) {
                 rngseed = Convert.ToInt32(seedTextBox.Text);
                 Shuffling(true);
@@ -754,10 +855,10 @@ namespace Merrow {
         }
 
         private void filenameTextBox_TextChanged(object sender, EventArgs e) {
-            if (filenameTextBox.Text != "" && filenameTextBox.Text != null) {
-                fileName = filenameTextBox.Text;
-            }
-            else { fileName = "merrowpatch_" + rngseed.ToString(); }
+            var textboxSender = (TextBox)sender; //restricts to alphanumeric only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z]", "");
+            textboxSender.SelectionStart = cursorPosition;
         }
 
         private void genButton_Click(object sender, EventArgs e) {
@@ -772,10 +873,6 @@ namespace Merrow {
 
         }
 
-        private void creditLabel_Click(object sender, EventArgs e) {
-
-        }
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
         }
@@ -784,8 +881,33 @@ namespace Merrow {
             
         }
 
-        private void labelVersion_Click(object sender, EventArgs e) {
+        private void verboseCheckBox_CheckedChanged(object sender, EventArgs e) {
+            verboselog = verboseCheckBox.Checked;
+        }
 
+        private void advFilenameText_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to alphanumeric only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        private void advAddressText_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to hexadecimal only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        private void advContentText_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to hexadecimal only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        private void advGenerateButton_Click(object sender, EventArgs e) {
+            BuildCustomPatch(advAddressText.Text,advContentText.Text);
         }
     }
 }
