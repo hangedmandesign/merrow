@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MerrowStandard));
             this.rndGroupBox = new System.Windows.Forms.GroupBox();
             this.rndSpellNames = new System.Windows.Forms.CheckBox();
@@ -44,7 +45,6 @@
             this.quaZoomDropdown = new System.Windows.Forms.ComboBox();
             this.quaZoomToggle = new System.Windows.Forms.CheckBox();
             this.quaInvalidityToggle = new System.Windows.Forms.CheckBox();
-            this.merrowName = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
             this.expGroupBox = new System.Windows.Forms.GroupBox();
             this.filenameLabel = new System.Windows.Forms.Label();
@@ -52,10 +52,26 @@
             this.genButton = new System.Windows.Forms.Button();
             this.filenameTextBox = new System.Windows.Forms.TextBox();
             this.seedTextBox = new System.Windows.Forms.TextBox();
-            this.creditLabel = new System.Windows.Forms.Label();
+            this.logoBox = new System.Windows.Forms.PictureBox();
+            this.tabsControl = new System.Windows.Forms.TabControl();
+            this.CreditsTab = new System.Windows.Forms.TabPage();
+            this.RandomizerTab = new System.Windows.Forms.TabPage();
+            this.CustomTab = new System.Windows.Forms.TabPage();
+            this.ReaderTab = new System.Windows.Forms.TabPage();
+            this.creditsLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.crcWarningLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.rndGroupBox.SuspendLayout();
             this.quaGroupBox.SuspendLayout();
             this.expGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
+            this.tabsControl.SuspendLayout();
+            this.CreditsTab.SuspendLayout();
+            this.RandomizerTab.SuspendLayout();
+            this.CustomTab.SuspendLayout();
+            this.ReaderTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // rndGroupBox
@@ -71,9 +87,9 @@
             this.rndGroupBox.Controls.Add(this.rndChestToggle);
             this.rndGroupBox.Controls.Add(this.rndSpellDropdown);
             this.rndGroupBox.Controls.Add(this.rndSpellToggle);
-            this.rndGroupBox.Location = new System.Drawing.Point(13, 72);
+            this.rndGroupBox.Location = new System.Drawing.Point(8, 6);
             this.rndGroupBox.Name = "rndGroupBox";
-            this.rndGroupBox.Size = new System.Drawing.Size(323, 187);
+            this.rndGroupBox.Size = new System.Drawing.Size(323, 314);
             this.rndGroupBox.TabIndex = 0;
             this.rndGroupBox.TabStop = false;
             this.rndGroupBox.Text = "RANDOMIZATION";
@@ -84,11 +100,13 @@
             this.rndSpellNames.Checked = true;
             this.rndSpellNames.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rndSpellNames.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rndSpellNames.Location = new System.Drawing.Point(160, 46);
+            this.rndSpellNames.Location = new System.Drawing.Point(160, 50);
             this.rndSpellNames.Name = "rndSpellNames";
             this.rndSpellNames.Size = new System.Drawing.Size(103, 17);
             this.rndSpellNames.TabIndex = 14;
             this.rndSpellNames.Text = "Hint spell names";
+            this.rndToolTip.SetToolTip(this.rndSpellNames, "Spell names are updated to be a randomized prefix/suffix combination based on the" +
+        " original and modifier spell.");
             this.rndSpellNames.UseVisualStyleBackColor = true;
             this.rndSpellNames.Visible = false;
             // 
@@ -102,7 +120,7 @@
             "RANDOM + WINGS",
             "RANDOM + GEMS",
             "CHAOS"});
-            this.rndDropsDropdown.Location = new System.Drawing.Point(160, 160);
+            this.rndDropsDropdown.Location = new System.Drawing.Point(160, 138);
             this.rndDropsDropdown.Name = "rndDropsDropdown";
             this.rndDropsDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndDropsDropdown.TabIndex = 13;
@@ -111,11 +129,12 @@
             // rndDropsToggle
             // 
             this.rndDropsToggle.AutoSize = true;
-            this.rndDropsToggle.Location = new System.Drawing.Point(6, 162);
+            this.rndDropsToggle.Location = new System.Drawing.Point(6, 140);
             this.rndDropsToggle.Name = "rndDropsToggle";
             this.rndDropsToggle.Size = new System.Drawing.Size(142, 17);
             this.rndDropsToggle.TabIndex = 12;
             this.rndDropsToggle.Text = "Randomize enemy drops";
+            this.rndToolTip.SetToolTip(this.rndDropsToggle, resources.GetString("rndDropsToggle.ToolTip"));
             this.rndDropsToggle.UseVisualStyleBackColor = true;
             this.rndDropsToggle.CheckedChanged += new System.EventHandler(this.rndDropsToggle_CheckedChanged);
             // 
@@ -125,7 +144,7 @@
             this.rndTextContentDropdown.FormattingEnabled = true;
             this.rndTextContentDropdown.Items.AddRange(new object[] {
             "Shuffled"});
-            this.rndTextContentDropdown.Location = new System.Drawing.Point(160, 133);
+            this.rndTextContentDropdown.Location = new System.Drawing.Point(160, 108);
             this.rndTextContentDropdown.Name = "rndTextContentDropdown";
             this.rndTextContentDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndTextContentDropdown.TabIndex = 11;
@@ -134,11 +153,13 @@
             // rndTextContentToggle
             // 
             this.rndTextContentToggle.AutoSize = true;
-            this.rndTextContentToggle.Location = new System.Drawing.Point(6, 135);
+            this.rndTextContentToggle.Location = new System.Drawing.Point(6, 110);
             this.rndTextContentToggle.Name = "rndTextContentToggle";
             this.rndTextContentToggle.Size = new System.Drawing.Size(127, 17);
             this.rndTextContentToggle.TabIndex = 10;
             this.rndTextContentToggle.Text = "Randomize textboxes";
+            this.rndToolTip.SetToolTip(this.rndTextContentToggle, "Redistribute all textbox content.\r\nSHUFFLED: All non-inn textboxes are shuffled t" +
+        "ogether, and all inn textboxes are shuffled together.");
             this.rndTextContentToggle.UseVisualStyleBackColor = true;
             this.rndTextContentToggle.CheckedChanged += new System.EventHandler(this.rndTextContentToggle_CheckedChanged);
             // 
@@ -152,7 +173,7 @@
             "Blue",
             "White",
             "SHUFFLED (any of above)"});
-            this.rndTextPaletteDropdown.Location = new System.Drawing.Point(160, 106);
+            this.rndTextPaletteDropdown.Location = new System.Drawing.Point(160, 168);
             this.rndTextPaletteDropdown.Name = "rndTextPaletteDropdown";
             this.rndTextPaletteDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndTextPaletteDropdown.TabIndex = 9;
@@ -161,11 +182,13 @@
             // rndTextPaletteToggle
             // 
             this.rndTextPaletteToggle.AutoSize = true;
-            this.rndTextPaletteToggle.Location = new System.Drawing.Point(6, 108);
+            this.rndTextPaletteToggle.Location = new System.Drawing.Point(6, 170);
             this.rndTextPaletteToggle.Name = "rndTextPaletteToggle";
             this.rndTextPaletteToggle.Size = new System.Drawing.Size(97, 17);
             this.rndTextPaletteToggle.TabIndex = 8;
             this.rndTextPaletteToggle.Text = "Set text palette";
+            this.rndToolTip.SetToolTip(this.rndTextPaletteToggle, "Changes the text colour palette.\r\n<COLOUR>: Use one of four default included colo" +
+        "urs.\r\nSHUFFLED: Select one of those four included colours at random.");
             this.rndTextPaletteToggle.UseVisualStyleBackColor = true;
             this.rndTextPaletteToggle.CheckedChanged += new System.EventHandler(this.rndTextPaletteToggle_CheckedChanged);
             // 
@@ -179,7 +202,7 @@
             "RANDOM + WINGS",
             "RANDOM + GEMS",
             "CHAOS"});
-            this.rndChestDropdown.Location = new System.Drawing.Point(160, 79);
+            this.rndChestDropdown.Location = new System.Drawing.Point(160, 78);
             this.rndChestDropdown.Name = "rndChestDropdown";
             this.rndChestDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndChestDropdown.TabIndex = 7;
@@ -188,11 +211,12 @@
             // rndChestToggle
             // 
             this.rndChestToggle.AutoSize = true;
-            this.rndChestToggle.Location = new System.Drawing.Point(6, 81);
+            this.rndChestToggle.Location = new System.Drawing.Point(6, 80);
             this.rndChestToggle.Name = "rndChestToggle";
             this.rndChestToggle.Size = new System.Drawing.Size(152, 17);
             this.rndChestToggle.TabIndex = 5;
             this.rndChestToggle.Text = "Randomize chest contents";
+            this.rndToolTip.SetToolTip(this.rndChestToggle, resources.GetString("rndChestToggle.ToolTip"));
             this.rndChestToggle.UseVisualStyleBackColor = true;
             this.rndChestToggle.CheckedChanged += new System.EventHandler(this.rndChestToggle_CheckedChanged);
             // 
@@ -204,7 +228,7 @@
             "Shuffled",
             "Item1",
             "Item2"});
-            this.rndSpellDropdown.Location = new System.Drawing.Point(160, 17);
+            this.rndSpellDropdown.Location = new System.Drawing.Point(160, 18);
             this.rndSpellDropdown.Name = "rndSpellDropdown";
             this.rndSpellDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndSpellDropdown.TabIndex = 4;
@@ -214,11 +238,12 @@
             // 
             this.rndSpellToggle.AutoSize = true;
             this.rndSpellToggle.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rndSpellToggle.Location = new System.Drawing.Point(6, 19);
+            this.rndSpellToggle.Location = new System.Drawing.Point(6, 20);
             this.rndSpellToggle.Name = "rndSpellToggle";
             this.rndSpellToggle.Size = new System.Drawing.Size(139, 17);
             this.rndSpellToggle.TabIndex = 1;
             this.rndSpellToggle.Text = "Override spell properties";
+            this.rndToolTip.SetToolTip(this.rndSpellToggle, resources.GetString("rndSpellToggle.ToolTip"));
             this.rndSpellToggle.UseVisualStyleBackColor = true;
             this.rndSpellToggle.CheckedChanged += new System.EventHandler(this.rndSpellToggle_CheckedChanged);
             // 
@@ -231,9 +256,9 @@
             this.quaGroupBox.Controls.Add(this.quaZoomDropdown);
             this.quaGroupBox.Controls.Add(this.quaZoomToggle);
             this.quaGroupBox.Controls.Add(this.quaInvalidityToggle);
-            this.quaGroupBox.Location = new System.Drawing.Point(344, 72);
+            this.quaGroupBox.Location = new System.Drawing.Point(339, 6);
             this.quaGroupBox.Name = "quaGroupBox";
-            this.quaGroupBox.Size = new System.Drawing.Size(217, 187);
+            this.quaGroupBox.Size = new System.Drawing.Size(217, 314);
             this.quaGroupBox.TabIndex = 1;
             this.quaGroupBox.TabStop = false;
             this.quaGroupBox.Text = "QUALITY";
@@ -241,22 +266,24 @@
             // quaLevelToggle
             // 
             this.quaLevelToggle.AutoSize = true;
-            this.quaLevelToggle.Location = new System.Drawing.Point(6, 127);
+            this.quaLevelToggle.Location = new System.Drawing.Point(6, 140);
             this.quaLevelToggle.Name = "quaLevelToggle";
             this.quaLevelToggle.Size = new System.Drawing.Size(163, 17);
             this.quaLevelToggle.TabIndex = 11;
             this.quaLevelToggle.Text = "All spells unlocked at Level 1";
+            this.rndToolTip.SetToolTip(this.quaLevelToggle, "Set all spell unlock levels to 1. ");
             this.quaLevelToggle.UseVisualStyleBackColor = true;
             this.quaLevelToggle.CheckedChanged += new System.EventHandler(this.quaLevelToggle_CheckedChanged);
             // 
             // quaSoulToggle
             // 
             this.quaSoulToggle.AutoSize = true;
-            this.quaSoulToggle.Location = new System.Drawing.Point(6, 100);
+            this.quaSoulToggle.Location = new System.Drawing.Point(6, 110);
             this.quaSoulToggle.Name = "quaSoulToggle";
             this.quaSoulToggle.Size = new System.Drawing.Size(127, 17);
             this.quaSoulToggle.TabIndex = 10;
             this.quaSoulToggle.Text = "All spells Soul Search";
+            this.rndToolTip.SetToolTip(this.quaSoulToggle, resources.GetString("quaSoulToggle.ToolTip"));
             this.quaSoulToggle.UseVisualStyleBackColor = true;
             this.quaSoulToggle.CheckedChanged += new System.EventHandler(this.quaSoulToggle_CheckedChanged);
             // 
@@ -267,7 +294,7 @@
             this.quaAccuracyDropdown.Items.AddRange(new object[] {
             "Status spells",
             "All spells"});
-            this.quaAccuracyDropdown.Location = new System.Drawing.Point(105, 71);
+            this.quaAccuracyDropdown.Location = new System.Drawing.Point(105, 78);
             this.quaAccuracyDropdown.Name = "quaAccuracyDropdown";
             this.quaAccuracyDropdown.Size = new System.Drawing.Size(102, 21);
             this.quaAccuracyDropdown.TabIndex = 9;
@@ -276,11 +303,12 @@
             // quaAccuracyToggle
             // 
             this.quaAccuracyToggle.AutoSize = true;
-            this.quaAccuracyToggle.Location = new System.Drawing.Point(6, 73);
+            this.quaAccuracyToggle.Location = new System.Drawing.Point(6, 80);
             this.quaAccuracyToggle.Name = "quaAccuracyToggle";
             this.quaAccuracyToggle.Size = new System.Drawing.Size(93, 17);
             this.quaAccuracyToggle.TabIndex = 8;
             this.quaAccuracyToggle.Text = "Max accuracy";
+            this.rndToolTip.SetToolTip(this.quaAccuracyToggle, resources.GetString("quaAccuracyToggle.ToolTip"));
             this.quaAccuracyToggle.UseVisualStyleBackColor = true;
             this.quaAccuracyToggle.CheckedChanged += new System.EventHandler(this.quaAccuracyToggle_CheckedChanged);
             // 
@@ -300,7 +328,7 @@
             "10",
             "11",
             "12"});
-            this.quaZoomDropdown.Location = new System.Drawing.Point(137, 44);
+            this.quaZoomDropdown.Location = new System.Drawing.Point(137, 48);
             this.quaZoomDropdown.MaxDropDownItems = 11;
             this.quaZoomDropdown.Name = "quaZoomDropdown";
             this.quaZoomDropdown.Size = new System.Drawing.Size(70, 21);
@@ -310,11 +338,14 @@
             // quaZoomToggle
             // 
             this.quaZoomToggle.AutoSize = true;
-            this.quaZoomToggle.Location = new System.Drawing.Point(6, 46);
+            this.quaZoomToggle.Location = new System.Drawing.Point(6, 50);
             this.quaZoomToggle.Name = "quaZoomToggle";
             this.quaZoomToggle.Size = new System.Drawing.Size(125, 17);
             this.quaZoomToggle.TabIndex = 5;
             this.quaZoomToggle.Text = "Increase zoom range";
+            this.rndToolTip.SetToolTip(this.quaZoomToggle, "Changes maximum zoom distance (2-12). 1 is default.\r\nValue is not a multiple, jus" +
+        "t a range of stable values available. \r\n[WARNING - Will cause checksum error loo" +
+        "p on any PJ64 derivative (e.g. RAP64).]");
             this.quaZoomToggle.UseVisualStyleBackColor = true;
             this.quaZoomToggle.CheckedChanged += new System.EventHandler(this.quaZoomToggle_CheckedChanged);
             // 
@@ -322,34 +353,27 @@
             // 
             this.quaInvalidityToggle.AutoSize = true;
             this.quaInvalidityToggle.Cursor = System.Windows.Forms.Cursors.Default;
-            this.quaInvalidityToggle.Location = new System.Drawing.Point(6, 19);
+            this.quaInvalidityToggle.Location = new System.Drawing.Point(6, 20);
             this.quaInvalidityToggle.Name = "quaInvalidityToggle";
             this.quaInvalidityToggle.Size = new System.Drawing.Size(149, 17);
             this.quaInvalidityToggle.TabIndex = 1;
             this.quaInvalidityToggle.Text = "Remove Boss spell debuff";
+            this.rndToolTip.SetToolTip(this.quaInvalidityToggle, "Boss spells no longer debuff the player with passive Invalidity effect. \r\nInvalid" +
+        "ity removes buffs/debuffs, so default boss spells make them mostly useless.");
             this.quaInvalidityToggle.UseVisualStyleBackColor = true;
             this.quaInvalidityToggle.CheckedChanged += new System.EventHandler(this.quaInvalidityToggle_CheckedChanged);
-            // 
-            // merrowName
-            // 
-            this.merrowName.AutoSize = true;
-            this.merrowName.Font = new System.Drawing.Font("Georgia", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.merrowName.Location = new System.Drawing.Point(3, 9);
-            this.merrowName.Name = "merrowName";
-            this.merrowName.Size = new System.Drawing.Size(277, 56);
-            this.merrowName.TabIndex = 2;
-            this.merrowName.Text = "MERROW";
             // 
             // labelVersion
             // 
             this.labelVersion.AutoSize = true;
             this.labelVersion.Font = new System.Drawing.Font("Georgia", 24F, System.Drawing.FontStyle.Bold);
-            this.labelVersion.Location = new System.Drawing.Point(265, 23);
+            this.labelVersion.Location = new System.Drawing.Point(459, 73);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(72, 38);
+            this.labelVersion.Size = new System.Drawing.Size(77, 38);
             this.labelVersion.TabIndex = 3;
-            this.labelVersion.Text = "v19";
+            this.labelVersion.Text = "v20";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.labelVersion.Click += new System.EventHandler(this.labelVersion_Click);
             // 
             // expGroupBox
             // 
@@ -358,7 +382,7 @@
             this.expGroupBox.Controls.Add(this.genButton);
             this.expGroupBox.Controls.Add(this.filenameTextBox);
             this.expGroupBox.Controls.Add(this.seedTextBox);
-            this.expGroupBox.Location = new System.Drawing.Point(13, 265);
+            this.expGroupBox.Location = new System.Drawing.Point(8, 357);
             this.expGroupBox.Name = "expGroupBox";
             this.expGroupBox.Size = new System.Drawing.Size(548, 55);
             this.expGroupBox.TabIndex = 4;
@@ -373,6 +397,7 @@
             this.filenameLabel.Size = new System.Drawing.Size(60, 13);
             this.filenameLabel.TabIndex = 13;
             this.filenameLabel.Text = "FILENAME";
+            this.rndToolTip.SetToolTip(this.filenameLabel, resources.GetString("filenameLabel.ToolTip"));
             // 
             // seedLabel
             // 
@@ -382,6 +407,8 @@
             this.seedLabel.Size = new System.Drawing.Size(36, 13);
             this.seedLabel.TabIndex = 12;
             this.seedLabel.Text = "SEED";
+            this.rndToolTip.SetToolTip(this.seedLabel, "Auto-generated pseudorandom seed. \r\nDefaults to a random 9-digit number but can b" +
+        "e edited freely.");
             // 
             // genButton
             // 
@@ -410,39 +437,151 @@
             this.seedTextBox.TabIndex = 0;
             this.seedTextBox.TextChanged += new System.EventHandler(this.seedTextBox_TextChanged);
             // 
-            // creditLabel
+            // logoBox
             // 
-            this.creditLabel.AutoSize = true;
-            this.creditLabel.Location = new System.Drawing.Point(352, 9);
-            this.creditLabel.Name = "creditLabel";
-            this.creditLabel.Size = new System.Drawing.Size(199, 52);
-            this.creditLabel.TabIndex = 5;
-            this.creditLabel.Text = "Developed by Hangedman.\r\nGreetz: Landmine36, Irenepunmaster,\r\nBingchang, Jeville," +
-    " Mallos31, Usedpizza,\r\nKirkq, all at Rosemary and Rectangles.";
-            this.creditLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.logoBox.Image = global::Merrow.Properties.Resources.merrowbar;
+            this.logoBox.InitialImage = global::Merrow.Properties.Resources.merrowbar;
+            this.logoBox.Location = new System.Drawing.Point(41, 16);
+            this.logoBox.Name = "logoBox";
+            this.logoBox.Size = new System.Drawing.Size(412, 154);
+            this.logoBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.logoBox.TabIndex = 6;
+            this.logoBox.TabStop = false;
+            // 
+            // tabsControl
+            // 
+            this.tabsControl.Controls.Add(this.CreditsTab);
+            this.tabsControl.Controls.Add(this.RandomizerTab);
+            this.tabsControl.Controls.Add(this.CustomTab);
+            this.tabsControl.Controls.Add(this.ReaderTab);
+            this.tabsControl.Location = new System.Drawing.Point(12, 12);
+            this.tabsControl.Name = "tabsControl";
+            this.tabsControl.SelectedIndex = 0;
+            this.tabsControl.Size = new System.Drawing.Size(573, 444);
+            this.tabsControl.TabIndex = 7;
+            // 
+            // CreditsTab
+            // 
+            this.CreditsTab.BackColor = System.Drawing.Color.Transparent;
+            this.CreditsTab.Controls.Add(this.creditsLinkLabel);
+            this.CreditsTab.Controls.Add(this.logoBox);
+            this.CreditsTab.Controls.Add(this.labelVersion);
+            this.CreditsTab.Location = new System.Drawing.Point(4, 22);
+            this.CreditsTab.Name = "CreditsTab";
+            this.CreditsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.CreditsTab.Size = new System.Drawing.Size(565, 418);
+            this.CreditsTab.TabIndex = 0;
+            this.CreditsTab.Text = "Credits";
+            // 
+            // RandomizerTab
+            // 
+            this.RandomizerTab.BackColor = System.Drawing.Color.Transparent;
+            this.RandomizerTab.Controls.Add(this.crcWarningLabel);
+            this.RandomizerTab.Controls.Add(this.rndGroupBox);
+            this.RandomizerTab.Controls.Add(this.quaGroupBox);
+            this.RandomizerTab.Controls.Add(this.expGroupBox);
+            this.RandomizerTab.Location = new System.Drawing.Point(4, 22);
+            this.RandomizerTab.Name = "RandomizerTab";
+            this.RandomizerTab.Padding = new System.Windows.Forms.Padding(3);
+            this.RandomizerTab.Size = new System.Drawing.Size(565, 418);
+            this.RandomizerTab.TabIndex = 1;
+            this.RandomizerTab.Text = "Quest 64 Randomizer";
+            // 
+            // CustomTab
+            // 
+            this.CustomTab.BackColor = System.Drawing.Color.Transparent;
+            this.CustomTab.Controls.Add(this.label1);
+            this.CustomTab.Location = new System.Drawing.Point(4, 22);
+            this.CustomTab.Name = "CustomTab";
+            this.CustomTab.Size = new System.Drawing.Size(565, 418);
+            this.CustomTab.TabIndex = 2;
+            this.CustomTab.Text = "Generic Patch Generator";
+            // 
+            // ReaderTab
+            // 
+            this.ReaderTab.BackColor = System.Drawing.Color.Transparent;
+            this.ReaderTab.Controls.Add(this.label2);
+            this.ReaderTab.Location = new System.Drawing.Point(4, 22);
+            this.ReaderTab.Name = "ReaderTab";
+            this.ReaderTab.Size = new System.Drawing.Size(565, 418);
+            this.ReaderTab.TabIndex = 3;
+            this.ReaderTab.Text = "Binary File Reader";
+            // 
+            // creditsLinkLabel
+            // 
+            this.creditsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.creditsLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(411, 41);
+            this.creditsLinkLabel.Location = new System.Drawing.Point(6, 173);
+            this.creditsLinkLabel.Name = "creditsLinkLabel";
+            this.creditsLinkLabel.Size = new System.Drawing.Size(553, 239);
+            this.creditsLinkLabel.TabIndex = 7;
+            this.creditsLinkLabel.TabStop = true;
+            this.creditsLinkLabel.Text = resources.GetString("creditsLinkLabel.Text");
+            this.creditsLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.creditsLinkLabel.UseCompatibleTextRendering = true;
+            this.creditsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // crcWarningLabel
+            // 
+            this.crcWarningLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.crcWarningLabel.ForeColor = System.Drawing.Color.Firebrick;
+            this.crcWarningLabel.Location = new System.Drawing.Point(6, 323);
+            this.crcWarningLabel.Name = "crcWarningLabel";
+            this.crcWarningLabel.Size = new System.Drawing.Size(550, 31);
+            this.crcWarningLabel.TabIndex = 5;
+            this.crcWarningLabel.Text = "WARNING: Checksum error. Patched file will not work in PJ64 derivatives, others m" +
+    "ay see error messages.";
+            this.crcWarningLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(559, 418);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Currently incomplete.";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(559, 418);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Currently incomplete.";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // rndToolTip
+            // 
+            this.rndToolTip.AutomaticDelay = 400;
             // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(568, 332);
-            this.Controls.Add(this.creditLabel);
-            this.Controls.Add(this.expGroupBox);
-            this.Controls.Add(this.labelVersion);
-            this.Controls.Add(this.merrowName);
-            this.Controls.Add(this.quaGroupBox);
-            this.Controls.Add(this.rndGroupBox);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(594, 467);
+            this.Controls.Add(this.tabsControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MerrowStandard";
             this.Text = "MERROW";
+            this.Load += new System.EventHandler(this.MerrowForm_Load);
             this.rndGroupBox.ResumeLayout(false);
             this.rndGroupBox.PerformLayout();
             this.quaGroupBox.ResumeLayout(false);
             this.quaGroupBox.PerformLayout();
             this.expGroupBox.ResumeLayout(false);
             this.expGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).EndInit();
+            this.tabsControl.ResumeLayout(false);
+            this.CreditsTab.ResumeLayout(false);
+            this.CreditsTab.PerformLayout();
+            this.RandomizerTab.ResumeLayout(false);
+            this.CustomTab.ResumeLayout(false);
+            this.ReaderTab.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -464,11 +603,9 @@
         private System.Windows.Forms.ComboBox quaZoomDropdown;
         private System.Windows.Forms.CheckBox quaZoomToggle;
         private System.Windows.Forms.CheckBox quaInvalidityToggle;
-        private System.Windows.Forms.Label merrowName;
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.CheckBox quaLevelToggle;
         private System.Windows.Forms.GroupBox expGroupBox;
-        private System.Windows.Forms.Label creditLabel;
         private System.Windows.Forms.Label filenameLabel;
         private System.Windows.Forms.Label seedLabel;
         private System.Windows.Forms.Button genButton;
@@ -477,6 +614,17 @@
         private System.Windows.Forms.ComboBox rndDropsDropdown;
         private System.Windows.Forms.CheckBox rndDropsToggle;
         private System.Windows.Forms.CheckBox rndSpellNames;
+        private System.Windows.Forms.PictureBox logoBox;
+        private System.Windows.Forms.TabControl tabsControl;
+        private System.Windows.Forms.TabPage CreditsTab;
+        private System.Windows.Forms.TabPage RandomizerTab;
+        private System.Windows.Forms.TabPage CustomTab;
+        private System.Windows.Forms.TabPage ReaderTab;
+        private System.Windows.Forms.LinkLabel creditsLinkLabel;
+        private System.Windows.Forms.Label crcWarningLabel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolTip rndToolTip;
     }
 }
 

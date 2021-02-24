@@ -124,6 +124,7 @@ namespace Merrow {
             rndDropsDropdown.Visible = false;
             quaAccuracyDropdown.Visible = false;
             quaZoomDropdown.Visible = false;
+            crcWarningLabel.Visible = false;
         }
 
         public void Shuffling(bool crashpro) {
@@ -724,7 +725,13 @@ namespace Merrow {
         }
 
         private void quaZoomToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaZoomToggle.Checked) { quaZoomDropdown.Visible = true; } else { quaZoomDropdown.Visible = false; }
+            if (quaZoomToggle.Checked) {
+                quaZoomDropdown.Visible = true;
+                crcWarningLabel.Visible = true;
+            } else {
+                quaZoomDropdown.Visible = false;
+                crcWarningLabel.Visible = false;
+            }
         }
 
         private void quaAccuracyToggle_CheckedChanged(object sender, EventArgs e) {
@@ -762,6 +769,22 @@ namespace Merrow {
         }
 
         private void rndDropsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+
+        }
+
+        private void creditLabel_Click(object sender, EventArgs e) {
+
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
+        }
+
+        private void MerrowForm_Load(object sender, EventArgs e) {
+            
+        }
+
+        private void labelVersion_Click(object sender, EventArgs e) {
 
         }
     }

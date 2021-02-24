@@ -117,6 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="rndDropsToggle.ToolTip" xml:space="preserve">
+    <value>Change the items dropped by non-Boss enemies.
+SHUFFLED: All default item drops are shuffled among all enemies.
+RANDOM: All drops are randomized to contain any normal drop item.
+RANDOM&amp;WINGS: All drops are randomized to contain any normal drop item or wing.
+RANDOM&amp;GEMS: All drops are randomized to contain any normal drop item or Elemental Gem.
+CHAOS: All drops are randomized to contain any normal drop item, wing, or Elemental Gem.
+[WARNING - Including gems or wings can cause sequence breaks.]</value>
+  </data>
+  <data name="rndChestToggle.ToolTip" xml:space="preserve">
+    <value>Change the contents of all chests.
+SHUFFLED: All default chest contents are shuffled among all chests.
+RANDOM: All chests are randomized to contain any normal chest item.
+RANDOM&amp;WINGS: All chests are randomized to contain any normal chest item or wing. 
+RANDOM&amp;GEMS: All chests are randomized to contain any normal chest item or Elemental Gem.
+CHAOS: All chests are randomized to contain any normal chest item, wing, or Elemental Gem.
+[WARNING - Including gems or wings can cause sequence breaks.]</value>
+  </data>
+  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
+    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
+SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
+&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
+  </data>
+  <data name="quaSoulToggle.ToolTip" xml:space="preserve">
+    <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
+Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.</value>
+  </data>
+  <data name="quaAccuracyToggle.ToolTip" xml:space="preserve">
+    <value>Normalizes accuracy values. This does not mean no misses, but instead the normal Agi-based hit rate of most spells. 
+Status spells: Changes positive/negative status effects' accuracy to 100.
+All spells: Changes all spells' accuracy to 100 (Also includes Escape, Extinction, etc.)</value>
+  </data>
+  <data name="filenameLabel.ToolTip" xml:space="preserve">
+    <value>IPS patch filename. Default is 'merrowpatch_(seed number).ips' if nothing is typed.
+Export will automatically overwrite any existing file with the same name, and will open a window to the save location. 
+It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
+  </data>
+  <data name="creditsLinkLabel.Text" xml:space="preserve">
+    <value>Developed by: 
+Hangedman (Jonah Davidson)
+
+Data Exploration and Theory: 
+Landmine36, Mallos31, Kirkq
+
+Testing and Input: 
+Bingchang, Jeville, Irenepunmaster, Schooliedee, Kao
+
+Inspiration and Support:
+Usedpizza, the Eltale Monsters Discord, all at Rosemary and Rectangles.
+
+Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), 
+but is made freely available under the MIT License.
+Please visit https://github.com/hangedmandesign/merrow for the license terms.
+</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
