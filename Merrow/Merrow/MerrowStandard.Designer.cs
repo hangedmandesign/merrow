@@ -72,8 +72,20 @@
             this.advAddressLabel = new System.Windows.Forms.Label();
             this.advAddressText = new System.Windows.Forms.TextBox();
             this.ReaderTab = new System.Windows.Forms.TabPage();
-            this.label2 = new System.Windows.Forms.Label();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.binErrorLabel = new System.Windows.Forms.Label();
+            this.binHelpLabel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.binAddrHEX = new System.Windows.Forms.RadioButton();
+            this.binAddrGroup = new System.Windows.Forms.GroupBox();
+            this.binAddrDEC = new System.Windows.Forms.RadioButton();
+            this.binLengthGroup = new System.Windows.Forms.GroupBox();
+            this.binLengthDEC = new System.Windows.Forms.RadioButton();
+            this.binLengthHEX = new System.Windows.Forms.RadioButton();
             this.rndGroupBox.SuspendLayout();
             this.quaGroupBox.SuspendLayout();
             this.expGroupBox.SuspendLayout();
@@ -83,6 +95,8 @@
             this.RandomizerTab.SuspendLayout();
             this.CustomTab.SuspendLayout();
             this.ReaderTab.SuspendLayout();
+            this.binAddrGroup.SuspendLayout();
+            this.binLengthGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // rndGroupBox
@@ -682,22 +696,20 @@
             // ReaderTab
             // 
             this.ReaderTab.BackColor = System.Drawing.Color.Transparent;
-            this.ReaderTab.Controls.Add(this.label2);
+            this.ReaderTab.Controls.Add(this.binLengthGroup);
+            this.ReaderTab.Controls.Add(this.binAddrGroup);
+            this.ReaderTab.Controls.Add(this.binErrorLabel);
+            this.ReaderTab.Controls.Add(this.binHelpLabel);
+            this.ReaderTab.Controls.Add(this.label3);
+            this.ReaderTab.Controls.Add(this.label4);
+            this.ReaderTab.Controls.Add(this.button1);
+            this.ReaderTab.Controls.Add(this.textBox1);
+            this.ReaderTab.Controls.Add(this.textBox2);
             this.ReaderTab.Location = new System.Drawing.Point(4, 22);
             this.ReaderTab.Name = "ReaderTab";
             this.ReaderTab.Size = new System.Drawing.Size(565, 418);
             this.ReaderTab.TabIndex = 3;
             this.ReaderTab.Text = "Binary File Reader";
-            // 
-            // label2
-            // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(559, 418);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Currently incomplete.";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // rndToolTip
             // 
@@ -706,6 +718,142 @@
             this.rndToolTip.InitialDelay = 400;
             this.rndToolTip.IsBalloon = true;
             this.rndToolTip.ReshowDelay = 80;
+            // 
+            // binErrorLabel
+            // 
+            this.binErrorLabel.ForeColor = System.Drawing.Color.Firebrick;
+            this.binErrorLabel.Location = new System.Drawing.Point(98, 8);
+            this.binErrorLabel.Name = "binErrorLabel";
+            this.binErrorLabel.Size = new System.Drawing.Size(429, 26);
+            this.binErrorLabel.TabIndex = 26;
+            this.binErrorLabel.Text = "ERROR:";
+            this.binErrorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.binErrorLabel.Visible = false;
+            // 
+            // binHelpLabel
+            // 
+            this.binHelpLabel.AutoSize = true;
+            this.binHelpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
+            this.binHelpLabel.Location = new System.Drawing.Point(531, 8);
+            this.binHelpLabel.Name = "binHelpLabel";
+            this.binHelpLabel.Size = new System.Drawing.Size(25, 26);
+            this.binHelpLabel.TabIndex = 25;
+            this.binHelpLabel.Text = "?";
+            this.rndToolTip.SetToolTip(this.binHelpLabel, resources.GetString("binHelpLabel.ToolTip"));
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.label3.Location = new System.Drawing.Point(248, 378);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 13);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "FILENAME:";
+            this.rndToolTip.SetToolTip(this.label3, "\r\nExport will automatically overwrite any existing file with the same name, and w" +
+        "ill open a window to the save location.");
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.label4.Location = new System.Drawing.Point(7, 21);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(86, 13);
+            this.label4.TabIndex = 24;
+            this.label4.Text = "EXTRACTIONS:";
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.button1.Location = new System.Drawing.Point(454, 360);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(102, 48);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "GENERATE";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(313, 375);
+            this.textBox1.MaxLength = 48;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(130, 20);
+            this.textBox1.TabIndex = 20;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(10, 41);
+            this.textBox2.MaxLength = 131044;
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox2.Size = new System.Drawing.Size(546, 313);
+            this.textBox2.TabIndex = 23;
+            // 
+            // binAddrHEX
+            // 
+            this.binAddrHEX.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.binAddrHEX.Location = new System.Drawing.Point(8, 17);
+            this.binAddrHEX.Name = "binAddrHEX";
+            this.binAddrHEX.Size = new System.Drawing.Size(47, 24);
+            this.binAddrHEX.TabIndex = 27;
+            this.binAddrHEX.TabStop = true;
+            this.binAddrHEX.Text = "HEX";
+            this.binAddrHEX.UseVisualStyleBackColor = true;
+            // 
+            // binAddrGroup
+            // 
+            this.binAddrGroup.Controls.Add(this.binAddrDEC);
+            this.binAddrGroup.Controls.Add(this.binAddrHEX);
+            this.binAddrGroup.Location = new System.Drawing.Point(10, 360);
+            this.binAddrGroup.Name = "binAddrGroup";
+            this.binAddrGroup.Size = new System.Drawing.Size(111, 48);
+            this.binAddrGroup.TabIndex = 28;
+            this.binAddrGroup.TabStop = false;
+            this.binAddrGroup.Text = "ADDRESS";
+            // 
+            // binAddrDEC
+            // 
+            this.binAddrDEC.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.binAddrDEC.Location = new System.Drawing.Point(60, 17);
+            this.binAddrDEC.Name = "binAddrDEC";
+            this.binAddrDEC.Size = new System.Drawing.Size(47, 24);
+            this.binAddrDEC.TabIndex = 28;
+            this.binAddrDEC.Text = "DEC";
+            this.binAddrDEC.UseVisualStyleBackColor = true;
+            // 
+            // binLengthGroup
+            // 
+            this.binLengthGroup.Controls.Add(this.binLengthDEC);
+            this.binLengthGroup.Controls.Add(this.binLengthHEX);
+            this.binLengthGroup.Location = new System.Drawing.Point(127, 360);
+            this.binLengthGroup.Name = "binLengthGroup";
+            this.binLengthGroup.Size = new System.Drawing.Size(111, 48);
+            this.binLengthGroup.TabIndex = 29;
+            this.binLengthGroup.TabStop = false;
+            this.binLengthGroup.Text = "LENGTH";
+            // 
+            // binLengthDEC
+            // 
+            this.binLengthDEC.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.binLengthDEC.Location = new System.Drawing.Point(60, 17);
+            this.binLengthDEC.Name = "binLengthDEC";
+            this.binLengthDEC.Size = new System.Drawing.Size(47, 24);
+            this.binLengthDEC.TabIndex = 28;
+            this.binLengthDEC.Text = "DEC";
+            this.binLengthDEC.UseVisualStyleBackColor = true;
+            // 
+            // binLengthHEX
+            // 
+            this.binLengthHEX.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.binLengthHEX.Location = new System.Drawing.Point(8, 17);
+            this.binLengthHEX.Name = "binLengthHEX";
+            this.binLengthHEX.Size = new System.Drawing.Size(47, 24);
+            this.binLengthHEX.TabIndex = 27;
+            this.binLengthHEX.TabStop = true;
+            this.binLengthHEX.Text = "HEX";
+            this.binLengthHEX.UseVisualStyleBackColor = true;
             // 
             // MerrowStandard
             // 
@@ -732,6 +880,9 @@
             this.CustomTab.ResumeLayout(false);
             this.CustomTab.PerformLayout();
             this.ReaderTab.ResumeLayout(false);
+            this.ReaderTab.PerformLayout();
+            this.binAddrGroup.ResumeLayout(false);
+            this.binLengthGroup.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -773,7 +924,6 @@
         private System.Windows.Forms.TabPage ReaderTab;
         private System.Windows.Forms.LinkLabel creditsLinkLabel;
         private System.Windows.Forms.Label crcWarningLabel;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolTip rndToolTip;
         private System.Windows.Forms.CheckBox rndWeightedChest;
         private System.Windows.Forms.CheckBox quaRestlessToggle;
@@ -787,6 +937,19 @@
         private System.Windows.Forms.TextBox advAddressText;
         private System.Windows.Forms.Label advHelpLabel;
         private System.Windows.Forms.Label advErrorLabel;
+        private System.Windows.Forms.Label binErrorLabel;
+        private System.Windows.Forms.Label binHelpLabel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.GroupBox binLengthGroup;
+        private System.Windows.Forms.RadioButton binLengthDEC;
+        private System.Windows.Forms.RadioButton binLengthHEX;
+        private System.Windows.Forms.GroupBox binAddrGroup;
+        private System.Windows.Forms.RadioButton binAddrDEC;
+        private System.Windows.Forms.RadioButton binAddrHEX;
     }
 }
 
