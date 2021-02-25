@@ -14,9 +14,11 @@ using System.Text.RegularExpressions;
 
 namespace Merrow {
     public partial class MerrowStandard : Form {
+        //data structures
+        DataStore library;
+        Random SysRand = new Random();
 
         //variables
-        DataStore library;
         int spellstart = 13941344; //D4BA60
         int spelloffset = 68;
         int playerspells = 60;
@@ -26,21 +28,19 @@ namespace Merrow {
         string patchcontent = "";
         string footerHex = "454F46"; //EOF
         string patchbuild = "";
-        byte[] patcharray;
-        int[] shuffles = new int[60];
-        List<int> reorg = new List<int>();
         int tempaddr;
         string tempstr1;
         string tempstr2;
-        string tempstr3;
         public int rngseed;
-        Random SysRand = new Random();
         int zoomvalue = 1;
-        bool passcheck = true;
-        string advaddr;
-        string advcontent;
-        bool advanced = false;
-        bool lastadv = false;
+        int passcheck = 0;
+        bool loadfinished = false;
+        bool verboselog = true;
+
+        //collection arrays and lists
+        byte[] patcharray;
+        int[] shuffles = new int[60];
+        List<int> reorg = new List<int>();
         int[] chests = new int[87];
         int[] drops = new int[67];
         int[] texts = new int[208];
@@ -49,8 +49,6 @@ namespace Merrow {
         string[] spoilerspells = new string[60];
         string[] spoilerchests = new string[87];
         string[] spoilerdrops = new string[67];
-        bool loadfinished = false;
-        bool verboselog = true;
 
         //crash sets and safe lists
         int[] crashset1 = { 3, 9, 12, 45, 46, 50, 51 }; //HA1, HA2, MBL, WC1, WC2, WC3, LC
@@ -66,7 +64,8 @@ namespace Merrow {
         int[] effectSpells = { 17, 19, 22, 25, 27, 32, 38, 40, 43, 44, 47, 48, 49, 52, 54, 56, 57, 58 };
         int[] brianSpells = { 2, 6, 7, 11, 24, 29, 33, 37, 39, 41 };
 
-        //initialization
+        //INITIALIZATION----------------------------------------------------------------
+
         public MerrowStandard() {
             InitializeComponent();
 
@@ -111,7 +110,7 @@ namespace Merrow {
             loadfinished = true;
         }
 
-        private void PrepareDropdowns() {
+        private void PrepareDropdowns() { //list of initial UI cleanup/prep steps
             rndSpellDropdown.SelectedIndex = 0;
             rndChestDropdown.SelectedIndex = 0;
             rndTextPaletteDropdown.SelectedIndex = 0;
@@ -131,6 +130,8 @@ namespace Merrow {
             quaZoomDropdown.Visible = false;
             crcWarningLabel.Visible = false;
         }
+
+        //UNIFIED SHUFFLING FUNCTION----------------------------------------------------------------
 
         public void Shuffling(bool crashpro) {
             int k = 0;
@@ -393,7 +394,9 @@ namespace Merrow {
             }
         }
 
-        public void BuildPatch() { //building Quest patch
+        //BUILD QUEST PATCH----------------------------------------------------------------
+
+        public void BuildPatch() {
             //update filename one more time here to avoid errors
             if (filenameTextBox.Text != "" && filenameTextBox.Text != null) {
                 fileName = string.Join("", filenameTextBox.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
@@ -407,7 +410,7 @@ namespace Merrow {
             patchbuild = "";
             patchcontent = "";
 
-            //RANDOMIZATION FEATURES------------------------------------------------------------------------------------------------------
+            //RANDOMIZATION FEATURES
 
             if (rndSpellToggle.Checked) { //Spell Shuffle
                 for (int q = 0; q < playerspells; q++) {
@@ -586,7 +589,7 @@ namespace Merrow {
                 }
             }
 
-            //QUALITY OF LIFE FEATURES------------------------------------------------------------------------------------------------------
+            //QUALITY OF LIFE FEATURES
 
             if (quaInvalidityToggle.Checked) { //Invalidity
                 patchcontent += "D4CAE9000100"; //Zel_Cat
@@ -707,31 +710,54 @@ namespace Merrow {
             System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
         }
 
-        public void BuildCustomPatch(string addr, string content) { //building custom IPS
+        //BUILD GENERIC PATCH----------------------------------------------------------------
+
+        public void BuildCustomPatch(string addr, string content) { //building Generic Patch
             //update filename one more time here to avoid errors
             if (advFilenameText.Text != "" && advFilenameText.Text != null) {
                 fileName = string.Join("", advFilenameText.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
             }
             else { fileName = "merrowgenericpatch"; }
 
+            passcheck = 0; //error check reset
+            advErrorLabel.Visible = false;
             patchbuild = "";
             patchcontent = "";
-            string lengthhex;
+            string lengthhex = Convert.ToString(content.Length / 2, 16);
+            string addresshex = addr;
 
-            passcheck = true; //error check reset
-            if (content.Length % 2 != 0) { passcheck = false; } //check that the content is a hex string of multiple 2 len, if not, fail
-            if (addr.Length != 6) { passcheck = false; } //check that the location hex string provided is exactly 6 len, if not, fail
+            if(addr.Length < 6) { //add leading zeroes to short addresses
+                addresshex = "";
+                for (int i = 0; i < 6 - addr.Length; i++) { addresshex += "0"; }
+                addresshex += addr;
+                advAddressText.Text = addresshex;
+            }
 
-            lengthhex = Convert.ToString(content.Length / 2, 16);
-            if (lengthhex.Length > 4) { passcheck = false; } //that's too long
-
-            //if it failed, get out
-            if (!passcheck) { return; }
+            //error check
+            if (content.Length == 0) { //check that the content is not null
+                advErrorLabel.Text = "ERROR: Content cannot be empty.";
+                passcheck = 1;
+            }
+            if (content.Length % 2 != 0) { //check that the content is a hex string of multiple 2 len, if not, fail
+                advErrorLabel.Text = "ERROR: Odd number of characters in content.";
+                passcheck = 2;
+            }
+            if (content.Length < 0 || addr.Length > 6 || lengthhex.Length > 4) { //if you somehow manage any of these then go to hell
+                advErrorLabel.Text = "ERROR: Invalid content or address.";
+                passcheck = 3;
+            }
+            //if error check failed, get out
+            if (passcheck > 0) {
+                advErrorLabel.Visible = true;
+                return;
+            }
 
             //ASSEMBLE CONTENT
-            patchcontent += addr;
-            if (lengthhex.Length < 4) { for (int p = 0; p < 4 - lengthhex.Length; p++) { patchcontent += "0"; } } //add leading zeroes if IPS record size is too short
-                                                                                                                  //if this breaks it's probably this overwritten function
+            patchcontent += addresshex;
+            if (lengthhex.Length < 4) { //add leading zeroes if IPS record size is too short
+                for (int p = 0; p < 4 - lengthhex.Length; p++) { patchcontent += "0"; }
+            } 
+            
             patchcontent += lengthhex; //add the remaining IPS record size in hex to the string
             patchcontent += content; //add the actual content of the patch
 
@@ -744,6 +770,8 @@ namespace Merrow {
             filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
             System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
         }
+
+        //STRING OPERATIONS----------------------------------------------------------------
 
         public static string ByteArrayToString(byte[] ba) { //Convert bytes to hex
             StringBuilder hex = new StringBuilder(ba.Length * 2);
@@ -764,6 +792,8 @@ namespace Merrow {
                 sb.AppendFormat("{0:X2}", (int)c);
             return sb.ToString().Trim();
         }
+
+        //UI INTERACTIONS----------------------------------------------------------------
 
         private void rndSpellToggle_CheckedChanged(object sender, EventArgs e) {
             if(rndSpellToggle.Checked) {
@@ -793,34 +823,6 @@ namespace Merrow {
             if (rndTextContentToggle.Checked) { rndTextContentDropdown.Visible = true; } else { rndTextContentDropdown.Visible = false; }
         }
 
-        private void rndSpellDropdown_IndexChanged(object sender, EventArgs e) {
-
-        }
-
-        private void rndChestDropdown_IndexChanged(object sender, EventArgs e) {
-
-        }
-
-        private void rndTextPaletteDropdown_IndexChanged(object sender, EventArgs e) {
-
-        }
-
-        private void rndTextContentDropdown_IndexChanged(object sender, EventArgs e) {
-
-        }
-
-        private void quaZoomDropdown_IndexChanged(object sender, EventArgs e) {
-            
-        }
-
-        private void quaAccuracyDropdown_IndexChanged(object sender, EventArgs e) {
-
-        }
-
-        private void quaInvalidityToggle_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
         private void quaZoomToggle_CheckedChanged(object sender, EventArgs e) {
             if (quaZoomToggle.Checked) {
                 quaZoomDropdown.Visible = true;
@@ -833,14 +835,6 @@ namespace Merrow {
 
         private void quaAccuracyToggle_CheckedChanged(object sender, EventArgs e) {
             if (quaAccuracyToggle.Checked) { quaAccuracyDropdown.Visible = true; } else { quaAccuracyDropdown.Visible = false; }
-        }
-
-        private void quaSoulToggle_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
-        private void quaLevelToggle_CheckedChanged(object sender, EventArgs e) {
-
         }
 
         private void seedTextBox_TextChanged(object sender, EventArgs e) {
@@ -867,10 +861,6 @@ namespace Merrow {
 
         private void rndDropsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndDropsToggle.Checked) { rndDropsDropdown.Visible = true; } else { rndDropsDropdown.Visible = false; }
-        }
-
-        private void rndDropsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {

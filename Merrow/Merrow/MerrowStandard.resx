@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="rndDropsToggle.ToolTip" xml:space="preserve">
     <value>Change the items dropped by non-Boss enemies.
 SHUFFLED: All default item drops are shuffled among all enemies.
@@ -172,8 +175,22 @@ Usedpizza, the Eltale Monsters Discord, all at Rosemary and Rectangles.
 
 Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), 
 but is made freely available under the MIT License.
-Please visit https://github.com/hangedmandesign/merrow for the license terms.
-</value>
+Merrow is offered without warranty and is experimental software.
+Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
+  </data>
+  <data name="advHelpLabel.ToolTip" xml:space="preserve">
+    <value>This is a generic IPS patch generator.
+Handy for quick hacks and tests, it will generate
+a clean IPS patch for whatever use you may need.
+Enter the PATCH CONTENT you want to write (in
+hexadecimal 2-character bytes), and the ADDRESS 
+to start writing at (as a 6-character hex string). 
+
+Always make backups of your files before patching.
+This tool will generate properly formatted patches, 
+but it is your responsibility to know what you are
+patching and why. Merrow is offered without warranty: 
+please refer to the license readme file for more info.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

@@ -26,6 +26,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MerrowStandard));
             this.rndGroupBox = new System.Windows.Forms.GroupBox();
+            this.rndWeightedChest = new System.Windows.Forms.CheckBox();
             this.rndSpellNames = new System.Windows.Forms.CheckBox();
             this.rndDropsDropdown = new System.Windows.Forms.ComboBox();
             this.rndDropsToggle = new System.Windows.Forms.CheckBox();
@@ -38,6 +39,7 @@
             this.rndSpellDropdown = new System.Windows.Forms.ComboBox();
             this.rndSpellToggle = new System.Windows.Forms.CheckBox();
             this.quaGroupBox = new System.Windows.Forms.GroupBox();
+            this.quaRestlessToggle = new System.Windows.Forms.CheckBox();
             this.quaLevelToggle = new System.Windows.Forms.CheckBox();
             this.quaSoulToggle = new System.Windows.Forms.CheckBox();
             this.quaAccuracyDropdown = new System.Windows.Forms.ComboBox();
@@ -47,6 +49,7 @@
             this.quaInvalidityToggle = new System.Windows.Forms.CheckBox();
             this.labelVersion = new System.Windows.Forms.Label();
             this.expGroupBox = new System.Windows.Forms.GroupBox();
+            this.verboseCheckBox = new System.Windows.Forms.CheckBox();
             this.filenameLabel = new System.Windows.Forms.Label();
             this.seedLabel = new System.Windows.Forms.Label();
             this.genButton = new System.Windows.Forms.Button();
@@ -59,20 +62,18 @@
             this.RandomizerTab = new System.Windows.Forms.TabPage();
             this.crcWarningLabel = new System.Windows.Forms.Label();
             this.CustomTab = new System.Windows.Forms.TabPage();
+            this.advErrorLabel = new System.Windows.Forms.Label();
+            this.advHelpLabel = new System.Windows.Forms.Label();
+            this.advFilenameLabel = new System.Windows.Forms.Label();
+            this.advContentLabel = new System.Windows.Forms.Label();
+            this.advGenerateButton = new System.Windows.Forms.Button();
+            this.advFilenameText = new System.Windows.Forms.TextBox();
+            this.advContentText = new System.Windows.Forms.TextBox();
+            this.advAddressLabel = new System.Windows.Forms.Label();
+            this.advAddressText = new System.Windows.Forms.TextBox();
             this.ReaderTab = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.rndWeightedChest = new System.Windows.Forms.CheckBox();
-            this.quaRestlessToggle = new System.Windows.Forms.CheckBox();
-            this.verboseCheckBox = new System.Windows.Forms.CheckBox();
-            this.advFilenameLabel = new System.Windows.Forms.Label();
-            this.advGenerateButton = new System.Windows.Forms.Button();
-            this.advFilenameText = new System.Windows.Forms.TextBox();
-            this.advAddressLabel = new System.Windows.Forms.Label();
-            this.advAddressText = new System.Windows.Forms.TextBox();
-            this.advContentLabel = new System.Windows.Forms.Label();
-            this.advContentText = new System.Windows.Forms.TextBox();
-            this.advHelpLabel = new System.Windows.Forms.Label();
             this.rndGroupBox.SuspendLayout();
             this.quaGroupBox.SuspendLayout();
             this.expGroupBox.SuspendLayout();
@@ -105,6 +106,22 @@
             this.rndGroupBox.TabStop = false;
             this.rndGroupBox.Text = "RANDOMIZATION";
             // 
+            // rndWeightedChest
+            // 
+            this.rndWeightedChest.AutoSize = true;
+            this.rndWeightedChest.Checked = true;
+            this.rndWeightedChest.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.rndWeightedChest.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndWeightedChest.Location = new System.Drawing.Point(160, 110);
+            this.rndWeightedChest.Name = "rndWeightedChest";
+            this.rndWeightedChest.Size = new System.Drawing.Size(116, 17);
+            this.rndWeightedChest.TabIndex = 15;
+            this.rndWeightedChest.Text = "Weighted contents";
+            this.rndToolTip.SetToolTip(this.rndWeightedChest, "Chest contents are guaranteed to contain at least one of each item in the selecte" +
+        "d category.");
+            this.rndWeightedChest.UseVisualStyleBackColor = true;
+            this.rndWeightedChest.Visible = false;
+            // 
             // rndSpellNames
             // 
             this.rndSpellNames.AutoSize = true;
@@ -135,7 +152,6 @@
             this.rndDropsDropdown.Name = "rndDropsDropdown";
             this.rndDropsDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndDropsDropdown.TabIndex = 13;
-            this.rndDropsDropdown.SelectedIndexChanged += new System.EventHandler(this.rndDropsDropdown_SelectedIndexChanged);
             // 
             // rndDropsToggle
             // 
@@ -159,7 +175,6 @@
             this.rndTextContentDropdown.Name = "rndTextContentDropdown";
             this.rndTextContentDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndTextContentDropdown.TabIndex = 11;
-            this.rndTextContentDropdown.SelectedIndexChanged += new System.EventHandler(this.rndTextContentDropdown_IndexChanged);
             // 
             // rndTextContentToggle
             // 
@@ -188,7 +203,6 @@
             this.rndTextPaletteDropdown.Name = "rndTextPaletteDropdown";
             this.rndTextPaletteDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndTextPaletteDropdown.TabIndex = 9;
-            this.rndTextPaletteDropdown.SelectedIndexChanged += new System.EventHandler(this.rndTextPaletteDropdown_IndexChanged);
             // 
             // rndTextPaletteToggle
             // 
@@ -217,7 +231,6 @@
             this.rndChestDropdown.Name = "rndChestDropdown";
             this.rndChestDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndChestDropdown.TabIndex = 7;
-            this.rndChestDropdown.SelectedIndexChanged += new System.EventHandler(this.rndChestDropdown_IndexChanged);
             // 
             // rndChestToggle
             // 
@@ -243,7 +256,6 @@
             this.rndSpellDropdown.Name = "rndSpellDropdown";
             this.rndSpellDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndSpellDropdown.TabIndex = 4;
-            this.rndSpellDropdown.SelectedIndexChanged += new System.EventHandler(this.rndSpellDropdown_IndexChanged);
             // 
             // rndSpellToggle
             // 
@@ -275,6 +287,17 @@
             this.quaGroupBox.TabStop = false;
             this.quaGroupBox.Text = "QUALITY / FUN";
             // 
+            // quaRestlessToggle
+            // 
+            this.quaRestlessToggle.AutoSize = true;
+            this.quaRestlessToggle.Location = new System.Drawing.Point(6, 170);
+            this.quaRestlessToggle.Name = "quaRestlessToggle";
+            this.quaRestlessToggle.Size = new System.Drawing.Size(96, 17);
+            this.quaRestlessToggle.TabIndex = 12;
+            this.quaRestlessToggle.Text = "Restless NPCs";
+            this.rndToolTip.SetToolTip(this.quaRestlessToggle, "All NPCs will wander.\r\n[WARNING: May cause unknown issues.]\r\n");
+            this.quaRestlessToggle.UseVisualStyleBackColor = true;
+            // 
             // quaLevelToggle
             // 
             this.quaLevelToggle.AutoSize = true;
@@ -285,7 +308,6 @@
             this.quaLevelToggle.Text = "All spells unlocked at Level 1";
             this.rndToolTip.SetToolTip(this.quaLevelToggle, "Set all spell unlock levels to 1. ");
             this.quaLevelToggle.UseVisualStyleBackColor = true;
-            this.quaLevelToggle.CheckedChanged += new System.EventHandler(this.quaLevelToggle_CheckedChanged);
             // 
             // quaSoulToggle
             // 
@@ -297,7 +319,6 @@
             this.quaSoulToggle.Text = "All spells Soul Search";
             this.rndToolTip.SetToolTip(this.quaSoulToggle, resources.GetString("quaSoulToggle.ToolTip"));
             this.quaSoulToggle.UseVisualStyleBackColor = true;
-            this.quaSoulToggle.CheckedChanged += new System.EventHandler(this.quaSoulToggle_CheckedChanged);
             // 
             // quaAccuracyDropdown
             // 
@@ -310,7 +331,6 @@
             this.quaAccuracyDropdown.Name = "quaAccuracyDropdown";
             this.quaAccuracyDropdown.Size = new System.Drawing.Size(102, 21);
             this.quaAccuracyDropdown.TabIndex = 9;
-            this.quaAccuracyDropdown.SelectedIndexChanged += new System.EventHandler(this.quaAccuracyDropdown_IndexChanged);
             // 
             // quaAccuracyToggle
             // 
@@ -345,7 +365,6 @@
             this.quaZoomDropdown.Name = "quaZoomDropdown";
             this.quaZoomDropdown.Size = new System.Drawing.Size(70, 21);
             this.quaZoomDropdown.TabIndex = 7;
-            this.quaZoomDropdown.SelectedIndexChanged += new System.EventHandler(this.quaZoomDropdown_IndexChanged);
             // 
             // quaZoomToggle
             // 
@@ -373,7 +392,6 @@
             this.rndToolTip.SetToolTip(this.quaInvalidityToggle, "Boss spells no longer debuff the player with passive Invalidity effect. \r\nInvalid" +
         "ity removes buffs/debuffs, so default boss spells make them mostly useless.");
             this.quaInvalidityToggle.UseVisualStyleBackColor = true;
-            this.quaInvalidityToggle.CheckedChanged += new System.EventHandler(this.quaInvalidityToggle_CheckedChanged);
             // 
             // labelVersion
             // 
@@ -401,11 +419,27 @@
             this.expGroupBox.TabStop = false;
             this.expGroupBox.Text = "EXPORT";
             // 
+            // verboseCheckBox
+            // 
+            this.verboseCheckBox.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.verboseCheckBox.Checked = true;
+            this.verboseCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.verboseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.verboseCheckBox.Location = new System.Drawing.Point(360, 16);
+            this.verboseCheckBox.Name = "verboseCheckBox";
+            this.verboseCheckBox.Size = new System.Drawing.Size(71, 34);
+            this.verboseCheckBox.TabIndex = 13;
+            this.verboseCheckBox.Text = "Verbose Log";
+            this.rndToolTip.SetToolTip(this.verboseCheckBox, "If enabled, spoiler log will contain a complete listing of modified spells, chest" +
+        "s, and/or drops.");
+            this.verboseCheckBox.UseVisualStyleBackColor = true;
+            this.verboseCheckBox.CheckedChanged += new System.EventHandler(this.verboseCheckBox_CheckedChanged);
+            // 
             // filenameLabel
             // 
             this.filenameLabel.AutoSize = true;
             this.filenameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.filenameLabel.Location = new System.Drawing.Point(153, 25);
+            this.filenameLabel.Location = new System.Drawing.Point(153, 26);
             this.filenameLabel.Name = "filenameLabel";
             this.filenameLabel.Size = new System.Drawing.Size(62, 13);
             this.filenameLabel.TabIndex = 13;
@@ -416,7 +450,7 @@
             // 
             this.seedLabel.AutoSize = true;
             this.seedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.seedLabel.Location = new System.Drawing.Point(6, 25);
+            this.seedLabel.Location = new System.Drawing.Point(6, 26);
             this.seedLabel.Name = "seedLabel";
             this.seedLabel.Size = new System.Drawing.Size(39, 13);
             this.seedLabel.TabIndex = 12;
@@ -437,7 +471,7 @@
             // 
             // filenameTextBox
             // 
-            this.filenameTextBox.Location = new System.Drawing.Point(218, 22);
+            this.filenameTextBox.Location = new System.Drawing.Point(218, 23);
             this.filenameTextBox.Name = "filenameTextBox";
             this.filenameTextBox.Size = new System.Drawing.Size(130, 20);
             this.filenameTextBox.TabIndex = 1;
@@ -445,7 +479,7 @@
             // 
             // seedTextBox
             // 
-            this.seedTextBox.Location = new System.Drawing.Point(45, 21);
+            this.seedTextBox.Location = new System.Drawing.Point(45, 22);
             this.seedTextBox.MaxLength = 9;
             this.seedTextBox.Name = "seedTextBox";
             this.seedTextBox.Size = new System.Drawing.Size(100, 20);
@@ -491,7 +525,7 @@
             // creditsLinkLabel
             // 
             this.creditsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.creditsLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(411, 41);
+            this.creditsLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(477, 41);
             this.creditsLinkLabel.Location = new System.Drawing.Point(6, 173);
             this.creditsLinkLabel.Name = "creditsLinkLabel";
             this.creditsLinkLabel.Size = new System.Drawing.Size(553, 239);
@@ -531,6 +565,7 @@
             // CustomTab
             // 
             this.CustomTab.BackColor = System.Drawing.Color.Transparent;
+            this.CustomTab.Controls.Add(this.advErrorLabel);
             this.CustomTab.Controls.Add(this.advHelpLabel);
             this.CustomTab.Controls.Add(this.advFilenameLabel);
             this.CustomTab.Controls.Add(this.advContentLabel);
@@ -545,72 +580,27 @@
             this.CustomTab.TabIndex = 2;
             this.CustomTab.Text = "Generic Patch Generator";
             // 
-            // ReaderTab
+            // advErrorLabel
             // 
-            this.ReaderTab.BackColor = System.Drawing.Color.Transparent;
-            this.ReaderTab.Controls.Add(this.label2);
-            this.ReaderTab.Location = new System.Drawing.Point(4, 22);
-            this.ReaderTab.Name = "ReaderTab";
-            this.ReaderTab.Size = new System.Drawing.Size(565, 418);
-            this.ReaderTab.TabIndex = 3;
-            this.ReaderTab.Text = "Binary File Reader";
+            this.advErrorLabel.ForeColor = System.Drawing.Color.Firebrick;
+            this.advErrorLabel.Location = new System.Drawing.Point(117, 5);
+            this.advErrorLabel.Name = "advErrorLabel";
+            this.advErrorLabel.Size = new System.Drawing.Size(414, 26);
+            this.advErrorLabel.TabIndex = 19;
+            this.advErrorLabel.Text = "ERROR:";
+            this.advErrorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.advErrorLabel.Visible = false;
             // 
-            // label2
+            // advHelpLabel
             // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(559, 418);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Currently incomplete.";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // rndToolTip
-            // 
-            this.rndToolTip.AutomaticDelay = 400;
-            // 
-            // rndWeightedChest
-            // 
-            this.rndWeightedChest.AutoSize = true;
-            this.rndWeightedChest.Checked = true;
-            this.rndWeightedChest.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.rndWeightedChest.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rndWeightedChest.Location = new System.Drawing.Point(160, 110);
-            this.rndWeightedChest.Name = "rndWeightedChest";
-            this.rndWeightedChest.Size = new System.Drawing.Size(116, 17);
-            this.rndWeightedChest.TabIndex = 15;
-            this.rndWeightedChest.Text = "Weighted contents";
-            this.rndToolTip.SetToolTip(this.rndWeightedChest, "Chest contents are guaranteed to contain at least one of each item in the selecte" +
-        "d category.");
-            this.rndWeightedChest.UseVisualStyleBackColor = true;
-            this.rndWeightedChest.Visible = false;
-            // 
-            // quaRestlessToggle
-            // 
-            this.quaRestlessToggle.AutoSize = true;
-            this.quaRestlessToggle.Location = new System.Drawing.Point(6, 170);
-            this.quaRestlessToggle.Name = "quaRestlessToggle";
-            this.quaRestlessToggle.Size = new System.Drawing.Size(96, 17);
-            this.quaRestlessToggle.TabIndex = 12;
-            this.quaRestlessToggle.Text = "Restless NPCs";
-            this.rndToolTip.SetToolTip(this.quaRestlessToggle, "All NPCs will wander.\r\n[WARNING: May cause unknown issues.]\r\n");
-            this.quaRestlessToggle.UseVisualStyleBackColor = true;
-            // 
-            // verboseCheckBox
-            // 
-            this.verboseCheckBox.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.verboseCheckBox.Checked = true;
-            this.verboseCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.verboseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.verboseCheckBox.Location = new System.Drawing.Point(360, 16);
-            this.verboseCheckBox.Name = "verboseCheckBox";
-            this.verboseCheckBox.Size = new System.Drawing.Size(71, 34);
-            this.verboseCheckBox.TabIndex = 13;
-            this.verboseCheckBox.Text = "Verbose Log";
-            this.rndToolTip.SetToolTip(this.verboseCheckBox, "If enabled, spoiler log will contain a complete listing of modified spells, chest" +
-        "s, and/or drops.");
-            this.verboseCheckBox.UseVisualStyleBackColor = true;
-            this.verboseCheckBox.CheckedChanged += new System.EventHandler(this.verboseCheckBox_CheckedChanged);
+            this.advHelpLabel.AutoSize = true;
+            this.advHelpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
+            this.advHelpLabel.Location = new System.Drawing.Point(537, 5);
+            this.advHelpLabel.Name = "advHelpLabel";
+            this.advHelpLabel.Size = new System.Drawing.Size(25, 26);
+            this.advHelpLabel.TabIndex = 18;
+            this.advHelpLabel.Text = "?";
+            this.rndToolTip.SetToolTip(this.advHelpLabel, resources.GetString("advHelpLabel.ToolTip"));
             // 
             // advFilenameLabel
             // 
@@ -624,6 +614,19 @@
             this.rndToolTip.SetToolTip(this.advFilenameLabel, "IPS patch filename. Default is \'merrowgenericpatch.ips\' if nothing is typed.\r\nExp" +
         "ort will automatically overwrite any existing file with the same name, and will " +
         "open a window to the save location.");
+            // 
+            // advContentLabel
+            // 
+            this.advContentLabel.AutoSize = true;
+            this.advContentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.advContentLabel.Location = new System.Drawing.Point(10, 14);
+            this.advContentLabel.Name = "advContentLabel";
+            this.advContentLabel.Size = new System.Drawing.Size(101, 13);
+            this.advContentLabel.TabIndex = 17;
+            this.advContentLabel.Text = "PATCH CONTENT:";
+            this.rndToolTip.SetToolTip(this.advContentLabel, "Patch content to be written to the address supplied below.\r\nMust be hexadecimal, " +
+        "maximum length is FFF2 bytes/131044c.\r\nMust be an even number of characters (to " +
+        "assemble bytes).");
             // 
             // advGenerateButton
             // 
@@ -645,6 +648,17 @@
             this.advFilenameText.TabIndex = 1;
             this.advFilenameText.TextChanged += new System.EventHandler(this.advFilenameText_TextChanged);
             // 
+            // advContentText
+            // 
+            this.advContentText.Location = new System.Drawing.Point(13, 36);
+            this.advContentText.MaxLength = 131044;
+            this.advContentText.Multiline = true;
+            this.advContentText.Name = "advContentText";
+            this.advContentText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.advContentText.Size = new System.Drawing.Size(535, 318);
+            this.advContentText.TabIndex = 16;
+            this.advContentText.TextChanged += new System.EventHandler(this.advContentText_TextChanged);
+            // 
             // advAddressLabel
             // 
             this.advAddressLabel.AutoSize = true;
@@ -665,38 +679,33 @@
             this.advAddressText.TabIndex = 14;
             this.advAddressText.TextChanged += new System.EventHandler(this.advAddressText_TextChanged);
             // 
-            // advContentLabel
+            // ReaderTab
             // 
-            this.advContentLabel.AutoSize = true;
-            this.advContentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.advContentLabel.Location = new System.Drawing.Point(10, 14);
-            this.advContentLabel.Name = "advContentLabel";
-            this.advContentLabel.Size = new System.Drawing.Size(101, 13);
-            this.advContentLabel.TabIndex = 17;
-            this.advContentLabel.Text = "PATCH CONTENT:";
-            this.rndToolTip.SetToolTip(this.advContentLabel, "Patch content to be written to the address supplied below.\r\nMust be hexadecimal. " +
-        "Must be an even number of characters (to assemble hex bytes).");
+            this.ReaderTab.BackColor = System.Drawing.Color.Transparent;
+            this.ReaderTab.Controls.Add(this.label2);
+            this.ReaderTab.Location = new System.Drawing.Point(4, 22);
+            this.ReaderTab.Name = "ReaderTab";
+            this.ReaderTab.Size = new System.Drawing.Size(565, 418);
+            this.ReaderTab.TabIndex = 3;
+            this.ReaderTab.Text = "Binary File Reader";
             // 
-            // advContentText
+            // label2
             // 
-            this.advContentText.Location = new System.Drawing.Point(13, 36);
-            this.advContentText.MaxLength = 32768;
-            this.advContentText.Multiline = true;
-            this.advContentText.Name = "advContentText";
-            this.advContentText.Size = new System.Drawing.Size(535, 318);
-            this.advContentText.TabIndex = 16;
-            this.advContentText.TextChanged += new System.EventHandler(this.advContentText_TextChanged);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(559, 418);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Currently incomplete.";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // advHelpLabel
+            // rndToolTip
             // 
-            this.advHelpLabel.AutoSize = true;
-            this.advHelpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
-            this.advHelpLabel.Location = new System.Drawing.Point(537, 5);
-            this.advHelpLabel.Name = "advHelpLabel";
-            this.advHelpLabel.Size = new System.Drawing.Size(25, 26);
-            this.advHelpLabel.TabIndex = 18;
-            this.advHelpLabel.Text = "?";
-            this.rndToolTip.SetToolTip(this.advHelpLabel, "Explanation to be written.");
+            this.rndToolTip.AutomaticDelay = 400;
+            this.rndToolTip.AutoPopDelay = 16000;
+            this.rndToolTip.InitialDelay = 400;
+            this.rndToolTip.IsBalloon = true;
+            this.rndToolTip.ReshowDelay = 80;
             // 
             // MerrowStandard
             // 
@@ -777,6 +786,7 @@
         private System.Windows.Forms.Label advAddressLabel;
         private System.Windows.Forms.TextBox advAddressText;
         private System.Windows.Forms.Label advHelpLabel;
+        private System.Windows.Forms.Label advErrorLabel;
     }
 }
 
