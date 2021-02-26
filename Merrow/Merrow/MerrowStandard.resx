@@ -156,23 +156,43 @@ Status spells: Changes positive/negative status effects' accuracy to 100.
 All spells: Changes all spells' accuracy to 100 (Also includes Escape, Extinction, etc.)</value>
   </data>
   <data name="filenameLabel.ToolTip" xml:space="preserve">
-    <value>IPS patch filename. Default is 'merrowpatch_(seed number).ips' if nothing is typed.
+    <value>IPS patch filename. Default is 'merrowpatch_(seed number)' if nothing is typed.
 Export will automatically overwrite any existing file with the same name, and will open a window to the save location. 
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
+  <data name="binVerboseLog.ToolTip" xml:space="preserve">
+    <value>If enabled, the extraction output file will alternate lines between
+(address/length:) entries and the extracted value from that entry.
+If disabled, the output file will only contain extracted values.</value>
+  </data>
   <data name="binHelpLabel.ToolTip" xml:space="preserve">
-    <value>This is a generic IPS patch generator.
-Handy for quick hacks and tests, it will generate
-a clean IPS patch for whatever use you may need.
-Enter the PATCH CONTENT you want to write (in
-hexadecimal 2-character bytes), and the ADDRESS 
-to start writing at (as a 6-character hex string). 
+    <value>This is a binary file data extractor.
+Handy for quick reference and grabbing bulk info, it will read the input file 
+at specified locations and create a text file containing the read bytes in 
+hexadecimal format.
 
-Always make backups of your files before patching.
-This tool will generate properly formatted patches, 
-but it is your responsibility to know what you are
-patching and why. Merrow is offered without warranty: 
-please refer to the license readme file for more info.</value>
+Populate the EXTRACTION LIST with as many entries as needed, in 
+comma-separated hexadecimal or decimal strings in the following format: 
+(Address,Length) with no brackets and another comma before the next entry. 
+Ensure you specify whether all addresses/lengths are written as hexadecimal 
+or decimal, using the lower left options.
+
+This tool can currently only access values in the following ranges:
+Address: 000000-FFFFFF (0-16777215)
+Length: 0000-FFFF (0-65535)
+If the ranges are too restrictive for your uses, please get in touch. 
+This is a first attempt but it can be adjusted in future versions.
+
+This tool is as restrictive as possible, to prevent possible memory errors and
+other problems, but it is experimental software. It is  your responsibility to 
+know what you are reading from files, and why. Merrow is offered without 
+warranty: please refer to the license readme file for more info.</value>
+  </data>
+  <data name="binExtractLabel.ToolTip" xml:space="preserve">
+    <value>Enter comma-separated hexadecimal or decimal values in this field.
+Each entry should follow this format: (address),(length),...
+The binary file will be read starting at address, for length bytes.
+After entry, ensure you select below what format each value type is in.</value>
   </data>
   <data name="creditsLinkLabel.Text" xml:space="preserve">
     <value>Developed by: 

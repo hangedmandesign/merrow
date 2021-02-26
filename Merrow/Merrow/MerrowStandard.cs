@@ -11,12 +11,14 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Security;
 
 namespace Merrow {
     public partial class MerrowStandard : Form {
         //data structures
         DataStore library;
         Random SysRand = new Random();
+        private OpenFileDialog binOpenFileDialog;
 
         //variables
         int spellstart = 13941344; //D4BA60
@@ -36,6 +38,8 @@ namespace Merrow {
         int passcheck = 0;
         bool loadfinished = false;
         bool verboselog = true;
+        int binFileLength = 0;
+        bool binFileLoaded = false;
 
         //collection arrays and lists
         byte[] patcharray;
@@ -49,6 +53,7 @@ namespace Merrow {
         string[] spoilerspells = new string[60];
         string[] spoilerchests = new string[87];
         string[] spoilerdrops = new string[67];
+        byte[] binFileBytes;
 
         //crash sets and safe lists
         int[] crashset1 = { 3, 9, 12, 45, 46, 50, 51 }; //HA1, HA2, MBL, WC1, WC2, WC3, LC
@@ -71,6 +76,10 @@ namespace Merrow {
 
             //prepare variables
             if (!Directory.Exists(filePath)) { Directory.CreateDirectory(filePath); }
+            binOpenFileDialog = new OpenFileDialog() {
+                FileName = "Select a file...",
+                Title = "Open binary file"
+            };
             shuffles = new int[playerspells];
             spoilerspells = new string[playerspells];
             library = new DataStore();
@@ -129,6 +138,9 @@ namespace Merrow {
             quaAccuracyDropdown.Visible = false;
             quaZoomDropdown.Visible = false;
             crcWarningLabel.Visible = false;
+
+            binAddrHEX.Checked = true;
+            binLengthHEX.Checked = true;
         }
 
         //UNIFIED SHUFFLING FUNCTION----------------------------------------------------------------
@@ -713,7 +725,7 @@ namespace Merrow {
         //BUILD GENERIC PATCH----------------------------------------------------------------
 
         public void BuildCustomPatch(string addr, string content) { //building Generic Patch
-            //update filename one more time here to avoid errors
+            //update filename
             if (advFilenameText.Text != "" && advFilenameText.Text != null) {
                 fileName = string.Join("", advFilenameText.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
             }
@@ -771,11 +783,101 @@ namespace Merrow {
             System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
         }
 
-        //STRING OPERATIONS----------------------------------------------------------------
+        //BINARY FILE READER----------------------------------------------------------------
+
+        public void BinRead() {
+            Console.WriteLine("BinRead start.");
+            //update filename
+            if (binFilenameTextBox.Text != "" && binFilenameTextBox.Text != null) {
+                fileName = string.Join("", binFilenameTextBox.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
+            }
+            else { fileName = "merrowreaderoutput"; }
+
+            //read content and split
+            string content = binContentTextBox.Text;
+            string[] strarray = content.Split(',');
+
+            //convert entire array to hex values if dec
+            if (binAddrDEC.Checked || binLengthDEC.Checked) {
+                for (int i = 0; i < strarray.Length; i++) {
+                    int tempval = -1;
+                    if (i % 2 == 0 && binAddrDEC.Checked) {
+                        tempval = Convert.ToInt32(strarray[i]);
+                        strarray[i] = tempval.ToString("X6");
+                    }
+                    if (i % 2 == 1 && binLengthDEC.Checked) {
+                        tempval = Convert.ToInt32(strarray[i]);
+                        strarray[i] = tempval.ToString("X2");
+                    }
+                    Console.WriteLine(strarray[i]);
+                }
+            }
+
+            //error check
+            if (strarray.Length % 2 != 0) { 
+                advErrorLabel.Text = "ERROR: Odd number of entries in content.";
+                return;
+            }
+            for (int i = 0; i < strarray.Length; i++) {
+                if (i % 2 == 0 && strarray[i].Length != 6) {
+                    advErrorLabel.Text = "ERROR: Entry " + i + " was not six characters";
+                    return;
+                }
+                if (i % 2 == 1) {
+                    if (strarray[i].Length > 4) {
+                        advErrorLabel.Text = "ERROR: Entry " + i + " was too long (FFFF max)";
+                        return;
+                    }
+
+                    int lastAddr = Convert.ToInt32(strarray[i - 1], 16);
+                    int lastLen = Convert.ToInt32(strarray[i], 16);
+                    if (lastAddr + lastLen > binFileLength) {
+                        advErrorLabel.Text = "ERROR: Entry " + i + " overruns end of file.";
+                        return;
+                    }
+                }
+            }
+
+            List<string> entries = new List<string>();
+            string extractor;
+
+            for (int i = 0; i < strarray.Length; i += 2) { //step through array pulling bytes into strings
+                int currAddr = Convert.ToInt32(strarray[i], 16);
+                int currLength = Convert.ToInt32(strarray[i + 1], 16);
+                byte[] binArray = new byte[currLength];
+
+                //it seems to just be grabbing from the beginning of the file
+                ArraySegment<byte> binSegment = new ArraySegment<byte>(binFileBytes, currAddr, currLength);
+                int k = 0;
+                for (int j = binSegment.Offset; j < (binSegment.Offset + binSegment.Count); j++) {
+                    binArray[k] = binSegment.Array[j];
+                    k++;
+                }
+                extractor = ByteArrayToString(binArray);
+                entries.Add(extractor);
+            }
+
+            //assemble file
+            File.WriteAllText(filePath + fileName + ".txt", "MERROW " + labelVersion.Text + " Binary Output..." + Environment.NewLine);
+            for (int i = 0; i < strarray.Length; i += 2) {
+                if (binVerboseLog.Checked) { File.AppendAllText(filePath + fileName + ".txt", "0x" + strarray[i] + "/0x" + strarray[i + 1] + ":" + Environment.NewLine); }
+                File.AppendAllText(filePath + fileName + ".txt", entries[i / 2] + Environment.NewLine);
+            }
+            filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
+            System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+        }
+
+        //VARIABLE OPERATIONS----------------------------------------------------------------
 
         public static string ByteArrayToString(byte[] ba) { //Convert bytes to hex
             StringBuilder hex = new StringBuilder(ba.Length * 2);
             foreach (byte b in ba) { hex.AppendFormat("{0:x2}", b); }
+            return hex.ToString();
+        }
+
+        public static string ByteToString(byte ba) { //Convert bytes to hex
+            StringBuilder hex = new StringBuilder();
+            hex.AppendFormat("{0:x2}", ba);
             return hex.ToString();
         }
 
@@ -849,9 +951,9 @@ namespace Merrow {
         }
 
         private void filenameTextBox_TextChanged(object sender, EventArgs e) {
-            var textboxSender = (TextBox)sender; //restricts to alphanumeric only
+            var textboxSender = (TextBox)sender; //restricts to alphanumeric/underscore only
             var cursorPosition = textboxSender.SelectionStart;
-            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z]", "");
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z_]", "");
             textboxSender.SelectionStart = cursorPosition;
         }
 
@@ -876,9 +978,9 @@ namespace Merrow {
         }
 
         private void advFilenameText_TextChanged(object sender, EventArgs e) {
-            var textboxSender = (TextBox)sender; //restricts to alphanumeric only
+            var textboxSender = (TextBox)sender; //restricts to alphanumeric/underscore only
             var cursorPosition = textboxSender.SelectionStart;
-            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z]", "");
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z_]", "");
             textboxSender.SelectionStart = cursorPosition;
         }
 
@@ -898,6 +1000,49 @@ namespace Merrow {
 
         private void advGenerateButton_Click(object sender, EventArgs e) {
             BuildCustomPatch(advAddressText.Text,advContentText.Text);
+        }
+
+        private void binFileSelectButton_Click(object sender, EventArgs e) {
+            if (binOpenFileDialog.ShowDialog() == DialogResult.OK) {
+                try {
+                    binFileBytes = File.ReadAllBytes(binOpenFileDialog.FileName);
+                    binFileLength = binFileBytes.Length;
+                    binErrorLabel.Text = Path.GetFileName(binOpenFileDialog.FileName) + " loaded (" + binFileLength + " bytes).";
+                    binErrorLabel.Visible = true;
+                    binFileLoaded = true;
+                }
+                catch (SecurityException ex) {
+                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+                }
+            }
+        }
+
+        private void binGenerateButton_Click(object sender, EventArgs e) {
+            if (binFileLoaded && binContentTextBox.Text != "" && binContentTextBox.Text != null) {
+                BinRead();
+            }
+        }
+
+        private void binContentTextBox_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to hexadecimal and comma only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F,]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        private void binFilenameTextBox_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to alphanumeric/underscore only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z_]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        private void tabsControl_SelectedIndexChanged(object sender, EventArgs e) {
+            crcWarningLabel.Visible = false;
+            binErrorLabel.Visible = false;
+            binFileLoaded = false;
+            binFileBytes = null;
         }
     }
 }
