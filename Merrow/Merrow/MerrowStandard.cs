@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Security;
 
@@ -119,7 +113,8 @@ namespace Merrow {
             loadfinished = true;
         }
 
-        private void PrepareDropdowns() { //list of initial UI cleanup/prep steps
+        //list of initial UI cleanup/prep steps
+        private void PrepareDropdowns() { 
             rndSpellDropdown.SelectedIndex = 0;
             rndChestDropdown.SelectedIndex = 0;
             rndTextPaletteDropdown.SelectedIndex = 0;
@@ -264,7 +259,6 @@ namespace Merrow {
                 bool fiftyfifty = SysRand.NextDouble() > 0.5;
                 if(fiftyfifty) { hintnames[i] = library.shuffleNames[i*5] + " " + library.shuffleNames[(shuffles[i] * 5) + 1]; }
                 else { hintnames[i] = library.shuffleNames[shuffles[i] * 5] + " " + library.shuffleNames[(i * 5) + 1]; }
-                //Console.WriteLine(shuffles[i].ToString() + " " + hintnames[i] + "_" + ToHex(hintnames[i]));
             }
 
             //CHEST SHUFFLING (based on Chest Shuffle dropdown value)
@@ -414,6 +408,9 @@ namespace Merrow {
                 fileName = string.Join("", filenameTextBox.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
             }
             else { fileName = "merrowpatch_" + rngseed.ToString(); }
+
+            //shuffle here so I don't have to shuffle after every option is changed
+            Shuffling(true);
 
             //start spoiler log and initialize empty patch
             File.WriteAllText(filePath + fileName + "_spoiler.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
@@ -704,6 +701,7 @@ namespace Merrow {
                     foreach (string line in spoilerdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
             }
+
             //check if nothing is enabled, if not, don't make a patch
             if (!rndSpellToggle.Checked && !rndChestToggle.Checked && !rndTextPaletteToggle.Checked && !rndTextContentToggle.Checked && !rndDropsToggle.Checked && !quaLevelToggle.Checked && !quaSoulToggle.Checked && !quaInvalidityToggle.Checked && !quaZoomToggle.Checked && !quaAccuracyToggle.Checked && !quaRestlessToggle.Checked) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
@@ -724,7 +722,7 @@ namespace Merrow {
 
         //BUILD GENERIC PATCH----------------------------------------------------------------
 
-        public void BuildCustomPatch(string addr, string content) { //building Generic Patch
+        public void BuildCustomPatch(string addr, string content) { 
             //update filename
             if (advFilenameText.Text != "" && advFilenameText.Text != null) {
                 fileName = string.Join("", advFilenameText.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
@@ -841,12 +839,12 @@ namespace Merrow {
             List<string> entries = new List<string>();
             string extractor;
 
-            for (int i = 0; i < strarray.Length; i += 2) { //step through array pulling bytes into strings
+            //step through array pulling bytes into strings
+            for (int i = 0; i < strarray.Length; i += 2) { 
                 int currAddr = Convert.ToInt32(strarray[i], 16);
                 int currLength = Convert.ToInt32(strarray[i + 1], 16);
                 byte[] binArray = new byte[currLength];
 
-                //it seems to just be grabbing from the beginning of the file
                 ArraySegment<byte> binSegment = new ArraySegment<byte>(binFileBytes, currAddr, currLength);
                 int k = 0;
                 for (int j = binSegment.Offset; j < (binSegment.Offset + binSegment.Count); j++) {
@@ -857,14 +855,22 @@ namespace Merrow {
                 entries.Add(extractor);
             }
 
-            //assemble file
-            File.WriteAllText(filePath + fileName + ".txt", "MERROW " + labelVersion.Text + " Binary Output..." + Environment.NewLine);
+            //output text into box
+            string boxContent = "";
             for (int i = 0; i < strarray.Length; i += 2) {
-                if (binVerboseLog.Checked) { File.AppendAllText(filePath + fileName + ".txt", "0x" + strarray[i] + "/0x" + strarray[i + 1] + ":" + Environment.NewLine); }
-                File.AppendAllText(filePath + fileName + ".txt", entries[i / 2] + Environment.NewLine);
+                boxContent += entries[i / 2].ToUpper() + Environment.NewLine;
             }
-            filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
-            System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+            binOutputTextBox.Text = boxContent;
+
+            //assemble file if checkbox checked
+            if (binVerboseLog.Checked) {
+                File.WriteAllText(filePath + fileName + ".txt", "MERROW " + labelVersion.Text + " Binary Output..." + Environment.NewLine);
+                for (int i = 0; i < strarray.Length; i += 2) {
+                    File.AppendAllText(filePath + fileName + ".txt", "0x" + strarray[i].ToUpper() + ":0x" + strarray[i + 1].ToUpper() + ":" + entries[i / 2].ToUpper() + Environment.NewLine);
+                }
+                filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
+                System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+            }
         }
 
         //VARIABLE OPERATIONS----------------------------------------------------------------
@@ -965,10 +971,6 @@ namespace Merrow {
             if (rndDropsToggle.Checked) { rndDropsDropdown.Visible = true; } else { rndDropsDropdown.Visible = false; }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
-        }
-
         private void MerrowForm_Load(object sender, EventArgs e) {
             
         }
@@ -1043,6 +1045,10 @@ namespace Merrow {
             binErrorLabel.Visible = false;
             binFileLoaded = false;
             binFileBytes = null;
+        }
+
+        private void terms__LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
         }
     }
 }

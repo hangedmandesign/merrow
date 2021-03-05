@@ -72,6 +72,10 @@
             this.advAddressLabel = new System.Windows.Forms.Label();
             this.advAddressText = new System.Windows.Forms.TextBox();
             this.ReaderTab = new System.Windows.Forms.TabPage();
+            this.binExtractionOutput = new System.Windows.Forms.Label();
+            this.binOutputTextBox = new System.Windows.Forms.TextBox();
+            this.binVerboseLog = new System.Windows.Forms.CheckBox();
+            this.binFileSelectButton = new System.Windows.Forms.Button();
             this.binLengthGroup = new System.Windows.Forms.GroupBox();
             this.binLengthDEC = new System.Windows.Forms.RadioButton();
             this.binLengthHEX = new System.Windows.Forms.RadioButton();
@@ -86,8 +90,10 @@
             this.binFilenameTextBox = new System.Windows.Forms.TextBox();
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.binFileSelectButton = new System.Windows.Forms.Button();
-            this.binVerboseLog = new System.Windows.Forms.CheckBox();
+            this.termsLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.creditsBox = new System.Windows.Forms.GroupBox();
+            this.newBox = new System.Windows.Forms.GroupBox();
+            this.newLabel = new System.Windows.Forms.Label();
             this.rndGroupBox.SuspendLayout();
             this.quaGroupBox.SuspendLayout();
             this.expGroupBox.SuspendLayout();
@@ -99,6 +105,8 @@
             this.ReaderTab.SuspendLayout();
             this.binLengthGroup.SuspendLayout();
             this.binAddrGroup.SuspendLayout();
+            this.creditsBox.SuspendLayout();
+            this.newBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // rndGroupBox
@@ -413,11 +421,11 @@
             // 
             this.labelVersion.AutoSize = true;
             this.labelVersion.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelVersion.Location = new System.Drawing.Point(459, 68);
+            this.labelVersion.Location = new System.Drawing.Point(444, 53);
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(73, 45);
             this.labelVersion.TabIndex = 3;
-            this.labelVersion.Text = "v20";
+            this.labelVersion.Text = "v21";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // expGroupBox
@@ -506,9 +514,9 @@
             // 
             this.logoBox.Image = global::Merrow.Properties.Resources.merrowbar;
             this.logoBox.InitialImage = global::Merrow.Properties.Resources.merrowbar;
-            this.logoBox.Location = new System.Drawing.Point(41, 16);
+            this.logoBox.Location = new System.Drawing.Point(73, 14);
             this.logoBox.Name = "logoBox";
-            this.logoBox.Size = new System.Drawing.Size(412, 154);
+            this.logoBox.Size = new System.Drawing.Size(365, 128);
             this.logoBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.logoBox.TabIndex = 6;
             this.logoBox.TabStop = false;
@@ -529,7 +537,9 @@
             // CreditsTab
             // 
             this.CreditsTab.BackColor = System.Drawing.Color.Transparent;
-            this.CreditsTab.Controls.Add(this.creditsLinkLabel);
+            this.CreditsTab.Controls.Add(this.newBox);
+            this.CreditsTab.Controls.Add(this.creditsBox);
+            this.CreditsTab.Controls.Add(this.termsLinkLabel);
             this.CreditsTab.Controls.Add(this.logoBox);
             this.CreditsTab.Controls.Add(this.labelVersion);
             this.CreditsTab.Location = new System.Drawing.Point(4, 22);
@@ -541,17 +551,15 @@
             // 
             // creditsLinkLabel
             // 
-            this.creditsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.creditsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.creditsLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(477, 41);
-            this.creditsLinkLabel.Location = new System.Drawing.Point(6, 173);
+            this.creditsLinkLabel.Location = new System.Drawing.Point(6, 16);
             this.creditsLinkLabel.Name = "creditsLinkLabel";
-            this.creditsLinkLabel.Size = new System.Drawing.Size(553, 239);
+            this.creditsLinkLabel.Size = new System.Drawing.Size(262, 182);
             this.creditsLinkLabel.TabIndex = 7;
-            this.creditsLinkLabel.TabStop = true;
             this.creditsLinkLabel.Text = resources.GetString("creditsLinkLabel.Text");
             this.creditsLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.creditsLinkLabel.UseCompatibleTextRendering = true;
-            this.creditsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // RandomizerTab
             // 
@@ -699,6 +707,8 @@
             // ReaderTab
             // 
             this.ReaderTab.BackColor = System.Drawing.Color.Transparent;
+            this.ReaderTab.Controls.Add(this.binExtractionOutput);
+            this.ReaderTab.Controls.Add(this.binOutputTextBox);
             this.ReaderTab.Controls.Add(this.binVerboseLog);
             this.ReaderTab.Controls.Add(this.binFileSelectButton);
             this.ReaderTab.Controls.Add(this.binLengthGroup);
@@ -715,6 +725,52 @@
             this.ReaderTab.Size = new System.Drawing.Size(565, 418);
             this.ReaderTab.TabIndex = 3;
             this.ReaderTab.Text = "Binary File Reader";
+            // 
+            // binExtractionOutput
+            // 
+            this.binExtractionOutput.AutoSize = true;
+            this.binExtractionOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.binExtractionOutput.Location = new System.Drawing.Point(253, 45);
+            this.binExtractionOutput.Name = "binExtractionOutput";
+            this.binExtractionOutput.Size = new System.Drawing.Size(87, 13);
+            this.binExtractionOutput.TabIndex = 33;
+            this.binExtractionOutput.Text = "OUTPUT DATA:";
+            this.rndToolTip.SetToolTip(this.binExtractionOutput, "Output will be displayed here.");
+            // 
+            // binOutputTextBox
+            // 
+            this.binOutputTextBox.Location = new System.Drawing.Point(256, 60);
+            this.binOutputTextBox.MaxLength = 131044;
+            this.binOutputTextBox.Multiline = true;
+            this.binOutputTextBox.Name = "binOutputTextBox";
+            this.binOutputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.binOutputTextBox.Size = new System.Drawing.Size(300, 294);
+            this.binOutputTextBox.TabIndex = 32;
+            // 
+            // binVerboseLog
+            // 
+            this.binVerboseLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.binVerboseLog.Location = new System.Drawing.Point(256, 365);
+            this.binVerboseLog.Name = "binVerboseLog";
+            this.binVerboseLog.Size = new System.Drawing.Size(192, 17);
+            this.binVerboseLog.TabIndex = 31;
+            this.binVerboseLog.Text = "Output extracted data to file\r\n";
+            this.rndToolTip.SetToolTip(this.binVerboseLog, "If enabled, the extracted data will be output to a file, which will alternate \r\nl" +
+        "ines between (address/length:) entries and the extracted value from that entry.");
+            this.binVerboseLog.UseVisualStyleBackColor = true;
+            // 
+            // binFileSelectButton
+            // 
+            this.binFileSelectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.binFileSelectButton.Location = new System.Drawing.Point(10, 10);
+            this.binFileSelectButton.Name = "binFileSelectButton";
+            this.binFileSelectButton.Size = new System.Drawing.Size(111, 26);
+            this.binFileSelectButton.TabIndex = 30;
+            this.binFileSelectButton.Text = "SELECT FILE";
+            this.rndToolTip.SetToolTip(this.binFileSelectButton, "Select a binary file to read hexadecimal data from.\r\nThe file will be unloaded if" +
+        " you switch tabs or exit.");
+            this.binFileSelectButton.UseVisualStyleBackColor = true;
+            this.binFileSelectButton.Click += new System.EventHandler(this.binFileSelectButton_Click);
             // 
             // binLengthGroup
             // 
@@ -810,7 +866,7 @@
             // 
             this.binFilenameLabel.AutoSize = true;
             this.binFilenameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.binFilenameLabel.Location = new System.Drawing.Point(253, 391);
+            this.binFilenameLabel.Location = new System.Drawing.Point(253, 389);
             this.binFilenameLabel.Name = "binFilenameLabel";
             this.binFilenameLabel.Size = new System.Drawing.Size(63, 13);
             this.binFilenameLabel.TabIndex = 22;
@@ -837,13 +893,13 @@
             this.binGenerateButton.Name = "binGenerateButton";
             this.binGenerateButton.Size = new System.Drawing.Size(102, 48);
             this.binGenerateButton.TabIndex = 21;
-            this.binGenerateButton.Text = "GENERATE";
+            this.binGenerateButton.Text = "READ DATA";
             this.binGenerateButton.UseVisualStyleBackColor = true;
             this.binGenerateButton.Click += new System.EventHandler(this.binGenerateButton_Click);
             // 
             // binFilenameTextBox
             // 
-            this.binFilenameTextBox.Location = new System.Drawing.Point(318, 388);
+            this.binFilenameTextBox.Location = new System.Drawing.Point(318, 386);
             this.binFilenameTextBox.MaxLength = 48;
             this.binFilenameTextBox.Name = "binFilenameTextBox";
             this.binFilenameTextBox.Size = new System.Drawing.Size(130, 20);
@@ -857,7 +913,7 @@
             this.binContentTextBox.Multiline = true;
             this.binContentTextBox.Name = "binContentTextBox";
             this.binContentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.binContentTextBox.Size = new System.Drawing.Size(546, 294);
+            this.binContentTextBox.Size = new System.Drawing.Size(228, 294);
             this.binContentTextBox.TabIndex = 23;
             this.binContentTextBox.TextChanged += new System.EventHandler(this.binContentTextBox_TextChanged);
             // 
@@ -867,29 +923,54 @@
             this.rndToolTip.InitialDelay = 500;
             this.rndToolTip.ReshowDelay = 100;
             // 
-            // binFileSelectButton
+            // termsLinkLabel
             // 
-            this.binFileSelectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.binFileSelectButton.Location = new System.Drawing.Point(10, 10);
-            this.binFileSelectButton.Name = "binFileSelectButton";
-            this.binFileSelectButton.Size = new System.Drawing.Size(111, 26);
-            this.binFileSelectButton.TabIndex = 30;
-            this.binFileSelectButton.Text = "SELECT FILE";
-            this.rndToolTip.SetToolTip(this.binFileSelectButton, "Select a binary file to read hexadecimal data from.\r\nThe file will be unloaded if" +
-        " you switch tabs or exit.");
-            this.binFileSelectButton.UseVisualStyleBackColor = true;
-            this.binFileSelectButton.Click += new System.EventHandler(this.binFileSelectButton_Click);
+            this.termsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F);
+            this.termsLinkLabel.ForeColor = System.Drawing.Color.DimGray;
+            this.termsLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(190, 41);
+            this.termsLinkLabel.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.termsLinkLabel.Location = new System.Drawing.Point(6, 361);
+            this.termsLinkLabel.Name = "termsLinkLabel";
+            this.termsLinkLabel.Size = new System.Drawing.Size(553, 50);
+            this.termsLinkLabel.TabIndex = 8;
+            this.termsLinkLabel.TabStop = true;
+            this.termsLinkLabel.Text = resources.GetString("termsLinkLabel.Text");
+            this.termsLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.termsLinkLabel.UseCompatibleTextRendering = true;
+            this.termsLinkLabel.VisitedLinkColor = System.Drawing.Color.MediumBlue;
+            this.termsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.terms__LinkClicked);
             // 
-            // binVerboseLog
+            // creditsBox
             // 
-            this.binVerboseLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.binVerboseLog.Location = new System.Drawing.Point(256, 365);
-            this.binVerboseLog.Name = "binVerboseLog";
-            this.binVerboseLog.Size = new System.Drawing.Size(192, 17);
-            this.binVerboseLog.TabIndex = 31;
-            this.binVerboseLog.Text = "Include extraction content in log";
-            this.rndToolTip.SetToolTip(this.binVerboseLog, resources.GetString("binVerboseLog.ToolTip"));
-            this.binVerboseLog.UseVisualStyleBackColor = true;
+            this.creditsBox.Controls.Add(this.creditsLinkLabel);
+            this.creditsBox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.creditsBox.Location = new System.Drawing.Point(285, 157);
+            this.creditsBox.Name = "creditsBox";
+            this.creditsBox.Size = new System.Drawing.Size(274, 201);
+            this.creditsBox.TabIndex = 10;
+            this.creditsBox.TabStop = false;
+            this.creditsBox.Text = "CREDITS";
+            // 
+            // newBox
+            // 
+            this.newBox.BackColor = System.Drawing.Color.Transparent;
+            this.newBox.Controls.Add(this.newLabel);
+            this.newBox.ForeColor = System.Drawing.Color.DarkRed;
+            this.newBox.Location = new System.Drawing.Point(5, 157);
+            this.newBox.Name = "newBox";
+            this.newBox.Size = new System.Drawing.Size(274, 201);
+            this.newBox.TabIndex = 11;
+            this.newBox.TabStop = false;
+            this.newBox.Text = "NEW IN THIS VERSION";
+            // 
+            // newLabel
+            // 
+            this.newLabel.ForeColor = System.Drawing.Color.DarkRed;
+            this.newLabel.Location = new System.Drawing.Point(6, 16);
+            this.newLabel.Name = "newLabel";
+            this.newLabel.Size = new System.Drawing.Size(262, 163);
+            this.newLabel.TabIndex = 0;
+            this.newLabel.Text = resources.GetString("newLabel.Text");
             // 
             // MerrowStandard
             // 
@@ -919,6 +1000,8 @@
             this.ReaderTab.PerformLayout();
             this.binLengthGroup.ResumeLayout(false);
             this.binAddrGroup.ResumeLayout(false);
+            this.creditsBox.ResumeLayout(false);
+            this.newBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -988,6 +1071,12 @@
         private System.Windows.Forms.RadioButton binAddrHEX;
         private System.Windows.Forms.Button binFileSelectButton;
         private System.Windows.Forms.CheckBox binVerboseLog;
+        private System.Windows.Forms.Label binExtractionOutput;
+        private System.Windows.Forms.TextBox binOutputTextBox;
+        private System.Windows.Forms.LinkLabel termsLinkLabel;
+        private System.Windows.Forms.GroupBox newBox;
+        private System.Windows.Forms.Label newLabel;
+        private System.Windows.Forms.GroupBox creditsBox;
     }
 }
 
