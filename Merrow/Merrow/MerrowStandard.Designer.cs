@@ -58,7 +58,11 @@
             this.logoBox = new System.Windows.Forms.PictureBox();
             this.tabsControl = new System.Windows.Forms.TabControl();
             this.CreditsTab = new System.Windows.Forms.TabPage();
+            this.newBox = new System.Windows.Forms.GroupBox();
+            this.newLabel = new System.Windows.Forms.Label();
+            this.creditsBox = new System.Windows.Forms.GroupBox();
             this.creditsLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.termsLinkLabel = new System.Windows.Forms.LinkLabel();
             this.RandomizerTab = new System.Windows.Forms.TabPage();
             this.crcWarningLabel = new System.Windows.Forms.Label();
             this.CustomTab = new System.Windows.Forms.TabPage();
@@ -90,23 +94,19 @@
             this.binFilenameTextBox = new System.Windows.Forms.TextBox();
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.termsLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.creditsBox = new System.Windows.Forms.GroupBox();
-            this.newBox = new System.Windows.Forms.GroupBox();
-            this.newLabel = new System.Windows.Forms.Label();
             this.rndGroupBox.SuspendLayout();
             this.quaGroupBox.SuspendLayout();
             this.expGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
             this.tabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
+            this.newBox.SuspendLayout();
+            this.creditsBox.SuspendLayout();
             this.RandomizerTab.SuspendLayout();
             this.CustomTab.SuspendLayout();
             this.ReaderTab.SuspendLayout();
             this.binLengthGroup.SuspendLayout();
             this.binAddrGroup.SuspendLayout();
-            this.creditsBox.SuspendLayout();
-            this.newBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // rndGroupBox
@@ -425,7 +425,7 @@
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(73, 45);
             this.labelVersion.TabIndex = 3;
-            this.labelVersion.Text = "v21";
+            this.labelVersion.Text = "v22";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // expGroupBox
@@ -549,6 +549,39 @@
             this.CreditsTab.TabIndex = 0;
             this.CreditsTab.Text = "Credits";
             // 
+            // newBox
+            // 
+            this.newBox.BackColor = System.Drawing.Color.Transparent;
+            this.newBox.Controls.Add(this.newLabel);
+            this.newBox.ForeColor = System.Drawing.Color.DarkRed;
+            this.newBox.Location = new System.Drawing.Point(5, 157);
+            this.newBox.Name = "newBox";
+            this.newBox.Size = new System.Drawing.Size(274, 201);
+            this.newBox.TabIndex = 11;
+            this.newBox.TabStop = false;
+            this.newBox.Text = "NEW IN THIS VERSION";
+            // 
+            // newLabel
+            // 
+            this.newLabel.ForeColor = System.Drawing.Color.DarkRed;
+            this.newLabel.Location = new System.Drawing.Point(6, 16);
+            this.newLabel.Name = "newLabel";
+            this.newLabel.Size = new System.Drawing.Size(262, 182);
+            this.newLabel.TabIndex = 0;
+            this.newLabel.Text = "● Fixed error in Inn Texts data store, Boren\'s text ID was incorrect.\r\n\r\n● Improv" +
+    "ed wording of Binary File Reader tooltips, especially around byte length.\r\n\r\n";
+            // 
+            // creditsBox
+            // 
+            this.creditsBox.Controls.Add(this.creditsLinkLabel);
+            this.creditsBox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.creditsBox.Location = new System.Drawing.Point(285, 157);
+            this.creditsBox.Name = "creditsBox";
+            this.creditsBox.Size = new System.Drawing.Size(274, 201);
+            this.creditsBox.TabIndex = 10;
+            this.creditsBox.TabStop = false;
+            this.creditsBox.Text = "CREDITS";
+            // 
             // creditsLinkLabel
             // 
             this.creditsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -560,6 +593,23 @@
             this.creditsLinkLabel.Text = resources.GetString("creditsLinkLabel.Text");
             this.creditsLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.creditsLinkLabel.UseCompatibleTextRendering = true;
+            // 
+            // termsLinkLabel
+            // 
+            this.termsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F);
+            this.termsLinkLabel.ForeColor = System.Drawing.Color.DimGray;
+            this.termsLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(190, 41);
+            this.termsLinkLabel.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.termsLinkLabel.Location = new System.Drawing.Point(6, 361);
+            this.termsLinkLabel.Name = "termsLinkLabel";
+            this.termsLinkLabel.Size = new System.Drawing.Size(553, 50);
+            this.termsLinkLabel.TabIndex = 8;
+            this.termsLinkLabel.TabStop = true;
+            this.termsLinkLabel.Text = resources.GetString("termsLinkLabel.Text");
+            this.termsLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.termsLinkLabel.UseCompatibleTextRendering = true;
+            this.termsLinkLabel.VisitedLinkColor = System.Drawing.Color.MediumBlue;
+            this.termsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.terms__LinkClicked);
             // 
             // RandomizerTab
             // 
@@ -923,55 +973,6 @@
             this.rndToolTip.InitialDelay = 500;
             this.rndToolTip.ReshowDelay = 100;
             // 
-            // termsLinkLabel
-            // 
-            this.termsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F);
-            this.termsLinkLabel.ForeColor = System.Drawing.Color.DimGray;
-            this.termsLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(190, 41);
-            this.termsLinkLabel.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.termsLinkLabel.Location = new System.Drawing.Point(6, 361);
-            this.termsLinkLabel.Name = "termsLinkLabel";
-            this.termsLinkLabel.Size = new System.Drawing.Size(553, 50);
-            this.termsLinkLabel.TabIndex = 8;
-            this.termsLinkLabel.TabStop = true;
-            this.termsLinkLabel.Text = resources.GetString("termsLinkLabel.Text");
-            this.termsLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.termsLinkLabel.UseCompatibleTextRendering = true;
-            this.termsLinkLabel.VisitedLinkColor = System.Drawing.Color.MediumBlue;
-            this.termsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.terms__LinkClicked);
-            // 
-            // creditsBox
-            // 
-            this.creditsBox.Controls.Add(this.creditsLinkLabel);
-            this.creditsBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.creditsBox.Location = new System.Drawing.Point(285, 157);
-            this.creditsBox.Name = "creditsBox";
-            this.creditsBox.Size = new System.Drawing.Size(274, 201);
-            this.creditsBox.TabIndex = 10;
-            this.creditsBox.TabStop = false;
-            this.creditsBox.Text = "CREDITS";
-            // 
-            // newBox
-            // 
-            this.newBox.BackColor = System.Drawing.Color.Transparent;
-            this.newBox.Controls.Add(this.newLabel);
-            this.newBox.ForeColor = System.Drawing.Color.DarkRed;
-            this.newBox.Location = new System.Drawing.Point(5, 157);
-            this.newBox.Name = "newBox";
-            this.newBox.Size = new System.Drawing.Size(274, 201);
-            this.newBox.TabIndex = 11;
-            this.newBox.TabStop = false;
-            this.newBox.Text = "NEW IN THIS VERSION";
-            // 
-            // newLabel
-            // 
-            this.newLabel.ForeColor = System.Drawing.Color.DarkRed;
-            this.newLabel.Location = new System.Drawing.Point(6, 16);
-            this.newLabel.Name = "newLabel";
-            this.newLabel.Size = new System.Drawing.Size(262, 163);
-            this.newLabel.TabIndex = 0;
-            this.newLabel.Text = resources.GetString("newLabel.Text");
-            // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -993,6 +994,8 @@
             this.tabsControl.ResumeLayout(false);
             this.CreditsTab.ResumeLayout(false);
             this.CreditsTab.PerformLayout();
+            this.newBox.ResumeLayout(false);
+            this.creditsBox.ResumeLayout(false);
             this.RandomizerTab.ResumeLayout(false);
             this.CustomTab.ResumeLayout(false);
             this.CustomTab.PerformLayout();
@@ -1000,8 +1003,6 @@
             this.ReaderTab.PerformLayout();
             this.binLengthGroup.ResumeLayout(false);
             this.binAddrGroup.ResumeLayout(false);
-            this.creditsBox.ResumeLayout(false);
-            this.newBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

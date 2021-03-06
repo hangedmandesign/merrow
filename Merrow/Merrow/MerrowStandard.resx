@@ -160,11 +160,10 @@ All spells: Changes all spells' accuracy to 100 (Also includes Escape, Extinctio
 Export will automatically overwrite any existing file with the same name, and will open a window to the save location. 
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
-  <data name="newLabel.Text" xml:space="preserve">
-    <value>● Updated Binary File Reader to expose text output in a textbox. Output to text file is now optional.
-
-● Fixed error in Chaos item shuffling logic, caused by initial shuffling. Added shuffle to patch generation process, to guarantee consistency of patch output.
-</value>
+  <data name="termsLinkLabel.Text" xml:space="preserve">
+    <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
+Merrow is offered without warranty and is experimental software. 
+Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
   </data>
   <data name="creditsLinkLabel.Text" xml:space="preserve">
     <value>Developed by: 
@@ -180,11 +179,6 @@ Schooliedee, Kao
 Inspiration and Support:
 Usedpizza, the Eltale Monsters Discord, 
 all at Rosemary and Rectangles.</value>
-  </data>
-  <data name="termsLinkLabel.Text" xml:space="preserve">
-    <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
-Merrow is offered without warranty and is experimental software. 
-Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
   </data>
   <data name="advHelpLabel.ToolTip" xml:space="preserve">
     <value>This is a generic IPS patch generator.
@@ -208,14 +202,14 @@ a text file containing the read bytes in hexadecimal format.
 
 Populate the EXTRACTION LIST with as many entries as needed, in 
 comma-separated hexadecimal or decimal strings in the following format: 
-(Address,Length) with no brackets and another comma before the next entry. 
+(Byte_Address,Byte_Length) with no brackets and another comma before the next entry. 
 Ensure you specify whether all addresses/lengths are written as hexadecimal 
 or decimal, using the lower left options. If you would like the exported data 
 to be output to file, check the box at the bottom.
 
 This tool can currently only access values in the following ranges:
-Address: 000000-FFFFFF (0-16777215)
-Length: 0000-FFFF (0-65535)
+Address: 000000-FFFFFF (DEC: 0-16777215)
+Length: 0000-FFFF (DEC: 0-65535)
 If the ranges are too restrictive for your uses, please get in touch. 
 This is a first attempt but it can be adjusted in future versions.
 
@@ -227,7 +221,7 @@ warranty: please refer to the license readme file for more info.</value>
   <data name="binExtractLabel.ToolTip" xml:space="preserve">
     <value>Enter comma-separated hexadecimal or decimal values in this field.
 Each entry should follow this format: (address),(length),...
-The binary file will be read starting at address, for length bytes.
+The binary file will be read starting at [address], for [length] bytes.
 After entry, ensure you select below what format each value type is in.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />

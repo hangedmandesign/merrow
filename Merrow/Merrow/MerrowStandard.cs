@@ -471,6 +471,8 @@ namespace Merrow {
 
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shuffled spells use hinted names." + Environment.NewLine);
                 }
+
+                patchcontent += "6672600C000000060000000100000001"; //Fix for skelebat group in Blue Cave that can cause crashes due to lag
             }
 
             if (rndTextPaletteToggle.Checked) { //Text Colour
