@@ -35,6 +35,7 @@ namespace Merrow {
         bool verboselog = true;
         int binFileLength = 0;
         bool binFileLoaded = false;
+        string textPaletteHex = "00008888FFFF"; //busted default palette to make errors obvious
 
         //collection arrays and lists
         byte[] patcharray;
@@ -399,6 +400,23 @@ namespace Merrow {
                     inntexts[c] = temp;
                 }
             }
+
+            //TEST COLOUR SHUFFLING (Trying on text colour, cause it's simple)
+            if(rndTextPaletteDropdown.SelectedIndex == 5) {
+                Color texPal1 = RGBAToColor(library.baseRedTextPalette[0]); //convert base colours from hex
+                Color texPal2 = RGBAToColor(library.baseRedTextPalette[1]);
+                Color texPal3 = RGBAToColor(library.baseRedTextPalette[2]);
+
+                float hueOffset = (float)SysRand.Next(0,360); //pick random hue offset
+
+                texPal1 = TransformHSV(texPal1, hueOffset, 1f, 1f); //apply hue offset to all colours
+                texPal2 = TransformHSV(texPal2, hueOffset, 1f, 1f);
+                texPal3 = TransformHSV(texPal3, hueOffset, 1f, 1f);
+
+                Console.WriteLine(texPal1.ToString());
+
+                textPaletteHex = ColorToHex(texPal1) + ColorToHex(texPal2) + ColorToHex(texPal3);
+            }
         }
 
         //BUILD QUEST PATCH----------------------------------------------------------------
@@ -502,6 +520,14 @@ namespace Merrow {
                 if (temp == 3) {
                     patchcontent += "F83E318DBDEFF735";
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to white." + Environment.NewLine);
+                }
+
+                if (rndTextPaletteDropdown.SelectedIndex == 5) {
+                    patchcontent += "F83E9C1BBA0DD009"; //uses red text palette since it's brightest default
+                    patchcontent += "D3E2620006";
+                    patchcontent += textPaletteHex;
+                    Console.WriteLine(textPaletteHex);
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random." + Environment.NewLine);
                 }
             }
 
@@ -893,6 +919,7 @@ namespace Merrow {
         public static byte[] StringToByteArray(string hex) { //Convert hex string to byte array
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
+            //Console.WriteLine(hex);
             for (int i = 0; i < NumberChars; i += 2) { bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16); }
             return bytes;
         }
@@ -906,22 +933,35 @@ namespace Merrow {
 
         public static Color RGBAToColor(string hexvalue) { //Convert 4-char hex string to Color
             string binCol = Convert.ToString(Convert.ToInt32(hexvalue, 16), 2); //convert the hex string to an int, and then to binary string
+            //Console.WriteLine(binCol);
             if (binCol.Length < 16) { for (int i = 0; i < 16 - binCol.Length; i++) { binCol = "0" + binCol; } } //ensure it's 16 characters, conversion will cut it short
 
             int intR = Convert.ToInt32(binCol.Substring(0, 5), 2); //convert first five bits of binary to int 0-31
             int intG = Convert.ToInt32(binCol.Substring(5, 5), 2); //convert second five bits of binary to int 0-31
             int intB = Convert.ToInt32(binCol.Substring(10, 5), 2); //convert third five bits of binary to int 0-31
-            //the last bit is alpha but we don't care about that
+            int intA = Convert.ToInt32(binCol.Substring(15), 2); //grab the alpha as well
+            //Console.WriteLine("intR={0}, intG={1}, intB={2}", intR, intG, intB);
 
-            intR = (int)Math.Round(255d * (intR / 31)); //convert the 0-31 values to 0-255 for FromArgb
-            intG = (int)Math.Round(255d * (intG / 31));
-            intB = (int)Math.Round(255d * (intB / 31));
+            double dubR = (intR / 31d) * 255; //convert the 0-31 values to 0-255 for FromArgb
+            double dubG = (intG / 31d) * 255;
+            double dubB = (intB / 31d) * 255;
 
-            Color ret = Color.FromArgb(intR, intG, intB); //return the color value so it can be used for TransformHSV
+            intR = (int)Math.Round(dubR); //it was not doing the conversion properly so i've separated it out
+            intG = (int)Math.Round(dubG);
+            intB = (int)Math.Round(dubB);
+
+            intA = intA * 255; //either 255 or 0
+            //Console.WriteLine("intR={0}, intG={1}, intB={2}", intR, intG, intB);
+
+            Color ret = Color.FromArgb(intA, intR, intG, intB); //return the color value so it can be used for TransformHSV
             return ret;
         }
 
         public static Color TransformHSV(Color col, float h, float s, float v) { //hsv shifting. we should probably stick mainly to just hue, no idea how the others will look.
+            //h is a hue shift in degrees, 0-359.
+            //s is a saturation multiplier, scalar. set to 1 to leave the same.
+            //v is a value multiplier, scalar. set to 1 to leave the same.
+
             double vsu = v * s * Math.Cos(h * Math.PI / 180);
             double vsw = v * s * Math.Sin(h * Math.PI / 180);
 
@@ -935,25 +975,47 @@ namespace Merrow {
                         + (.587 * v - .588 * vsu - 1.05 * vsw) * col.G
                         + (.114 * v + .886 * vsu - .203 * vsw) * col.B;
 
-            int intR = (int)Math.Round(255 * colR); //turning them back into ints, to convert back to color
-            int intG = (int)Math.Round(255 * colG);
-            int intB = (int)Math.Round(255 * colB);
+            int intR = (int)Math.Round(colR); //turning them back into ints, to convert back to color
+            int intG = (int)Math.Round(colG);
+            int intB = (int)Math.Round(colB);
 
-            Color ret = Color.FromArgb(intR,intG,intB);
+            if (intR < 0) { intR += 255; }
+            if (intG < 0) { intG += 255; }
+            if (intB < 0) { intB += 255; }
+            if (intR > 255) { intR -= 255; }
+            if (intG > 255) { intG -= 255; }
+            if (intB > 255) { intB -= 255; }
+
+            Color ret = Color.FromArgb(col.A, intR, intG, intB); //convert back, retain alpha
             return ret;
         }
 
         public static string ColorToHex(Color col) { //Convert Color to 4-char hex string
-            int intR = (int)Math.Round(31d * (col.R / 255)); //convert the 0-31 values to 0-255 for FromArgb
-            int intG = (int)Math.Round(31d * (col.G / 255));
-            int intB = (int)Math.Round(31d * (col.B / 255));
+            Console.WriteLine(col.ToString());
+            double dubR = (col.R / 255d) * 31; //convert the 0-255 values to 0-31 for binary conversion
+            double dubG = (col.G / 255d) * 31;
+            double dubB = (col.B / 255d) * 31;
+
+            int intR = (int)Math.Round(dubR); //it was not doing the conversion properly so i've separated it out
+            int intG = (int)Math.Round(dubG);
+            int intB = (int)Math.Round(dubB);
+            //Console.WriteLine("intR={0}, intG={1}, intB={2}", intR, intG, intB);
+
+            int intA = 1; //Alpha is either 1 or 0
+            if (col.A == 0) { intA = 0; }
+
+            Console.WriteLine("intR={0}, intG={1}, intB={2}", intR, intG, intB);
 
             string binR = Convert.ToString(intR, 2); //convert them to separate binary strings
-            string binG = Convert.ToString(intR, 2);
-            string binB = Convert.ToString(intR, 2);
+            if (binR.Length < 5) { for (int i = 0; i < 5 - binR.Length; i++) { binR = "0" + binR; } } //ensure it's 5 characters, conversion will cut it short
+            string binG = Convert.ToString(intG, 2);
+            if (binG.Length < 5) { for (int i = 0; i < 5 - binG.Length; i++) { binG = "0" + binG; } }
+            string binB = Convert.ToString(intB, 2);
+            if (binB.Length < 5) { for (int i = 0; i < 5 - binB.Length; i++) { binB = "0" + binB; } }
+            string binA = Convert.ToString(intA, 2);
+            Console.WriteLine(binR + binG + binB + binA);
 
-            int binCol = Convert.ToInt32(binR + binG + binB + "1", 2); //combine into one int, the 1 is alpha value bit
-
+            int binCol = Convert.ToInt32(binR + binG + binB + binA, 2); //combine into one int
             string ret = Convert.ToString(binCol, 16); //convert that int to hex
             return ret;
         }

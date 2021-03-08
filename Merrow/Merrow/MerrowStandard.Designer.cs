@@ -222,7 +222,8 @@
             "Red",
             "Blue",
             "White",
-            "SHUFFLED (any of above)"});
+            "SHUFFLED (any of above)",
+            "RANDOM"});
             this.rndTextPaletteDropdown.Location = new System.Drawing.Point(160, 198);
             this.rndTextPaletteDropdown.Name = "rndTextPaletteDropdown";
             this.rndTextPaletteDropdown.Size = new System.Drawing.Size(157, 21);
