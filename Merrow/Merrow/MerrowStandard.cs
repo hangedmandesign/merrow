@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Security;
+using System.Drawing;
 
 namespace Merrow {
     public partial class MerrowStandard : Form {
@@ -877,30 +878,84 @@ namespace Merrow {
 
         //VARIABLE OPERATIONS----------------------------------------------------------------
 
-        public static string ByteArrayToString(byte[] ba) { //Convert bytes to hex
+        public static string ByteArrayToString(byte[] ba) { //Convert byte array to hex string
             StringBuilder hex = new StringBuilder(ba.Length * 2);
             foreach (byte b in ba) { hex.AppendFormat("{0:x2}", b); }
             return hex.ToString();
         }
 
-        public static string ByteToString(byte ba) { //Convert bytes to hex
+        public static string ByteToString(byte ba) { //Convert byte to hex string
             StringBuilder hex = new StringBuilder();
             hex.AppendFormat("{0:x2}", ba);
             return hex.ToString();
         }
 
-        public static byte[] StringToByteArray(string hex) { //Convert hex to bytes
+        public static byte[] StringToByteArray(string hex) { //Convert hex string to byte array
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
             for (int i = 0; i < NumberChars; i += 2) { bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16); }
             return bytes;
         }
 
-        public static string ToHex(string input) {
+        public static string ToHex(string input) { //Convert ascii string to hex string
             StringBuilder sb = new StringBuilder();
             foreach (char c in input)
                 sb.AppendFormat("{0:X2}", (int)c);
             return sb.ToString().Trim();
+        }
+
+        public static Color RGBAToColor(string hexvalue) { //Convert 4-char hex string to Color
+            string binCol = Convert.ToString(Convert.ToInt32(hexvalue, 16), 2); //convert the hex string to an int, and then to binary string
+            if (binCol.Length < 16) { for (int i = 0; i < 16 - binCol.Length; i++) { binCol = "0" + binCol; } } //ensure it's 16 characters, conversion will cut it short
+
+            int intR = Convert.ToInt32(binCol.Substring(0, 5), 2); //convert first five bits of binary to int 0-31
+            int intG = Convert.ToInt32(binCol.Substring(5, 5), 2); //convert second five bits of binary to int 0-31
+            int intB = Convert.ToInt32(binCol.Substring(10, 5), 2); //convert third five bits of binary to int 0-31
+            //the last bit is alpha but we don't care about that
+
+            intR = (int)Math.Round(255d * (intR / 31)); //convert the 0-31 values to 0-255 for FromArgb
+            intG = (int)Math.Round(255d * (intG / 31));
+            intB = (int)Math.Round(255d * (intB / 31));
+
+            Color ret = Color.FromArgb(intR, intG, intB); //return the color value so it can be used for TransformHSV
+            return ret;
+        }
+
+        public static Color TransformHSV(Color col, float h, float s, float v) { //hsv shifting. we should probably stick mainly to just hue, no idea how the others will look.
+            double vsu = v * s * Math.Cos(h * Math.PI / 180);
+            double vsw = v * s * Math.Sin(h * Math.PI / 180);
+
+            double colR = (.299 * v + .701 * vsu + .168 * vsw) * col.R //hsv->yiq matrix
+                        + (.587 * v - .587 * vsu + .330 * vsw) * col.G
+                        + (.114 * v - .114 * vsu - .497 * vsw) * col.B;
+            double colG = (.299 * v - .299 * vsu - .328 * vsw) * col.R
+                        + (.587 * v + .413 * vsu + .035 * vsw) * col.G
+                        + (.114 * v - .114 * vsu + .292 * vsw) * col.B;
+            double colB = (.299 * v - .300 * vsu + 1.25 * vsw) * col.R
+                        + (.587 * v - .588 * vsu - 1.05 * vsw) * col.G
+                        + (.114 * v + .886 * vsu - .203 * vsw) * col.B;
+
+            int intR = (int)Math.Round(255 * colR); //turning them back into ints, to convert back to color
+            int intG = (int)Math.Round(255 * colG);
+            int intB = (int)Math.Round(255 * colB);
+
+            Color ret = Color.FromArgb(intR,intG,intB);
+            return ret;
+        }
+
+        public static string ColorToHex(Color col) { //Convert Color to 4-char hex string
+            int intR = (int)Math.Round(31d * (col.R / 255)); //convert the 0-31 values to 0-255 for FromArgb
+            int intG = (int)Math.Round(31d * (col.G / 255));
+            int intB = (int)Math.Round(31d * (col.B / 255));
+
+            string binR = Convert.ToString(intR, 2); //convert them to separate binary strings
+            string binG = Convert.ToString(intR, 2);
+            string binB = Convert.ToString(intR, 2);
+
+            int binCol = Convert.ToInt32(binR + binG + binB + "1", 2); //combine into one int, the 1 is alpha value bit
+
+            string ret = Convert.ToString(binCol, 16); //convert that int to hex
+            return ret;
         }
 
         //UI INTERACTIONS----------------------------------------------------------------
