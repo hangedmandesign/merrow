@@ -94,6 +94,12 @@
             this.binFilenameTextBox = new System.Windows.Forms.TextBox();
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.rndColorViewCheckbox = new System.Windows.Forms.CheckBox();
+            this.rndColourPanel1 = new System.Windows.Forms.Panel();
+            this.rndColourPanel2 = new System.Windows.Forms.Panel();
+            this.rndColourPanel3 = new System.Windows.Forms.Panel();
+            this.rndColourPanel4 = new System.Windows.Forms.Panel();
+            this.rndColorViewPanel = new System.Windows.Forms.Panel();
             this.rndGroupBox.SuspendLayout();
             this.quaGroupBox.SuspendLayout();
             this.expGroupBox.SuspendLayout();
@@ -107,10 +113,13 @@
             this.ReaderTab.SuspendLayout();
             this.binLengthGroup.SuspendLayout();
             this.binAddrGroup.SuspendLayout();
+            this.rndColorViewPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // rndGroupBox
             // 
+            this.rndGroupBox.Controls.Add(this.rndColorViewPanel);
+            this.rndGroupBox.Controls.Add(this.rndColorViewCheckbox);
             this.rndGroupBox.Controls.Add(this.rndWeightedChest);
             this.rndGroupBox.Controls.Add(this.rndSpellNames);
             this.rndGroupBox.Controls.Add(this.rndDropsDropdown);
@@ -136,11 +145,11 @@
             this.rndWeightedChest.Checked = true;
             this.rndWeightedChest.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rndWeightedChest.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rndWeightedChest.Location = new System.Drawing.Point(160, 110);
+            this.rndWeightedChest.Location = new System.Drawing.Point(26, 110);
             this.rndWeightedChest.Name = "rndWeightedChest";
-            this.rndWeightedChest.Size = new System.Drawing.Size(116, 17);
+            this.rndWeightedChest.Size = new System.Drawing.Size(145, 17);
             this.rndWeightedChest.TabIndex = 15;
-            this.rndWeightedChest.Text = "Weighted contents";
+            this.rndWeightedChest.Text = "Weighted chest contents";
             this.rndToolTip.SetToolTip(this.rndWeightedChest, "Chest contents are guaranteed to contain at least one of each item in the selecte" +
         "d category.");
             this.rndWeightedChest.UseVisualStyleBackColor = true;
@@ -152,11 +161,11 @@
             this.rndSpellNames.Checked = true;
             this.rndSpellNames.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rndSpellNames.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rndSpellNames.Location = new System.Drawing.Point(160, 50);
+            this.rndSpellNames.Location = new System.Drawing.Point(26, 50);
             this.rndSpellNames.Name = "rndSpellNames";
-            this.rndSpellNames.Size = new System.Drawing.Size(103, 17);
+            this.rndSpellNames.Size = new System.Drawing.Size(115, 17);
             this.rndSpellNames.TabIndex = 14;
-            this.rndSpellNames.Text = "Hint spell names";
+            this.rndSpellNames.Text = "Hinted spell names";
             this.rndToolTip.SetToolTip(this.rndSpellNames, "Spell names are updated to be a randomized prefix/suffix combination based on the" +
         " original and modifier spell.");
             this.rndSpellNames.UseVisualStyleBackColor = true;
@@ -237,8 +246,7 @@
             this.rndTextPaletteToggle.Size = new System.Drawing.Size(97, 17);
             this.rndTextPaletteToggle.TabIndex = 8;
             this.rndTextPaletteToggle.Text = "Set text palette";
-            this.rndToolTip.SetToolTip(this.rndTextPaletteToggle, "Changes the text colour palette.\r\n<COLOUR>: Use one of four default included colo" +
-        "urs.\r\nSHUFFLED: Select one of those four included colours at random.");
+            this.rndToolTip.SetToolTip(this.rndTextPaletteToggle, resources.GetString("rndTextPaletteToggle.ToolTip"));
             this.rndTextPaletteToggle.UseVisualStyleBackColor = true;
             this.rndTextPaletteToggle.CheckedChanged += new System.EventHandler(this.rndTextPaletteToggle_CheckedChanged);
             // 
@@ -569,8 +577,7 @@
             this.newLabel.Name = "newLabel";
             this.newLabel.Size = new System.Drawing.Size(262, 182);
             this.newLabel.TabIndex = 0;
-            this.newLabel.Text = "● Fixed error in Inn Texts data store, Boren\'s text ID was incorrect.\r\n\r\n● Improv" +
-    "ed wording of Binary File Reader tooltips, especially around byte length.\r\n\r\n";
+            this.newLabel.Text = resources.GetString("newLabel.Text");
             // 
             // creditsBox
             // 
@@ -974,6 +981,66 @@
             this.rndToolTip.InitialDelay = 500;
             this.rndToolTip.ReshowDelay = 100;
             // 
+            // rndColorViewCheckbox
+            // 
+            this.rndColorViewCheckbox.AutoSize = true;
+            this.rndColorViewCheckbox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndColorViewCheckbox.Location = new System.Drawing.Point(26, 230);
+            this.rndColorViewCheckbox.Name = "rndColorViewCheckbox";
+            this.rndColorViewCheckbox.Size = new System.Drawing.Size(97, 17);
+            this.rndColorViewCheckbox.TabIndex = 16;
+            this.rndColorViewCheckbox.Text = "Check colours:";
+            this.rndToolTip.SetToolTip(this.rndColorViewCheckbox, "If enabled, the text colour palette will be displayed to the right\r\nfor reference" +
+        ", so you can ensure it\'s acceptable.");
+            this.rndColorViewCheckbox.UseVisualStyleBackColor = true;
+            this.rndColorViewCheckbox.Visible = false;
+            this.rndColorViewCheckbox.CheckedChanged += new System.EventHandler(this.rndColorViewCheckbox_CheckedChanged);
+            // 
+            // rndColourPanel1
+            // 
+            this.rndColourPanel1.Location = new System.Drawing.Point(0, 0);
+            this.rndColourPanel1.Name = "rndColourPanel1";
+            this.rndColourPanel1.Size = new System.Drawing.Size(39, 21);
+            this.rndColourPanel1.TabIndex = 17;
+            // 
+            // rndColourPanel2
+            // 
+            this.rndColourPanel2.BackColor = System.Drawing.Color.Maroon;
+            this.rndColourPanel2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndColourPanel2.Location = new System.Drawing.Point(39, 0);
+            this.rndColourPanel2.Name = "rndColourPanel2";
+            this.rndColourPanel2.Size = new System.Drawing.Size(39, 21);
+            this.rndColourPanel2.TabIndex = 18;
+            // 
+            // rndColourPanel3
+            // 
+            this.rndColourPanel3.BackColor = System.Drawing.Color.Brown;
+            this.rndColourPanel3.Location = new System.Drawing.Point(78, 0);
+            this.rndColourPanel3.Name = "rndColourPanel3";
+            this.rndColourPanel3.Size = new System.Drawing.Size(39, 21);
+            this.rndColourPanel3.TabIndex = 19;
+            // 
+            // rndColourPanel4
+            // 
+            this.rndColourPanel4.BackColor = System.Drawing.Color.Red;
+            this.rndColourPanel4.ForeColor = System.Drawing.Color.Transparent;
+            this.rndColourPanel4.Location = new System.Drawing.Point(117, 0);
+            this.rndColourPanel4.Name = "rndColourPanel4";
+            this.rndColourPanel4.Size = new System.Drawing.Size(39, 21);
+            this.rndColourPanel4.TabIndex = 19;
+            // 
+            // rndColorViewPanel
+            // 
+            this.rndColorViewPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rndColorViewPanel.Controls.Add(this.rndColourPanel4);
+            this.rndColorViewPanel.Controls.Add(this.rndColourPanel2);
+            this.rndColorViewPanel.Controls.Add(this.rndColourPanel3);
+            this.rndColorViewPanel.Controls.Add(this.rndColourPanel1);
+            this.rndColorViewPanel.Location = new System.Drawing.Point(160, 228);
+            this.rndColorViewPanel.Name = "rndColorViewPanel";
+            this.rndColorViewPanel.Size = new System.Drawing.Size(157, 21);
+            this.rndColorViewPanel.TabIndex = 20;
+            // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1004,6 +1071,7 @@
             this.ReaderTab.PerformLayout();
             this.binLengthGroup.ResumeLayout(false);
             this.binAddrGroup.ResumeLayout(false);
+            this.rndColorViewPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1079,6 +1147,12 @@
         private System.Windows.Forms.GroupBox newBox;
         private System.Windows.Forms.Label newLabel;
         private System.Windows.Forms.GroupBox creditsBox;
+        private System.Windows.Forms.CheckBox rndColorViewCheckbox;
+        private System.Windows.Forms.Panel rndColourPanel1;
+        private System.Windows.Forms.Panel rndColourPanel4;
+        private System.Windows.Forms.Panel rndColourPanel3;
+        private System.Windows.Forms.Panel rndColourPanel2;
+        private System.Windows.Forms.Panel rndColorViewPanel;
     }
 }
 

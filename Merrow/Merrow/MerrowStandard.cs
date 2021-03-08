@@ -36,6 +36,9 @@ namespace Merrow {
         int binFileLength = 0;
         bool binFileLoaded = false;
         string textPaletteHex = "00008888FFFF"; //busted default palette to make errors obvious
+        Color texPal1 = Color.Black;
+        Color texPal2 = Color.Black;
+        Color texPal3 = Color.Black;
 
         //collection arrays and lists
         byte[] patcharray;
@@ -79,9 +82,6 @@ namespace Merrow {
             shuffles = new int[playerspells];
             spoilerspells = new string[playerspells];
             library = new DataStore();
-            rngseed = SysRand.Next(100000000, 1000000000); //a 9-digit number
-            SysRand = new Random(rngseed);
-            seedTextBox.Text = rngseed.ToString();
             fileName = "merrowpatch_" + rngseed.ToString();
 
             //initiate spell list with SHUFFLED option before
@@ -111,8 +111,9 @@ namespace Merrow {
             PrepareDropdowns();
 
             //initial shuffle
-            Shuffling(true);
+            rngseed = SysRand.Next(100000000, 1000000000); //a 9-digit number
             loadfinished = true;
+            Shuffling(true);
         }
 
         //list of initial UI cleanup/prep steps
@@ -132,6 +133,7 @@ namespace Merrow {
             rndTextContentDropdown.Visible = false;
             rndDropsDropdown.Visible = false;
             rndWeightedChest.Visible = false;
+            rndColorViewPanel.Visible = false;
             quaAccuracyDropdown.Visible = false;
             quaZoomDropdown.Visible = false;
             crcWarningLabel.Visible = false;
@@ -147,6 +149,7 @@ namespace Merrow {
 
             //REINITIATE RANDOM WITH NEW SEED
             SysRand = new System.Random(rngseed);
+            seedTextBox.Text = rngseed.ToString();
 
             //The reason we reset the seed and reshuffle everything every time, whether they're enabled or not, is because the number of times the random seed is used determines the sequence of random values.
             //So to guarantee the random seed to produce the same results with the same options, it has to do the same number of random checks each time. It might not always be necessary but it prevents errors.
@@ -402,21 +405,21 @@ namespace Merrow {
             }
 
             //TEST COLOUR SHUFFLING (Trying on text colour, cause it's simple)
-            if(rndTextPaletteDropdown.SelectedIndex == 5) {
-                Color texPal1 = RGBAToColor(library.baseRedTextPalette[0]); //convert base colours from hex
-                Color texPal2 = RGBAToColor(library.baseRedTextPalette[1]);
-                Color texPal3 = RGBAToColor(library.baseRedTextPalette[2]);
+            texPal1 = RGBAToColor(library.baseRedTextPalette[0]); //convert base colours from hex
+            texPal2 = RGBAToColor(library.baseRedTextPalette[1]);
+            texPal3 = RGBAToColor(library.baseRedTextPalette[2]);
 
-                float hueOffset = (float)SysRand.Next(0,360); //pick random hue offset
+            float hueOffset = (float)SysRand.Next(0,360); //pick random hue offset
 
-                texPal1 = TransformHSV(texPal1, hueOffset, 1f, 1f); //apply hue offset to all colours
-                texPal2 = TransformHSV(texPal2, hueOffset, 1f, 1f);
-                texPal3 = TransformHSV(texPal3, hueOffset, 1f, 1f);
+            texPal1 = TransformHSV(texPal1, hueOffset, 1f, 1f); //apply hue offset to all colours
+            texPal2 = TransformHSV(texPal2, hueOffset, 1f, 1f);
+            texPal3 = TransformHSV(texPal3, hueOffset, 1f, 1f);
 
-                Console.WriteLine(texPal1.ToString());
+            textPaletteHex = ColorToHex(texPal1) + ColorToHex(texPal2) + ColorToHex(texPal3);
 
-                textPaletteHex = ColorToHex(texPal1) + ColorToHex(texPal2) + ColorToHex(texPal3);
-            }
+            rndColourPanel2.BackColor = texPal1;
+            rndColourPanel3.BackColor = texPal2;
+            rndColourPanel4.BackColor = texPal3;
         }
 
         //BUILD QUEST PATCH----------------------------------------------------------------
@@ -918,7 +921,7 @@ namespace Merrow {
         public static byte[] StringToByteArray(string hex) { //Convert hex string to byte array
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
-            //Console.WriteLine(hex);
+            Console.WriteLine(hex);
             for (int i = 0; i < NumberChars; i += 2) { bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16); }
             return bytes;
         }
@@ -932,14 +935,12 @@ namespace Merrow {
 
         public static Color RGBAToColor(string hexvalue) { //Convert 4-char hex string to Color
             string binCol = Convert.ToString(Convert.ToInt32(hexvalue, 16), 2); //convert the hex string to an int, and then to binary string
-            //Console.WriteLine(binCol);
             if (binCol.Length < 16) { for (int i = 0; i < 16 - binCol.Length; i++) { binCol = "0" + binCol; } } //ensure it's 16 characters, conversion will cut it short
 
             int intR = Convert.ToInt32(binCol.Substring(0, 5), 2); //convert first five bits of binary to int 0-31
             int intG = Convert.ToInt32(binCol.Substring(5, 5), 2); //convert second five bits of binary to int 0-31
             int intB = Convert.ToInt32(binCol.Substring(10, 5), 2); //convert third five bits of binary to int 0-31
             int intA = Convert.ToInt32(binCol.Substring(15), 2); //grab the alpha as well
-            //Console.WriteLine("intR={0}, intG={1}, intB={2}", intR, intG, intB);
 
             double dubR = (intR / 31d) * 255; //convert the 0-31 values to 0-255 for FromArgb
             double dubG = (intG / 31d) * 255;
@@ -950,7 +951,6 @@ namespace Merrow {
             intB = (int)Math.Round(dubB);
 
             intA = intA * 255; //either 255 or 0
-            //Console.WriteLine("intR={0}, intG={1}, intB={2}", intR, intG, intB);
 
             Color ret = Color.FromArgb(intA, intR, intG, intB); //return the color value so it can be used for TransformHSV
             return ret;
@@ -1003,7 +1003,6 @@ namespace Merrow {
             int intA = 1; //Alpha is either 1 or 0
             if (col.A == 0) { intA = 0; }
 
-            Console.WriteLine("intR={0}, intG={1}, intB={2}", intR, intG, intB);
 
             string binR = Convert.ToString(intR, 2); //convert them to separate binary strings
             if (binR.Length < 5) { for (int i = 0; i < 5 - binR.Length; i++) { binR = "0" + binR; } } //ensure it's 5 characters, conversion will cut it short
@@ -1012,10 +1011,11 @@ namespace Merrow {
             string binB = Convert.ToString(intB, 2);
             if (binB.Length < 5) { for (int i = 0; i < 5 - binB.Length; i++) { binB = "0" + binB; } }
             string binA = Convert.ToString(intA, 2);
-            Console.WriteLine(binR + binG + binB + binA);
 
             int binCol = Convert.ToInt32(binR + binG + binB + binA, 2); //combine into one int
             string ret = Convert.ToString(binCol, 16); //convert that int to hex
+            if (ret.Length < 16) { for (int i = 0; i < 16 - ret.Length; i++) { ret = "0" + ret; } } //ensure it's 16 characters, conversion will cut it short
+
             return ret;
         }
 
@@ -1042,7 +1042,13 @@ namespace Merrow {
         }
 
         private void rndTextPaletteToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndTextPaletteToggle.Checked) { rndTextPaletteDropdown.Visible = true; } else { rndTextPaletteDropdown.Visible = false; }
+            if (rndTextPaletteToggle.Checked) {
+                rndTextPaletteDropdown.Visible = true;
+                rndColorViewCheckbox.Visible = true;
+            } else {
+                rndTextPaletteDropdown.Visible = false;
+                rndColorViewCheckbox.Visible = false;
+            }
         }
 
         private void rndTextContentToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1167,6 +1173,17 @@ namespace Merrow {
 
         private void terms__LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
+        }
+
+        private void rndColorViewCheckbox_CheckedChanged(object sender, EventArgs e) {
+            if (rndColorViewCheckbox.Checked) {
+                rndColorViewCheckbox.Text = "Check colours:";
+                rndColorViewPanel.Visible = true;
+            }
+            else {
+                rndColorViewCheckbox.Text = "Check colours";
+                rndColorViewPanel.Visible = false;
+            }
         }
     }
 }

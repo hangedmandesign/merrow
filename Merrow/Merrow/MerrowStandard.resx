@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="rndDropsToggle.ToolTip" xml:space="preserve">
     <value>Change the items dropped by non-Boss enemies.
 SHUFFLED: All default item drops are shuffled among all enemies.
@@ -128,6 +131,12 @@ RANDOM&amp;WINGS: All drops are randomized to contain any normal drop item or wi
 RANDOM&amp;GEMS: All drops are randomized to contain any normal drop item or Elemental Gem.
 CHAOS: All drops are randomized to contain any normal drop item, wing, or Elemental Gem.
 [WARNING - Including gems or wings can cause sequence breaks.]</value>
+  </data>
+  <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
+    <value>Changes the text colour palette.
+&lt;COLOUR&gt;: Use one of four default included colours.
+SHUFFLED: Select one of those four included colours at random.
+RANDOM: Generate a palette at random. [Feature unfinished, quality not guaranteed.]</value>
   </data>
   <data name="rndChestToggle.ToolTip" xml:space="preserve">
     <value>Change the contents of all chests.
@@ -156,6 +165,15 @@ All spells: Changes all spells' accuracy to 100 (Also includes Escape, Extinctio
     <value>IPS patch filename. Default is 'merrowpatch_(seed number)' if nothing is typed.
 Export will automatically overwrite any existing file with the same name, and will open a window to the save location. 
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
+  </data>
+  <data name="newLabel.Text" xml:space="preserve">
+    <value>● First attempt at text colour randomization. Results need work, but it's functional.
+
+● Fixed error in Inn Texts data store, Boren's text ID was incorrect.
+
+● Improved wording of Binary File Reader tooltips, especially around byte length.
+
+</value>
   </data>
   <data name="creditsLinkLabel.Text" xml:space="preserve">
     <value>Developed by: 
