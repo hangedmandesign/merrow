@@ -523,8 +523,7 @@ namespace Merrow {
                 }
 
                 if (rndTextPaletteDropdown.SelectedIndex == 5) {
-                    patchcontent += "F83E9C1BBA0DD009"; //uses red text palette since it's brightest default
-                    patchcontent += "D3E2620006";
+                    patchcontent += "F83E";
                     patchcontent += textPaletteHex;
                     Console.WriteLine(textPaletteHex);
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random." + Environment.NewLine);
