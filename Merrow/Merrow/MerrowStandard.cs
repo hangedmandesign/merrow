@@ -409,11 +409,21 @@ namespace Merrow {
             texPal2 = RGBAToColor(library.baseRedTextPalette[1]);
             texPal3 = RGBAToColor(library.baseRedTextPalette[2]);
 
-            float hueOffset = (float)SysRand.Next(0,360); //pick random hue offset
+            float hueOffset = (float)SysRand.NextDouble() * 360; //pick random hue offset
+            float brightScale = (float)SysRand.NextDouble() / 3;
 
-            texPal1 = TransformHSV(texPal1, hueOffset, 1f, 1f); //apply hue offset to all colours
-            texPal2 = TransformHSV(texPal2, hueOffset, 1f, 1f);
-            texPal3 = TransformHSV(texPal3, hueOffset, 1f, 1f);
+            float temph = texPal1.GetHue() + hueOffset;
+            float temps = texPal1.GetSaturation();
+            float tempb = getBrightness(texPal1);
+            texPal1 = ColorFromHSL(temph, temps, tempb);
+            temph = texPal2.GetHue() + hueOffset;
+            temps = texPal2.GetSaturation();
+            tempb = getBrightness(texPal2) + brightScale / 2;
+            texPal2 = ColorFromHSL(temph, temps, tempb);
+            temph = texPal3.GetHue() + hueOffset;
+            temps = texPal3.GetSaturation();
+            tempb = getBrightness(texPal3) + brightScale;
+            texPal3 = ColorFromHSL(temph, temps, tempb);
 
             textPaletteHex = ColorToHex(texPal1) + ColorToHex(texPal2) + ColorToHex(texPal3);
 
@@ -956,37 +966,32 @@ namespace Merrow {
             return ret;
         }
 
-        public static Color TransformHSV(Color col, float h, float s, float v) { //hsv shifting. we should probably stick mainly to just hue, no idea how the others will look.
-            //h is a hue shift in degrees, 0-359.
-            //s is a saturation multiplier, scalar. set to 1 to leave the same.
-            //v is a value multiplier, scalar. set to 1 to leave the same.
+        public static Color ColorFromHSL(float h, float s, float v) {
+            if (s == 0) { int L = (int)v; return Color.FromArgb(255, L, L, L); }
 
-            double vsu = v * s * Math.Cos(h * Math.PI / 180);
-            double vsw = v * s * Math.Sin(h * Math.PI / 180);
+            double min, max, hx;
+            hx = h / 360d;
 
-            double colR = (.299 * v + .701 * vsu + .168 * vsw) * col.R //hsv->yiq matrix
-                        + (.587 * v - .587 * vsu + .330 * vsw) * col.G
-                        + (.114 * v - .114 * vsu - .497 * vsw) * col.B;
-            double colG = (.299 * v - .299 * vsu - .328 * vsw) * col.R
-                        + (.587 * v + .413 * vsu + .035 * vsw) * col.G
-                        + (.114 * v - .114 * vsu + .292 * vsw) * col.B;
-            double colB = (.299 * v - .300 * vsu + 1.25 * vsw) * col.R
-                        + (.587 * v - .588 * vsu - 1.05 * vsw) * col.G
-                        + (.114 * v + .886 * vsu - .203 * vsw) * col.B;
+            max = v < 0.5d ? v * (1 + s) : (v + s) - (v * s);
+            min = (v * 2d) - max;
 
-            int intR = (int)Math.Round(colR); //turning them back into ints, to convert back to color
-            int intG = (int)Math.Round(colG);
-            int intB = (int)Math.Round(colB);
+            Color c = Color.FromArgb(255, (int)(255 * RGBChannelFromHue(min, max, hx + 1 / 3d)),
+                                          (int)(255 * RGBChannelFromHue(min, max, hx)),
+                                          (int)(255 * RGBChannelFromHue(min, max, hx - 1 / 3d)));
+            return c;
+        }
 
-            if (intR < 0) { intR += 255; }
-            if (intG < 0) { intG += 255; }
-            if (intB < 0) { intB += 255; }
-            if (intR > 255) { intR -= 255; }
-            if (intG > 255) { intG -= 255; }
-            if (intB > 255) { intB -= 255; }
+        public static double RGBChannelFromHue(double m1, double m2, double h) {
+            h = (h + 1d) % 1d;
+            if (h < 0) h += 1;
+            if (h * 6 < 1) return m1 + (m2 - m1) * 6 * h;
+            else if (h * 2 < 1) return m2;
+            else if (h * 3 < 2) return m1 + (m2 - m1) * 6 * (2d / 3d - h);
+            else return m1;
+        }
 
-            Color ret = Color.FromArgb(col.A, intR, intG, intB); //convert back, retain alpha
-            return ret;
+        public float getBrightness(Color c) { //more realistic brightness
+            return (c.R * 0.299f + c.G * 0.587f + c.B * 0.114f) / 256f;
         }
 
         public static string ColorToHex(Color col) { //Convert Color to 4-char hex string
