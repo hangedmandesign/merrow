@@ -26,6 +26,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MerrowStandard));
             this.rndGroupBox = new System.Windows.Forms.GroupBox();
+            this.rndColorViewPanel = new System.Windows.Forms.Panel();
+            this.rndColourPanel4 = new System.Windows.Forms.Panel();
+            this.rndColourPanel2 = new System.Windows.Forms.Panel();
+            this.rndColourPanel3 = new System.Windows.Forms.Panel();
+            this.rndColourPanel1 = new System.Windows.Forms.Panel();
+            this.rndColorViewCheckbox = new System.Windows.Forms.CheckBox();
             this.rndWeightedChest = new System.Windows.Forms.CheckBox();
             this.rndSpellNames = new System.Windows.Forms.CheckBox();
             this.rndDropsDropdown = new System.Windows.Forms.ComboBox();
@@ -94,13 +100,8 @@
             this.binFilenameTextBox = new System.Windows.Forms.TextBox();
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.rndColorViewCheckbox = new System.Windows.Forms.CheckBox();
-            this.rndColourPanel1 = new System.Windows.Forms.Panel();
-            this.rndColourPanel2 = new System.Windows.Forms.Panel();
-            this.rndColourPanel3 = new System.Windows.Forms.Panel();
-            this.rndColourPanel4 = new System.Windows.Forms.Panel();
-            this.rndColorViewPanel = new System.Windows.Forms.Panel();
             this.rndGroupBox.SuspendLayout();
+            this.rndColorViewPanel.SuspendLayout();
             this.quaGroupBox.SuspendLayout();
             this.expGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
@@ -113,7 +114,6 @@
             this.ReaderTab.SuspendLayout();
             this.binLengthGroup.SuspendLayout();
             this.binAddrGroup.SuspendLayout();
-            this.rndColorViewPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // rndGroupBox
@@ -138,6 +138,66 @@
             this.rndGroupBox.TabIndex = 0;
             this.rndGroupBox.TabStop = false;
             this.rndGroupBox.Text = "RANDOMIZATION";
+            // 
+            // rndColorViewPanel
+            // 
+            this.rndColorViewPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rndColorViewPanel.Controls.Add(this.rndColourPanel4);
+            this.rndColorViewPanel.Controls.Add(this.rndColourPanel2);
+            this.rndColorViewPanel.Controls.Add(this.rndColourPanel3);
+            this.rndColorViewPanel.Controls.Add(this.rndColourPanel1);
+            this.rndColorViewPanel.Location = new System.Drawing.Point(160, 228);
+            this.rndColorViewPanel.Name = "rndColorViewPanel";
+            this.rndColorViewPanel.Size = new System.Drawing.Size(157, 21);
+            this.rndColorViewPanel.TabIndex = 20;
+            // 
+            // rndColourPanel4
+            // 
+            this.rndColourPanel4.BackColor = System.Drawing.Color.Red;
+            this.rndColourPanel4.ForeColor = System.Drawing.Color.Transparent;
+            this.rndColourPanel4.Location = new System.Drawing.Point(117, 0);
+            this.rndColourPanel4.Name = "rndColourPanel4";
+            this.rndColourPanel4.Size = new System.Drawing.Size(39, 21);
+            this.rndColourPanel4.TabIndex = 19;
+            // 
+            // rndColourPanel2
+            // 
+            this.rndColourPanel2.BackColor = System.Drawing.Color.Maroon;
+            this.rndColourPanel2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndColourPanel2.Location = new System.Drawing.Point(39, 0);
+            this.rndColourPanel2.Name = "rndColourPanel2";
+            this.rndColourPanel2.Size = new System.Drawing.Size(39, 21);
+            this.rndColourPanel2.TabIndex = 18;
+            // 
+            // rndColourPanel3
+            // 
+            this.rndColourPanel3.BackColor = System.Drawing.Color.Brown;
+            this.rndColourPanel3.Location = new System.Drawing.Point(78, 0);
+            this.rndColourPanel3.Name = "rndColourPanel3";
+            this.rndColourPanel3.Size = new System.Drawing.Size(39, 21);
+            this.rndColourPanel3.TabIndex = 19;
+            // 
+            // rndColourPanel1
+            // 
+            this.rndColourPanel1.Location = new System.Drawing.Point(0, 0);
+            this.rndColourPanel1.Name = "rndColourPanel1";
+            this.rndColourPanel1.Size = new System.Drawing.Size(39, 21);
+            this.rndColourPanel1.TabIndex = 17;
+            // 
+            // rndColorViewCheckbox
+            // 
+            this.rndColorViewCheckbox.AutoSize = true;
+            this.rndColorViewCheckbox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndColorViewCheckbox.Location = new System.Drawing.Point(26, 230);
+            this.rndColorViewCheckbox.Name = "rndColorViewCheckbox";
+            this.rndColorViewCheckbox.Size = new System.Drawing.Size(127, 17);
+            this.rndColorViewCheckbox.TabIndex = 16;
+            this.rndColorViewCheckbox.Text = "View random colours:";
+            this.rndToolTip.SetToolTip(this.rndColorViewCheckbox, "If enabled, the text colour palette will be displayed to the right\r\nfor reference" +
+        ", so you can ensure it\'s acceptable.");
+            this.rndColorViewCheckbox.UseVisualStyleBackColor = true;
+            this.rndColorViewCheckbox.Visible = false;
+            this.rndColorViewCheckbox.CheckedChanged += new System.EventHandler(this.rndColorViewCheckbox_CheckedChanged);
             // 
             // rndWeightedChest
             // 
@@ -237,6 +297,7 @@
             this.rndTextPaletteDropdown.Name = "rndTextPaletteDropdown";
             this.rndTextPaletteDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndTextPaletteDropdown.TabIndex = 9;
+            this.rndTextPaletteDropdown.SelectedIndexChanged += new System.EventHandler(this.rndTextPaletteDropdown_SelectedIndexChanged);
             // 
             // rndTextPaletteToggle
             // 
@@ -981,66 +1042,6 @@
             this.rndToolTip.InitialDelay = 500;
             this.rndToolTip.ReshowDelay = 100;
             // 
-            // rndColorViewCheckbox
-            // 
-            this.rndColorViewCheckbox.AutoSize = true;
-            this.rndColorViewCheckbox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rndColorViewCheckbox.Location = new System.Drawing.Point(26, 230);
-            this.rndColorViewCheckbox.Name = "rndColorViewCheckbox";
-            this.rndColorViewCheckbox.Size = new System.Drawing.Size(97, 17);
-            this.rndColorViewCheckbox.TabIndex = 16;
-            this.rndColorViewCheckbox.Text = "Check colours:";
-            this.rndToolTip.SetToolTip(this.rndColorViewCheckbox, "If enabled, the text colour palette will be displayed to the right\r\nfor reference" +
-        ", so you can ensure it\'s acceptable.");
-            this.rndColorViewCheckbox.UseVisualStyleBackColor = true;
-            this.rndColorViewCheckbox.Visible = false;
-            this.rndColorViewCheckbox.CheckedChanged += new System.EventHandler(this.rndColorViewCheckbox_CheckedChanged);
-            // 
-            // rndColourPanel1
-            // 
-            this.rndColourPanel1.Location = new System.Drawing.Point(0, 0);
-            this.rndColourPanel1.Name = "rndColourPanel1";
-            this.rndColourPanel1.Size = new System.Drawing.Size(39, 21);
-            this.rndColourPanel1.TabIndex = 17;
-            // 
-            // rndColourPanel2
-            // 
-            this.rndColourPanel2.BackColor = System.Drawing.Color.Maroon;
-            this.rndColourPanel2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndColourPanel2.Location = new System.Drawing.Point(39, 0);
-            this.rndColourPanel2.Name = "rndColourPanel2";
-            this.rndColourPanel2.Size = new System.Drawing.Size(39, 21);
-            this.rndColourPanel2.TabIndex = 18;
-            // 
-            // rndColourPanel3
-            // 
-            this.rndColourPanel3.BackColor = System.Drawing.Color.Brown;
-            this.rndColourPanel3.Location = new System.Drawing.Point(78, 0);
-            this.rndColourPanel3.Name = "rndColourPanel3";
-            this.rndColourPanel3.Size = new System.Drawing.Size(39, 21);
-            this.rndColourPanel3.TabIndex = 19;
-            // 
-            // rndColourPanel4
-            // 
-            this.rndColourPanel4.BackColor = System.Drawing.Color.Red;
-            this.rndColourPanel4.ForeColor = System.Drawing.Color.Transparent;
-            this.rndColourPanel4.Location = new System.Drawing.Point(117, 0);
-            this.rndColourPanel4.Name = "rndColourPanel4";
-            this.rndColourPanel4.Size = new System.Drawing.Size(39, 21);
-            this.rndColourPanel4.TabIndex = 19;
-            // 
-            // rndColorViewPanel
-            // 
-            this.rndColorViewPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rndColorViewPanel.Controls.Add(this.rndColourPanel4);
-            this.rndColorViewPanel.Controls.Add(this.rndColourPanel2);
-            this.rndColorViewPanel.Controls.Add(this.rndColourPanel3);
-            this.rndColorViewPanel.Controls.Add(this.rndColourPanel1);
-            this.rndColorViewPanel.Location = new System.Drawing.Point(160, 228);
-            this.rndColorViewPanel.Name = "rndColorViewPanel";
-            this.rndColorViewPanel.Size = new System.Drawing.Size(157, 21);
-            this.rndColorViewPanel.TabIndex = 20;
-            // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1054,6 +1055,7 @@
             this.Load += new System.EventHandler(this.MerrowForm_Load);
             this.rndGroupBox.ResumeLayout(false);
             this.rndGroupBox.PerformLayout();
+            this.rndColorViewPanel.ResumeLayout(false);
             this.quaGroupBox.ResumeLayout(false);
             this.quaGroupBox.PerformLayout();
             this.expGroupBox.ResumeLayout(false);
@@ -1071,7 +1073,6 @@
             this.ReaderTab.PerformLayout();
             this.binLengthGroup.ResumeLayout(false);
             this.binAddrGroup.ResumeLayout(false);
-            this.rndColorViewPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

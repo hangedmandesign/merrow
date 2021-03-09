@@ -256,7 +256,7 @@ namespace Merrow {
                 }
 
                 //this should prevent all crashes.
-                Console.WriteLine("Crash protection complete.");
+                //Console.WriteLine("Crash protection complete.");
             }
 
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
@@ -931,7 +931,7 @@ namespace Merrow {
         public static byte[] StringToByteArray(string hex) { //Convert hex string to byte array
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
-            Console.WriteLine(hex);
+            //Console.WriteLine(hex);
             for (int i = 0; i < NumberChars; i += 2) { bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16); }
             return bytes;
         }
@@ -1003,11 +1003,9 @@ namespace Merrow {
             int intR = (int)Math.Round(dubR); //it was not doing the conversion properly so i've separated it out
             int intG = (int)Math.Round(dubG);
             int intB = (int)Math.Round(dubB);
-            //Console.WriteLine("intR={0}, intG={1}, intB={2}", intR, intG, intB);
 
             int intA = 1; //Alpha is either 1 or 0
             if (col.A == 0) { intA = 0; }
-
 
             string binR = Convert.ToString(intR, 2); //convert them to separate binary strings
             if (binR.Length < 5) { for (int i = 0; i < 5 - binR.Length; i++) { binR = "0" + binR; } } //ensure it's 5 characters, conversion will cut it short
@@ -1018,9 +1016,8 @@ namespace Merrow {
             string binA = Convert.ToString(intA, 2);
 
             int binCol = Convert.ToInt32(binR + binG + binB + binA, 2); //combine into one int
-            string ret = Convert.ToString(binCol, 16); //convert that int to hex
-            if (ret.Length < 16) { for (int i = 0; i < 16 - ret.Length; i++) { ret = "0" + ret; } } //ensure it's 16 characters, conversion will cut it short
-
+            string ret = binCol.ToString(("X4")); //convert that int to hex
+            Console.WriteLine(ret);
             return ret;
         }
 
@@ -1049,10 +1046,8 @@ namespace Merrow {
         private void rndTextPaletteToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndTextPaletteToggle.Checked) {
                 rndTextPaletteDropdown.Visible = true;
-                rndColorViewCheckbox.Visible = true;
             } else {
                 rndTextPaletteDropdown.Visible = false;
-                rndColorViewCheckbox.Visible = false;
             }
         }
 
@@ -1182,12 +1177,23 @@ namespace Merrow {
 
         private void rndColorViewCheckbox_CheckedChanged(object sender, EventArgs e) {
             if (rndColorViewCheckbox.Checked) {
-                rndColorViewCheckbox.Text = "Check colours:";
+                rndColorViewCheckbox.Text = "View random colours:";
+                Shuffling(true); //if you don't do this, the colour doesn't update the first time, despite my best efforts
                 rndColorViewPanel.Visible = true;
             }
             else {
-                rndColorViewCheckbox.Text = "Check colours";
+                rndColorViewCheckbox.Text = "View random colours";
                 rndColorViewPanel.Visible = false;
+            }
+        }
+
+        private void rndTextPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            if (rndTextPaletteDropdown.SelectedIndex == 5) {
+                rndColorViewCheckbox.Visible = true;
+            }
+            else {
+                rndColorViewCheckbox.Visible = false;
+                rndColorViewCheckbox.Checked = false; //make it false again so as not to spoil the next value, and so the panel's invisible
             }
         }
     }
