@@ -1050,6 +1050,9 @@
             this.ClientSize = new System.Drawing.Size(594, 467);
             this.Controls.Add(this.tabsControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(606, 502);
+            this.MinimumSize = new System.Drawing.Size(606, 502);
             this.Name = "MerrowStandard";
             this.Text = "MERROW";
             this.Load += new System.EventHandler(this.MerrowForm_Load);
