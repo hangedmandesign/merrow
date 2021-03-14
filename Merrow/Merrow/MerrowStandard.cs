@@ -123,19 +123,10 @@ namespace Merrow {
             rndTextPaletteDropdown.SelectedIndex = 0;
             rndTextContentDropdown.SelectedIndex = 0;
             rndDropsDropdown.SelectedIndex = 0;
+            rndSpellNamesDropdown.SelectedIndex = 0;
             quaAccuracyDropdown.SelectedIndex = 0;
             quaZoomDropdown.SelectedIndex = 0;
 
-            rndSpellDropdown.Visible = false;
-            rndSpellNames.Visible = false;
-            rndChestDropdown.Visible = false;
-            rndTextPaletteDropdown.Visible = false;
-            rndTextContentDropdown.Visible = false;
-            rndDropsDropdown.Visible = false;
-            rndWeightedChest.Visible = false;
-            rndColorViewPanel.Visible = false;
-            quaAccuracyDropdown.Visible = false;
-            quaZoomDropdown.Visible = false;
             crcWarningLabel.Visible = false;
 
             binAddrHEX.Checked = true;
@@ -261,8 +252,9 @@ namespace Merrow {
 
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
             for (int i = 0; i < playerspells; i++) {
-                bool fiftyfifty = SysRand.NextDouble() > 0.5;
-                if(fiftyfifty) { hintnames[i] = library.shuffleNames[i*5] + " " + library.shuffleNames[(shuffles[i] * 5) + 1]; }
+                bool fiftyfifty = SysRand.NextDouble() > 0.5; ; 
+                if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfifty = true; } //"Linear" option
+                if (fiftyfifty) { hintnames[i] = library.shuffleNames[i*5] + " " + library.shuffleNames[(shuffles[i] * 5) + 1]; }
                 else { hintnames[i] = library.shuffleNames[shuffles[i] * 5] + " " + library.shuffleNames[(i * 5) + 1]; }
             }
 
@@ -271,10 +263,10 @@ namespace Merrow {
                 int c = chests.Length;
                 while (c > 1) {
                     c--;
-                    if(rndWeightedChest.Checked) {
+                    if(rndWeightedChestToggle.Checked) {
                         if (c > 14) { k = SysRand.Next(14); } else { k = c - 1; }
                     }
-                    if (!rndWeightedChest.Checked) {
+                    if (!rndWeightedChestToggle.Checked) {
                         k = SysRand.Next(14);
                     }
                     chests[c] = k;
@@ -285,10 +277,10 @@ namespace Merrow {
                 int c = chests.Length;
                 while (c > 1) {
                     c--;
-                    if (rndWeightedChest.Checked) {
+                    if (rndWeightedChestToggle.Checked) {
                         if (c > 20) { k = SysRand.Next(20); } else { k = c - 1; }
                     }
-                    if (!rndWeightedChest.Checked) {
+                    if (!rndWeightedChestToggle.Checked) {
                         k = SysRand.Next(20);
                     }
                     chests[c] = k;
@@ -299,10 +291,10 @@ namespace Merrow {
                 int c = chests.Length;
                 while (c > 1) {
                     c--;
-                    if (rndWeightedChest.Checked) {
+                    if (rndWeightedChestToggle.Checked) {
                         if (c > 18) { k = SysRand.Next(18); } else { k = c - 1; }
                     }
-                    if (!rndWeightedChest.Checked) {
+                    if (!rndWeightedChestToggle.Checked) {
                         k = SysRand.Next(18); //produces 0-17
                     }
                     if (k > 13) { k += 6; } //adds 6 if above 13, to get 20-23
@@ -314,11 +306,53 @@ namespace Merrow {
                 int c = chests.Length;
                 while (c > 1) {
                     c--;
-                    if (rndWeightedChest.Checked) {
+                    if (rndWeightedChestToggle.Checked) {
                         if (c > 24) { k = SysRand.Next(24); } else { k = c - 1; }
                     }
-                    if (!rndWeightedChest.Checked) {
+                    if (!rndWeightedChestToggle.Checked) {
                         k = SysRand.Next(24);
+                    }
+                    chests[c] = k;
+                }
+            }
+
+            if (rndChestDropdown.SelectedIndex == 5) { //RANDOM: WINGS 14-19
+                int c = chests.Length;
+                while (c > 1) {
+                    c--;
+                    if (rndWeightedChestToggle.Checked) {
+                        if (c > 6) { k = SysRand.Next(6) + 14; } else { k = c - 1; }
+                    }
+                    if (!rndWeightedChestToggle.Checked) {
+                        k = SysRand.Next(6) + 14; //produces 0-5, adds 14
+                    }
+                    chests[c] = k;
+                }
+            }
+
+            if (rndChestDropdown.SelectedIndex == 6) { //RANDOM: GEMS 20-23
+                int c = chests.Length;
+                while (c > 1) {
+                    c--;
+                    if (rndWeightedChestToggle.Checked) {
+                        if (c > 4) { k = SysRand.Next(4) + 20; } else { k = c - 1; }
+                    }
+                    if (!rndWeightedChestToggle.Checked) {
+                        k = SysRand.Next(4) + 20; //produces 0-3, adds 20
+                    }
+                    chests[c] = k;
+                }
+            }
+
+            if (rndChestDropdown.SelectedIndex == 7) { //RANDOM: WINGS & GEMS 14-23
+                int c = chests.Length;
+                while (c > 1) {
+                    c--;
+                    if (rndWeightedChestToggle.Checked) {
+                        if (c > 10) { k = SysRand.Next(10) + 14; } else { k = c - 1; }
+                    }
+                    if (!rndWeightedChestToggle.Checked) {
+                        k = SysRand.Next(10) + 14; //produces 0-9, adds 14
                     }
                     chests[c] = k;
                 }
@@ -383,6 +417,33 @@ namespace Merrow {
                 }
             }
 
+            if (rndDropsDropdown.SelectedIndex == 5) { //RANDOM: WINGS 14-19
+                int c = drops.Length;
+                while (c > 1) {
+                    c--;
+                    k = SysRand.Next(6) + 14; //produces 0-5, adds 14
+                    drops[c] = k;
+                }
+            }
+
+            if (rndDropsDropdown.SelectedIndex == 6) { //RANDOM: GEMS 20-23
+                int c = drops.Length;
+                while (c > 1) {
+                    c--;
+                    k = SysRand.Next(4) + 20; //produces 0-3, adds 20
+                    drops[c] = k;
+                }
+            }
+
+            if (rndDropsDropdown.SelectedIndex == 7) { //RANDOM: WINGS & GEMS 14-23
+                int c = drops.Length;
+                while (c > 1) {
+                    c--;
+                    k = SysRand.Next(10) + 14; //produces 0-9, adds 14
+                    drops[c] = k;
+                }
+            }
+
             //TEXT SHUFFLING (May be based on dropdown value more later, text shortening, whatever)
             if (rndTextContentDropdown.SelectedIndex == 0) {
                 int c = texts.Length;
@@ -435,6 +496,22 @@ namespace Merrow {
         //BUILD QUEST PATCH----------------------------------------------------------------
 
         public void BuildPatch() {
+            //check if nothing is enabled, if not, don't make a patch
+            if (!rndSpellToggle.Checked && 
+                !rndChestToggle.Checked && 
+                !rndTextPaletteToggle.Checked && 
+                !rndTextContentToggle.Checked && 
+                !rndDropsToggle.Checked && 
+                !quaLevelToggle.Checked && 
+                !quaSoulToggle.Checked && 
+                !quaInvalidityToggle.Checked && 
+                !quaZoomToggle.Checked && 
+                !quaAccuracyToggle.Checked && 
+                !quaRestlessToggle.Checked &&
+                !quaMaxMessageToggle.Checked
+               ) { return; }
+            //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
+
             //update filename one more time here to avoid errors
             if (filenameTextBox.Text != "" && filenameTextBox.Text != null) {
                 fileName = string.Join("", filenameTextBox.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
@@ -479,7 +556,7 @@ namespace Merrow {
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spells overridden." + Environment.NewLine);
 
-                if (rndSpellNames.Checked && rndSpellDropdown.SelectedIndex == 0) {
+                if (rndSpellNamesToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
                     //boss spells
                     patchcontent += library.shuffleBossSpellNames[0];
                     patchcontent += library.shuffleBossSpellNames[1];
@@ -569,7 +646,7 @@ namespace Merrow {
                 if (rndChestDropdown.SelectedIndex == 4) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (chaos)." + Environment.NewLine);
                 }
-                if (rndWeightedChest.Checked) {
+                if (rndWeightedChestToggle.Checked) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents weighted (minimum one of each)." + Environment.NewLine);
                 }
             }
@@ -725,8 +802,16 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPCs are restless." + Environment.NewLine);
             }
 
+            if (quaMaxMessageToggle.Checked) { //Max Message Speed
+                patchcontent += "060600000100";
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Message speed set to maximum." + Environment.NewLine);
+            }
+
+            //FINAL ASSEMBLY/OUTPUT
+
             //Verbose spoiler log down at the bottom just to not hide the enabled options above.
-            if(verboselog) { 
+            if (verboselog) { 
                 if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED SPELLS:" + Environment.NewLine);
                     foreach (string line in spoilerspells) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
@@ -742,10 +827,6 @@ namespace Merrow {
                     foreach (string line in spoilerdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
             }
-
-            //check if nothing is enabled, if not, don't make a patch
-            if (!rndSpellToggle.Checked && !rndChestToggle.Checked && !rndTextPaletteToggle.Checked && !rndTextContentToggle.Checked && !rndDropsToggle.Checked && !quaLevelToggle.Checked && !quaSoulToggle.Checked && !quaInvalidityToggle.Checked && !quaZoomToggle.Checked && !quaAccuracyToggle.Checked && !quaRestlessToggle.Checked) { return; }
-            //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
             patchcontent += "DAC040393C"; //main menu logo address/length
             patchcontent += library.randologo;
@@ -1026,20 +1107,22 @@ namespace Merrow {
         private void rndSpellToggle_CheckedChanged(object sender, EventArgs e) {
             if(rndSpellToggle.Checked) {
                 rndSpellDropdown.Visible = true;
-                rndSpellNames.Visible = true;
+                rndSpellNamesToggle.Visible = true;
+                rndSpellNamesDropdown.Visible = true;
             } else {
                 rndSpellDropdown.Visible = false;
-                rndSpellNames.Visible = false;
+                rndSpellNamesToggle.Visible = false;
+                rndSpellNamesDropdown.Visible = false;
             }
         }
 
         private void rndChestToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndChestToggle.Checked) {
                 rndChestDropdown.Visible = true;
-                rndWeightedChest.Visible = true;
+                rndWeightedChestToggle.Visible = true;
             } else {
                 rndChestDropdown.Visible = false;
-                rndWeightedChest.Visible = false;
+                rndWeightedChestToggle.Visible = false;
             }
         }
 
@@ -1176,24 +1259,33 @@ namespace Merrow {
         }
 
         private void rndColorViewCheckbox_CheckedChanged(object sender, EventArgs e) {
-            if (rndColorViewCheckbox.Checked) {
-                rndColorViewCheckbox.Text = "View random colours:";
+            if (rndColorViewToggle.Checked) {
+                rndColorViewToggle.Text = "View random colours:";
                 Shuffling(true); //if you don't do this, the colour doesn't update the first time, despite my best efforts
                 rndColorViewPanel.Visible = true;
             }
             else {
-                rndColorViewCheckbox.Text = "View random colours";
+                rndColorViewToggle.Text = "View random colours";
                 rndColorViewPanel.Visible = false;
             }
         }
 
         private void rndTextPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             if (rndTextPaletteDropdown.SelectedIndex == 5) {
-                rndColorViewCheckbox.Visible = true;
+                rndColorViewToggle.Visible = true;
             }
             else {
-                rndColorViewCheckbox.Visible = false;
-                rndColorViewCheckbox.Checked = false; //make it false again so as not to spoil the next value, and so the panel's invisible
+                rndColorViewToggle.Visible = false;
+                rndColorViewToggle.Checked = false; //make it false again so as not to spoil the next value, and so the panel's invisible
+            }
+        }
+
+        private void quaMaxMessageToggle_CheckedChanged(object sender, EventArgs e) {
+            if (quaMaxMessageToggle.Checked) {
+                crcWarningLabel.Visible = true;
+            }
+            else {
+                crcWarningLabel.Visible = false;
             }
         }
     }

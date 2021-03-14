@@ -31,9 +31,9 @@
             this.rndColourPanel2 = new System.Windows.Forms.Panel();
             this.rndColourPanel3 = new System.Windows.Forms.Panel();
             this.rndColourPanel1 = new System.Windows.Forms.Panel();
-            this.rndColorViewCheckbox = new System.Windows.Forms.CheckBox();
-            this.rndWeightedChest = new System.Windows.Forms.CheckBox();
-            this.rndSpellNames = new System.Windows.Forms.CheckBox();
+            this.rndColorViewToggle = new System.Windows.Forms.CheckBox();
+            this.rndWeightedChestToggle = new System.Windows.Forms.CheckBox();
+            this.rndSpellNamesToggle = new System.Windows.Forms.CheckBox();
             this.rndDropsDropdown = new System.Windows.Forms.ComboBox();
             this.rndDropsToggle = new System.Windows.Forms.CheckBox();
             this.rndTextContentDropdown = new System.Windows.Forms.ComboBox();
@@ -100,6 +100,9 @@
             this.binFilenameTextBox = new System.Windows.Forms.TextBox();
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.quaMaxMessageToggle = new System.Windows.Forms.CheckBox();
+            this.rndSpellNamesDropdown = new System.Windows.Forms.ComboBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.rndGroupBox.SuspendLayout();
             this.rndColorViewPanel.SuspendLayout();
             this.quaGroupBox.SuspendLayout();
@@ -118,10 +121,11 @@
             // 
             // rndGroupBox
             // 
+            this.rndGroupBox.Controls.Add(this.rndSpellNamesDropdown);
             this.rndGroupBox.Controls.Add(this.rndColorViewPanel);
-            this.rndGroupBox.Controls.Add(this.rndColorViewCheckbox);
-            this.rndGroupBox.Controls.Add(this.rndWeightedChest);
-            this.rndGroupBox.Controls.Add(this.rndSpellNames);
+            this.rndGroupBox.Controls.Add(this.rndColorViewToggle);
+            this.rndGroupBox.Controls.Add(this.rndWeightedChestToggle);
+            this.rndGroupBox.Controls.Add(this.rndSpellNamesToggle);
             this.rndGroupBox.Controls.Add(this.rndDropsDropdown);
             this.rndGroupBox.Controls.Add(this.rndDropsToggle);
             this.rndGroupBox.Controls.Add(this.rndTextContentDropdown);
@@ -134,7 +138,7 @@
             this.rndGroupBox.Controls.Add(this.rndSpellToggle);
             this.rndGroupBox.Location = new System.Drawing.Point(8, 6);
             this.rndGroupBox.Name = "rndGroupBox";
-            this.rndGroupBox.Size = new System.Drawing.Size(323, 314);
+            this.rndGroupBox.Size = new System.Drawing.Size(323, 451);
             this.rndGroupBox.TabIndex = 0;
             this.rndGroupBox.TabStop = false;
             this.rndGroupBox.Text = "RANDOMIZATION";
@@ -150,6 +154,7 @@
             this.rndColorViewPanel.Name = "rndColorViewPanel";
             this.rndColorViewPanel.Size = new System.Drawing.Size(157, 21);
             this.rndColorViewPanel.TabIndex = 20;
+            this.rndColorViewPanel.Visible = false;
             // 
             // rndColourPanel4
             // 
@@ -184,52 +189,51 @@
             this.rndColourPanel1.Size = new System.Drawing.Size(39, 21);
             this.rndColourPanel1.TabIndex = 17;
             // 
-            // rndColorViewCheckbox
+            // rndColorViewToggle
             // 
-            this.rndColorViewCheckbox.AutoSize = true;
-            this.rndColorViewCheckbox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rndColorViewCheckbox.Location = new System.Drawing.Point(26, 230);
-            this.rndColorViewCheckbox.Name = "rndColorViewCheckbox";
-            this.rndColorViewCheckbox.Size = new System.Drawing.Size(127, 17);
-            this.rndColorViewCheckbox.TabIndex = 16;
-            this.rndColorViewCheckbox.Text = "View random colours:";
-            this.rndToolTip.SetToolTip(this.rndColorViewCheckbox, "If enabled, the text colour palette will be displayed to the right\r\nfor reference" +
+            this.rndColorViewToggle.AutoSize = true;
+            this.rndColorViewToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndColorViewToggle.Location = new System.Drawing.Point(26, 230);
+            this.rndColorViewToggle.Name = "rndColorViewToggle";
+            this.rndColorViewToggle.Size = new System.Drawing.Size(127, 17);
+            this.rndColorViewToggle.TabIndex = 16;
+            this.rndColorViewToggle.Text = "View random colours:";
+            this.rndToolTip.SetToolTip(this.rndColorViewToggle, "If enabled, the text colour palette will be displayed to the right\r\nfor reference" +
         ", so you can ensure it\'s acceptable.");
-            this.rndColorViewCheckbox.UseVisualStyleBackColor = true;
-            this.rndColorViewCheckbox.Visible = false;
-            this.rndColorViewCheckbox.CheckedChanged += new System.EventHandler(this.rndColorViewCheckbox_CheckedChanged);
+            this.rndColorViewToggle.UseVisualStyleBackColor = true;
+            this.rndColorViewToggle.Visible = false;
+            this.rndColorViewToggle.CheckedChanged += new System.EventHandler(this.rndColorViewCheckbox_CheckedChanged);
             // 
-            // rndWeightedChest
+            // rndWeightedChestToggle
             // 
-            this.rndWeightedChest.AutoSize = true;
-            this.rndWeightedChest.Checked = true;
-            this.rndWeightedChest.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.rndWeightedChest.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rndWeightedChest.Location = new System.Drawing.Point(26, 110);
-            this.rndWeightedChest.Name = "rndWeightedChest";
-            this.rndWeightedChest.Size = new System.Drawing.Size(145, 17);
-            this.rndWeightedChest.TabIndex = 15;
-            this.rndWeightedChest.Text = "Weighted chest contents";
-            this.rndToolTip.SetToolTip(this.rndWeightedChest, "Chest contents are guaranteed to contain at least one of each item in the selecte" +
+            this.rndWeightedChestToggle.AutoSize = true;
+            this.rndWeightedChestToggle.Checked = true;
+            this.rndWeightedChestToggle.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.rndWeightedChestToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndWeightedChestToggle.Location = new System.Drawing.Point(26, 110);
+            this.rndWeightedChestToggle.Name = "rndWeightedChestToggle";
+            this.rndWeightedChestToggle.Size = new System.Drawing.Size(145, 17);
+            this.rndWeightedChestToggle.TabIndex = 15;
+            this.rndWeightedChestToggle.Text = "Weighted chest contents";
+            this.rndToolTip.SetToolTip(this.rndWeightedChestToggle, "Chest contents are guaranteed to contain at least one of each item in the selecte" +
         "d category.");
-            this.rndWeightedChest.UseVisualStyleBackColor = true;
-            this.rndWeightedChest.Visible = false;
+            this.rndWeightedChestToggle.UseVisualStyleBackColor = true;
+            this.rndWeightedChestToggle.Visible = false;
             // 
-            // rndSpellNames
+            // rndSpellNamesToggle
             // 
-            this.rndSpellNames.AutoSize = true;
-            this.rndSpellNames.Checked = true;
-            this.rndSpellNames.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.rndSpellNames.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rndSpellNames.Location = new System.Drawing.Point(26, 50);
-            this.rndSpellNames.Name = "rndSpellNames";
-            this.rndSpellNames.Size = new System.Drawing.Size(115, 17);
-            this.rndSpellNames.TabIndex = 14;
-            this.rndSpellNames.Text = "Hinted spell names";
-            this.rndToolTip.SetToolTip(this.rndSpellNames, "Spell names are updated to be a randomized prefix/suffix combination based on the" +
-        " original and modifier spell.");
-            this.rndSpellNames.UseVisualStyleBackColor = true;
-            this.rndSpellNames.Visible = false;
+            this.rndSpellNamesToggle.AutoSize = true;
+            this.rndSpellNamesToggle.Checked = true;
+            this.rndSpellNamesToggle.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.rndSpellNamesToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndSpellNamesToggle.Location = new System.Drawing.Point(26, 50);
+            this.rndSpellNamesToggle.Name = "rndSpellNamesToggle";
+            this.rndSpellNamesToggle.Size = new System.Drawing.Size(115, 17);
+            this.rndSpellNamesToggle.TabIndex = 14;
+            this.rndSpellNamesToggle.Text = "Hinted spell names";
+            this.rndToolTip.SetToolTip(this.rndSpellNamesToggle, resources.GetString("rndSpellNamesToggle.ToolTip"));
+            this.rndSpellNamesToggle.UseVisualStyleBackColor = true;
+            this.rndSpellNamesToggle.Visible = false;
             // 
             // rndDropsDropdown
             // 
@@ -240,16 +244,20 @@
             "RANDOM",
             "RANDOM + WINGS",
             "RANDOM + GEMS",
-            "CHAOS"});
-            this.rndDropsDropdown.Location = new System.Drawing.Point(160, 168);
+            "CHAOS",
+            "WINGS",
+            "GEMS",
+            "WINGS + GEMS"});
+            this.rndDropsDropdown.Location = new System.Drawing.Point(160, 138);
             this.rndDropsDropdown.Name = "rndDropsDropdown";
             this.rndDropsDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndDropsDropdown.TabIndex = 13;
+            this.rndDropsDropdown.Visible = false;
             // 
             // rndDropsToggle
             // 
             this.rndDropsToggle.AutoSize = true;
-            this.rndDropsToggle.Location = new System.Drawing.Point(6, 170);
+            this.rndDropsToggle.Location = new System.Drawing.Point(6, 140);
             this.rndDropsToggle.Name = "rndDropsToggle";
             this.rndDropsToggle.Size = new System.Drawing.Size(142, 17);
             this.rndDropsToggle.TabIndex = 12;
@@ -264,15 +272,16 @@
             this.rndTextContentDropdown.FormattingEnabled = true;
             this.rndTextContentDropdown.Items.AddRange(new object[] {
             "Shuffled"});
-            this.rndTextContentDropdown.Location = new System.Drawing.Point(160, 138);
+            this.rndTextContentDropdown.Location = new System.Drawing.Point(160, 168);
             this.rndTextContentDropdown.Name = "rndTextContentDropdown";
             this.rndTextContentDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndTextContentDropdown.TabIndex = 11;
+            this.rndTextContentDropdown.Visible = false;
             // 
             // rndTextContentToggle
             // 
             this.rndTextContentToggle.AutoSize = true;
-            this.rndTextContentToggle.Location = new System.Drawing.Point(6, 140);
+            this.rndTextContentToggle.Location = new System.Drawing.Point(6, 170);
             this.rndTextContentToggle.Name = "rndTextContentToggle";
             this.rndTextContentToggle.Size = new System.Drawing.Size(127, 17);
             this.rndTextContentToggle.TabIndex = 10;
@@ -297,6 +306,7 @@
             this.rndTextPaletteDropdown.Name = "rndTextPaletteDropdown";
             this.rndTextPaletteDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndTextPaletteDropdown.TabIndex = 9;
+            this.rndTextPaletteDropdown.Visible = false;
             this.rndTextPaletteDropdown.SelectedIndexChanged += new System.EventHandler(this.rndTextPaletteDropdown_SelectedIndexChanged);
             // 
             // rndTextPaletteToggle
@@ -317,14 +327,18 @@
             this.rndChestDropdown.FormattingEnabled = true;
             this.rndChestDropdown.Items.AddRange(new object[] {
             "SHUFFLED",
-            "RANDOM",
-            "RANDOM + WINGS",
-            "RANDOM + GEMS",
-            "CHAOS"});
+            "STANDARD",
+            "STANDARD + WINGS",
+            "STANDARD + GEMS",
+            "CHAOS",
+            "WINGS",
+            "GEMS",
+            "WINGS + GEMS"});
             this.rndChestDropdown.Location = new System.Drawing.Point(160, 78);
             this.rndChestDropdown.Name = "rndChestDropdown";
             this.rndChestDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndChestDropdown.TabIndex = 7;
+            this.rndChestDropdown.Visible = false;
             // 
             // rndChestToggle
             // 
@@ -350,6 +364,7 @@
             this.rndSpellDropdown.Name = "rndSpellDropdown";
             this.rndSpellDropdown.Size = new System.Drawing.Size(157, 21);
             this.rndSpellDropdown.TabIndex = 4;
+            this.rndSpellDropdown.Visible = false;
             // 
             // rndSpellToggle
             // 
@@ -366,6 +381,7 @@
             // 
             // quaGroupBox
             // 
+            this.quaGroupBox.Controls.Add(this.quaMaxMessageToggle);
             this.quaGroupBox.Controls.Add(this.quaRestlessToggle);
             this.quaGroupBox.Controls.Add(this.quaLevelToggle);
             this.quaGroupBox.Controls.Add(this.quaSoulToggle);
@@ -376,7 +392,7 @@
             this.quaGroupBox.Controls.Add(this.quaInvalidityToggle);
             this.quaGroupBox.Location = new System.Drawing.Point(339, 6);
             this.quaGroupBox.Name = "quaGroupBox";
-            this.quaGroupBox.Size = new System.Drawing.Size(217, 314);
+            this.quaGroupBox.Size = new System.Drawing.Size(251, 451);
             this.quaGroupBox.TabIndex = 1;
             this.quaGroupBox.TabStop = false;
             this.quaGroupBox.Text = "QUALITY / FUN";
@@ -423,8 +439,9 @@
             "All spells"});
             this.quaAccuracyDropdown.Location = new System.Drawing.Point(105, 78);
             this.quaAccuracyDropdown.Name = "quaAccuracyDropdown";
-            this.quaAccuracyDropdown.Size = new System.Drawing.Size(102, 21);
+            this.quaAccuracyDropdown.Size = new System.Drawing.Size(140, 21);
             this.quaAccuracyDropdown.TabIndex = 9;
+            this.quaAccuracyDropdown.Visible = false;
             // 
             // quaAccuracyToggle
             // 
@@ -457,8 +474,9 @@
             this.quaZoomDropdown.Location = new System.Drawing.Point(137, 48);
             this.quaZoomDropdown.MaxDropDownItems = 11;
             this.quaZoomDropdown.Name = "quaZoomDropdown";
-            this.quaZoomDropdown.Size = new System.Drawing.Size(70, 21);
+            this.quaZoomDropdown.Size = new System.Drawing.Size(108, 21);
             this.quaZoomDropdown.TabIndex = 7;
+            this.quaZoomDropdown.Visible = false;
             // 
             // quaZoomToggle
             // 
@@ -491,11 +509,11 @@
             // 
             this.labelVersion.AutoSize = true;
             this.labelVersion.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelVersion.Location = new System.Drawing.Point(444, 53);
+            this.labelVersion.Location = new System.Drawing.Point(453, 53);
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(73, 45);
             this.labelVersion.TabIndex = 3;
-            this.labelVersion.Text = "v22";
+            this.labelVersion.Text = "v23";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // expGroupBox
@@ -506,9 +524,9 @@
             this.expGroupBox.Controls.Add(this.genButton);
             this.expGroupBox.Controls.Add(this.filenameTextBox);
             this.expGroupBox.Controls.Add(this.seedTextBox);
-            this.expGroupBox.Location = new System.Drawing.Point(8, 357);
+            this.expGroupBox.Location = new System.Drawing.Point(9, 494);
             this.expGroupBox.Name = "expGroupBox";
-            this.expGroupBox.Size = new System.Drawing.Size(548, 55);
+            this.expGroupBox.Size = new System.Drawing.Size(581, 55);
             this.expGroupBox.TabIndex = 4;
             this.expGroupBox.TabStop = false;
             this.expGroupBox.Text = "EXPORT";
@@ -519,7 +537,7 @@
             this.verboseCheckBox.Checked = true;
             this.verboseCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.verboseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.verboseCheckBox.Location = new System.Drawing.Point(362, 16);
+            this.verboseCheckBox.Location = new System.Drawing.Point(392, 15);
             this.verboseCheckBox.Name = "verboseCheckBox";
             this.verboseCheckBox.Size = new System.Drawing.Size(71, 34);
             this.verboseCheckBox.TabIndex = 13;
@@ -533,7 +551,7 @@
             // 
             this.filenameLabel.AutoSize = true;
             this.filenameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.filenameLabel.Location = new System.Drawing.Point(158, 26);
+            this.filenameLabel.Location = new System.Drawing.Point(173, 26);
             this.filenameLabel.Name = "filenameLabel";
             this.filenameLabel.Size = new System.Drawing.Size(63, 13);
             this.filenameLabel.TabIndex = 13;
@@ -555,7 +573,7 @@
             // genButton
             // 
             this.genButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.genButton.Location = new System.Drawing.Point(437, 14);
+            this.genButton.Location = new System.Drawing.Point(472, 13);
             this.genButton.Name = "genButton";
             this.genButton.Size = new System.Drawing.Size(102, 35);
             this.genButton.TabIndex = 2;
@@ -565,7 +583,7 @@
             // 
             // filenameTextBox
             // 
-            this.filenameTextBox.Location = new System.Drawing.Point(223, 23);
+            this.filenameTextBox.Location = new System.Drawing.Point(238, 23);
             this.filenameTextBox.Name = "filenameTextBox";
             this.filenameTextBox.Size = new System.Drawing.Size(130, 20);
             this.filenameTextBox.TabIndex = 1;
@@ -584,7 +602,7 @@
             // 
             this.logoBox.Image = global::Merrow.Properties.Resources.merrowbar;
             this.logoBox.InitialImage = global::Merrow.Properties.Resources.merrowbar;
-            this.logoBox.Location = new System.Drawing.Point(73, 14);
+            this.logoBox.Location = new System.Drawing.Point(82, 14);
             this.logoBox.Name = "logoBox";
             this.logoBox.Size = new System.Drawing.Size(365, 128);
             this.logoBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -600,7 +618,7 @@
             this.tabsControl.Location = new System.Drawing.Point(12, 12);
             this.tabsControl.Name = "tabsControl";
             this.tabsControl.SelectedIndex = 0;
-            this.tabsControl.Size = new System.Drawing.Size(573, 444);
+            this.tabsControl.Size = new System.Drawing.Size(604, 581);
             this.tabsControl.TabIndex = 7;
             this.tabsControl.SelectedIndexChanged += new System.EventHandler(this.tabsControl_SelectedIndexChanged);
             // 
@@ -615,7 +633,7 @@
             this.CreditsTab.Location = new System.Drawing.Point(4, 22);
             this.CreditsTab.Name = "CreditsTab";
             this.CreditsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.CreditsTab.Size = new System.Drawing.Size(565, 418);
+            this.CreditsTab.Size = new System.Drawing.Size(596, 555);
             this.CreditsTab.TabIndex = 0;
             this.CreditsTab.Text = "Credits";
             // 
@@ -626,7 +644,7 @@
             this.newBox.ForeColor = System.Drawing.Color.DarkRed;
             this.newBox.Location = new System.Drawing.Point(5, 157);
             this.newBox.Name = "newBox";
-            this.newBox.Size = new System.Drawing.Size(274, 201);
+            this.newBox.Size = new System.Drawing.Size(585, 201);
             this.newBox.TabIndex = 11;
             this.newBox.TabStop = false;
             this.newBox.Text = "NEW IN THIS VERSION";
@@ -636,17 +654,18 @@
             this.newLabel.ForeColor = System.Drawing.Color.DarkRed;
             this.newLabel.Location = new System.Drawing.Point(6, 16);
             this.newLabel.Name = "newLabel";
-            this.newLabel.Size = new System.Drawing.Size(262, 182);
+            this.newLabel.Size = new System.Drawing.Size(572, 180);
             this.newLabel.TabIndex = 0;
             this.newLabel.Text = resources.GetString("newLabel.Text");
             // 
             // creditsBox
             // 
+            this.creditsBox.Controls.Add(this.linkLabel1);
             this.creditsBox.Controls.Add(this.creditsLinkLabel);
             this.creditsBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.creditsBox.Location = new System.Drawing.Point(285, 157);
+            this.creditsBox.Location = new System.Drawing.Point(6, 364);
             this.creditsBox.Name = "creditsBox";
-            this.creditsBox.Size = new System.Drawing.Size(274, 201);
+            this.creditsBox.Size = new System.Drawing.Size(583, 131);
             this.creditsBox.TabIndex = 10;
             this.creditsBox.TabStop = false;
             this.creditsBox.Text = "CREDITS";
@@ -657,21 +676,22 @@
             this.creditsLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(477, 41);
             this.creditsLinkLabel.Location = new System.Drawing.Point(6, 16);
             this.creditsLinkLabel.Name = "creditsLinkLabel";
-            this.creditsLinkLabel.Size = new System.Drawing.Size(262, 182);
+            this.creditsLinkLabel.Size = new System.Drawing.Size(280, 110);
             this.creditsLinkLabel.TabIndex = 7;
-            this.creditsLinkLabel.Text = resources.GetString("creditsLinkLabel.Text");
+            this.creditsLinkLabel.Text = "Developed by: \r\nHangedman (Jonah Davidson)\r\n\r\nTesting and Input: \r\nBingchang, Jev" +
+    "ille, Irenepunmaster, \r\nSchooliedee, Kao";
             this.creditsLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.creditsLinkLabel.UseCompatibleTextRendering = true;
             // 
             // termsLinkLabel
             // 
-            this.termsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F);
+            this.termsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.termsLinkLabel.ForeColor = System.Drawing.Color.DimGray;
             this.termsLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(190, 41);
             this.termsLinkLabel.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.termsLinkLabel.Location = new System.Drawing.Point(6, 361);
+            this.termsLinkLabel.Location = new System.Drawing.Point(5, 498);
             this.termsLinkLabel.Name = "termsLinkLabel";
-            this.termsLinkLabel.Size = new System.Drawing.Size(553, 50);
+            this.termsLinkLabel.Size = new System.Drawing.Size(584, 50);
             this.termsLinkLabel.TabIndex = 8;
             this.termsLinkLabel.TabStop = true;
             this.termsLinkLabel.Text = resources.GetString("termsLinkLabel.Text");
@@ -690,7 +710,7 @@
             this.RandomizerTab.Location = new System.Drawing.Point(4, 22);
             this.RandomizerTab.Name = "RandomizerTab";
             this.RandomizerTab.Padding = new System.Windows.Forms.Padding(3);
-            this.RandomizerTab.Size = new System.Drawing.Size(565, 418);
+            this.RandomizerTab.Size = new System.Drawing.Size(596, 555);
             this.RandomizerTab.TabIndex = 1;
             this.RandomizerTab.Text = "Quest 64 Randomizer";
             // 
@@ -698,13 +718,14 @@
             // 
             this.crcWarningLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.crcWarningLabel.ForeColor = System.Drawing.Color.Firebrick;
-            this.crcWarningLabel.Location = new System.Drawing.Point(6, 323);
+            this.crcWarningLabel.Location = new System.Drawing.Point(21, 460);
             this.crcWarningLabel.Name = "crcWarningLabel";
             this.crcWarningLabel.Size = new System.Drawing.Size(550, 31);
             this.crcWarningLabel.TabIndex = 5;
             this.crcWarningLabel.Text = "WARNING: Checksum error. Patched file will not work in PJ64 derivatives, others m" +
     "ay see error messages.";
             this.crcWarningLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.crcWarningLabel.Visible = false;
             // 
             // CustomTab
             // 
@@ -720,7 +741,7 @@
             this.CustomTab.Controls.Add(this.advAddressText);
             this.CustomTab.Location = new System.Drawing.Point(4, 22);
             this.CustomTab.Name = "CustomTab";
-            this.CustomTab.Size = new System.Drawing.Size(565, 418);
+            this.CustomTab.Size = new System.Drawing.Size(596, 555);
             this.CustomTab.TabIndex = 2;
             this.CustomTab.Text = "Generic Patch Generator";
             // 
@@ -729,7 +750,7 @@
             this.advErrorLabel.ForeColor = System.Drawing.Color.Firebrick;
             this.advErrorLabel.Location = new System.Drawing.Point(117, 5);
             this.advErrorLabel.Name = "advErrorLabel";
-            this.advErrorLabel.Size = new System.Drawing.Size(414, 26);
+            this.advErrorLabel.Size = new System.Drawing.Size(445, 26);
             this.advErrorLabel.TabIndex = 19;
             this.advErrorLabel.Text = "ERROR:";
             this.advErrorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -739,7 +760,7 @@
             // 
             this.advHelpLabel.AutoSize = true;
             this.advHelpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
-            this.advHelpLabel.Location = new System.Drawing.Point(537, 5);
+            this.advHelpLabel.Location = new System.Drawing.Point(568, 3);
             this.advHelpLabel.Name = "advHelpLabel";
             this.advHelpLabel.Size = new System.Drawing.Size(25, 26);
             this.advHelpLabel.TabIndex = 18;
@@ -750,7 +771,7 @@
             // 
             this.advFilenameLabel.AutoSize = true;
             this.advFilenameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.advFilenameLabel.Location = new System.Drawing.Point(220, 379);
+            this.advFilenameLabel.Location = new System.Drawing.Point(228, 523);
             this.advFilenameLabel.Name = "advFilenameLabel";
             this.advFilenameLabel.Size = new System.Drawing.Size(63, 13);
             this.advFilenameLabel.TabIndex = 13;
@@ -775,9 +796,9 @@
             // advGenerateButton
             // 
             this.advGenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.advGenerateButton.Location = new System.Drawing.Point(446, 368);
+            this.advGenerateButton.Location = new System.Drawing.Point(471, 512);
             this.advGenerateButton.Name = "advGenerateButton";
-            this.advGenerateButton.Size = new System.Drawing.Size(102, 35);
+            this.advGenerateButton.Size = new System.Drawing.Size(116, 35);
             this.advGenerateButton.TabIndex = 2;
             this.advGenerateButton.Text = "GENERATE";
             this.advGenerateButton.UseVisualStyleBackColor = true;
@@ -785,7 +806,7 @@
             // 
             // advFilenameText
             // 
-            this.advFilenameText.Location = new System.Drawing.Point(285, 376);
+            this.advFilenameText.Location = new System.Drawing.Point(293, 520);
             this.advFilenameText.MaxLength = 48;
             this.advFilenameText.Name = "advFilenameText";
             this.advFilenameText.Size = new System.Drawing.Size(130, 20);
@@ -799,7 +820,7 @@
             this.advContentText.Multiline = true;
             this.advContentText.Name = "advContentText";
             this.advContentText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.advContentText.Size = new System.Drawing.Size(535, 318);
+            this.advContentText.Size = new System.Drawing.Size(574, 470);
             this.advContentText.TabIndex = 16;
             this.advContentText.TextChanged += new System.EventHandler(this.advContentText_TextChanged);
             // 
@@ -807,7 +828,7 @@
             // 
             this.advAddressLabel.AutoSize = true;
             this.advAddressLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.advAddressLabel.Location = new System.Drawing.Point(10, 379);
+            this.advAddressLabel.Location = new System.Drawing.Point(10, 523);
             this.advAddressLabel.Name = "advAddressLabel";
             this.advAddressLabel.Size = new System.Drawing.Size(62, 13);
             this.advAddressLabel.TabIndex = 15;
@@ -816,7 +837,7 @@
             // 
             // advAddressText
             // 
-            this.advAddressText.Location = new System.Drawing.Point(75, 376);
+            this.advAddressText.Location = new System.Drawing.Point(75, 520);
             this.advAddressText.MaxLength = 6;
             this.advAddressText.Name = "advAddressText";
             this.advAddressText.Size = new System.Drawing.Size(111, 20);
@@ -841,7 +862,7 @@
             this.ReaderTab.Controls.Add(this.binContentTextBox);
             this.ReaderTab.Location = new System.Drawing.Point(4, 22);
             this.ReaderTab.Name = "ReaderTab";
-            this.ReaderTab.Size = new System.Drawing.Size(565, 418);
+            this.ReaderTab.Size = new System.Drawing.Size(596, 555);
             this.ReaderTab.TabIndex = 3;
             this.ReaderTab.Text = "Binary File Reader";
             // 
@@ -863,13 +884,13 @@
             this.binOutputTextBox.Multiline = true;
             this.binOutputTextBox.Name = "binOutputTextBox";
             this.binOutputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.binOutputTextBox.Size = new System.Drawing.Size(300, 294);
+            this.binOutputTextBox.Size = new System.Drawing.Size(330, 419);
             this.binOutputTextBox.TabIndex = 32;
             // 
             // binVerboseLog
             // 
             this.binVerboseLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.binVerboseLog.Location = new System.Drawing.Point(256, 365);
+            this.binVerboseLog.Location = new System.Drawing.Point(265, 502);
             this.binVerboseLog.Name = "binVerboseLog";
             this.binVerboseLog.Size = new System.Drawing.Size(192, 17);
             this.binVerboseLog.TabIndex = 31;
@@ -895,7 +916,7 @@
             // 
             this.binLengthGroup.Controls.Add(this.binLengthDEC);
             this.binLengthGroup.Controls.Add(this.binLengthHEX);
-            this.binLengthGroup.Location = new System.Drawing.Point(127, 360);
+            this.binLengthGroup.Location = new System.Drawing.Point(127, 497);
             this.binLengthGroup.Name = "binLengthGroup";
             this.binLengthGroup.Size = new System.Drawing.Size(111, 48);
             this.binLengthGroup.TabIndex = 29;
@@ -929,7 +950,7 @@
             // 
             this.binAddrGroup.Controls.Add(this.binAddrDEC);
             this.binAddrGroup.Controls.Add(this.binAddrHEX);
-            this.binAddrGroup.Location = new System.Drawing.Point(10, 360);
+            this.binAddrGroup.Location = new System.Drawing.Point(10, 497);
             this.binAddrGroup.Name = "binAddrGroup";
             this.binAddrGroup.Size = new System.Drawing.Size(111, 48);
             this.binAddrGroup.TabIndex = 28;
@@ -964,7 +985,7 @@
             this.binErrorLabel.ForeColor = System.Drawing.Color.Firebrick;
             this.binErrorLabel.Location = new System.Drawing.Point(124, 9);
             this.binErrorLabel.Name = "binErrorLabel";
-            this.binErrorLabel.Size = new System.Drawing.Size(401, 24);
+            this.binErrorLabel.Size = new System.Drawing.Size(438, 24);
             this.binErrorLabel.TabIndex = 26;
             this.binErrorLabel.Text = "ERROR:";
             this.binErrorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -974,7 +995,7 @@
             // 
             this.binHelpLabel.AutoSize = true;
             this.binHelpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
-            this.binHelpLabel.Location = new System.Drawing.Point(531, 8);
+            this.binHelpLabel.Location = new System.Drawing.Point(568, 3);
             this.binHelpLabel.Name = "binHelpLabel";
             this.binHelpLabel.Size = new System.Drawing.Size(25, 26);
             this.binHelpLabel.TabIndex = 25;
@@ -985,7 +1006,7 @@
             // 
             this.binFilenameLabel.AutoSize = true;
             this.binFilenameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.binFilenameLabel.Location = new System.Drawing.Point(253, 389);
+            this.binFilenameLabel.Location = new System.Drawing.Point(262, 526);
             this.binFilenameLabel.Name = "binFilenameLabel";
             this.binFilenameLabel.Size = new System.Drawing.Size(63, 13);
             this.binFilenameLabel.TabIndex = 22;
@@ -1008,9 +1029,9 @@
             // binGenerateButton
             // 
             this.binGenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.binGenerateButton.Location = new System.Drawing.Point(454, 360);
+            this.binGenerateButton.Location = new System.Drawing.Point(477, 497);
             this.binGenerateButton.Name = "binGenerateButton";
-            this.binGenerateButton.Size = new System.Drawing.Size(102, 48);
+            this.binGenerateButton.Size = new System.Drawing.Size(109, 48);
             this.binGenerateButton.TabIndex = 21;
             this.binGenerateButton.Text = "READ DATA";
             this.binGenerateButton.UseVisualStyleBackColor = true;
@@ -1018,7 +1039,7 @@
             // 
             // binFilenameTextBox
             // 
-            this.binFilenameTextBox.Location = new System.Drawing.Point(318, 386);
+            this.binFilenameTextBox.Location = new System.Drawing.Point(327, 523);
             this.binFilenameTextBox.MaxLength = 48;
             this.binFilenameTextBox.Name = "binFilenameTextBox";
             this.binFilenameTextBox.Size = new System.Drawing.Size(130, 20);
@@ -1032,7 +1053,7 @@
             this.binContentTextBox.Multiline = true;
             this.binContentTextBox.Name = "binContentTextBox";
             this.binContentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.binContentTextBox.Size = new System.Drawing.Size(228, 294);
+            this.binContentTextBox.Size = new System.Drawing.Size(228, 419);
             this.binContentTextBox.TabIndex = 23;
             this.binContentTextBox.TextChanged += new System.EventHandler(this.binContentTextBox_TextChanged);
             // 
@@ -1042,17 +1063,56 @@
             this.rndToolTip.InitialDelay = 500;
             this.rndToolTip.ReshowDelay = 100;
             // 
+            // quaMaxMessageToggle
+            // 
+            this.quaMaxMessageToggle.AutoSize = true;
+            this.quaMaxMessageToggle.Location = new System.Drawing.Point(6, 200);
+            this.quaMaxMessageToggle.Name = "quaMaxMessageToggle";
+            this.quaMaxMessageToggle.Size = new System.Drawing.Size(123, 17);
+            this.quaMaxMessageToggle.TabIndex = 13;
+            this.quaMaxMessageToggle.Text = "Max message speed";
+            this.rndToolTip.SetToolTip(this.quaMaxMessageToggle, "Will set default textbox message speed to maximum.");
+            this.quaMaxMessageToggle.UseVisualStyleBackColor = true;
+            this.quaMaxMessageToggle.CheckedChanged += new System.EventHandler(this.quaMaxMessageToggle_CheckedChanged);
+            // 
+            // rndSpellNamesDropdown
+            // 
+            this.rndSpellNamesDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndSpellNamesDropdown.FormattingEnabled = true;
+            this.rndSpellNamesDropdown.Items.AddRange(new object[] {
+            "Ambiguous",
+            "Obvious"});
+            this.rndSpellNamesDropdown.Location = new System.Drawing.Point(160, 48);
+            this.rndSpellNamesDropdown.Name = "rndSpellNamesDropdown";
+            this.rndSpellNamesDropdown.Size = new System.Drawing.Size(157, 21);
+            this.rndSpellNamesDropdown.TabIndex = 21;
+            this.rndSpellNamesDropdown.Visible = false;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.LinkArea = new System.Windows.Forms.LinkArea(477, 41);
+            this.linkLabel1.Location = new System.Drawing.Point(297, 16);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(280, 110);
+            this.linkLabel1.TabIndex = 8;
+            this.linkLabel1.Text = "Data Exploration and Theory: \r\nLandmine36, Mallos31, Kirkq\r\n\r\nInspiration and Sup" +
+    "port:\r\nUsedpizza, the Eltale Monsters Discord, \r\nall at Rosemary and Rectangles." +
+    "";
+            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabel1.UseCompatibleTextRendering = true;
+            // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(594, 467);
+            this.ClientSize = new System.Drawing.Size(628, 605);
             this.Controls.Add(this.tabsControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(606, 502);
-            this.MinimumSize = new System.Drawing.Size(606, 502);
+            this.MaximumSize = new System.Drawing.Size(640, 640);
+            this.MinimumSize = new System.Drawing.Size(640, 640);
             this.Name = "MerrowStandard";
             this.Text = "MERROW";
             this.Load += new System.EventHandler(this.MerrowForm_Load);
@@ -1108,7 +1168,7 @@
         private System.Windows.Forms.TextBox seedTextBox;
         private System.Windows.Forms.ComboBox rndDropsDropdown;
         private System.Windows.Forms.CheckBox rndDropsToggle;
-        private System.Windows.Forms.CheckBox rndSpellNames;
+        private System.Windows.Forms.CheckBox rndSpellNamesToggle;
         private System.Windows.Forms.PictureBox logoBox;
         private System.Windows.Forms.TabControl tabsControl;
         private System.Windows.Forms.TabPage CreditsTab;
@@ -1118,7 +1178,7 @@
         private System.Windows.Forms.LinkLabel creditsLinkLabel;
         private System.Windows.Forms.Label crcWarningLabel;
         private System.Windows.Forms.ToolTip rndToolTip;
-        private System.Windows.Forms.CheckBox rndWeightedChest;
+        private System.Windows.Forms.CheckBox rndWeightedChestToggle;
         private System.Windows.Forms.CheckBox quaRestlessToggle;
         private System.Windows.Forms.CheckBox verboseCheckBox;
         private System.Windows.Forms.Label advFilenameLabel;
@@ -1151,12 +1211,15 @@
         private System.Windows.Forms.GroupBox newBox;
         private System.Windows.Forms.Label newLabel;
         private System.Windows.Forms.GroupBox creditsBox;
-        private System.Windows.Forms.CheckBox rndColorViewCheckbox;
+        private System.Windows.Forms.CheckBox rndColorViewToggle;
         private System.Windows.Forms.Panel rndColourPanel1;
         private System.Windows.Forms.Panel rndColourPanel4;
         private System.Windows.Forms.Panel rndColourPanel3;
         private System.Windows.Forms.Panel rndColourPanel2;
         private System.Windows.Forms.Panel rndColorViewPanel;
+        private System.Windows.Forms.CheckBox quaMaxMessageToggle;
+        private System.Windows.Forms.ComboBox rndSpellNamesDropdown;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

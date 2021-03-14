@@ -120,16 +120,21 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
+    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
+Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
+Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
+  </data>
   <data name="rndDropsToggle.ToolTip" xml:space="preserve">
     <value>Change the items dropped by non-Boss enemies.
 SHUFFLED: All default item drops are shuffled among all enemies.
-RANDOM: All drops are randomized to contain any normal drop item.
-RANDOM&amp;WINGS: All drops are randomized to contain any normal drop item or wing.
-RANDOM&amp;GEMS: All drops are randomized to contain any normal drop item or Elemental Gem.
-CHAOS: All drops are randomized to contain any normal drop item, wing, or Elemental Gem.
+RANDOM: Drops are randomized to contain any normal drop item.
+RANDOM&amp;WINGS: Drops are randomized to contain any normal drop item or wing.
+RANDOM&amp;GEMS: Drops are randomized to contain any normal drop item or Elemental Gem.
+CHAOS: Drops are randomized to contain any normal drop item, wing, or Elemental Gem.
+WINGS: Drops are randomized to contain any wing.
+GEMS: Drops are randomized to contain any Elemental Gem.
+WINGS&amp;GEMS: Drops are randomized to contain any wing or Elemental Gem.
 [WARNING - Including gems or wings can cause sequence breaks.]</value>
   </data>
   <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
@@ -141,10 +146,13 @@ RANDOM: Generate a palette at random. [Feature unfinished, quality not guarantee
   <data name="rndChestToggle.ToolTip" xml:space="preserve">
     <value>Change the contents of all chests.
 SHUFFLED: All default chest contents are shuffled among all chests.
-RANDOM: All chests are randomized to contain any normal chest item.
-RANDOM&amp;WINGS: All chests are randomized to contain any normal chest item or wing. 
-RANDOM&amp;GEMS: All chests are randomized to contain any normal chest item or Elemental Gem.
-CHAOS: All chests are randomized to contain any normal chest item, wing, or Elemental Gem.
+RANDOM: Chests are randomized to contain any normal chest item.
+RANDOM&amp;WINGS: Chests are randomized to contain any normal chest item or wing. 
+RANDOM&amp;GEMS: Chests are randomized to contain any normal chest item or Elemental Gem.
+CHAOS: Chests are randomized to contain any normal chest item, wing, or Elemental Gem.
+WINGS: Chests are randomized to contain any wing.
+GEMS: Chests are randomized to contain any Elemental Gem.
+WINGS&amp;GEMS: Chests are randomized to contain any wing or Elemental Gem.
 [WARNING - Including gems or wings can cause sequence breaks.]</value>
   </data>
   <data name="rndSpellToggle.ToolTip" xml:space="preserve">
@@ -167,28 +175,12 @@ Export will automatically overwrite any existing file with the same name, and wi
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● First attempt at text colour randomization. Results need work, but it's functional.
+    <value>● Added 'Wings', 'Gems' and 'Wings + Gems' options to chest content and enemy drop randomization.
 
-● Fixed error in Inn Texts data store, Boren's text ID was incorrect.
+● Added Max Message Speed option. Still currently causes a checksum error.
 
-● Improved wording of Binary File Reader tooltips, especially around byte length.
-
+● Improved handling of patch generation. It now checks options *before* starting to write a spoiler log.
 </value>
-  </data>
-  <data name="creditsLinkLabel.Text" xml:space="preserve">
-    <value>Developed by: 
-Hangedman (Jonah Davidson)
-
-Data Exploration and Theory: 
-Landmine36, Mallos31, Kirkq
-
-Testing and Input: 
-Bingchang, Jeville, Irenepunmaster, 
-Schooliedee, Kao
-
-Inspiration and Support:
-Usedpizza, the Eltale Monsters Discord, 
-all at Rosemary and Rectangles.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
