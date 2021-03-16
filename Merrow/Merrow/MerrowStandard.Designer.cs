@@ -26,6 +26,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MerrowStandard));
             this.rndGroupBox = new System.Windows.Forms.GroupBox();
+            this.rndSpellNamesDropdown = new System.Windows.Forms.ComboBox();
             this.rndColorViewPanel = new System.Windows.Forms.Panel();
             this.rndColourPanel4 = new System.Windows.Forms.Panel();
             this.rndColourPanel2 = new System.Windows.Forms.Panel();
@@ -45,6 +46,7 @@
             this.rndSpellDropdown = new System.Windows.Forms.ComboBox();
             this.rndSpellToggle = new System.Windows.Forms.CheckBox();
             this.quaGroupBox = new System.Windows.Forms.GroupBox();
+            this.quaMaxMessageToggle = new System.Windows.Forms.CheckBox();
             this.quaRestlessToggle = new System.Windows.Forms.CheckBox();
             this.quaLevelToggle = new System.Windows.Forms.CheckBox();
             this.quaSoulToggle = new System.Windows.Forms.CheckBox();
@@ -67,6 +69,7 @@
             this.newBox = new System.Windows.Forms.GroupBox();
             this.newLabel = new System.Windows.Forms.Label();
             this.creditsBox = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.creditsLinkLabel = new System.Windows.Forms.LinkLabel();
             this.termsLinkLabel = new System.Windows.Forms.LinkLabel();
             this.RandomizerTab = new System.Windows.Forms.TabPage();
@@ -99,10 +102,11 @@
             this.binGenerateButton = new System.Windows.Forms.Button();
             this.binFilenameTextBox = new System.Windows.Forms.TextBox();
             this.binContentTextBox = new System.Windows.Forms.TextBox();
+            this.CRCTab = new System.Windows.Forms.TabPage();
+            this.crcErrorLabel = new System.Windows.Forms.Label();
+            this.crcRepairButton = new System.Windows.Forms.Button();
+            this.crcFileButton = new System.Windows.Forms.Button();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.quaMaxMessageToggle = new System.Windows.Forms.CheckBox();
-            this.rndSpellNamesDropdown = new System.Windows.Forms.ComboBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.rndGroupBox.SuspendLayout();
             this.rndColorViewPanel.SuspendLayout();
             this.quaGroupBox.SuspendLayout();
@@ -117,6 +121,7 @@
             this.ReaderTab.SuspendLayout();
             this.binLengthGroup.SuspendLayout();
             this.binAddrGroup.SuspendLayout();
+            this.CRCTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // rndGroupBox
@@ -142,6 +147,19 @@
             this.rndGroupBox.TabIndex = 0;
             this.rndGroupBox.TabStop = false;
             this.rndGroupBox.Text = "RANDOMIZATION";
+            // 
+            // rndSpellNamesDropdown
+            // 
+            this.rndSpellNamesDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndSpellNamesDropdown.FormattingEnabled = true;
+            this.rndSpellNamesDropdown.Items.AddRange(new object[] {
+            "Ambiguous",
+            "Obvious"});
+            this.rndSpellNamesDropdown.Location = new System.Drawing.Point(160, 48);
+            this.rndSpellNamesDropdown.Name = "rndSpellNamesDropdown";
+            this.rndSpellNamesDropdown.Size = new System.Drawing.Size(157, 21);
+            this.rndSpellNamesDropdown.TabIndex = 21;
+            this.rndSpellNamesDropdown.Visible = false;
             // 
             // rndColorViewPanel
             // 
@@ -397,6 +415,18 @@
             this.quaGroupBox.TabStop = false;
             this.quaGroupBox.Text = "QUALITY / FUN";
             // 
+            // quaMaxMessageToggle
+            // 
+            this.quaMaxMessageToggle.AutoSize = true;
+            this.quaMaxMessageToggle.Location = new System.Drawing.Point(6, 200);
+            this.quaMaxMessageToggle.Name = "quaMaxMessageToggle";
+            this.quaMaxMessageToggle.Size = new System.Drawing.Size(123, 17);
+            this.quaMaxMessageToggle.TabIndex = 13;
+            this.quaMaxMessageToggle.Text = "Max message speed";
+            this.rndToolTip.SetToolTip(this.quaMaxMessageToggle, "Will set default textbox message speed to maximum.");
+            this.quaMaxMessageToggle.UseVisualStyleBackColor = true;
+            this.quaMaxMessageToggle.CheckedChanged += new System.EventHandler(this.quaMaxMessageToggle_CheckedChanged);
+            // 
             // quaRestlessToggle
             // 
             this.quaRestlessToggle.AutoSize = true;
@@ -615,6 +645,7 @@
             this.tabsControl.Controls.Add(this.RandomizerTab);
             this.tabsControl.Controls.Add(this.CustomTab);
             this.tabsControl.Controls.Add(this.ReaderTab);
+            this.tabsControl.Controls.Add(this.CRCTab);
             this.tabsControl.Location = new System.Drawing.Point(12, 12);
             this.tabsControl.Name = "tabsControl";
             this.tabsControl.SelectedIndex = 0;
@@ -669,6 +700,20 @@
             this.creditsBox.TabIndex = 10;
             this.creditsBox.TabStop = false;
             this.creditsBox.Text = "CREDITS";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.LinkArea = new System.Windows.Forms.LinkArea(477, 41);
+            this.linkLabel1.Location = new System.Drawing.Point(297, 16);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(280, 110);
+            this.linkLabel1.TabIndex = 8;
+            this.linkLabel1.Text = "Data Exploration and Theory: \r\nLandmine36, Mallos31, Kirkq\r\n\r\nInspiration and Sup" +
+    "port:\r\nUsedpizza, the Eltale Monsters Discord, \r\nall at Rosemary and Rectangles." +
+    "";
+            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabel1.UseCompatibleTextRendering = true;
             // 
             // creditsLinkLabel
             // 
@@ -1057,50 +1102,60 @@
             this.binContentTextBox.TabIndex = 23;
             this.binContentTextBox.TextChanged += new System.EventHandler(this.binContentTextBox_TextChanged);
             // 
+            // CRCTab
+            // 
+            this.CRCTab.BackColor = System.Drawing.Color.Transparent;
+            this.CRCTab.Controls.Add(this.crcErrorLabel);
+            this.CRCTab.Controls.Add(this.crcRepairButton);
+            this.CRCTab.Controls.Add(this.crcFileButton);
+            this.CRCTab.Location = new System.Drawing.Point(4, 22);
+            this.CRCTab.Name = "CRCTab";
+            this.CRCTab.Size = new System.Drawing.Size(596, 555);
+            this.CRCTab.TabIndex = 4;
+            this.CRCTab.Text = "CRC Repair Tool";
+            // 
+            // crcErrorLabel
+            // 
+            this.crcErrorLabel.ForeColor = System.Drawing.Color.Firebrick;
+            this.crcErrorLabel.Location = new System.Drawing.Point(74, 276);
+            this.crcErrorLabel.Name = "crcErrorLabel";
+            this.crcErrorLabel.Size = new System.Drawing.Size(438, 24);
+            this.crcErrorLabel.TabIndex = 33;
+            this.crcErrorLabel.Text = "ERROR:";
+            this.crcErrorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.crcErrorLabel.Visible = false;
+            // 
+            // crcRepairButton
+            // 
+            this.crcRepairButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.crcRepairButton.Location = new System.Drawing.Point(223, 336);
+            this.crcRepairButton.Name = "crcRepairButton";
+            this.crcRepairButton.Size = new System.Drawing.Size(132, 47);
+            this.crcRepairButton.TabIndex = 32;
+            this.crcRepairButton.Text = "REPAIR CHECKSUM";
+            this.rndToolTip.SetToolTip(this.crcRepairButton, "Select a binary file to read hexadecimal data from.\r\nThe file will be unloaded if" +
+        " you switch tabs or exit.");
+            this.crcRepairButton.UseVisualStyleBackColor = true;
+            this.crcRepairButton.Click += new System.EventHandler(this.crcRepairButton_Click);
+            // 
+            // crcFileButton
+            // 
+            this.crcFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.crcFileButton.Location = new System.Drawing.Point(223, 190);
+            this.crcFileButton.Name = "crcFileButton";
+            this.crcFileButton.Size = new System.Drawing.Size(132, 48);
+            this.crcFileButton.TabIndex = 31;
+            this.crcFileButton.Text = "SELECT Z64 FILE";
+            this.rndToolTip.SetToolTip(this.crcFileButton, "Select a binary file to read hexadecimal data from.\r\nThe file will be unloaded if" +
+        " you switch tabs or exit.");
+            this.crcFileButton.UseVisualStyleBackColor = true;
+            this.crcFileButton.Click += new System.EventHandler(this.crcFileButton_Click);
+            // 
             // rndToolTip
             // 
             this.rndToolTip.AutoPopDelay = 30000;
             this.rndToolTip.InitialDelay = 500;
             this.rndToolTip.ReshowDelay = 100;
-            // 
-            // quaMaxMessageToggle
-            // 
-            this.quaMaxMessageToggle.AutoSize = true;
-            this.quaMaxMessageToggle.Location = new System.Drawing.Point(6, 200);
-            this.quaMaxMessageToggle.Name = "quaMaxMessageToggle";
-            this.quaMaxMessageToggle.Size = new System.Drawing.Size(123, 17);
-            this.quaMaxMessageToggle.TabIndex = 13;
-            this.quaMaxMessageToggle.Text = "Max message speed";
-            this.rndToolTip.SetToolTip(this.quaMaxMessageToggle, "Will set default textbox message speed to maximum.");
-            this.quaMaxMessageToggle.UseVisualStyleBackColor = true;
-            this.quaMaxMessageToggle.CheckedChanged += new System.EventHandler(this.quaMaxMessageToggle_CheckedChanged);
-            // 
-            // rndSpellNamesDropdown
-            // 
-            this.rndSpellNamesDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.rndSpellNamesDropdown.FormattingEnabled = true;
-            this.rndSpellNamesDropdown.Items.AddRange(new object[] {
-            "Ambiguous",
-            "Obvious"});
-            this.rndSpellNamesDropdown.Location = new System.Drawing.Point(160, 48);
-            this.rndSpellNamesDropdown.Name = "rndSpellNamesDropdown";
-            this.rndSpellNamesDropdown.Size = new System.Drawing.Size(157, 21);
-            this.rndSpellNamesDropdown.TabIndex = 21;
-            this.rndSpellNamesDropdown.Visible = false;
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.LinkArea = new System.Windows.Forms.LinkArea(477, 41);
-            this.linkLabel1.Location = new System.Drawing.Point(297, 16);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(280, 110);
-            this.linkLabel1.TabIndex = 8;
-            this.linkLabel1.Text = "Data Exploration and Theory: \r\nLandmine36, Mallos31, Kirkq\r\n\r\nInspiration and Sup" +
-    "port:\r\nUsedpizza, the Eltale Monsters Discord, \r\nall at Rosemary and Rectangles." +
-    "";
-            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabel1.UseCompatibleTextRendering = true;
             // 
             // MerrowStandard
             // 
@@ -1136,6 +1191,7 @@
             this.ReaderTab.PerformLayout();
             this.binLengthGroup.ResumeLayout(false);
             this.binAddrGroup.ResumeLayout(false);
+            this.CRCTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1220,6 +1276,10 @@
         private System.Windows.Forms.CheckBox quaMaxMessageToggle;
         private System.Windows.Forms.ComboBox rndSpellNamesDropdown;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.TabPage CRCTab;
+        private System.Windows.Forms.Button crcRepairButton;
+        private System.Windows.Forms.Button crcFileButton;
+        private System.Windows.Forms.Label crcErrorLabel;
     }
 }
 

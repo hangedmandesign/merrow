@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Security;
 using System.Drawing;
@@ -14,6 +15,13 @@ namespace Merrow {
         DataStore library;
         Random SysRand = new Random();
         private OpenFileDialog binOpenFileDialog;
+        private OpenFileDialog crcOpenFileDialog;
+
+        //crc dll import
+        [DllImport("crc64.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int fix_crc(string crcPath);
+        string fullPath;
+        bool crcFileSelected = false;
 
         //variables
         int spellstart = 13941344; //D4BA60
@@ -78,6 +86,11 @@ namespace Merrow {
             binOpenFileDialog = new OpenFileDialog() {
                 FileName = "Select a file...",
                 Title = "Open binary file"
+            };
+            crcOpenFileDialog = new OpenFileDialog() {
+                FileName = "Select a Z64...",
+                Filter = "Z64 files (*.z64)|*.z64",
+                Title = "Select Z64 file"
             };
             shuffles = new int[playerspells];
             spoilerspells = new string[playerspells];
@@ -995,6 +1008,13 @@ namespace Merrow {
             }
         }
 
+        //CRC REPAIR TOOL--------------------------------------------------------------------
+
+        public void RepairCRC(string fPath) {
+            
+        }
+
+
         //VARIABLE OPERATIONS----------------------------------------------------------------
 
         public static string ByteArrayToString(byte[] ba) { //Convert byte array to hex string
@@ -1135,7 +1155,11 @@ namespace Merrow {
         }
 
         private void rndTextContentToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndTextContentToggle.Checked) { rndTextContentDropdown.Visible = true; } else { rndTextContentDropdown.Visible = false; }
+            if (rndTextContentToggle.Checked) {
+                rndTextContentDropdown.Visible = true;
+            } else {
+                rndTextContentDropdown.Visible = false;
+            }
         }
 
         private void quaZoomToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1252,6 +1276,8 @@ namespace Merrow {
             binErrorLabel.Visible = false;
             binFileLoaded = false;
             binFileBytes = null;
+            crcErrorLabel.Visible = false;
+            crcFileSelected = false;
         }
 
         private void terms__LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -1286,6 +1312,39 @@ namespace Merrow {
             }
             else {
                 crcWarningLabel.Visible = false;
+            }
+        }
+
+        private void crcFileButton_Click(object sender, EventArgs e) {
+            if (crcOpenFileDialog.ShowDialog() == DialogResult.OK) {
+                try {
+                    fullPath = crcOpenFileDialog.FileName;
+                    crcErrorLabel.Text = "File loaded: " + crcOpenFileDialog.FileName + ".";
+                    crcErrorLabel.Visible = true;
+                    crcFileSelected = true;
+                }
+                catch (SecurityException ex) {
+                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+                }
+            }
+        }
+
+        private void crcRepairButton_Click(object sender, EventArgs e) {
+            int message = 2;
+            if (crcFileSelected) {
+                message = fix_crc(fullPath);
+            
+                if (message == 0) {
+                    crcErrorLabel.Text = "Checksum repaired.";
+                }
+                if (message == 1) {
+                    crcErrorLabel.Text = "ERROR: There was an error. More granular error codes coming soon.";
+                }
+                
+            }
+            if (message == 2) {
+                crcErrorLabel.Text = "ERROR: File not selected or available.";
             }
         }
     }

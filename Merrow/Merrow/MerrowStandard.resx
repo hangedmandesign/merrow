@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
     <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
 Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
@@ -175,7 +178,9 @@ Export will automatically overwrite any existing file with the same name, and wi
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Added 'Wings', 'Gems' and 'Wings + Gems' options to chest content and enemy drop randomization.
+    <value>● Added the first attempt at a CRC Repair Tool. It is pretty rudimentary, but functional, and will eventually no longer require the packaged dll.
+
+● Added 'Wings', 'Gems' and 'Wings + Gems' options to chest content and enemy drop randomization.
 
 ● Added Max Message Speed option. Still currently causes a checksum error.
 
