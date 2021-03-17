@@ -120,9 +120,6 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
     <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
 Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
@@ -178,11 +175,11 @@ Export will automatically overwrite any existing file with the same name, and wi
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Added the first attempt at a CRC Repair Tool. It is pretty rudimentary, but functional, and will eventually no longer require the packaged dll.
+    <value>● Added the first attempt at a CRC (Checksum) Repair Tool. It is pretty rudimentary, but functional, and will eventually no longer require the packaged dll file. You can use it to fix your patched file's checksum after applying a patch that causes checksum changes, such as Max Zoom or Max Message Speed.
 
 ● Added 'Wings', 'Gems' and 'Wings + Gems' options to chest content and enemy drop randomization.
 
-● Added Max Message Speed option. Still currently causes a checksum error.
+● Added Max Message Speed option. It will cause a checksum error, which can be repaired with the CRC Repair Tool.
 
 ● Improved handling of patch generation. It now checks options *before* starting to write a spoiler log.
 </value>
@@ -235,6 +232,25 @@ warranty: please refer to the license readme file for more info.</value>
 Each entry should follow this format: (address),(length),...
 The binary file will be read starting at [address], for [length] bytes.
 After entry, ensure you select below what format each value type is in.</value>
+  </data>
+  <data name="crcHelpLabel.ToolTip" xml:space="preserve">
+    <value>This is a CRC (N64 file checksum) Repair Tool.
+The checksum is a value calculated based on a certain portion of a Z64 file, 
+that is used to verify that the file is legitimate. Making modifications (with 
+tools or patches) to that portion of the file will cause the checksum to be
+incorrect, which causes certain hardware and emulation to fail on boot.
+
+This tool can be used to recalculate and update the checksum of a Z64 file,
+allowing hardware to recognize it as legitimate without errors or issues.
+It uses a DLL compiled from existing checksum calculation code in C. Full
+details of the algorithm and the license information for the C script are
+available in the repo, under the CRC64 subfolder.
+
+This tool is restricted to Z64 files, to prevent possible memory errors and
+other problems, but it is experimental software. Please ensure you back up any
+files before attempting any checksum repairs. It is your responsibility to 
+know what you are doing to files, and why. Merrow is offered without warranty: 
+please refer to the license readme file for more info.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

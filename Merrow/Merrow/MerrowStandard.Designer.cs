@@ -103,6 +103,7 @@
             this.binFilenameTextBox = new System.Windows.Forms.TextBox();
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.CRCTab = new System.Windows.Forms.TabPage();
+            this.crcHelpLabel = new System.Windows.Forms.Label();
             this.crcErrorLabel = new System.Windows.Forms.Label();
             this.crcRepairButton = new System.Windows.Forms.Button();
             this.crcFileButton = new System.Windows.Forms.Button();
@@ -767,8 +768,8 @@
             this.crcWarningLabel.Name = "crcWarningLabel";
             this.crcWarningLabel.Size = new System.Drawing.Size(550, 31);
             this.crcWarningLabel.TabIndex = 5;
-            this.crcWarningLabel.Text = "WARNING: Checksum error. Patched file will not work in PJ64 derivatives, others m" +
-    "ay see error messages.";
+            this.crcWarningLabel.Text = "WARNING: Checksum error. Patched file may not run. Backup and use CRC Repair Tool" +
+    " to fix errors.";
             this.crcWarningLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.crcWarningLabel.Visible = false;
             // 
@@ -1105,6 +1106,7 @@
             // CRCTab
             // 
             this.CRCTab.BackColor = System.Drawing.Color.Transparent;
+            this.CRCTab.Controls.Add(this.crcHelpLabel);
             this.CRCTab.Controls.Add(this.crcErrorLabel);
             this.CRCTab.Controls.Add(this.crcRepairButton);
             this.CRCTab.Controls.Add(this.crcFileButton);
@@ -1114,10 +1116,22 @@
             this.CRCTab.TabIndex = 4;
             this.CRCTab.Text = "CRC Repair Tool";
             // 
+            // crcHelpLabel
+            // 
+            this.crcHelpLabel.AutoSize = true;
+            this.crcHelpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
+            this.crcHelpLabel.Location = new System.Drawing.Point(568, 3);
+            this.crcHelpLabel.Name = "crcHelpLabel";
+            this.crcHelpLabel.Size = new System.Drawing.Size(25, 26);
+            this.crcHelpLabel.TabIndex = 34;
+            this.crcHelpLabel.Text = "?";
+            this.rndToolTip.SetToolTip(this.crcHelpLabel, resources.GetString("crcHelpLabel.ToolTip"));
+            // 
             // crcErrorLabel
             // 
+            this.crcErrorLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.crcErrorLabel.ForeColor = System.Drawing.Color.Firebrick;
-            this.crcErrorLabel.Location = new System.Drawing.Point(74, 276);
+            this.crcErrorLabel.Location = new System.Drawing.Point(80, 265);
             this.crcErrorLabel.Name = "crcErrorLabel";
             this.crcErrorLabel.Size = new System.Drawing.Size(438, 24);
             this.crcErrorLabel.TabIndex = 33;
@@ -1128,20 +1142,18 @@
             // crcRepairButton
             // 
             this.crcRepairButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.crcRepairButton.Location = new System.Drawing.Point(223, 336);
+            this.crcRepairButton.Location = new System.Drawing.Point(229, 355);
             this.crcRepairButton.Name = "crcRepairButton";
-            this.crcRepairButton.Size = new System.Drawing.Size(132, 47);
+            this.crcRepairButton.Size = new System.Drawing.Size(132, 48);
             this.crcRepairButton.TabIndex = 32;
             this.crcRepairButton.Text = "REPAIR CHECKSUM";
-            this.rndToolTip.SetToolTip(this.crcRepairButton, "Select a binary file to read hexadecimal data from.\r\nThe file will be unloaded if" +
-        " you switch tabs or exit.");
             this.crcRepairButton.UseVisualStyleBackColor = true;
             this.crcRepairButton.Click += new System.EventHandler(this.crcRepairButton_Click);
             // 
             // crcFileButton
             // 
             this.crcFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.crcFileButton.Location = new System.Drawing.Point(223, 190);
+            this.crcFileButton.Location = new System.Drawing.Point(229, 153);
             this.crcFileButton.Name = "crcFileButton";
             this.crcFileButton.Size = new System.Drawing.Size(132, 48);
             this.crcFileButton.TabIndex = 31;
@@ -1192,6 +1204,7 @@
             this.binLengthGroup.ResumeLayout(false);
             this.binAddrGroup.ResumeLayout(false);
             this.CRCTab.ResumeLayout(false);
+            this.CRCTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1280,6 +1293,7 @@
         private System.Windows.Forms.Button crcRepairButton;
         private System.Windows.Forms.Button crcFileButton;
         private System.Windows.Forms.Label crcErrorLabel;
+        private System.Windows.Forms.Label crcHelpLabel;
     }
 }
 
