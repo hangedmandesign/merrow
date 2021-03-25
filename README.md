@@ -1,8 +1,11 @@
 # Merrow
 
-Merrow is a tool for generating IPS patches, primarily to be applied to the NA/U dotZ64 version of Quest 64, offering many randomizer and quality-of-life options. You'll need an IPS-capable patching tool to use the patches it creates, like Lunar or Ninja.
+Merrow is a tool for generating IPS patches, primarily to be applied to the NA/U dotZ64 version of Quest 64, offering many randomizer and quality-of-life options.
+You'll need an IPS-capable patching tool to use the patches it creates, like Lunar or Ninja.
 
-It also has two advanced data tools that aren't specific to Quest 64 and may be handy to coders and romhackers: a universal clean IPS patch generator, for those who know what they're doing and just want to test some specific hex address patching; and a binary file reader, that allows you to specify a series of addresses and lengths and easily export hexadecimal data from any binary file.
+It also has an Z64 file checksum repair tool, because some randomizer features will modify the checksum. See the description below for more details.
+
+Along with the randomizer, Merrow has two advanced data tools that aren't specific to Quest 64 and may be handy to coders and romhackers: a universal clean IPS patch generator, for those who know what they're doing and just want to test some specific hex address patching; and a binary file reader, that allows you to specify a series of addresses and lengths and easily export hexadecimal data from any binary file.
 
 Developed by Hangedman (Jonah Davidson), with the aid and support of many people, especially the Eltale Monsters Discord. Credits are available in the program itself.
 Merrow was originally developed in Unity, this repository is the C# Winforms port, to make it more widely available to edit and use.
