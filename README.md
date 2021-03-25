@@ -28,7 +28,7 @@ The rest of the files (especially *MerrowStandard.Designer.cs*) are auto-generat
 The other folder on the root level "crc64" is a C++ Visual Studio DLL project, which compiles into the **crc64.dll** file, which must be included alongside the compiled Merrow.exe for the CRC (checksum) Repair Tool to work. It's unlikely to change, so an up-to-date build of it is provided in the Merrow folder.
 
 # MerrowStandard.cs Code Structure
-This is a short overview of the code structure, contained in the class *MerrowStandard:Form*. Comments explain the sections in more detail
+This is a short overview of the code structure, contained in the class *MerrowStandard:Form*. Comments in the code explain each section in more detail.
 * Variable declarations and small arrays. New winforms objects should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout.
   - Prefixes "rnd","qua","exp" are winforms objects in the *Quest 64 Randomizer* tab
   - Prefix "adv" are winforms objects in the *Generic Patch Generator* tab
