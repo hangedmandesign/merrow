@@ -28,7 +28,7 @@ The other folder on the root level "crc64" is a C++ Visual Studio DLL project, w
 
 # MerrowStandard.cs Code Structure
 This is a short overview of the code structure, contained in the class *MerrowStandard:Form*. Comments explain the sections in more detail
-* Variable declarations and small arrays
+* Variable declarations and small arrays. New winforms objects should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout.
   - Prefixes "rnd","qua","exp" are winforms objects in the *Quest 64 Randomizer* tab
   - Prefix "adv" are winforms objects in the *Generic Patch Generator* tab
   - Prefix "bin" are winforms objects in the *Binary File Reader* tab
@@ -41,7 +41,7 @@ This is a short overview of the code structure, contained in the class *MerrowSt
 * *BinRead*: Binary file reader functionality, reading from selected file at specified addresses and exported as comma-separated strings.
 * *RepairCRC*: CRC repair tool functionality, calling the fix_crc dll connection.
 * Variable operations, for easy converting bytex/hex/strings/colors
-* UI interactions, for modifying the interface on interaction and for calling other functions. None should be left empty.
+* UI interactions, for modifying the interface on interaction and for calling other functions. Roughly ordered by tab. These should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout. None should be left empty.
 
 # License
 Merrow is copyright (c) 2021 Jonah Davidson (Hangedman).
