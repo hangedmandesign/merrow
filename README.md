@@ -22,6 +22,7 @@ The project is a C# Visual Studio WPF application. When compiled, it will create
 * *MerrowStandard.cs*, which contains the actual application code, further detailed below in the **Code Structure** section. 
 * *DataStore.cs*, which contains arrays and tables of reference data used for randomizer calculation and generation.
 * *crc64.dll*, a DLL implementation of some old community code for repairing N64 CRCs, modified to work standalone from a filename rather than requiring a bitstream.
+
 The rest of the files (especially *MerrowStandard.Designer.cs*) are auto-generated as part of WPF and should never be manually edited, to avoid future build issues. To edit the visual layout of Merrow, right-click on the *MerrowStandard.cs* file in the Solution Explorer, and select *View Designer*.
 
 The other folder on the root level "crc64" is a C++ Visual Studio DLL project, which compiles into the **crc64.dll** file, which must be included alongside the compiled Merrow.exe for the CRC (checksum) Repair Tool to work. It's unlikely to change, so an up-to-date build of it is provided in the Merrow folder.
