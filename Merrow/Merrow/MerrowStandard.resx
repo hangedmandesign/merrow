@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
     <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
 Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
@@ -169,7 +172,7 @@ Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compac
 Status spells: Changes positive/negative status effects' accuracy to 100.
 All spells: Changes all spells' accuracy to 100 (Also includes Escape, Extinction, etc.)</value>
   </data>
-  <data name="filenameLabel.ToolTip" xml:space="preserve">
+  <data name="expFilenameLabel.ToolTip" xml:space="preserve">
     <value>IPS patch filename. Default is 'merrowpatch_(seed number)' if nothing is typed.
 Export will automatically overwrite any existing file with the same name, and will open a window to the save location. 
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>

@@ -57,12 +57,12 @@
             this.quaInvalidityToggle = new System.Windows.Forms.CheckBox();
             this.labelVersion = new System.Windows.Forms.Label();
             this.expGroupBox = new System.Windows.Forms.GroupBox();
-            this.verboseCheckBox = new System.Windows.Forms.CheckBox();
-            this.filenameLabel = new System.Windows.Forms.Label();
-            this.seedLabel = new System.Windows.Forms.Label();
-            this.genButton = new System.Windows.Forms.Button();
-            this.filenameTextBox = new System.Windows.Forms.TextBox();
-            this.seedTextBox = new System.Windows.Forms.TextBox();
+            this.expVerboseCheckBox = new System.Windows.Forms.CheckBox();
+            this.expFilenameLabel = new System.Windows.Forms.Label();
+            this.expSeedLabel = new System.Windows.Forms.Label();
+            this.expGenerateButton = new System.Windows.Forms.Button();
+            this.expFilenameTextBox = new System.Windows.Forms.TextBox();
+            this.expSeedTextBox = new System.Windows.Forms.TextBox();
             this.logoBox = new System.Windows.Forms.PictureBox();
             this.tabsControl = new System.Windows.Forms.TabControl();
             this.CreditsTab = new System.Windows.Forms.TabPage();
@@ -73,7 +73,7 @@
             this.creditsLinkLabel = new System.Windows.Forms.LinkLabel();
             this.termsLinkLabel = new System.Windows.Forms.LinkLabel();
             this.RandomizerTab = new System.Windows.Forms.TabPage();
-            this.crcWarningLabel = new System.Windows.Forms.Label();
+            this.rndCRCWarningLabel = new System.Windows.Forms.Label();
             this.CustomTab = new System.Windows.Forms.TabPage();
             this.advErrorLabel = new System.Windows.Forms.Label();
             this.advHelpLabel = new System.Windows.Forms.Label();
@@ -549,12 +549,12 @@
             // 
             // expGroupBox
             // 
-            this.expGroupBox.Controls.Add(this.verboseCheckBox);
-            this.expGroupBox.Controls.Add(this.filenameLabel);
-            this.expGroupBox.Controls.Add(this.seedLabel);
-            this.expGroupBox.Controls.Add(this.genButton);
-            this.expGroupBox.Controls.Add(this.filenameTextBox);
-            this.expGroupBox.Controls.Add(this.seedTextBox);
+            this.expGroupBox.Controls.Add(this.expVerboseCheckBox);
+            this.expGroupBox.Controls.Add(this.expFilenameLabel);
+            this.expGroupBox.Controls.Add(this.expSeedLabel);
+            this.expGroupBox.Controls.Add(this.expGenerateButton);
+            this.expGroupBox.Controls.Add(this.expFilenameTextBox);
+            this.expGroupBox.Controls.Add(this.expSeedTextBox);
             this.expGroupBox.Location = new System.Drawing.Point(9, 494);
             this.expGroupBox.Name = "expGroupBox";
             this.expGroupBox.Size = new System.Drawing.Size(581, 55);
@@ -562,72 +562,72 @@
             this.expGroupBox.TabStop = false;
             this.expGroupBox.Text = "EXPORT";
             // 
-            // verboseCheckBox
+            // expVerboseCheckBox
             // 
-            this.verboseCheckBox.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.verboseCheckBox.Checked = true;
-            this.verboseCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.verboseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.verboseCheckBox.Location = new System.Drawing.Point(392, 15);
-            this.verboseCheckBox.Name = "verboseCheckBox";
-            this.verboseCheckBox.Size = new System.Drawing.Size(71, 34);
-            this.verboseCheckBox.TabIndex = 13;
-            this.verboseCheckBox.Text = "Verbose Log";
-            this.rndToolTip.SetToolTip(this.verboseCheckBox, "If enabled, spoiler log will contain a complete listing of modified spells, chest" +
+            this.expVerboseCheckBox.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.expVerboseCheckBox.Checked = true;
+            this.expVerboseCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.expVerboseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.expVerboseCheckBox.Location = new System.Drawing.Point(392, 15);
+            this.expVerboseCheckBox.Name = "expVerboseCheckBox";
+            this.expVerboseCheckBox.Size = new System.Drawing.Size(71, 34);
+            this.expVerboseCheckBox.TabIndex = 13;
+            this.expVerboseCheckBox.Text = "Verbose Log";
+            this.rndToolTip.SetToolTip(this.expVerboseCheckBox, "If enabled, spoiler log will contain a complete listing of modified spells, chest" +
         "s, and/or drops.");
-            this.verboseCheckBox.UseVisualStyleBackColor = true;
-            this.verboseCheckBox.CheckedChanged += new System.EventHandler(this.verboseCheckBox_CheckedChanged);
+            this.expVerboseCheckBox.UseVisualStyleBackColor = true;
+            this.expVerboseCheckBox.CheckedChanged += new System.EventHandler(this.expVerboseCheckBox_CheckedChanged);
             // 
-            // filenameLabel
+            // expFilenameLabel
             // 
-            this.filenameLabel.AutoSize = true;
-            this.filenameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.filenameLabel.Location = new System.Drawing.Point(173, 26);
-            this.filenameLabel.Name = "filenameLabel";
-            this.filenameLabel.Size = new System.Drawing.Size(63, 13);
-            this.filenameLabel.TabIndex = 13;
-            this.filenameLabel.Text = "FILENAME:";
-            this.rndToolTip.SetToolTip(this.filenameLabel, resources.GetString("filenameLabel.ToolTip"));
+            this.expFilenameLabel.AutoSize = true;
+            this.expFilenameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.expFilenameLabel.Location = new System.Drawing.Point(173, 26);
+            this.expFilenameLabel.Name = "expFilenameLabel";
+            this.expFilenameLabel.Size = new System.Drawing.Size(63, 13);
+            this.expFilenameLabel.TabIndex = 13;
+            this.expFilenameLabel.Text = "FILENAME:";
+            this.rndToolTip.SetToolTip(this.expFilenameLabel, resources.GetString("expFilenameLabel.ToolTip"));
             // 
-            // seedLabel
+            // expSeedLabel
             // 
-            this.seedLabel.AutoSize = true;
-            this.seedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.seedLabel.Location = new System.Drawing.Point(9, 26);
-            this.seedLabel.Name = "seedLabel";
-            this.seedLabel.Size = new System.Drawing.Size(39, 13);
-            this.seedLabel.TabIndex = 12;
-            this.seedLabel.Text = "SEED:";
-            this.rndToolTip.SetToolTip(this.seedLabel, "Auto-generated pseudorandom seed. \r\nDefaults to a random 9-digit number but can b" +
+            this.expSeedLabel.AutoSize = true;
+            this.expSeedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.expSeedLabel.Location = new System.Drawing.Point(9, 26);
+            this.expSeedLabel.Name = "expSeedLabel";
+            this.expSeedLabel.Size = new System.Drawing.Size(39, 13);
+            this.expSeedLabel.TabIndex = 12;
+            this.expSeedLabel.Text = "SEED:";
+            this.rndToolTip.SetToolTip(this.expSeedLabel, "Auto-generated pseudorandom seed. \r\nDefaults to a random 9-digit number but can b" +
         "e edited freely.");
             // 
-            // genButton
+            // expGenerateButton
             // 
-            this.genButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.genButton.Location = new System.Drawing.Point(472, 13);
-            this.genButton.Name = "genButton";
-            this.genButton.Size = new System.Drawing.Size(102, 35);
-            this.genButton.TabIndex = 2;
-            this.genButton.Text = "GENERATE";
-            this.genButton.UseVisualStyleBackColor = true;
-            this.genButton.Click += new System.EventHandler(this.genButton_Click);
+            this.expGenerateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.expGenerateButton.Location = new System.Drawing.Point(472, 13);
+            this.expGenerateButton.Name = "expGenerateButton";
+            this.expGenerateButton.Size = new System.Drawing.Size(102, 35);
+            this.expGenerateButton.TabIndex = 2;
+            this.expGenerateButton.Text = "GENERATE";
+            this.expGenerateButton.UseVisualStyleBackColor = true;
+            this.expGenerateButton.Click += new System.EventHandler(this.expGenerateButton_Click);
             // 
-            // filenameTextBox
+            // expFilenameTextBox
             // 
-            this.filenameTextBox.Location = new System.Drawing.Point(238, 23);
-            this.filenameTextBox.Name = "filenameTextBox";
-            this.filenameTextBox.Size = new System.Drawing.Size(130, 20);
-            this.filenameTextBox.TabIndex = 1;
-            this.filenameTextBox.TextChanged += new System.EventHandler(this.filenameTextBox_TextChanged);
+            this.expFilenameTextBox.Location = new System.Drawing.Point(238, 23);
+            this.expFilenameTextBox.Name = "expFilenameTextBox";
+            this.expFilenameTextBox.Size = new System.Drawing.Size(130, 20);
+            this.expFilenameTextBox.TabIndex = 1;
+            this.expFilenameTextBox.TextChanged += new System.EventHandler(this.expFilenameTextBox_TextChanged);
             // 
-            // seedTextBox
+            // expSeedTextBox
             // 
-            this.seedTextBox.Location = new System.Drawing.Point(49, 22);
-            this.seedTextBox.MaxLength = 9;
-            this.seedTextBox.Name = "seedTextBox";
-            this.seedTextBox.Size = new System.Drawing.Size(100, 20);
-            this.seedTextBox.TabIndex = 0;
-            this.seedTextBox.TextChanged += new System.EventHandler(this.seedTextBox_TextChanged);
+            this.expSeedTextBox.Location = new System.Drawing.Point(49, 22);
+            this.expSeedTextBox.MaxLength = 9;
+            this.expSeedTextBox.Name = "expSeedTextBox";
+            this.expSeedTextBox.Size = new System.Drawing.Size(100, 20);
+            this.expSeedTextBox.TabIndex = 0;
+            this.expSeedTextBox.TextChanged += new System.EventHandler(this.expSeedTextBox_TextChanged);
             // 
             // logoBox
             // 
@@ -749,7 +749,7 @@
             // RandomizerTab
             // 
             this.RandomizerTab.BackColor = System.Drawing.Color.Transparent;
-            this.RandomizerTab.Controls.Add(this.crcWarningLabel);
+            this.RandomizerTab.Controls.Add(this.rndCRCWarningLabel);
             this.RandomizerTab.Controls.Add(this.rndGroupBox);
             this.RandomizerTab.Controls.Add(this.quaGroupBox);
             this.RandomizerTab.Controls.Add(this.expGroupBox);
@@ -760,18 +760,18 @@
             this.RandomizerTab.TabIndex = 1;
             this.RandomizerTab.Text = "Quest 64 Randomizer";
             // 
-            // crcWarningLabel
+            // rndCRCWarningLabel
             // 
-            this.crcWarningLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.crcWarningLabel.ForeColor = System.Drawing.Color.Firebrick;
-            this.crcWarningLabel.Location = new System.Drawing.Point(21, 460);
-            this.crcWarningLabel.Name = "crcWarningLabel";
-            this.crcWarningLabel.Size = new System.Drawing.Size(550, 31);
-            this.crcWarningLabel.TabIndex = 5;
-            this.crcWarningLabel.Text = "WARNING: Checksum error. Patched file may not run. Backup and use CRC Repair Tool" +
+            this.rndCRCWarningLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rndCRCWarningLabel.ForeColor = System.Drawing.Color.Firebrick;
+            this.rndCRCWarningLabel.Location = new System.Drawing.Point(21, 460);
+            this.rndCRCWarningLabel.Name = "rndCRCWarningLabel";
+            this.rndCRCWarningLabel.Size = new System.Drawing.Size(550, 31);
+            this.rndCRCWarningLabel.TabIndex = 5;
+            this.rndCRCWarningLabel.Text = "WARNING: Checksum error. Patched file may not run. Backup and use CRC Repair Tool" +
     " to fix errors.";
-            this.crcWarningLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.crcWarningLabel.Visible = false;
+            this.rndCRCWarningLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rndCRCWarningLabel.Visible = false;
             // 
             // CustomTab
             // 
@@ -1182,7 +1182,6 @@
             this.MinimumSize = new System.Drawing.Size(640, 640);
             this.Name = "MerrowStandard";
             this.Text = "MERROW";
-            this.Load += new System.EventHandler(this.MerrowForm_Load);
             this.rndGroupBox.ResumeLayout(false);
             this.rndGroupBox.PerformLayout();
             this.rndColorViewPanel.ResumeLayout(false);
@@ -1230,11 +1229,11 @@
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.CheckBox quaLevelToggle;
         private System.Windows.Forms.GroupBox expGroupBox;
-        private System.Windows.Forms.Label filenameLabel;
-        private System.Windows.Forms.Label seedLabel;
-        private System.Windows.Forms.Button genButton;
-        private System.Windows.Forms.TextBox filenameTextBox;
-        private System.Windows.Forms.TextBox seedTextBox;
+        private System.Windows.Forms.Label expFilenameLabel;
+        private System.Windows.Forms.Label expSeedLabel;
+        private System.Windows.Forms.Button expGenerateButton;
+        private System.Windows.Forms.TextBox expFilenameTextBox;
+        private System.Windows.Forms.TextBox expSeedTextBox;
         private System.Windows.Forms.ComboBox rndDropsDropdown;
         private System.Windows.Forms.CheckBox rndDropsToggle;
         private System.Windows.Forms.CheckBox rndSpellNamesToggle;
@@ -1245,11 +1244,11 @@
         private System.Windows.Forms.TabPage CustomTab;
         private System.Windows.Forms.TabPage ReaderTab;
         private System.Windows.Forms.LinkLabel creditsLinkLabel;
-        private System.Windows.Forms.Label crcWarningLabel;
+        private System.Windows.Forms.Label rndCRCWarningLabel;
         private System.Windows.Forms.ToolTip rndToolTip;
         private System.Windows.Forms.CheckBox rndWeightedChestToggle;
         private System.Windows.Forms.CheckBox quaRestlessToggle;
-        private System.Windows.Forms.CheckBox verboseCheckBox;
+        private System.Windows.Forms.CheckBox expVerboseCheckBox;
         private System.Windows.Forms.Label advFilenameLabel;
         private System.Windows.Forms.Button advGenerateButton;
         private System.Windows.Forms.TextBox advFilenameText;

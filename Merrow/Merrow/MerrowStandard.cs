@@ -140,7 +140,7 @@ namespace Merrow {
             quaAccuracyDropdown.SelectedIndex = 0;
             quaZoomDropdown.SelectedIndex = 0;
 
-            crcWarningLabel.Visible = false;
+            rndCRCWarningLabel.Visible = false;
 
             binAddrHEX.Checked = true;
             binLengthHEX.Checked = true;
@@ -153,7 +153,7 @@ namespace Merrow {
 
             //REINITIATE RANDOM WITH NEW SEED
             SysRand = new System.Random(rngseed);
-            seedTextBox.Text = rngseed.ToString();
+            expSeedTextBox.Text = rngseed.ToString();
 
             //The reason we reset the seed and reshuffle everything every time, whether they're enabled or not, is because the number of times the random seed is used determines the sequence of random values.
             //So to guarantee the random seed to produce the same results with the same options, it has to do the same number of random checks each time. It might not always be necessary but it prevents errors.
@@ -486,7 +486,7 @@ namespace Merrow {
             float hueOffset = (float)SysRand.NextDouble() * 360; //pick random hue offset
             float brightScale = (float)SysRand.NextDouble() / 3;
 
-            float temph = texPal1.GetHue() + hueOffset;
+            float temph = texPal1.GetHue() + hueOffset; //alter palette colours according to HSV
             float temps = texPal1.GetSaturation();
             float tempb = getBrightness(texPal1);
             texPal1 = ColorFromHSL(temph, temps, tempb);
@@ -526,8 +526,8 @@ namespace Merrow {
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
             //update filename one more time here to avoid errors
-            if (filenameTextBox.Text != "" && filenameTextBox.Text != null) {
-                fileName = string.Join("", filenameTextBox.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
+            if (expFilenameTextBox.Text != "" && expFilenameTextBox.Text != null) {
+                fileName = string.Join("", expFilenameTextBox.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
             }
             else { fileName = "merrowpatch_" + rngseed.ToString(); }
 
@@ -1010,8 +1010,11 @@ namespace Merrow {
 
         //CRC REPAIR TOOL--------------------------------------------------------------------
 
-        public void RepairCRC(string fPath) {
-            
+        public int RepairCRC() {
+            int check = -1;
+            if (crcFileSelected) { check = fix_crc(fullPath); }
+            Console.WriteLine(check);
+            return check;
         }
 
 
@@ -1124,6 +1127,19 @@ namespace Merrow {
 
         //UI INTERACTIONS----------------------------------------------------------------
 
+        private void tabsControl_SelectedIndexChanged(object sender, EventArgs e) {
+            rndCRCWarningLabel.Visible = false;
+            binErrorLabel.Visible = false;
+            binFileLoaded = false;
+            binFileBytes = null;
+            crcErrorLabel.Visible = false;
+            crcFileSelected = false;
+        }
+
+        private void terms__LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
+        }
+
         private void rndSpellToggle_CheckedChanged(object sender, EventArgs e) {
             if(rndSpellToggle.Checked) {
                 rndSpellDropdown.Visible = true;
@@ -1162,13 +1178,48 @@ namespace Merrow {
             }
         }
 
+        private void rndColorViewCheckbox_CheckedChanged(object sender, EventArgs e) {
+            if (rndColorViewToggle.Checked) {
+                rndColorViewToggle.Text = "View random colours:";
+                Shuffling(true); //if you don't do this, the colour doesn't update the first time, despite my best efforts
+                rndColorViewPanel.Visible = true;
+            }
+            else {
+                rndColorViewToggle.Text = "View random colours";
+                rndColorViewPanel.Visible = false;
+            }
+        }
+
+        private void rndTextPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            if (rndTextPaletteDropdown.SelectedIndex == 5) {
+                rndColorViewToggle.Visible = true;
+            }
+            else {
+                rndColorViewToggle.Visible = false;
+                rndColorViewToggle.Checked = false; //make it false again so as not to spoil the next value, and so the panel's invisible
+            }
+        }
+
+        private void rndDropsToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndDropsToggle.Checked) { rndDropsDropdown.Visible = true; } else { rndDropsDropdown.Visible = false; }
+        }
+
+        private void quaMaxMessageToggle_CheckedChanged(object sender, EventArgs e) {
+            if (quaMaxMessageToggle.Checked) {
+                rndCRCWarningLabel.Visible = true;
+            }
+            else {
+                rndCRCWarningLabel.Visible = false;
+            }
+        }
+
         private void quaZoomToggle_CheckedChanged(object sender, EventArgs e) {
             if (quaZoomToggle.Checked) {
                 quaZoomDropdown.Visible = true;
-                crcWarningLabel.Visible = true;
+                rndCRCWarningLabel.Visible = true;
             } else {
                 quaZoomDropdown.Visible = false;
-                crcWarningLabel.Visible = false;
+                rndCRCWarningLabel.Visible = false;
             }
         }
 
@@ -1176,38 +1227,30 @@ namespace Merrow {
             if (quaAccuracyToggle.Checked) { quaAccuracyDropdown.Visible = true; } else { quaAccuracyDropdown.Visible = false; }
         }
 
-        private void seedTextBox_TextChanged(object sender, EventArgs e) {
+        private void expSeedTextBox_TextChanged(object sender, EventArgs e) {
             var textboxSender = (TextBox)sender; //restricts to numeric only
             var cursorPosition = textboxSender.SelectionStart;
             textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9]", "");
             textboxSender.SelectionStart = cursorPosition;
-            if (seedTextBox.Text != "" && seedTextBox.Text != null && loadfinished) {
-                rngseed = Convert.ToInt32(seedTextBox.Text);
+            if (expSeedTextBox.Text != "" && expSeedTextBox.Text != null && loadfinished) {
+                rngseed = Convert.ToInt32(expSeedTextBox.Text);
                 Shuffling(true);
             }
         }
 
-        private void filenameTextBox_TextChanged(object sender, EventArgs e) {
+        private void expFilenameTextBox_TextChanged(object sender, EventArgs e) {
             var textboxSender = (TextBox)sender; //restricts to alphanumeric/underscore only
             var cursorPosition = textboxSender.SelectionStart;
             textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z_]", "");
             textboxSender.SelectionStart = cursorPosition;
         }
 
-        private void genButton_Click(object sender, EventArgs e) {
+        private void expGenerateButton_Click(object sender, EventArgs e) {
             BuildPatch();
         }
 
-        private void rndDropsToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndDropsToggle.Checked) { rndDropsDropdown.Visible = true; } else { rndDropsDropdown.Visible = false; }
-        }
-
-        private void MerrowForm_Load(object sender, EventArgs e) {
-            
-        }
-
-        private void verboseCheckBox_CheckedChanged(object sender, EventArgs e) {
-            verboselog = verboseCheckBox.Checked;
+        private void expVerboseCheckBox_CheckedChanged(object sender, EventArgs e) {
+            verboselog = expVerboseCheckBox.Checked;
         }
 
         private void advFilenameText_TextChanged(object sender, EventArgs e) {
@@ -1271,50 +1314,6 @@ namespace Merrow {
             textboxSender.SelectionStart = cursorPosition;
         }
 
-        private void tabsControl_SelectedIndexChanged(object sender, EventArgs e) {
-            crcWarningLabel.Visible = false;
-            binErrorLabel.Visible = false;
-            binFileLoaded = false;
-            binFileBytes = null;
-            crcErrorLabel.Visible = false;
-            crcFileSelected = false;
-        }
-
-        private void terms__LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
-        }
-
-        private void rndColorViewCheckbox_CheckedChanged(object sender, EventArgs e) {
-            if (rndColorViewToggle.Checked) {
-                rndColorViewToggle.Text = "View random colours:";
-                Shuffling(true); //if you don't do this, the colour doesn't update the first time, despite my best efforts
-                rndColorViewPanel.Visible = true;
-            }
-            else {
-                rndColorViewToggle.Text = "View random colours";
-                rndColorViewPanel.Visible = false;
-            }
-        }
-
-        private void rndTextPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            if (rndTextPaletteDropdown.SelectedIndex == 5) {
-                rndColorViewToggle.Visible = true;
-            }
-            else {
-                rndColorViewToggle.Visible = false;
-                rndColorViewToggle.Checked = false; //make it false again so as not to spoil the next value, and so the panel's invisible
-            }
-        }
-
-        private void quaMaxMessageToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaMaxMessageToggle.Checked) {
-                crcWarningLabel.Visible = true;
-            }
-            else {
-                crcWarningLabel.Visible = false;
-            }
-        }
-
         private void crcFileButton_Click(object sender, EventArgs e) {
             if (crcOpenFileDialog.ShowDialog() == DialogResult.OK) {
                 try {
@@ -1326,24 +1325,26 @@ namespace Merrow {
                 catch (SecurityException ex) {
                     MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
                     $"Details:\n\n{ex.StackTrace}");
+                    crcFileSelected = false;
                 }
             }
         }
 
         private void crcRepairButton_Click(object sender, EventArgs e) {
-            int message = 2;
-            if (crcFileSelected) {
-                message = fix_crc(fullPath);
-            
-                if (message == 0) {
-                    crcErrorLabel.Text = "Checksum repaired.";
-                }
-                if (message == 1) {
-                    crcErrorLabel.Text = "ERROR: There was an error. More granular error codes coming soon.";
-                }
-                
+            int message = RepairCRC();
+            Console.WriteLine(message);
+            if (message == 0) {
+                crcErrorLabel.Visible = true;
+                crcErrorLabel.Text = "Checksum repaired.";
             }
-            if (message == 2) {
+
+            if (message == 1) {
+                crcErrorLabel.Visible = true;
+                crcErrorLabel.Text = "ERROR: There was an error. More granular error codes coming soon.";
+            }
+
+            if (message == -1) {
+                crcErrorLabel.Visible = true;
                 crcErrorLabel.Text = "ERROR: File not selected or available.";
             }
         }
