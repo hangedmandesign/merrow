@@ -26,6 +26,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MerrowStandard));
             this.rndGroupBox = new System.Windows.Forms.GroupBox();
+            this.rndExtremityLabel = new System.Windows.Forms.Label();
+            this.rndExtremityDropdown = new System.Windows.Forms.ComboBox();
+            this.rndMonsterStatsToggle = new System.Windows.Forms.CheckBox();
             this.rndSpellNamesDropdown = new System.Windows.Forms.ComboBox();
             this.rndColorViewPanel = new System.Windows.Forms.Panel();
             this.rndColourPanel4 = new System.Windows.Forms.Panel();
@@ -46,6 +49,8 @@
             this.rndSpellDropdown = new System.Windows.Forms.ComboBox();
             this.rndSpellToggle = new System.Windows.Forms.CheckBox();
             this.quaGroupBox = new System.Windows.Forms.GroupBox();
+            this.quaScalingDropdown = new System.Windows.Forms.ComboBox();
+            this.quaMonsterScaleToggle = new System.Windows.Forms.CheckBox();
             this.quaMaxMessageToggle = new System.Windows.Forms.CheckBox();
             this.quaRestlessToggle = new System.Windows.Forms.CheckBox();
             this.quaLevelToggle = new System.Windows.Forms.CheckBox();
@@ -127,6 +132,9 @@
             // 
             // rndGroupBox
             // 
+            this.rndGroupBox.Controls.Add(this.rndExtremityLabel);
+            this.rndGroupBox.Controls.Add(this.rndExtremityDropdown);
+            this.rndGroupBox.Controls.Add(this.rndMonsterStatsToggle);
             this.rndGroupBox.Controls.Add(this.rndSpellNamesDropdown);
             this.rndGroupBox.Controls.Add(this.rndColorViewPanel);
             this.rndGroupBox.Controls.Add(this.rndColorViewToggle);
@@ -148,6 +156,52 @@
             this.rndGroupBox.TabIndex = 0;
             this.rndGroupBox.TabStop = false;
             this.rndGroupBox.Text = "RANDOMIZATION";
+            // 
+            // rndExtremityLabel
+            // 
+            this.rndExtremityLabel.AutoSize = true;
+            this.rndExtremityLabel.Location = new System.Drawing.Point(170, 261);
+            this.rndExtremityLabel.Name = "rndExtremityLabel";
+            this.rndExtremityLabel.Size = new System.Drawing.Size(52, 13);
+            this.rndExtremityLabel.TabIndex = 23;
+            this.rndExtremityLabel.Text = "Variance:";
+            this.rndExtremityLabel.Visible = false;
+            // 
+            // rndExtremityDropdown
+            // 
+            this.rndExtremityDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndExtremityDropdown.FormattingEnabled = true;
+            this.rndExtremityDropdown.Items.AddRange(new object[] {
+            "1.0 (default)",
+            "1.1",
+            "1.2",
+            "1.3",
+            "1.4",
+            "1.5",
+            "1.6",
+            "1.7",
+            "1.8",
+            "1.9",
+            "2.0"});
+            this.rndExtremityDropdown.Location = new System.Drawing.Point(224, 258);
+            this.rndExtremityDropdown.MaxDropDownItems = 11;
+            this.rndExtremityDropdown.Name = "rndExtremityDropdown";
+            this.rndExtremityDropdown.Size = new System.Drawing.Size(93, 21);
+            this.rndExtremityDropdown.TabIndex = 16;
+            this.rndExtremityDropdown.Visible = false;
+            this.rndExtremityDropdown.SelectedIndexChanged += new System.EventHandler(this.rndExtremityDropdown_SelectedIndexChanged);
+            // 
+            // rndMonsterStatsToggle
+            // 
+            this.rndMonsterStatsToggle.AutoSize = true;
+            this.rndMonsterStatsToggle.Location = new System.Drawing.Point(6, 260);
+            this.rndMonsterStatsToggle.Name = "rndMonsterStatsToggle";
+            this.rndMonsterStatsToggle.Size = new System.Drawing.Size(144, 17);
+            this.rndMonsterStatsToggle.TabIndex = 22;
+            this.rndMonsterStatsToggle.Text = "Randomize monster stats";
+            this.rndToolTip.SetToolTip(this.rndMonsterStatsToggle, resources.GetString("rndMonsterStatsToggle.ToolTip"));
+            this.rndMonsterStatsToggle.UseVisualStyleBackColor = true;
+            this.rndMonsterStatsToggle.CheckedChanged += new System.EventHandler(this.rndMonsterStatsToggle_CheckedChanged);
             // 
             // rndSpellNamesDropdown
             // 
@@ -400,6 +454,8 @@
             // 
             // quaGroupBox
             // 
+            this.quaGroupBox.Controls.Add(this.quaScalingDropdown);
+            this.quaGroupBox.Controls.Add(this.quaMonsterScaleToggle);
             this.quaGroupBox.Controls.Add(this.quaMaxMessageToggle);
             this.quaGroupBox.Controls.Add(this.quaRestlessToggle);
             this.quaGroupBox.Controls.Add(this.quaLevelToggle);
@@ -415,6 +471,47 @@
             this.quaGroupBox.TabIndex = 1;
             this.quaGroupBox.TabStop = false;
             this.quaGroupBox.Text = "QUALITY / FUN";
+            // 
+            // quaScalingDropdown
+            // 
+            this.quaScalingDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.quaScalingDropdown.FormattingEnabled = true;
+            this.quaScalingDropdown.Items.AddRange(new object[] {
+            "0.5",
+            "0.6",
+            "0.7",
+            "0.8",
+            "0.9",
+            "1.0 (Default)",
+            "1.1",
+            "1.2",
+            "1.3",
+            "1.4",
+            "1.5",
+            "1.6",
+            "1.7",
+            "1.8",
+            "1.9",
+            "2.0"});
+            this.quaScalingDropdown.Location = new System.Drawing.Point(126, 228);
+            this.quaScalingDropdown.MaxDropDownItems = 11;
+            this.quaScalingDropdown.Name = "quaScalingDropdown";
+            this.quaScalingDropdown.Size = new System.Drawing.Size(118, 21);
+            this.quaScalingDropdown.TabIndex = 15;
+            this.quaScalingDropdown.Visible = false;
+            this.quaScalingDropdown.SelectedIndexChanged += new System.EventHandler(this.quaScalingDropdown_SelectedIndexChanged);
+            // 
+            // quaMonsterScaleToggle
+            // 
+            this.quaMonsterScaleToggle.AutoSize = true;
+            this.quaMonsterScaleToggle.Location = new System.Drawing.Point(6, 230);
+            this.quaMonsterScaleToggle.Name = "quaMonsterScaleToggle";
+            this.quaMonsterScaleToggle.Size = new System.Drawing.Size(114, 17);
+            this.quaMonsterScaleToggle.TabIndex = 14;
+            this.quaMonsterScaleToggle.Text = "Enemy stat scaling";
+            this.rndToolTip.SetToolTip(this.quaMonsterScaleToggle, resources.GetString("quaMonsterScaleToggle.ToolTip"));
+            this.quaMonsterScaleToggle.UseVisualStyleBackColor = true;
+            this.quaMonsterScaleToggle.CheckedChanged += new System.EventHandler(this.quaMonsterScaleToggle_CheckedChanged);
             // 
             // quaMaxMessageToggle
             // 
@@ -544,7 +641,7 @@
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(73, 45);
             this.labelVersion.TabIndex = 3;
-            this.labelVersion.Text = "v23";
+            this.labelVersion.Text = "v24";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // expGroupBox
@@ -568,7 +665,7 @@
             this.expVerboseCheckBox.Checked = true;
             this.expVerboseCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.expVerboseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.expVerboseCheckBox.Location = new System.Drawing.Point(392, 15);
+            this.expVerboseCheckBox.Location = new System.Drawing.Point(387, 15);
             this.expVerboseCheckBox.Name = "expVerboseCheckBox";
             this.expVerboseCheckBox.Size = new System.Drawing.Size(71, 34);
             this.expVerboseCheckBox.TabIndex = 13;
@@ -1293,6 +1390,11 @@
         private System.Windows.Forms.Button crcFileButton;
         private System.Windows.Forms.Label crcErrorLabel;
         private System.Windows.Forms.Label crcHelpLabel;
+        private System.Windows.Forms.CheckBox rndMonsterStatsToggle;
+        private System.Windows.Forms.ComboBox quaScalingDropdown;
+        private System.Windows.Forms.CheckBox quaMonsterScaleToggle;
+        private System.Windows.Forms.ComboBox rndExtremityDropdown;
+        private System.Windows.Forms.Label rndExtremityLabel;
     }
 }
 

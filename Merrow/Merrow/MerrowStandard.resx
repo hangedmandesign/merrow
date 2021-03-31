@@ -120,9 +120,18 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="rndMonsterStatsToggle.ToolTip" xml:space="preserve">
+    <value>Randomizes monster stats within regions.
+All monsters in each region will receive new stats, randomly chosen
+from a range from lowest to highest local vanilla values for that stat.
+Increasing the Variance modifier will increase the width of that range,
+beyond the vanilla lowest-highest bounds. Repeat for all stats.
+Example: at Variance 1.0, all Holy Plain enemies will get a new random 
+HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
+
+NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
+and Variance. Setting both values higher may have extreme results.</value>
+  </data>
   <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
     <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
 Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
@@ -163,6 +172,13 @@ WINGS&amp;GEMS: Chests are randomized to contain any wing or Elemental Gem.
 SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
 &lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
   </data>
+  <data name="quaMonsterScaleToggle.ToolTip" xml:space="preserve">
+    <value>Scales enemy stats by simple multiplication.
+
+NOTE: The 'Enemy stat scaling' feature is applied AFTER the effects of 
+'Randomize monster stats'. Setting both to higher values may cause 
+extreme results.</value>
+  </data>
   <data name="quaSoulToggle.ToolTip" xml:space="preserve">
     <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
 Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.</value>
@@ -178,14 +194,11 @@ Export will automatically overwrite any existing file with the same name, and wi
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Added the first attempt at a CRC (Checksum) Repair Tool. It is pretty rudimentary, but functional, and will eventually no longer require the packaged dll file. You can use it to fix your patched file's checksum after applying a patch that causes checksum changes, such as Max Zoom or Max Message Speed.
+    <value>● After a lot of effort and organization, we now have Randomized enemy stats, and Enemy stat scaling. Values can get pretty extreme if you scale them both up, but this will allow us to do difficulty scaling for the progression randomizer.
 
-● Added 'Wings', 'Gems' and 'Wings + Gems' options to chest content and enemy drop randomization.
+● Fixed various small bugs, tidied up some code and variable naming.
 
-● Added Max Message Speed option. It will cause a checksum error, which can be repaired with the CRC Repair Tool.
-
-● Improved handling of patch generation. It now checks options *before* starting to write a spoiler log.
-</value>
+● Added a Code Overview to the Github page, and improved some explanatory comments.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
