@@ -128,7 +128,7 @@ Increasing the Variance modifier will increase the width of that range,
 beyond the vanilla lowest-highest bounds. Repeat for all stats.
 Example: at Variance 1.0, all Holy Plain enemies will get a new random 
 HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
-
+Does not apply to bosses.
 NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
 and Variance. Setting both values higher may have extreme results.</value>
   </data>
@@ -174,10 +174,11 @@ SHUFFLED: Redistribute spell properties randomly, with some crash protection rul
   </data>
   <data name="quaMonsterScaleToggle.ToolTip" xml:space="preserve">
     <value>Scales enemy stats by simple multiplication.
-
+Applies to bosses.
 NOTE: The 'Enemy stat scaling' feature is applied AFTER the effects of 
 'Randomize monster stats'. Setting both to higher values may cause 
-extreme results.</value>
+extreme results.
+</value>
   </data>
   <data name="quaSoulToggle.ToolTip" xml:space="preserve">
     <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 

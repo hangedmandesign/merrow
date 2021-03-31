@@ -199,6 +199,7 @@
             this.rndMonsterStatsToggle.Size = new System.Drawing.Size(144, 17);
             this.rndMonsterStatsToggle.TabIndex = 22;
             this.rndMonsterStatsToggle.Text = "Randomize monster stats";
+            this.rndMonsterStatsToggle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.rndToolTip.SetToolTip(this.rndMonsterStatsToggle, resources.GetString("rndMonsterStatsToggle.ToolTip"));
             this.rndMonsterStatsToggle.UseVisualStyleBackColor = true;
             this.rndMonsterStatsToggle.CheckedChanged += new System.EventHandler(this.rndMonsterStatsToggle_CheckedChanged);
