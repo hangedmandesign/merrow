@@ -47,6 +47,7 @@ namespace Merrow {
         Color texPal1 = Color.Black;
         Color texPal2 = Color.Black;
         Color texPal3 = Color.Black;
+        bool lockItemUpdates = false;
 
         //collection arrays and lists
         byte[] patcharray;
@@ -145,6 +146,8 @@ namespace Merrow {
             rndDropsDropdown.SelectedIndex = 0;
             rndSpellNamesDropdown.SelectedIndex = 0;
             rndExtremityDropdown.SelectedIndex = 0;
+            rndGiftersDropdown.SelectedIndex = 0;
+            rndWingsmithsDropdown.SelectedIndex = 0;
             quaAccuracyDropdown.SelectedIndex = 0;
             quaZoomDropdown.SelectedIndex = 0;
             quaScalingDropdown.SelectedIndex = 5;
@@ -567,6 +570,8 @@ namespace Merrow {
                 !rndTextContentToggle.Checked && 
                 !rndDropsToggle.Checked && 
                 !rndMonsterStatsToggle.Checked &&
+                !rndGiftersToggle.Checked &&
+                !rndWingsmithsToggle.Checked &&
                 !quaLevelToggle.Checked && 
                 !quaSoulToggle.Checked && 
                 !quaInvalidityToggle.Checked && 
@@ -574,7 +579,8 @@ namespace Merrow {
                 !quaAccuracyToggle.Checked && 
                 !quaRestlessToggle.Checked &&
                 !quaMaxMessageToggle.Checked &&
-                !quaMonsterScaleToggle.Checked
+                !quaMonsterScaleToggle.Checked &&
+                !quaFastMonToggle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -901,6 +907,12 @@ namespace Merrow {
                 patchcontent += "060600000100";
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Message speed set to maximum." + Environment.NewLine);
+            }
+
+            if (quaFastMonToggle.Checked) { //Fast Monastery
+                patchcontent += "4361A0000400090002"; // write 00090002 as new door target ID at 4361A0
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Monastery enabled." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT
@@ -1239,21 +1251,15 @@ namespace Merrow {
             }
         }
 
-        private void rndChestToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndChestToggle.Checked) {
-                rndChestDropdown.Visible = true;
-                rndWeightedChestToggle.Visible = true;
-            } else {
-                rndChestDropdown.Visible = false;
-                rndWeightedChestToggle.Visible = false;
-            }
-        }
-
         private void rndTextPaletteToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndTextPaletteToggle.Checked) {
                 rndTextPaletteDropdown.Visible = true;
+                if (rndTextPaletteDropdown.SelectedIndex == 5) { rndColorViewToggle.Visible = true; }
             } else {
                 rndTextPaletteDropdown.Visible = false;
+                rndColorViewPanel.Visible = false;
+                rndColorViewToggle.Visible = false;
+                rndColorViewToggle.Checked = false;
             }
         }
 
@@ -1287,8 +1293,61 @@ namespace Merrow {
             }
         }
 
+        private void rndChestToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndChestToggle.Checked) {
+                rndChestDropdown.Visible = true;
+                rndWeightedChestToggle.Visible = true;
+                itemListTabs.Visible = true;
+                itemListTabs.SelectedIndex = 0;
+            }
+            else {
+                rndChestDropdown.Visible = false;
+                rndWeightedChestToggle.Visible = false;
+                if(!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
+                    itemListTabs.Visible = false;
+                }
+            }
+        }
+
         private void rndDropsToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndDropsToggle.Checked) { rndDropsDropdown.Visible = true; } else { rndDropsDropdown.Visible = false; }
+            if (rndDropsToggle.Checked) {
+                rndDropsDropdown.Visible = true;
+                itemListTabs.Visible = true;
+                itemListTabs.SelectedIndex = 1;
+            } else {
+                rndDropsDropdown.Visible = false;
+                if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
+                    itemListTabs.Visible = false;
+                }
+            }
+        }
+
+        private void rndGiftersToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndGiftersToggle.Checked) {
+                rndGiftersDropdown.Visible = true;
+                itemListTabs.Visible = true;
+                itemListTabs.SelectedIndex = 2;
+            }
+            else {
+                rndGiftersDropdown.Visible = false;
+                if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
+                    itemListTabs.Visible = false;
+                }
+            }
+        }
+
+        private void rndWingsmithsToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndWingsmithsToggle.Checked) {
+                rndWingsmithsDropdown.Visible = true;
+                itemListTabs.Visible = true;
+                itemListTabs.SelectedIndex = 3;
+            }
+            else {
+                rndWingsmithsDropdown.Visible = false;
+                if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
+                    itemListTabs.Visible = false;
+                }
+            }
         }
 
         private void quaMaxMessageToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1466,8 +1525,110 @@ namespace Merrow {
         }
 
         private void rndExtremityDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            //index 0 is 1.0, which is extremity scale 0
+            //index 0 is 1.0, which is variance scale 0
             extremity = rndExtremityDropdown.SelectedIndex * 0.1f;
+        }
+
+        private void rndSpellNamesToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndSpellNamesToggle.Checked) {
+                rndSpellNamesDropdown.Visible = true;
+            }
+            else {
+                rndSpellNamesDropdown.Visible = false;
+            }
+        }
+
+        private void rndColorViewToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndColorViewToggle.Checked) {
+                rndColorViewPanel.Visible = true;
+            }
+            else {
+                rndColorViewPanel.Visible = false;
+            }
+        }
+
+        private void rndChestDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            itemListTabs.SelectedIndex = 0;
+            itemListUpdate(itemListView1, rndChestDropdown.SelectedIndex);
+        }
+
+        private void rndDropsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            itemListTabs.SelectedIndex = 1;
+            itemListUpdate(itemListView2, rndDropsDropdown.SelectedIndex);
+        }
+
+        private void rndGiftersDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            itemListTabs.SelectedIndex = 2;
+            itemListUpdate(itemListView3, rndGiftersDropdown.SelectedIndex);
+        }
+
+        private void rndWingsmithsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            itemListTabs.SelectedIndex = 3;
+            itemListUpdate(itemListView4, rndWingsmithsDropdown.SelectedIndex);
+        }
+
+        public void itemListUpdate(ListView currentList, int currentIndex) {
+            lockItemUpdates = true;
+            if (currentIndex == 0) { itemListWipe(currentList); }
+            if (currentIndex >= 1 && currentIndex <= 7) {
+                itemListWipe(currentList);
+                itemListSet(currentList, itemListSelect(currentIndex));
+            }
+            lockItemUpdates = false;
+        }
+
+        public int[] itemListSelect(int option) { //grab the item array from the library
+            if (option == 1) { return library.itemlist_standard; }
+            if (option == 2) { return library.itemlist_standardwings; }
+            if (option == 3) { return library.itemlist_standardgems; }
+            if (option == 4) { return library.itemlist_chaos; }
+            if (option == 5) { return library.itemlist_wings; }
+            if (option == 6) { return library.itemlist_gems; }
+            if (option == 7) { return library.itemlist_wingsgems; }
+
+            return library.itemlist_standard; //return this as a backup, should never happen
+        }
+
+        public void itemListWipe(ListView listID) { //wipe the specified item list so we can set it
+            for (int i = 0; i < 26; i++) {
+                ListViewItem listChestItem = listID.Items[i];
+                listChestItem.Checked = false;
+            }
+        }
+
+        public void itemListSet(ListView listID, int[] listArray) { //set the specified item list
+            for (int i = 0; i < listArray.Length; i++) {
+                ListViewItem listChestItem = listID.Items[listArray[i]];
+                listChestItem.Checked = true;
+            }
+        }
+
+        private void itemListView1_ItemChecked(object sender, ItemCheckedEventArgs e) {
+            if (!lockItemUpdates) {
+                rndChestDropdown.SelectedIndex = 8;
+                if(e.Item.Checked) { rndChestToggle.Checked = true; }
+            }
+        }
+
+        private void itemListView2_ItemChecked(object sender, ItemCheckedEventArgs e) {
+            if (!lockItemUpdates) {
+                rndDropsDropdown.SelectedIndex = 8;
+                if (e.Item.Checked) { rndDropsToggle.Checked = true; }
+            }
+        }
+
+        private void itemListView3_ItemChecked(object sender, ItemCheckedEventArgs e) {
+            if (!lockItemUpdates) {
+                rndGiftersDropdown.SelectedIndex = 8;
+                if (e.Item.Checked) { rndGiftersToggle.Checked = true; }
+            }
+        }
+
+        private void itemListView4_ItemChecked(object sender, ItemCheckedEventArgs e) {
+            if (!lockItemUpdates) {
+                rndWingsmithsDropdown.SelectedIndex = 8;
+                if (e.Item.Checked) { rndWingsmithsToggle.Checked = true; }
+            }
         }
     }
 }

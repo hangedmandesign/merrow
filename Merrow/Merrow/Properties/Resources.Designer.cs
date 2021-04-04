@@ -63,6 +63,16 @@ namespace Merrow.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ditherblock {
+            get {
+                object obj = ResourceManager.GetObject("ditherblock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap merrowbar {
             get {
                 object obj = ResourceManager.GetObject("merrowbar", resourceCulture);

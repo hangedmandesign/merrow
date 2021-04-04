@@ -194,6 +194,40 @@ namespace Merrow {
             "DARK GAOL KEY","E67C52","19"
         };
 
+        //list of item granter NPCs. +7 offset is already included in value
+        //Will need options to shuffle items with protection against two shannon items being inverted, and wings separately or together
+        //For randomization, that'll have to exclude Shannon items (unless it weights them in), but the rest can all be randomized separately or together.
+        //In terms of interface, this is going to be a pain, will also need to incorporate other item changes probably
+        public int[] itemgranters = {
+            4429179, 1,  //Item
+            5042871, 5,  //Item
+            5043135, 1,  //Item
+            5137887, 6,  //Item
+            5359431, 2,  //Item
+            5896019, 7,  //Item
+            6130939, 7,  //Item
+            6131115, 3,  //Item
+            3978695, 24, //Shannon
+            8729591, 25, //Shannon
+            4847891, 14, //Wing
+            5043003, 15, //Wing
+            5205763, 16, //Wing
+            5359563, 17, //Wing
+            5896151, 18, //Wing
+            6130543, 19  //Wing
+        };
+
+        //item lists for the item randomization options.
+        //these are slightly different than the game IDs, Spirit Light is not first.
+        public int[] itemlist_standard = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+        public int[] itemlist_standardwings = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
+        public int[] itemlist_standardgems = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 21, 22, 23 };
+        public int[] itemlist_chaos = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
+        public int[] itemlist_chaosEX = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 };
+        public int[] itemlist_wings = { 14, 15, 16, 17, 18, 19 };
+        public int[] itemlist_gems = { 20, 21, 22, 23 };
+        public int[] itemlist_wingsgems = { 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
+
         //name list for spoiler log
         public string[] monsternames = {
             "WERE HARE", "HELL HOUND", "MAN EATER", "BIG MOUTH", "BUMBERSHOOT", "PARASAULT", "ORK JR", "GREMLIN", "SKELETON", "GHOSTHOUND", "MERROW", "WOLF GOAT", "GOBLIN", "FROG KING", "APOPHIS", "MAD DOLL", "DEATH HUGGER", "KOBOLD", "MAN TRAP", "BAT", "FROG KNIGHT", "MARIONASTY", "DARK GOBLIN", "HOT LIPS", "GHOST STALKER", "TREANT", "COCKATRICE", "MULTI OPTICS", "MIMIC", "CRAWLER", "SCORPION", "SCARE CROW", "WYVERN", "SKELEBAT", "CRYSHELL", "BLOOD JELL", "CATERPILLAR", "FISH MAN", "SANDMAN", "WERE CAT", "NIGHTMARE", "BLUE MAN", "WINGED SUNFISH", "GLOOM WING", "OGRE", "ROCKY", "RED WYVERN", "FLAMED MANE", "MAGMA FISH", "RED ROSE KNIGHT", "WHITE ROSE KNIGHT", "ORK", "GHOST", "WILL-O'-WISP", "SPRITE", "JACK-O'-LANTERN", "ARACHNOID", "LAMIA", "TEMPTRESS", "PIXIE", "GRANGACH", "THUNDER JELL", "TERMANT", "JUDGMENT", "PALE RIDER", "PIN HEAD", "SPRIGGAN", "SOLVARING", "ZELSE", "NEPTY", "SHILF", "FARGO", "GUILTY", "BEIGIS", "MAMMON"

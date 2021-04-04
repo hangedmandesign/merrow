@@ -120,66 +120,6 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="rndMonsterStatsToggle.ToolTip" xml:space="preserve">
-    <value>Randomizes monster stats within regions.
-All monsters in each region will receive new stats, randomly chosen
-from a range from lowest to highest local vanilla values for that stat.
-Increasing the Variance modifier will increase the width of that range,
-beyond the vanilla lowest-highest bounds. Repeat for all stats.
-Example: at Variance 1.0, all Holy Plain enemies will get a new random 
-HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
-Does not apply to bosses.
-NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
-and Variance. Setting both values higher may have extreme results.</value>
-  </data>
-  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
-    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
-Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
-Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
-  </data>
-  <data name="rndDropsToggle.ToolTip" xml:space="preserve">
-    <value>Change the items dropped by non-Boss enemies.
-SHUFFLED: All default item drops are shuffled among all enemies.
-RANDOM: Drops are randomized to contain any normal drop item.
-RANDOM&amp;WINGS: Drops are randomized to contain any normal drop item or wing.
-RANDOM&amp;GEMS: Drops are randomized to contain any normal drop item or Elemental Gem.
-CHAOS: Drops are randomized to contain any normal drop item, wing, or Elemental Gem.
-WINGS: Drops are randomized to contain any wing.
-GEMS: Drops are randomized to contain any Elemental Gem.
-WINGS&amp;GEMS: Drops are randomized to contain any wing or Elemental Gem.
-[WARNING - Including gems or wings can cause sequence breaks.]</value>
-  </data>
-  <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
-    <value>Changes the text colour palette.
-&lt;COLOUR&gt;: Use one of four default included colours.
-SHUFFLED: Select one of those four included colours at random.
-RANDOM: Generate a palette at random. [Feature unfinished, quality not guaranteed.]</value>
-  </data>
-  <data name="rndChestToggle.ToolTip" xml:space="preserve">
-    <value>Change the contents of all chests.
-SHUFFLED: All default chest contents are shuffled among all chests.
-RANDOM: Chests are randomized to contain any normal chest item.
-RANDOM&amp;WINGS: Chests are randomized to contain any normal chest item or wing. 
-RANDOM&amp;GEMS: Chests are randomized to contain any normal chest item or Elemental Gem.
-CHAOS: Chests are randomized to contain any normal chest item, wing, or Elemental Gem.
-WINGS: Chests are randomized to contain any wing.
-GEMS: Chests are randomized to contain any Elemental Gem.
-WINGS&amp;GEMS: Chests are randomized to contain any wing or Elemental Gem.
-[WARNING - Including gems or wings can cause sequence breaks.]</value>
-  </data>
-  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
-    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
-SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
-&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
-  </data>
-  <data name="quaMonsterScaleToggle.ToolTip" xml:space="preserve">
-    <value>Scales enemy stats by simple multiplication.
-Applies to bosses.
-NOTE: The 'Enemy stat scaling' feature is applied AFTER the effects of 
-'Randomize monster stats'. Setting both to higher values may cause 
-extreme results.
-</value>
-  </data>
   <data name="quaSoulToggle.ToolTip" xml:space="preserve">
     <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
 Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.</value>
@@ -195,16 +135,308 @@ Export will automatically overwrite any existing file with the same name, and wi
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● After a lot of effort and organization, we now have Randomized enemy stats, and Enemy stat scaling. Values can get pretty extreme if you scale them both up, but this will allow us to do difficulty scaling for the progression randomizer.
+    <value>● Added Fast Monastery option, allowing the player to quickly exit the Monastery at the start.
 
-● Fixed various small bugs, tidied up some code and variable naming.
+● Overhauled interface arrangement for Quest patch creation.
 
-● Added a Code Overview to the Github page, and improved some explanatory comments.</value>
+● Overhauled item randomization selection to add Gifters and Wingsmiths options, and granular selection controls.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
 Merrow is offered without warranty and is experimental software. 
 Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
+  </data>
+  <data name="rndChestToggle.ToolTip" xml:space="preserve">
+    <value>Change the contents of all chests.
+SHUFFLED: All default chest contents are shuffled among all chests.
+RANDOM: Chests are randomized to contain any standard item.
+RANDOM&amp;WINGS: Chests are randomized to contain any standard item or wing. 
+RANDOM&amp;GEMS: Chests are randomized to contain any standard item or Elemental Gem.
+CHAOS: Chests are randomized to contain any standard item, wing, or Elemental Gem.
+WINGS: Chests are randomized to contain any wing.
+GEMS: Chests are randomized to contain any Elemental Gem.
+WINGS&amp;GEMS: Chests are randomized to contain any wing or Elemental Gem.
+CUSTOM: Chests are randomized as selected below.
+[WARNING - Including gems or wings can cause sequence breaks.]</value>
+  </data>
+  <data name="rndDropsToggle.ToolTip" xml:space="preserve">
+    <value>Change the items dropped by non-Boss enemies. All Random options exclude blanks.
+SHUFFLED: All default item drops are shuffled among all enemies, including blanks.
+RANDOM: Drops are randomized to contain any standard item.
+RANDOM&amp;WINGS: Drops are randomized to contain any standard item or wing.
+RANDOM&amp;GEMS: Drops are randomized to contain any standard item or Elemental Gem.
+CHAOS: Drops are randomized to contain any standard item, wing, or Elemental Gem.
+WINGS: Drops are randomized to contain any wing.
+GEMS: Drops are randomized to contain any Elemental Gem.
+WINGS&amp;GEMS: Drops are randomized to contain any wing or Elemental Gem.
+CUSTOM: Drops are randomized as selected below.
+[WARNING - Including gems or wings can cause sequence breaks.]</value>
+  </data>
+  <metadata name="itemImageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>128, 17</value>
+  </metadata>
+  <data name="itemImageList.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAG
+        LQAAAk1TRnQBSQFMAgEBGgEAASgBAAEoAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        AwABQAMAAXADAAEBAQABCAYAARwYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
+        AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
+        AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
+        AWYDAAGZAwABzAIAATMDAAIzAgABMwFmAgABMwGZAgABMwHMAgABMwH/AgABZgMAAWYBMwIAAmYCAAFm
+        AZkCAAFmAcwCAAFmAf8CAAGZAwABmQEzAgABmQFmAgACmQIAAZkBzAIAAZkB/wIAAcwDAAHMATMCAAHM
+        AWYCAAHMAZkCAALMAgABzAH/AgAB/wFmAgAB/wGZAgAB/wHMAQABMwH/AgAB/wEAATMBAAEzAQABZgEA
+        ATMBAAGZAQABMwEAAcwBAAEzAQAB/wEAAf8BMwIAAzMBAAIzAWYBAAIzAZkBAAIzAcwBAAIzAf8BAAEz
+        AWYCAAEzAWYBMwEAATMCZgEAATMBZgGZAQABMwFmAcwBAAEzAWYB/wEAATMBmQIAATMBmQEzAQABMwGZ
+        AWYBAAEzApkBAAEzAZkBzAEAATMBmQH/AQABMwHMAgABMwHMATMBAAEzAcwBZgEAATMBzAGZAQABMwLM
+        AQABMwHMAf8BAAEzAf8BMwEAATMB/wFmAQABMwH/AZkBAAEzAf8BzAEAATMC/wEAAWYDAAFmAQABMwEA
+        AWYBAAFmAQABZgEAAZkBAAFmAQABzAEAAWYBAAH/AQABZgEzAgABZgIzAQABZgEzAWYBAAFmATMBmQEA
+        AWYBMwHMAQABZgEzAf8BAAJmAgACZgEzAQADZgEAAmYBmQEAAmYBzAEAAWYBmQIAAWYBmQEzAQABZgGZ
+        AWYBAAFmApkBAAFmAZkBzAEAAWYBmQH/AQABZgHMAgABZgHMATMBAAFmAcwBmQEAAWYCzAEAAWYBzAH/
+        AQABZgH/AgABZgH/ATMBAAFmAf8BmQEAAWYB/wHMAQABzAEAAf8BAAH/AQABzAEAApkCAAGZATMBmQEA
+        AZkBAAGZAQABmQEAAcwBAAGZAwABmQIzAQABmQEAAWYBAAGZATMBzAEAAZkBAAH/AQABmQFmAgABmQFm
+        ATMBAAGZATMBZgEAAZkBZgGZAQABmQFmAcwBAAGZATMB/wEAApkBMwEAApkBZgEAA5kBAAKZAcwBAAKZ
+        Af8BAAGZAcwCAAGZAcwBMwEAAWYBzAFmAQABmQHMAZkBAAGZAswBAAGZAcwB/wEAAZkB/wIAAZkB/wEz
+        AQABmQHMAWYBAAGZAf8BmQEAAZkB/wHMAQABmQL/AQABzAMAAZkBAAEzAQABzAEAAWYBAAHMAQABmQEA
+        AcwBAAHMAQABmQEzAgABzAIzAQABzAEzAWYBAAHMATMBmQEAAcwBMwHMAQABzAEzAf8BAAHMAWYCAAHM
+        AWYBMwEAAZkCZgEAAcwBZgGZAQABzAFmAcwBAAGZAWYB/wEAAcwBmQIAAcwBmQEzAQABzAGZAWYBAAHM
+        ApkBAAHMAZkBzAEAAcwBmQH/AQACzAIAAswBMwEAAswBZgEAAswBmQEAA8wBAALMAf8BAAHMAf8CAAHM
+        Af8BMwEAAZkB/wFmAQABzAH/AZkBAAHMAf8BzAEAAcwC/wEAAcwBAAEzAQAB/wEAAWYBAAH/AQABmQEA
+        AcwBMwIAAf8CMwEAAf8BMwFmAQAB/wEzAZkBAAH/ATMBzAEAAf8BMwH/AQAB/wFmAgAB/wFmATMBAAHM
+        AmYBAAH/AWYBmQEAAf8BZgHMAQABzAFmAf8BAAH/AZkCAAH/AZkBMwEAAf8BmQFmAQAB/wKZAQAB/wGZ
+        AcwBAAH/AZkB/wEAAf8BzAIAAf8BzAEzAQAB/wHMAWYBAAH/AcwBmQEAAf8CzAEAAf8BzAH/AQAC/wEz
+        AQABzAH/AWYBAAL/AZkBAAL/AcwBAAJmAf8BAAFmAf8BZgEAAWYC/wEAAf8CZgEAAf8BZgH/AQAC/wFm
+        AQABIQEAAaUBAANfAQADdwEAA4YBAAOWAQADywEAA7IBAAPXAQAD3QEAA+MBAAPqAQAD8QEAA/gBAAHw
+        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD/wYAAbwDFQHrAf8OAAG8
+        BBEBZyMAAfIB6wFtARIBEwHrAeoBEwJtAfcB/wgAAe8BZwEUAW0BHAFzARwB7wHtAeohAAG8AesBFAHq
+        AewD7wH3Ae0BbQHqAe0B8wYAAe8B6wEcAXMBFAIRAhUB6gH0IAAB7wLrAe8BvAIIAvcBBwG8Ae8B7QHq
+        Ae0B8AUAAewB6wGZAXIB7QXzIgABbQHvAfQB8wEIAZgC7AHtAfcCBwHvARQB7AQAAe8CQwFKASIB9ycA
+        AesBBwH2AQgCmAORAe0CmAHvARQB7AMAAe8BQwFKAUMBSgFRAesBvCYAAesBBwH0AQgBBwGYAggBuwKY
+        AbsBCAETAewCAAHvAREBRAFKASMBUQF5AUsBEgG8JQAB6wEHAf8B8wHwAfEC9AHCBAgBEwHsAQABBwEQ
+        AUQCSgFRAlgBUQEjARIB8CQAAesBvAP/AfQB8QEIA5gBCAG8ARMB7AEHARUBRAFSASIBSwFYAVkCNwFS
+        AUoBbQHwIwAB7AHwAfYB8wHxAQgBmANyAZgBCAG8ARMB7AEAAVEBWAFZAkoBWAFZATcBMQFSAVEBbQHv
+        IwAB7AG8AfQCCAGYAXICcQGRAZgBCAHwARMC7AFRAVgBWQFRASIBSgFYAVkBUgFRASkBEgHyIwAB6gHv
+        AfEBCAEHAZgBcgFxAXIBCAHCAfAB7wEUAewBAAEQAlgBAwEiARMBSwFYAnoBUQEiAUoB8yEAAe0B6gFt
+        AfcB7wKYAXIB7AGYAgcB9wHqAewBBwEAAW0BUQJ5AUMB8AEHAUoBUQJYAVIBAwFEAfQhAAEHAeoBFQES
+        AewB9wGYAu8BbQLqAW0B8gMAAW0BSwF5AUoBBwH/AbwBRAFKAVEBUgF5AW4BEiIAAfEBFAEVARQBbQHs
+        AesBEgIVAewB/wUAAW0BSgGZARIBvAIAAfABEAIPARImAAEHAwABEgH0CQABbQEAAfA8AAH/AewEDwEQ
+        AUMBvAkAAfABEgEVARQB7AH/DgABvAQRAeoCAAHrAewB6w4AAfEBZwHrAfcBvAHwAbwBBwHtAW0B7QH/
+        BAAB8wGNAesC6gHsAesBbQHrAewB7wH/CAAB7wJEAeoBcwEcApkB7wHqAQAB6wH3Ae0B7AHrAQcLAAH/
+        AfMB6wFtAbUB3QEJAewBFQHvAfQB/wMAAbwB7QFtAesB7QG1ArwB7wH3AuwB9wHzBgAB7wFtARwBcwFE
+        AUMDRAHqAfQBAAHqAe0B/wHvAe0BSgGZCwAB/wH0Ae8BZgG8Ae0BEgHxAf8EAAHvAewB7QHvAfAB3QMJ
+        AbwB8QG8Ae8B7AH3AfAFAAHsAW4BmQFLAe0F8wMAAesB7wH/AfEBcgEaDQABvAFDAQcB6wESAfQGAAHs
+        AbwB/wH0Ad0EtQG7AQkB3QG8ARMB7AQAAQcBFQFKAXMBSgHvCAAB6gH3AfEB9gFKAcMLAAH/AQcBrgFm
+        AZEBrgFmAewB8gUAAewB8QH/ARkBCQa1AgkBEwHsAwABBwESAesBEwHsAe8B9wHwBwABmQFKAW0CSgGZ
+        AgABDgMMBAAB8wH3Aq4CtAG1AbQBrgHsAbwB/wMAAewB8QH/AfEBCQG1AQkB3QEJArUBCQHdARIB7AIA
+        AQcBEwHsAesBEgHvAfMB9wHsAfAHAAGZARoBwwGZAXMBmQEaA/8B8QMAAfABkgGMAc8BtAHPAbQB1gHX
+        Ac8CrgHvAfQCAAHsAfAC/wL0Af8B9AEZAd0CCQEZARIB7AEAAQcBFALrAeoBkgLzAQcB7AHrAfALAAH2
+        ARMDAAETAf8BAAG8Aq4BBwG1As8DrwGoAs8BZgGSAfEBAAHsAfAE/wH0Ad0BCQG1AQkB3QEZARIB7AEH
+        ARIB7AG8ARUB7AHyAf8B8gG8AQcBkgHsAfALAALxARMCAAHxAQABCgGuAbwB9AHdAQkBtQG2Aa8CqAHP
+        ArUBZgHsAQAB7QHyAf8DGQG1AbQBzwG0AbUB3QEZARIB7AEAAfcB8QH/AusBvAH/AfICvAEHAe0B7w0A
+        Af8BAAH/ARMCAAHsAfAD/wHzAa8DqAHPAbUB3QESAewBAAHtAfIB/wEZAgkBtALPAbUBCQIZAeoC7AHt
+        AvQBvAETAesB8AH0AfAB7wLsAfMOAAH/ARMB8gIAAewB8AL/AfQB8gG1Aa8DzwG1Ad0BEgHsAQAB6wEH
+        AfMCCQG1AbQCzwEJARkB8wG8ARMB7AEAAQ8B8AHyAfcCEgHsAbwB/wH0AQcB6wFtAfMLAAEOAf8BEwEA
+        Af8CAAHsAfEB9AHdAgkC3QIJAbUBzwG1AWYB7AHtAeoB6wEHAbsCCQO1ArwB7wFtAewBBwEAAW0B9wHy
+        AQcBFQHwAQcB6wEHAfEB8wG8Ae0BEwH0CgABDAHxAQABEwHxAQABFQHtAQcCtQOuArUBrgK1Aa8BZwH3
+        AQABBwFtAusBkgMJAbwB7AHrAm0B8gMAAW0B7AHxAW0BBwH/AbwBFAFtAfcBBwHwAe0BEgwAAf8B8QMA
+        AewBEAERAa4BtQHwAbwB3QEJAbUBEgERAUMB8AMAAfEBFAEVAeoB7QH3AZIB7AEUARUB7AH/BQABbQHr
+        AbwBbQG8AgAB8AERAQ8BEAHqFAAB/wHrBgABBwkAAQcDAAESAfQJAAFtAQAB8AoAAesBFQHvFQABvAQR
+        AeoFAAHsAREB8AwAAewBEwFEAfAJAAFtAeoBEwESAfcRAAHvAkQBSgFzARwCmQGTAeoDAAHsAW0CRAG8
+        CgAB7AJEAQwB8AkAAfABEgEUARMBEgHtBpIB9AgAAe8B6gEcAXMBRAFDA0QB6gH0AgAB7AFKAXMBSwFE
+        ARMBvAgAAewDSgFEAfAKAAG8AW0BFAHqARUBEQFDARUBFAITAZIB8wcAAewBbgGZAUsB7QXzAgAB7AFu
+        AUMBSgFzAW4BQwEUAusBBwQAAXMCSgJLAUQBbQHxCgAB7QFDA2wBcQJyAZ0BcgFJAe0B8wUAAQcBFQFE
+        AUUBIwHvBgAB7AHqAXMBSgEiAUoBcwEUAQ4CFQEUAQcDAAEVAUoCSwF0AW4BQwG8CgAB7QEPAUkBbAFx
+        A50BlwJyARMB7AHzAwABBwNEAUsBbwFuAbwGAAFtAnMBSgFLAXMBSgEiARUBEgERAesDAAEPAREBQwFE
+        AW4BdAFKAesB8QkAAe0BEAFJBHEClwNyAeoB7AIAAQcBRAHqARIBRAFvAZQBbgESAbwEAAEHARUBSwFz
+        A1EBSwFEAkoBQwHrAwACBwG8ARIBRAFuAUoBFQHrAfEIAAHtAREEcQGXAZ0BlwFxAUkBEAHtAgABBwJE
+        ARIBRAFuAZMBlAFvAUQBEgHwBAABBwJEAUoBSwNRAUsBSgERAesGAAG8Ae8BbQFEAW0BEgHrAfEGAAHr
+        ARUBSQFxAZ0BcQFJAXIBmAGdAZcBcgEVAZIBAAG8AUQBRQGTAUQB6gGTAb0CkwFvAm4B8AQAAQcBEQEO
+        AUoBUQJSAVEBSgEOAesIAAHwA20BFQHrAfIFAAESAUkBcgGdAZcBcQFyAZcCnQFyAUMB9wH0AQABCwHq
+        AZMBvQFuAeoBkwG9AZMBjgJvAW4B7wUAARIBFAFLAnQBUgFLAUQBEAFtAfEIAAG8AW0BFAFKARIBbQHy
+        BAACEgHqAUkBlwFxA5cBmAGdAW0B7AG8AQAB7AFuARoBvQFvAUQBbgGTAb0BkwFoAUUB6gHzBQABEgFK
+        AXMCdAFLA0oBRAESAfIIAAG8Am0BbgEUAeoB8wMAAbwB6wFDAREBkQFxApcBcgGXApgBEwGSAgABEAKT
+        AUUBRAESAesBkwK9AW8CRAHzBAABkgFEA0oBEAFEAXMBUQFKARUBFAkAAfAB6gJEAhIB8wMAAbwB7QHs
+        AeoBSQRyAZcBmAETAZICAAFtAW4BkwGOAUMB8AEHAeoB7QG2AZMBbwJEAfQEAAGSBBIBEwFKAXMBFAFD
+        ARIB9AkAAfABEgFKAXMBEgEUAfQEAAH0AusB6gFtA3IBkQESAewB8wIAAW0BEgGTARIBvAH/AbwBFAFn
+        AW4CkwFoARIJAAG8AUQCFAH0AQcBDwoAAfEBRAFKAXMBEwERBwABkgIVARQBcgLsAW0B7AMAAW0BEgGT
+        AeoBvAIAAfABEQIQAeoLAAHwAREBFAHwAbwBFQsAAfIBQwHqAesBFAoAAfQBDwIAAe0FAAHrAQsB8BUA
+        AfIBAAEVDQAB8wEOARQKAAG8BBEB6gQAAfMDDwIQAREBEAHsBgAB8AMAAwoDAAFtAf8GAAEHAREBDwET
+        DgAB7wFnAWYBEgHrAW0BkQEHAa4BZwIAAQcBEwFuARwBBwIaAZMBcwFtARUB8wMAAewBEwEHAe0BtQHd
+        AbUBCQG8Ae0B9wHtAQwB8AQAAe8B6gFuAXMBRAEVAUQB8woAAe8BbQGSAZEBFAERA2YBZwH0AQAB7QHq
+        AXMBmgF0AW4BSwFFAW4CdAFuARIBvAIAAesBkgKuAZEBtQHvAbUB9wKuAewBtQETAewCAAGSAUoBbgN0
+        AW4BRAETARIBvAgAAewBbAGRAWwB7QXzAgABbQFKARwBmQFLAUQBIwEeAUQBdAGZARwBEQHvAgAB7AET
+        AQkBuwHwAv8B9AHdAgcB7QEOAfACAAHtAW4BSwFSAXQBeQJ0AVEBSwJKAesB7wUAAe8BQwENAUkBDQH3
+        BgAB7AESAW0BdAOZAZMBbgFLAXQBmgFzAUoBbQHvAQAB7AETAQcB8wP/AfQCGQEHAewBDAHwAQAB7AFE
+        AUsBUgF5AZkEdAJSAksBRAGSAwABBwFDARQBQwFsAXIB6wG8BgAB7AFtAUQBdAGZARoBmgN0AXMBQwFz
+        ARIBbQIAAfABDgHtAfEC/wH0AfEBvAESAW0B/wMAAUQBSwF0ApoBeQd0AUQBFQIAAQcBEQEUARMBSQFy
+        AZgBcQESAbwFAAEcAW0BDgEVAXQCmgF5AZkBbgFDAQABHAJtAgAB8AEMAewBvAL/AfQB8AHvARMBbQH/
+        AgABCwFKAUsBdASaAZkBeQR0AUsBFQEAAQcBEQEVARIBSQFyApgBcgFJARIB8AMAAe8B7AJtARQBdAJ6
+        AnkBcwFKAm0B7QHwAwAB/wFtARMB7wEZAbwB7AEPAQcEAAELAUsCUgF5BJoBmQGaAXkCdAFLARUBBwFD
+        AUkBkQFDAWwBmAEIAZgBnQGXAXEBbQHwAwABvAHtAesBRAFzAnkBUgF0AUsBSgHsAZIB8gQAAf8BbQEU
+        A5EB6wEOAQcEAAELAUsCUgJ0ApkCkwKaAZkBdAFuARUBAAFyAZgBCAHqAWwBmAEIAZgCnQFyAeoB7wQA
+        Ae8BDwEUAXMCdAF5AXQBSwEVAQAB8wQAAfABDwHrAfcBuwIJAbsB7AEVAW0B/wIAAQsCSwFMA1IBdAJL
+        AXQDmQFzARUB7AFyAggBkQERAeoBmAEIAZ0BcQFJARIB8gQAAfAC7AEcBJkBcwLsAfQDAAHsARQB7QG8
+        AhkC9AIZAQcB7AEMAfABAAHsAUQBSwVMASoBSwR0AW4BFQEAAQ8CmAFyARABFAHrAZgBCAG7AZcBSQET
+        AfMEAAHyAQABSgFzAnQBSwFDAW0GAAHwAgABQwGuAbUBkQFsAQ8BAAHrAf8DAAFEASMBKgJLAkwBJAFL
+        AVIBdAFSAUsBRAEVAQABbQFyAZgBkQERAfABBwHqAZECmAGdAWwBFAH0AwAB8wEAAW4BmQEaAZkBdAFE
+        AesGAAHwAQwBEgHtAbwB8wEZAbsBiwERAW0B/wMAAesBEAEjAUQBSwFEAiMBTAF0AVIBSwFEAUMB6wIA
+        AW0BbAGYARIBBwH/AQcBFQETAXIBnQGYAeoBEgMAAfMBFAHsAbwCGgGTAW4B7QYAAfABDAHqAfcB9AH/
+        ARkBCQG1AWYB6wH/BAAB7QEQASIBQwILAUQDSwJEAe0EAAFtARIB9wESAbwCAAHwARABDwEQARIGAAHs
+        AeoCcwFEAQcIAAH/AW0BEwH3AfAB7wGuARABvAcAAZICDwEQAREDRAEiAREB9wYAAW0BAAHwDwAB7wIA
+        AfILAAEHAwABEgH0DAAB9AQAAe8IAAH/AW0CFQH3CQABBwhtAfAGAAHrBBUBBwEAAfEDFQFtFAAB8QHr
+        Ae0CRAFFA24B9AUAAfAB7AESAeoBbQLrAm0B6gHsAfEEAAHtAUQEQwETAesBEgNDARQB7AEAAesBcwFK
+        DgABvAFuAUUGRgFoAY0B8wMAAfMB6wFuApkCGgEbAhoBmQFuAewB9AIAAfcCRARFB0QBEAEAAW4CdAFR
+        AUsBRAELCQABvAFuAWgBbwJGAukCRgFvAW4B7QHxAgABRAFzApkBGgXDARoBmQFuAesBAAHvAUQBRQdL
+        AUUDRAFDAQ8BAAFKAXQBoAJ0AUwBRAkAAeoBbgGTAW8DRgHpASABRgFvAZMBbgH3AQAB6wFtAZMBmQGa
+        ARoBmgOZARoCmgEcAW0B7AELAUQGRQFMAUsBRQFLAUUBRAFDAQ8CAAFLAXQBwwGaAm8IAAHyAW0BkwG3
+        AY4BbwEWARcDRgFvAZQB7QH3AfMBAAFuAZMDmQJ0AZMBHASZAW4BFQEABEQBRQJEAkUCTAFvAUUBRAEP
+        AgABSwF0AZkBwwFMAW8JAAHrAbwEvQGUAW8BRgFvAZQBvQEHAeoBEgEAAUsGdAOZA3QBbgIVAW4CkwJv
+        AWgBRAJFA0wBSwFFARACAAFEAUwBSwJMAW8BCwEAAQ4DDAMAAe0B8QH/AfQB8wG9AZQBFgGUAb0B8wH0
+        AfAB6wESAQABRAF0AlIBdAKaAsMBmgJ0AUsBRAEVAQABEAJuAY4BRAE+AkUBRAFFAm8BTAFFARACAAEL
+        AUQDbwFEAhoD/wHxAwAB7QHyAf8BvQG3AY4BbwEWAr0B8wH0AfAB6wESAQABRAFLAkwBUgF0A5oBdAFS
+        AUwBSwFEARUBAAH0AUQBDAE+AWcBbwFuBEUBTAFLAUUBEAYAAQsBAAH2ARMDAAETAf8CAAHrAfAB8wG3
+        AW8CRgGTAb0B8wL0AQcBbQESAQABRAJLAkwBUgR0AUwCSwFDARUCAATzAe0BRAJoAkUBTAFvAUsBEAkA
+        AvEBEwIAAfEBAAHwAesB7wG9AZQBbwJGAZMBvQP0AfcB7QHxAW0BFQFEAksGTAJLAkQB7AYAAfMB7AFE
+        A0UBSwFvAUsBEAsAAf8BAAH/ARMCAAHqAewBBwG3AW8BaQFGAW8CvQHzAbwBbQH3AgABFQEjAUUCSwFM
+        AUsCTANLASMB6wgAAfcBRAJLAUUBbgFvAW4BEAwAAf8BEwHyAgAB7wFtAewBkwGUARYCbwGUAb0BvAHr
+        AewBvAIAAUQBIgFEAUUGSwFFAkQB6wgAAfcBRAJvAUQBaAFuAWgBEQoAAQ4B/wETAQAB/wMAAQcB6gFt
+        ApMCbwGOAZMBbgHrAfEDAAG8AUQBIgEjAUQBRQMjAUQBIwERAW4B8AgAAbwB6gJuAkQBCwEMAewKAAEM
+        AfEBAAETAfEEAAG8ARQBEgHqAm4B6gESARMB8wUAAe8B6wFEASIBRAQiARIB6wEHCgABvAFDAQ4BEQIV
+        AesNAAH/AfEHAAH/ARUCAAHsCgAB7wULAQAB8A0AAQcBAAEOAesWAAEHAhEDDwFDARUBBwcAAfIHAAFt
+        CQAB/wFtAhUBkggAAQcLFQEHAgABvAFnAa4BtQG7AwkCtQGuARQBvAQAAQcBFQHsAQcB8gL/AfEB9wES
+        AQwB8wUAAfEB6wHtA24B7AHtAewB9AQAAfcBEwtDARIB9wESAesBtQG0ApEDiwG0ArUB7AFtARIBvAIA
+        AQcBZgG1Aa4BtAIJA64BDAHzBAABvAHsAUoGdAFuAe0B8wIAAe0BFQERAUQJbgFDAewB8gEAAeoBuwGR
+        AYsBbANlAosBtAG7AeoBAAHvAgABBwEMAWYBkQK1AbQBtQGuAWYBCgHzAwABvAHrAW4BkwF0AVICTAFS
+        AnQBbgHtAfICAAERAkQJSwFDAesB8AEAARIBtQS7ArQCiwG1ARkB6wEAAe8CAAHvAWYBtQG8AfECGQHd
+        AbUBrgEKAfMDAAHqAesCmQJ0A0wBdAGTAZkBbgH3AgABQwJECCMCRAEQAW0BAAESAfcBuwEJAhkBCQK7
+        AbUBuwEJAW0BAAHvAQABbQHqAQkBGQH0ARoBHAHsAfAB8QEHAbUBQwHvAQAB8gHrAe8BGgGZAZMBmQJ0
+        AUwBdAGUARoBHAH3AfMBAAERAUQBSwJEAUUDSwFFA0QBEQFtAQcB7QFmAa4BtQEJARkBCQK7AbUBrgES
+        Ae0BBwHzAQAB6gGSAbwB/wEcAXQBeQGZAXMBHAEHAbsBrgEVAesBAAHsAfABGwEaAb0BGwGaAZQBdAGT
+        AZoBGwG8AesBEgEAAREBRAFLASMBRAFLA3QBSwNEAREBbQEAAfMBBwHsAWYBkQEJAbUBkQGuAeoB7AEH
+        AfMCAAEKAa4BuwEHAewBdAGaAaABegF5ARwB9wEJAbUBEgHrAQAB9wHzA/YBGgKaAZMBGgH0Af8B8gHs
+        ARIBAAERAUQBSwEjAW8BSwEkASMBJAFLAXQCRAERAW0DAAEHAQoBZgGRAa4BiwFmAQoBBwUAAW0B9wEH
+        AfABcwF0AXoBeQFRAZkB8gG1Ae0BFAHrAQAB9wHzAvYBGgKTAZoBvQL0Af8B8gHsARIBAAERAUQBSwFE
+        AXQCSwF0AksBdAFEAUoBQwHrAQAB9AHwAfcCrgORAa4B6gH3AfAB9AMAAesBDgFDAewBHAFzAksCHAFt
+        AQABDgEHAgAB7AHwAfQBGgGTAnQBmQEbAf8B9AH/AfAB6wESAQABEQFEAUsBRQFLAUQBIwFLASMCRQJE
+        AUMB6wEAAfAB7AHtAfcBuwMJAbsB9wHtAewB8AUAAfICAAERAhIBDgEAAW0EAAHwAesBBwH0ARoDdAGZ
+        AvYC/wHvAZIB8QEAAREBRAFLAkQCSwFvAksDRAERAW0DAAHvAQABEwKRAa4BZgEKAe8HAAHyAQAB7AHw
+        AfQBGQEJAm0FAAFtAewBvAEaAZMCdAGZAcMB9AH/AfAB7AH3AgABEQFEBksBdAFvAUsCRAERAW0BAAH/
+        AfQB9wFDAe0BGQEJAbUBbQERAfcB9AH/BQAB8gEAArUCrgEJAesBbQUAAe8B6wHsAQcBGgGZAZMBmQIa
+        AbwC7AG8AgABEQFEAksBdAFLAiMCbwJLAUoBEQFtAQABvAEUAewBvAHyAf8BvAK1Ae0BbQEUAbwHAAHr
+        AW0BCQG1ARUB7wcAAQcBbQHrApMCmQGTAe8C6wHxAgAB6wEUAUQBbgFLAW4BSwJEAksBSgFzAeoBQwHr
+        AwABBwFDAewB8AEHAe0B6gFDAQcJAAHrAa4B8AG8ARQBBwgAAbwBFAESAW0C7AFtAeoBEwHzBAAB7AET
+        AW0BSgFtA0oEbQETARQB7AUAAe8DAAHvDAAB7wIAAfILAAH/ARUCAAHsCAAB7wsAAe8KAAG8AxABEQHq
+        CgABvAQRAWcJAAHvAgABDAHzBAABbQEVAfEBAAHxARUBbQ4AAe8GRAFuAUQB6gYAAe8DRANuAXMBbgHq
+        BAAB8wEMAQ4BAAERARMBQwEMAfMDAAFtAeoBEwHqAesBbQEUAeoB6wH/CwAB9wNEAgsBDAI+AUQB9AUA
+        Ae8BEgJuAUQBPgREAfQDAAG8AUQCGgFLARUBRAESAQwB8wMAAfABEwNtAeoBEwERAQ4B9AsAAewBQwES
+        AUMB7AXzBgAB7AESAW4BEgHtBfMDAAH3AUMBSgEaAZkCSgFuAesBDwHzBAABBwFtAusBFAEVAUMBFAHv
+        AfQJAAEHAUMBFAFtARQB7woAAQcCQwFnAUMB9wcAAW0BRAJKAiIBSwIcAXMBDgHzBQAB6wESAeoBFAET
+        ARIBZwHtAfQIAAEHARUBEwEUAesC7AG8CAABBwFmARIBZgFtAq4BvAUAARECFQEiAUoCcwGZAcMBGgFz
+        AUoBIgEHBAAB9wHqAesB7QHrARMB6wH/CAABBwFDAhMBFAHsAQcBbQETAbwGAAEHAWYBhgGLAWYBtQEJ
+        Aa4B6gG8BQABbQERARQB6wFuAZkDwwGZAXMBRAEPAe0EAAHvAW0B7AESARUJAAEHAREBFAESARQB6wHv
+        AQcB7AFDARQB8AQAAQcCZgGLAWYBrgIJAbQBhgESAfAGAAG8AkQBcwGZARoBmgKZAXMBSgEVARIEAAEH
+        ARQB6wEVCAABBwEVARMB7QFDAeoB7wG8Ae8B9wHsARIBbQHwAgABvAFmAYYBtQFmAYsBCQEZAQkB1gG0
+        Aq4B8AYAAfMBRAFKARwBmQGaARoBmgGZAXMBFAESBAABBwEVAusBZwH/AQAB7wG8BAAB6wHvAQcB6gES
+        AfcBvAEHAfcC7QHrAe8CAAEKAa4BtQHdAa4BiwEJARkBCQO0Aa4B7wYAAfMBPgFEAXMBmQEaA8MBcwFE
+        AeoCAAHvAfIB9AHvARUB7AFnBOsBBwIAAewB6wIHAe0BEQHqAe8BvAH3AesBEgETAfICAAHsAa4C3QG0
+        AWYBrgEJAd0BtQGLAYYB6gHzBgAB8wEMAUQBbgGZARoCwwGZAeoB9wIAAe8C7AHtAW0BEAHsAW4BRAEU
+        AesBZwGSAwABDwLvAW0BDwEUAesB9wIHAewBEQESAfMCAAEQAgkBiwFfAWYBrgG1ARkB3QG0AWYBEgHz
+        BgAB/wFnAeoBcwEcAZkCHAESAfcCAAG8AesBEgEUAUMBFAFuAhIBbgHqAewB8QMAAW0B7AHvAe0BEQHw
+        AQcBbQHsAu8B7QFtARQB9AEAAW0BkQEJAbUBZgHwAQcBbQG1AgkBtAGLAWYB9AcAAewBDwEQAREB6wGZ
+        ARwBRAHqAgABBwHsAusCbgFEAm4BEwHsAfAB8gMAAW0B6gH3ARMBBwH/AbwBFAESAewBkgH3AW0B6gIA
+        AW0B6gG7AeoBvAH/AbwCZgGuAbUBBwGuAeoKAAH0AQ8B6wFzAhIDAAEHAusCbgFEAZMB7QHrARQBDwFt
+        AfMDAAFtARIB9wESAbwCAAHwAREBDwEQARIEAAFtARIBtQHqAbwCAAHwAREBEAERAeoLAAH0AQ8BFAGS
+        AewBEgQAAbwBFAMVAesB7ALrAW0B6gFtBAABbQEAAfANAAHrAQoB8BUAAW0BAAHtCgABFQQAAW0BAAFC
+        AU0BPgcAAT4DAAEoAwABQAMAAXADAAEBAQABAQUAAYABAxYAA/8BAAH4AR8B/wGBBAABwAEDAfwFAAGA
+        AQEB+AcAAfgBAQYAAfABPwYAAeABHwYAAcABDwYAAYABBwcAAQMHAAEDBwABAwYAAYABAQYAAYAFAAGA
+        AQEBwAUAAcABAwHgAcEEAAH4AR8B8QH/BAABjwH/AeABDwH4AR8B/wGBAQEB/wHAAQMBwAEDAfwCAAH/
+        AcABAwGAAQEB+AIAAX8B4AEPAgAB+AEBAYABfwH4AR8CAAHwAT8BgAF/AeABDwIAAeABHwGAAQMBwAED
+        AgABwAEPAcABAQGAAQECAAGAAQcB4AYAAQMB/wEIBQABAwH/AYEFAAEDAf8B4AQAAYABAQH/AcAEAAGA
+        AQAB/wHAAgABgAEBAcABAAH/AeEBgAEBAcABAwHgAcEB/wHzAeABDwH4AR8B8QH/AY8C/wGBAfEB/wHh
+        Af8BBwH/AfwBAAHgAf8BwQH/AQABBwH4AQABwAF/AYEB/wGAAQMB+AEBAYABDwEAAf8BwAEBAfABPwEA
+        AQcBAAH/AcABAAHgAR8BAAEHAQABfwHAAQABwAEPAQABBwEAAT8BwAEBAYABBwGAAQcB4AEfAYABAQEA
+        AQMBwAEHAfgBDwGAAQEBAAEDAeABAwH8AQcBgAEBAQABAwHgAQEB/gEDAYABAQGAAQEB4AEBAf8BAQHA
+        AQEBgAEAAfABAAH/AYAB8AEAAcABAAH/AYAB/wHAAf4BAAHgAcEB/wHAAf8B4AH/AcEB8QL/AfEB/wHx
+        Af8BgQHgAQ8BwAEDAfAB/wH8AQABwAEDAYABAQHgAR8B+AEAAYABAQIAAcABBwH4AQEBgAEBAYABAQGA
+        AQEB8AE/AgABgAEBAgAB4AEfAgABwAEDAgABwAEPAgABwAEDAgABgAEHAgAB4AEPAwABAwGAAQEB4AEP
+        AwABAwHAAQMBwAEDAwABAwHAAQMBgAEBAgABgAEBAeABDwHAAQMBgAEAAYABAAHgAQ8BwAEDAYABAAHA
+        AQAB4AEPAcABAwHAAQEB4AHBAfgBHwHgAQ8B4AEDAfEB/wH8AT8B+AEfAf4BBwH4AT8B4AEHAeABQQGP
+        Af8B4AEHAcABAwHAAQABAQH/AcABAwGAAQEBgAIAAf8BgAEBAYABAQMAAX8BgAEBBAABgAF/BgABgAF/
+        BgABgAEDBAABgAEAAcABAQQAAYABAAHgBQABwAEAAf8BCAQAAfwBAAH/AYEBgAEBAYABAQH+AQAB/wHg
+        AYABAQGAAQEB/gEAAf8CwAEDAYABAQH+AQAB/wHAAeABBwHAAQMB/wEBAf8B4QH4AT8B8AEPAf8BhwH/
+        AfMB4AEPAeABDwH4AT8BwAEBAYABAwHAAQMB4AEHAYADAAHAAQMBwAEDBAABwAEDAYABAQQAAcABAwGA
+        AQEEAAGAAQEMAAGAAQMGAAHgAQ8GAAGAAQMBgAEBBAABgAEDAeABDwQAAeABDwHgAQ8BgAEBAgABgAED
+        AeABDwGAAQECAAGAAQMB+AEfAcABAwIAAeABDwH4AR8B4AEHAYABAAH4AT8B/AE/AfgBPwHAAQEB/wGB
+        Af8BgQH/AQcBiAH/AfwBAAH8AQAB8AEHAQABPwH4AQAB+AEAAeABBwEAAT8B+AEBAfgBAQHAAQcBgAEf
+        AfABPwHwAT8BgAEHAcABHwHgAR8B4AEfAQABAwHAAT8BwAEPAcABDwGAAQEB4AH/AYABBwGAAQcB4AEA
+        AfAB/wEAAQMBAAEDAfABAAHwAScBAAEDAQABAwHwAQABwAEDAQABAwEAAQMB8AEBAYABAwGAAQEBgAEB
+        AfgBAQGAAQMBgAEAAYABAAH+AQABwAEBAcABAAHAAQAB/wHAAeABAAHgAcEB4AHBAf8BwAHwAQAB8QH/
+        AfEC/wHxAf8BgQs=
+</value>
+  </data>
+  <data name="rndGiftersToggle.ToolTip" xml:space="preserve">
+    <value>Change the items granted by item-gifting NPCs. All Random options exclude Shannon.
+SHUFFLED: All default gift items are shuffled among all gift NPCs. (Includes Shannon.)
+STANDARD: Gifts are randomized to be any standard item.
+STANDARD&amp;WINGS: Gifts are randomized to be any standard item or wing. 
+STANDARD&amp;GEMS: Gifts are randomized to be any standard item or Elemental Gem.
+CHAOS: Gifts are randomized to be any standard item, wing, or Elemental Gem.
+WINGS: Gifts are randomized to be any wing.
+GEMS: Gifts are randomized to be any Elemental Gem.
+WINGS&amp;GEMS: Gifts are randomized to be any wing or Elemental Gem.
+CUSTOM: Gifts are randomized as set in the below menu.
+[WARNING - Including gems or wings can cause sequence breaks.]</value>
+  </data>
+  <data name="rndWingsmithsToggle.ToolTip" xml:space="preserve">
+    <value>Change the items granted by Wingsmith NPCs.
+SHUFFLED: All wings are shuffled among all wingsmith NPCs.
+STANDARD: Wingsmith items are randomized to be any standard item.
+STANDARD&amp;WINGS: Wingsmith items are randomized to be any standard item or wing. 
+STANDARD&amp;GEMS: Wingsmith items are randomized to be any standard item or Elemental Gem.
+CHAOS: Wingsmith items are randomized to be any standard item, wing, or Elemental Gem.
+WINGS: Wingsmith items are randomized to be any wing.
+GEMS: Wingsmith items are randomized to be any Elemental Gem.
+WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
+CUSTOM: Wingsmith items are randomized as set in the below menu.
+[WARNING - Any of these options can cause sequence breaks.]
+</value>
+  </data>
+  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
+    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
+SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
+&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
+  </data>
+  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
+    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
+Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
+Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
+  </data>
+  <data name="quaMonsterScaleToggle.ToolTip" xml:space="preserve">
+    <value>Scales enemy stats by simple multiplication.
+Applies to bosses.
+NOTE: The 'Enemy stat scaling' feature is applied AFTER the effects of 
+'Randomize monster stats'. Setting both to higher values may cause 
+extreme results.
+</value>
+  </data>
+  <data name="rndMonsterStatsToggle.ToolTip" xml:space="preserve">
+    <value>Randomizes monster stats within regions.
+All monsters in each region will receive new stats, randomly chosen
+from a range from lowest to highest local vanilla values for that stat.
+Increasing the Variance modifier will increase the width of that range,
+beyond the vanilla lowest-highest bounds. Repeat for all stats.
+Example: at Variance 1.0, all Holy Plain enemies will get a new random 
+HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
+Does not apply to bosses.
+NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
+and Variance. Setting both values higher may have extreme results.</value>
+  </data>
+  <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
+    <value>Changes the text colour palette.
+&lt;COLOUR&gt;: Use one of four default included colours.
+SHUFFLED: Select one of those four included colours at random.
+RANDOM: Generate a palette at random. [Feature unfinished, quality not guaranteed.]</value>
   </data>
   <data name="advHelpLabel.ToolTip" xml:space="preserve">
     <value>This is a generic IPS patch generator.

@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="merrowiconsmall.ico" />
+    <None Include="Resources\items\ditherblock.png" />
     <None Include="Resources\merrowbar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

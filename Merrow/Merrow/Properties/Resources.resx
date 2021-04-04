@@ -121,4 +121,7 @@
   <data name="merrowbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\merrowbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ditherblock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\ditherblock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
