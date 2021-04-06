@@ -116,8 +116,35 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="merrowiconsmall.ico" />
+    <None Include="Resources\items\BlackWings_Sprite.png" />
+    <None Include="Resources\items\BlueWings_Sprite.png" />
+    <None Include="Resources\items\CelinesBell_Sprite.png" />
+    <None Include="Resources\items\DarkGaolKey_Sprite.png" />
+    <None Include="Resources\items\DewDrop_Sprite.png" />
     <None Include="Resources\items\ditherblock.png" />
-    <None Include="Resources\merrowbar.png" />
+    <None Include="Resources\items\DragonsPotion_Sprite.png" />
+    <None Include="Resources\items\EarthOrb_Sprite.png" />
+    <None Include="Resources\items\EletalesBook_Sprite.png" />
+    <None Include="Resources\items\FireRuby_Sprite.png" />
+    <None Include="Resources\items\FreshBread_Sprite.png" />
+    <None Include="Resources\items\GiantsShoes_Sprite.png" />
+    <None Include="Resources\items\GoldenAmulet_Sprite.png" />
+    <None Include="Resources\items\GreenWings_Sprite.png" />
+    <None Include="Resources\items\HealingPotion_Sprite.png" />
+    <None Include="Resources\items\HeroesDrink_Sprite.png" />
+    <None Include="Resources\items\HoneyBread_Sprite.png" />
+    <None Include="Resources\items\MintLeaves_Sprite.png" />
+    <None Include="Resources\items\RedWings_Sprite.png" />
+    <None Include="Resources\items\Replica_Sprite.png" />
+    <None Include="Resources\items\SilentFlute_Sprite.png" />
+    <None Include="Resources\items\SilverAmulet_Sprite.png" />
+    <None Include="Resources\items\SpiritLight_Sprite.png" />
+    <None Include="Resources\items\WaterJewel_Sprite.png" />
+    <None Include="Resources\items\WhiteWings_Sprite.png" />
+    <None Include="Resources\items\WindJade_Sprite.png" />
+    <None Include="Resources\items\YellowWings_Sprites.png" />
+    <Content Include="Resources\merrowbar.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

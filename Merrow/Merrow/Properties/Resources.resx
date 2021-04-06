@@ -118,10 +118,88 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="merrowbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\merrowbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BlackWings_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\BlackWings_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueWings_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\BlueWings_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CelinesBell_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\CelinesBell_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DarkGaolKey_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\DarkGaolKey_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DewDrop_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\DewDrop_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ditherblock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\items\ditherblock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DragonsPotion_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\DragonsPotion_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EarthOrb_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\EarthOrb_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EletalesBook_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\EletalesBook_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FireRuby_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\FireRuby_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FreshBread_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\FreshBread_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GiantsShoes_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\GiantsShoes_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GoldenAmulet_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\GoldenAmulet_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GreenWings_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\GreenWings_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HealingPotion_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\HealingPotion_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HeroesDrink_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\HeroesDrink_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HoneyBread_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\HoneyBread_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="merrowbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\merrowbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MintLeaves_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\MintLeaves_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedWings_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\RedWings_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Replica_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\Replica_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SilentFlute_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\SilentFlute_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SilverAmulet_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\SilverAmulet_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SpiritLight_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\SpiritLight_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WaterJewel_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\WaterJewel_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WhiteWings_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\WhiteWings_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WindJade_Sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\WindJade_Sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="YellowWings_Sprites" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\items\YellowWings_Sprites.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
