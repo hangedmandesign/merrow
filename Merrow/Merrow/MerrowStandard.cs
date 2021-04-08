@@ -11,6 +11,8 @@ using System.Drawing;
 
 namespace Merrow {
     public partial class MerrowStandard : Form {
+        //MAIN MERROW RANDOMIZER AND WINFORMS FUNCTIONALITY
+
         //data structures
         DataStore library;
         Random SysRand = new Random();
@@ -72,26 +74,13 @@ namespace Merrow {
         string[] voweled = new string[75];
         byte[] binFileBytes;
 
-        //crash sets and safe lists
-        int[] crashset1 = { 3, 9, 12, 45, 46, 50, 51 }; //HA1, HA2, MBL, WC1, WC2, WC3, LC
-        int[] safeset1 = { 0, 1, 3, 5, 9, 12, 18, 28, 35, 42, 44, 45, 46, 50, 51, 53, 55 };
-        int[] crashset2 = { 26 }; //AVA
-        int[] UNsafeset2 = { 3, 5, 9, 12, 23, 46, 50 };
-        int[] crashset3 = { 40 }; //H2
-        int[] UNsafeset3 = { 23, 50 };
-
-        //categories
-        int[] statusspells = { 6, 17, 19, 22, 24, 25, 29, 43, 44, 47, 48, 49, 52, 54, 56, 57, 58 };
-        int[] offenseSpells = { 0, 1, 3, 4, 5, 8, 9, 10, 12, 13, 14, 15, 16, 18, 20, 21, 23, 26, 28, 30, 31, 34, 35, 36, 42, 45, 46, 50, 51, 53, 55, 59 };
-        int[] effectSpells = { 17, 19, 22, 25, 27, 32, 38, 40, 43, 44, 47, 48, 49, 52, 54, 56, 57, 58 };
-        int[] brianSpells = { 2, 6, 7, 11, 24, 29, 33, 37, 39, 41 };
-
         //INITIALIZATION----------------------------------------------------------------
 
         public MerrowStandard() {
-            InitializeComponent();
+            //required Winforms function, do not edit or remove
+            InitializeComponent(); 
 
-            //prepare variables
+            //initiate fundamental variables
             if (!Directory.Exists(filePath)) { Directory.CreateDirectory(filePath); }
             binOpenFileDialog = new OpenFileDialog() {
                 FileName = "Select a file...",
@@ -133,16 +122,17 @@ namespace Merrow {
             //initiate monster stats
             for (int i = 0; i < 450; i++) { newmonsterstats[i] = library.monsterstatvanilla[i]; }
 
-            //now that dropdowns have content, fix them
+            //initiate UI
             PrepareDropdowns();
 
-            //initial shuffle
-            rngseed = SysRand.Next(100000000, 1000000000); //a 9-digit number
-            loadfinished = true;
+            //initial randomization
+            rngseed = SysRand.Next(100000000, 1000000000); //default seed set to a random 9-digit number
+            loadfinished = true; //loadfinished being false prevents some UI elements from taking incorrect action during the initial setup
             Shuffling(true);
         }
 
-        //list of initial UI cleanup/prep steps
+        //INITIAL UI CLEANUP/PREP------------------------------------------------------------------
+
         private void PrepareDropdowns() { 
             rndSpellDropdown.SelectedIndex = 0;
             rndChestDropdown.SelectedIndex = 0;
@@ -163,7 +153,7 @@ namespace Merrow {
             binLengthHEX.Checked = true;
         }
 
-        //UNIFIED SHUFFLING FUNCTION----------------------------------------------------------------
+        //UNIFIED SHUFFLING/RANDOMIZING FUNCTION----------------------------------------------------------------
 
         public void Shuffling(bool crashpro) {
             int k = 0;
@@ -204,16 +194,16 @@ namespace Merrow {
                 int s;
 
                 //crash set 1, with safe set
-                for (c = 0; c < crashset1.Length; c++)  //step through crash set
+                for (c = 0; c < library.crashset1.Length; c++)  //step through crash set
                 {
                     step = false;
 
                     for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
                     {
-                        for (s = 0; s < safeset1.Length; s++) //for each reorg value, check it against every safe value
+                        for (s = 0; s < library.safeset1.Length; s++) //for each reorg value, check it against every safe value
                         {
-                            if (reorg[r] == safeset1[s]) { //found a safe value
-                                shuffles[crashset1[c]] = safeset1[s]; //replace the -1 value in the correct location in shuffles
+                            if (reorg[r] == library.safeset1[s]) { //found a safe value
+                                shuffles[library.crashset1[c]] = library.safeset1[s]; //replace the -1 value in the correct location in shuffles
                                 reorg.RemoveAt(r); //and then Remove it from reorg
                                 step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
                             }
@@ -226,18 +216,18 @@ namespace Merrow {
                 }
 
                 //crash set 2, with UNsafe set (since safe set would be longer)
-                for (c = 0; c < crashset2.Length; c++) {
+                for (c = 0; c < library.crashset2.Length; c++) {
                     step = false;
 
                     for (r = 0; r < reorg.Count; r++) {
-                        for (s = 0; s < UNsafeset2.Length; s++) //for each reorg value, check it against every *unsafe* value
+                        for (s = 0; s < library.UNsafeset2.Length; s++) //for each reorg value, check it against every *unsafe* value
                         {
-                            if (reorg[r] == UNsafeset2[s]) { step = true; } //if it's listed as unsafe, break out of this loop, check the next reorg
+                            if (reorg[r] == library.UNsafeset2[s]) { step = true; } //if it's listed as unsafe, break out of this loop, check the next reorg
                             if (step) { break; }
                         }
 
                         if (!step) { //if innermost loop ended without finding an unsafe value, then set it to the current value and break out
-                            shuffles[crashset2[c]] = reorg[r];
+                            shuffles[library.crashset2[c]] = reorg[r];
                             reorg.RemoveAt(r);
                             step = true; //get back to outermost loop, we're done
                         }
@@ -247,17 +237,17 @@ namespace Merrow {
                 }
 
                 //crash set 3, with UNsafe set
-                for (c = 0; c < crashset3.Length; c++) {
+                for (c = 0; c < library.crashset3.Length; c++) {
                     step = false;
 
                     for (r = 0; r < reorg.Count; r++) {
-                        for (s = 0; s < UNsafeset3.Length; s++) {
-                            if (reorg[r] == UNsafeset3[s]) { step = true; }
+                        for (s = 0; s < library.UNsafeset3.Length; s++) {
+                            if (reorg[r] == library.UNsafeset3[s]) { step = true; }
                             if (step) { break; }
                         }
 
                         if (!step) {
-                            shuffles[crashset3[c]] = reorg[r];
+                            shuffles[library.crashset3[c]] = reorg[r];
                             reorg.RemoveAt(r);
                             step = true;
                         }
@@ -356,64 +346,58 @@ namespace Merrow {
 
             //RANDOM GIFTS--------------------------------------------------------------------------------
 
-            //random excludes final shannons to prevent softlocks.
-            if (rndGiftersDropdown.SelectedIndex >= 1) { gifts = new int[8]; }
-            if (rndGiftersDropdown.SelectedIndex == 0 && !rndShuffleShannonToggle.Checked) { gifts = new int[10]; }
-            if (rndGiftersDropdown.SelectedIndex == 0 && rndShuffleShannonToggle.Checked) { gifts = new int[8]; }
+            //option to exclude final shannons, forcing them to be vanilla. Either way, the game will prevent softlocks.
+            if (!rndShuffleShannonToggle.Checked) { gifts = new int[10]; }
+            if (rndShuffleShannonToggle.Checked) { gifts = new int[8]; } //8-indice array will just never overwrite the last two items, so they'll be vanilla.
 
-            //initiate item gifts list
+            //initiate item gifts list with vanilla items
             for (int l = 0; l < gifts.Length; l++) { gifts[l] = library.itemgranters[l * 2 + 1]; }
 
             itemset = itemListView3.CheckedIndices.Cast<int>().ToArray();
             setlength = itemset.Length;
 
+            //randomized gifts happen first so they can be shuffled after
             if (rndGiftersDropdown.SelectedIndex >= 1 && setlength > 0) {
                 int c = gifts.Length;
 
-                while (c > 0) {
+                while (c > 0) { //fill the array with items
                     c--;
                     k = itemset[SysRand.Next(setlength)];
                     gifts[c] = k;
                 }
 
-                d = gifts.Length; //do normal shuffling here because of special exceptions against standard shuffle
-                while (d > 1) {
-                    d--;
-                    k = SysRand.Next(d + 1);
-                    int temp = gifts[k];
-                    gifts[k] = gifts[d];
-                    gifts[d] = temp;
+                if (!rndShuffleShannonToggle.Checked) { //ensure there's at least one book and key in the array
+                    gifts[8] = 24;
+                    gifts[9] = 25;
                 }
             }
 
-            //initial shuffle of all items
-            if (rndGiftersDropdown.SelectedIndex == 0) { 
-                d = gifts.Length;
-                while (d > 1) {
-                    d--;
-                    k = SysRand.Next(d + 1);
-                    int temp = gifts[k];
-                    gifts[k] = gifts[d];
-                    gifts[d] = temp;
-                }
+            //shuffling, happens for both random/shuffle options
+            d = gifts.Length;
+            while (d > 1) {
+                d--;
+                k = SysRand.Next(d + 1);
+                int temp = gifts[k];
+                gifts[k] = gifts[d];
+                gifts[d] = temp;
+            }
 
-                //shuffle has to guarantee key/book are not on final shannons to avoid softlocks
-                if (!rndShuffleShannonToggle.Checked) { 
-                    int newloc1 = 0;
-                    int newloc2 = 0;
-                    if (gifts[8] == 24 || gifts[8] == 25) {
-                        newloc1 = SysRand.Next(8); //pick a gifter slot from 0-7 to rotate it into
-                        int temp = gifts[8];
-                        gifts[8] = gifts[newloc1];
-                        gifts[newloc1] = temp;
-                    }
-                    if (gifts[9] == 24 || gifts[9] == 25) {
-                        newloc2 = SysRand.Next(8);
-                        while (newloc2 == newloc1) { newloc2 = SysRand.Next(8); } //avoid rotating the first item back into a shannon slot
-                        int temp = gifts[9];
-                        gifts[9] = gifts[newloc2];
-                        gifts[newloc2] = temp;
-                    }
+            //if final shannons are not forced vanilla, guarantee key/book are never on them to avoid softlocks
+            if (!rndShuffleShannonToggle.Checked) { 
+                int newloc1 = 0;
+                int newloc2 = 0;
+                if (gifts[8] == 24 || gifts[8] == 25) { //if the first shannon item is book or key
+                    newloc1 = SysRand.Next(8); //pick a gifter slot from 0-7 to rotate it into
+                    int temp = gifts[8];
+                    gifts[8] = gifts[newloc1];
+                    gifts[newloc1] = temp;
+                }
+                if (gifts[9] == 24 || gifts[9] == 25) { //if the second shannon item is book or key
+                    newloc2 = SysRand.Next(8);
+                    while (newloc2 == newloc1) { newloc2 = SysRand.Next(8); } //guarantee it's in a different slot than the first
+                    int temp = gifts[9];
+                    gifts[9] = gifts[newloc2];
+                    gifts[newloc2] = temp;
                 }
             }
 
@@ -588,10 +572,10 @@ namespace Merrow {
             }
             else { fileName = "merrowpatch_" + rngseed.ToString(); }
 
-            //shuffle here so I don't have to shuffle after every option is changed
+            //reshuffle here so I don't have to shuffle after every option is changed in the UI, only certain ones
             Shuffling(true);
 
-            //start spoiler log and initialize empty patch
+            //start spoiler log and initialize empty patch content strings
             File.WriteAllText(filePath + fileName + "_spoiler.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
             File.AppendAllText(filePath + fileName + "_spoiler.txt", "Seed: " + rngseed.ToString() + Environment.NewLine);
             File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "PATCH MODIFIERS:" + Environment.NewLine);
@@ -766,20 +750,20 @@ namespace Merrow {
                     spoilergifts[i] = library.granternames[i] + ": " + library.items[gifts[i] * 3];
                 }
 
-                if (rndGiftersDropdown.SelectedIndex == 0) {
+                if (rndShuffleShannonToggle.Checked) { //if shannons are forced vanilla, add this note about them being vanilla
+                    spoilergifts[8] = "Shannon (Brannoch Castle): ELETALE BOOK (unrandomized)";
+                    spoilergifts[9] = "Shannon (Mammon's World): DARK GAOL KEY (unrandomized)";
+                }
+
+                if (rndGiftersDropdown.SelectedIndex == 0) { //shuffle
                     if (rndShuffleShannonToggle.Checked) {
-                        spoilergifts[8] = "Shannon (Brannoch Castle): ELETALE BOOK (unrandomized)";
-                        spoilergifts[9] = "Shannon (Mammon's World): DARK GAOL KEY (unrandomized)";
                         File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts shuffled (Shannons excluded)." + Environment.NewLine);
                     } else {
                         File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts shuffled." + Environment.NewLine);
                     }
                 }
 
-                if (rndGiftersDropdown.SelectedIndex > 0) {
-                    spoilergifts[8] = "Shannon (Brannoch Castle): ELETALE BOOK (unrandomized)";
-                    spoilergifts[9] = "Shannon (Mammon's World): DARK GAOL KEY (unrandomized)";
-
+                if (rndGiftersDropdown.SelectedIndex > 0) { //random
                     string randomtype = "";
                     if (rndGiftersDropdown.SelectedIndex == 1) { randomtype = "standard"; }
                     if (rndGiftersDropdown.SelectedIndex == 2) { randomtype = "standard + wings"; }
@@ -788,7 +772,13 @@ namespace Merrow {
                     if (rndGiftersDropdown.SelectedIndex == 5) { randomtype = "wings"; }
                     if (rndGiftersDropdown.SelectedIndex == 6) { randomtype = "gems"; }
                     if (rndGiftersDropdown.SelectedIndex == 7) { randomtype = "wings + gems"; }
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts randomized (" + randomtype + ")." + Environment.NewLine);
+
+                    if (rndShuffleShannonToggle.Checked) {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts randomized (" + randomtype + "), Shannons excluded." + Environment.NewLine);
+                    }
+                    else {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts randomized (" + randomtype + ")." + Environment.NewLine);
+                    }
                 }
             }
 
@@ -820,8 +810,7 @@ namespace Merrow {
                 }
             }
 
-            //TEXT CONTENT SHUFFLE
-
+            //Text content shuffle
             if (rndTextContentToggle.Checked) {
                 int temp = 0;
                 //add single text addresses, and new byte
@@ -907,7 +896,7 @@ namespace Merrow {
             if (quaAccuracyToggle.Checked) {
                 if (quaAccuracyDropdown.SelectedIndex == 0) { //Spell Accuracy: Status
                     for (int i = 0; i < 17; i++) {
-                        string spellloc = library.spells[(statusspells[i] * 4) + 2];
+                        string spellloc = library.spells[(library.statusspells[i] * 4) + 2];
                         int temploc = Convert.ToInt32(spellloc) + 15;
                         patchcontent += Convert.ToString(temploc, 16);
                         patchcontent += "000164";
@@ -1049,156 +1038,41 @@ namespace Merrow {
             System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
         }
 
-        //BUILD GENERIC PATCH----------------------------------------------------------------
+        //GRANULAR ITEM RANDOMIZER FUNCTIONS-------------------------------------------------
 
-        public void BuildCustomPatch(string addr, string content) { 
-            //update filename
-            if (advFilenameText.Text != "" && advFilenameText.Text != null) {
-                fileName = string.Join("", advFilenameText.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
+        public void itemListUpdate(ListView currentList, int currentIndex) {
+            lockItemUpdates = true;
+            if (currentIndex == 0) { itemListWipe(currentList); }
+            if (currentIndex >= 1 && currentIndex <= 7) {
+                itemListWipe(currentList);
+                itemListSet(currentList, itemListSelect(currentIndex));
             }
-            else { fileName = "merrowgenericpatch"; }
-
-            passcheck = 0; //error check reset
-            advErrorLabel.Visible = false;
-            patchbuild = "";
-            patchcontent = "";
-            string lengthhex = Convert.ToString(content.Length / 2, 16);
-            string addresshex = addr;
-
-            if(addr.Length < 6) { //add leading zeroes to short addresses
-                addresshex = "";
-                for (int i = 0; i < 6 - addr.Length; i++) { addresshex += "0"; }
-                addresshex += addr;
-                advAddressText.Text = addresshex;
-            }
-
-            //error check
-            if (content.Length == 0) { //check that the content is not null
-                advErrorLabel.Text = "ERROR: Content cannot be empty.";
-                passcheck = 1;
-            }
-            if (content.Length % 2 != 0) { //check that the content is a hex string of multiple 2 len, if not, fail
-                advErrorLabel.Text = "ERROR: Odd number of characters in content.";
-                passcheck = 2;
-            }
-            if (content.Length < 0 || addr.Length > 6 || lengthhex.Length > 4) { //if you somehow manage any of these then go to hell
-                advErrorLabel.Text = "ERROR: Invalid content or address.";
-                passcheck = 3;
-            }
-            //if error check failed, get out
-            if (passcheck > 0) {
-                advErrorLabel.Visible = true;
-                return;
-            }
-
-            //ASSEMBLE CONTENT
-            patchcontent += addresshex;
-            if (lengthhex.Length < 4) { //add leading zeroes if IPS record size is too short
-                for (int p = 0; p < 4 - lengthhex.Length; p++) { patchcontent += "0"; }
-            } 
-            
-            patchcontent += lengthhex; //add the remaining IPS record size in hex to the string
-            patchcontent += content; //add the actual content of the patch
-
-            //ASSEMBLE PATCH FILE
-            patchbuild += headerHex;
-            patchbuild += patchcontent;
-            patchbuild += footerHex;
-            patcharray = StringToByteArray(patchbuild);
-            File.WriteAllBytes(filePath + fileName + ".ips", patcharray);
-            filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
-            System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+            lockItemUpdates = false;
         }
 
-        //BINARY FILE READER----------------------------------------------------------------
+        public int[] itemListSelect(int option) { //grab the item array from the library
+            if (option == 1) { return library.itemlist_standard; }
+            if (option == 2) { return library.itemlist_standardwings; }
+            if (option == 3) { return library.itemlist_standardgems; }
+            if (option == 4) { return library.itemlist_chaos; }
+            if (option == 5) { return library.itemlist_wings; }
+            if (option == 6) { return library.itemlist_gems; }
+            if (option == 7) { return library.itemlist_wingsgems; }
 
-        public void BinRead() {
-            Console.WriteLine("BinRead start.");
-            //update filename
-            if (binFilenameTextBox.Text != "" && binFilenameTextBox.Text != null) {
-                fileName = string.Join("", binFilenameTextBox.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
+            return library.itemlist_standard; //return this as a backup, should never happen
+        }
+
+        public void itemListWipe(ListView listID) { //wipe the specified item list so we can set it
+            for (int i = 0; i < 26; i++) {
+                ListViewItem listChestItem = listID.Items[i];
+                listChestItem.Checked = false;
             }
-            else { fileName = "merrowreaderoutput"; }
+        }
 
-            //read content and split
-            string content = binContentTextBox.Text;
-            string[] strarray = content.Split(',');
-
-            //convert entire array to hex values if dec
-            if (binAddrDEC.Checked || binLengthDEC.Checked) {
-                for (int i = 0; i < strarray.Length; i++) {
-                    int tempval = -1;
-                    if (i % 2 == 0 && binAddrDEC.Checked) {
-                        tempval = Convert.ToInt32(strarray[i]);
-                        strarray[i] = tempval.ToString("X6");
-                    }
-                    if (i % 2 == 1 && binLengthDEC.Checked) {
-                        tempval = Convert.ToInt32(strarray[i]);
-                        strarray[i] = tempval.ToString("X2");
-                    }
-                    Console.WriteLine(strarray[i]);
-                }
-            }
-
-            //error check
-            if (strarray.Length % 2 != 0) { 
-                advErrorLabel.Text = "ERROR: Odd number of entries in content.";
-                return;
-            }
-            for (int i = 0; i < strarray.Length; i++) {
-                if (i % 2 == 0 && strarray[i].Length != 6) {
-                    advErrorLabel.Text = "ERROR: Entry " + i + " was not six characters";
-                    return;
-                }
-                if (i % 2 == 1) {
-                    if (strarray[i].Length > 4) {
-                        advErrorLabel.Text = "ERROR: Entry " + i + " was too long (FFFF max)";
-                        return;
-                    }
-
-                    int lastAddr = Convert.ToInt32(strarray[i - 1], 16);
-                    int lastLen = Convert.ToInt32(strarray[i], 16);
-                    if (lastAddr + lastLen > binFileLength) {
-                        advErrorLabel.Text = "ERROR: Entry " + i + " overruns end of file.";
-                        return;
-                    }
-                }
-            }
-
-            List<string> entries = new List<string>();
-            string extractor;
-
-            //step through array pulling bytes into strings
-            for (int i = 0; i < strarray.Length; i += 2) { 
-                int currAddr = Convert.ToInt32(strarray[i], 16);
-                int currLength = Convert.ToInt32(strarray[i + 1], 16);
-                byte[] binArray = new byte[currLength];
-
-                ArraySegment<byte> binSegment = new ArraySegment<byte>(binFileBytes, currAddr, currLength);
-                int k = 0;
-                for (int j = binSegment.Offset; j < (binSegment.Offset + binSegment.Count); j++) {
-                    binArray[k] = binSegment.Array[j];
-                    k++;
-                }
-                extractor = ByteArrayToString(binArray);
-                entries.Add(extractor);
-            }
-
-            //output text into box
-            string boxContent = "";
-            for (int i = 0; i < strarray.Length; i += 2) {
-                boxContent += entries[i / 2].ToUpper() + Environment.NewLine;
-            }
-            binOutputTextBox.Text = boxContent;
-
-            //assemble file if checkbox checked
-            if (binVerboseLog.Checked) {
-                File.WriteAllText(filePath + fileName + ".txt", "MERROW " + labelVersion.Text + " Binary Output..." + Environment.NewLine);
-                for (int i = 0; i < strarray.Length; i += 2) {
-                    File.AppendAllText(filePath + fileName + ".txt", "0x" + strarray[i].ToUpper() + ":0x" + strarray[i + 1].ToUpper() + ":" + entries[i / 2].ToUpper() + Environment.NewLine);
-                }
-                filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
-                System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+        public void itemListSet(ListView listID, int[] listArray) { //set the specified item list
+            for (int i = 0; i < listArray.Length; i++) {
+                ListViewItem listChestItem = listID.Items[listArray[i]];
+                listChestItem.Checked = true;
             }
         }
 
@@ -1211,115 +1085,11 @@ namespace Merrow {
             return check;
         }
 
+        //WINFORMS UI INTERACTIONS-------------------------------------------------------------------
+        //These declarations should not be manually edited without care, as they're partially auto-generated by the Winforms Designer.
+        //The content can be edited as needed. They're kept here for logical sake, because this is the :Form type function.
 
-        //VARIABLE OPERATIONS----------------------------------------------------------------
-
-        public static string ByteArrayToString(byte[] ba) { //Convert byte array to hex string
-            StringBuilder hex = new StringBuilder(ba.Length * 2);
-            foreach (byte b in ba) { hex.AppendFormat("{0:x2}", b); }
-            return hex.ToString();
-        }
-
-        public static string ByteToString(byte ba) { //Convert byte to hex string
-            StringBuilder hex = new StringBuilder();
-            hex.AppendFormat("{0:x2}", ba);
-            return hex.ToString();
-        }
-
-        public static byte[] StringToByteArray(string hex) { //Convert hex string to byte array
-            int NumberChars = hex.Length;
-            byte[] bytes = new byte[NumberChars / 2];
-            //Console.WriteLine(hex);
-            for (int i = 0; i < NumberChars; i += 2) { bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16); }
-            return bytes;
-        }
-
-        public static string ToHex(string input) { //Convert ascii string to hex string
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in input)
-                sb.AppendFormat("{0:X2}", (int)c);
-            return sb.ToString().Trim();
-        }
-
-        public static Color RGBAToColor(string hexvalue) { //Convert 4-char hex string to Color
-            string binCol = Convert.ToString(Convert.ToInt32(hexvalue, 16), 2); //convert the hex string to an int, and then to binary string
-            if (binCol.Length < 16) { for (int i = 0; i < 16 - binCol.Length; i++) { binCol = "0" + binCol; } } //ensure it's 16 characters, conversion will cut it short
-
-            int intR = Convert.ToInt32(binCol.Substring(0, 5), 2); //convert first five bits of binary to int 0-31
-            int intG = Convert.ToInt32(binCol.Substring(5, 5), 2); //convert second five bits of binary to int 0-31
-            int intB = Convert.ToInt32(binCol.Substring(10, 5), 2); //convert third five bits of binary to int 0-31
-            int intA = Convert.ToInt32(binCol.Substring(15), 2); //grab the alpha as well
-
-            double dubR = (intR / 31d) * 255; //convert the 0-31 values to 0-255 for FromArgb
-            double dubG = (intG / 31d) * 255;
-            double dubB = (intB / 31d) * 255;
-
-            intR = (int)Math.Round(dubR); //it was not doing the conversion properly so i've separated it out
-            intG = (int)Math.Round(dubG);
-            intB = (int)Math.Round(dubB);
-
-            intA = intA * 255; //either 255 or 0
-
-            Color ret = Color.FromArgb(intA, intR, intG, intB); //return the color value so it can be used for TransformHSV
-            return ret;
-        }
-
-        public static Color ColorFromHSL(float h, float s, float v) {
-            if (s == 0) { int L = (int)v; return Color.FromArgb(255, L, L, L); }
-
-            double min, max, hx;
-            hx = h / 360d;
-
-            max = v < 0.5d ? v * (1 + s) : (v + s) - (v * s);
-            min = (v * 2d) - max;
-
-            Color c = Color.FromArgb(255, (int)(255 * RGBChannelFromHue(min, max, hx + 1 / 3d)),
-                                          (int)(255 * RGBChannelFromHue(min, max, hx)),
-                                          (int)(255 * RGBChannelFromHue(min, max, hx - 1 / 3d)));
-            return c;
-        }
-
-        public static double RGBChannelFromHue(double m1, double m2, double h) {
-            h = (h + 1d) % 1d;
-            if (h < 0) h += 1;
-            if (h * 6 < 1) return m1 + (m2 - m1) * 6 * h;
-            else if (h * 2 < 1) return m2;
-            else if (h * 3 < 2) return m1 + (m2 - m1) * 6 * (2d / 3d - h);
-            else return m1;
-        }
-
-        public float getBrightness(Color c) { //more realistic brightness
-            return (c.R * 0.299f + c.G * 0.587f + c.B * 0.114f) / 256f;
-        }
-
-        public static string ColorToHex(Color col) { //Convert Color to 4-char hex string
-            Console.WriteLine(col.ToString());
-            double dubR = (col.R / 255d) * 31; //convert the 0-255 values to 0-31 for binary conversion
-            double dubG = (col.G / 255d) * 31;
-            double dubB = (col.B / 255d) * 31;
-
-            int intR = (int)Math.Round(dubR); //it was not doing the conversion properly so i've separated it out
-            int intG = (int)Math.Round(dubG);
-            int intB = (int)Math.Round(dubB);
-
-            int intA = 1; //Alpha is either 1 or 0
-            if (col.A == 0) { intA = 0; }
-
-            string binR = Convert.ToString(intR, 2); //convert them to separate binary strings
-            if (binR.Length < 5) { for (int i = 0; i < 5 - binR.Length; i++) { binR = "0" + binR; } } //ensure it's 5 characters, conversion will cut it short
-            string binG = Convert.ToString(intG, 2);
-            if (binG.Length < 5) { for (int i = 0; i < 5 - binG.Length; i++) { binG = "0" + binG; } }
-            string binB = Convert.ToString(intB, 2);
-            if (binB.Length < 5) { for (int i = 0; i < 5 - binB.Length; i++) { binB = "0" + binB; } }
-            string binA = Convert.ToString(intA, 2);
-
-            int binCol = Convert.ToInt32(binR + binG + binB + binA, 2); //combine into one int
-            string ret = binCol.ToString(("X4")); //convert that int to hex
-            Console.WriteLine(ret);
-            return ret;
-        }
-
-        //UI INTERACTIONS----------------------------------------------------------------
+        //General functions
 
         private void tabsControl_SelectedIndexChanged(object sender, EventArgs e) {
             rndCRCWarningLabel.Visible = false;
@@ -1333,6 +1103,8 @@ namespace Merrow {
         private void terms__LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
         }
+
+        //RND - Randomizer randomization
 
         private void rndSpellToggle_CheckedChanged(object sender, EventArgs e) {
             if(rndSpellToggle.Checked) {
@@ -1420,7 +1192,7 @@ namespace Merrow {
         private void rndGiftersToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndGiftersToggle.Checked) {
                 rndGiftersDropdown.Enabled = true;
-                if (rndGiftersDropdown.SelectedIndex == 0) { rndShuffleShannonToggle.Enabled = true; } //make visible again if they've already been using it
+                rndShuffleShannonToggle.Enabled = true;
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 2;
             }
@@ -1445,171 +1217,6 @@ namespace Merrow {
                     itemListTabs.Visible = false;
                 }
             }
-        }
-
-        private void quaMaxMessageToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaMaxMessageToggle.Checked) {
-                rndCRCWarningLabel.Visible = true;
-            }
-            else {
-                rndCRCWarningLabel.Visible = false;
-            }
-        }
-
-        private void quaZoomToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaZoomToggle.Checked) {
-                quaZoomDropdown.Enabled = true;
-                rndCRCWarningLabel.Visible = true;
-            } else {
-                quaZoomDropdown.Enabled = false;
-                rndCRCWarningLabel.Visible = false;
-            }
-        }
-
-        private void quaAccuracyToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaAccuracyToggle.Checked) {
-                quaAccuracyDropdown.Enabled = true;
-            } else {
-                quaAccuracyDropdown.Enabled = false;
-            }
-        }
-
-        private void expSeedTextBox_TextChanged(object sender, EventArgs e) {
-            var textboxSender = (TextBox)sender; //restricts to numeric only
-            var cursorPosition = textboxSender.SelectionStart;
-            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9]", "");
-            textboxSender.SelectionStart = cursorPosition;
-            if (expSeedTextBox.Text != "" && expSeedTextBox.Text != null && loadfinished) {
-                rngseed = Convert.ToInt32(expSeedTextBox.Text);
-                Shuffling(true);
-            }
-        }
-
-        private void expFilenameTextBox_TextChanged(object sender, EventArgs e) {
-            var textboxSender = (TextBox)sender; //restricts to alphanumeric/underscore only
-            var cursorPosition = textboxSender.SelectionStart;
-            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z_]", "");
-            textboxSender.SelectionStart = cursorPosition;
-        }
-
-        private void expGenerateButton_Click(object sender, EventArgs e) {
-            BuildPatch();
-        }
-
-        private void expVerboseCheckBox_CheckedChanged(object sender, EventArgs e) {
-            verboselog = expVerboseCheckBox.Checked;
-        }
-
-        private void advFilenameText_TextChanged(object sender, EventArgs e) {
-            var textboxSender = (TextBox)sender; //restricts to alphanumeric/underscore only
-            var cursorPosition = textboxSender.SelectionStart;
-            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z_]", "");
-            textboxSender.SelectionStart = cursorPosition;
-        }
-
-        private void advAddressText_TextChanged(object sender, EventArgs e) {
-            var textboxSender = (TextBox)sender; //restricts to hexadecimal only
-            var cursorPosition = textboxSender.SelectionStart;
-            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F]", "");
-            textboxSender.SelectionStart = cursorPosition;
-        }
-
-        private void advContentText_TextChanged(object sender, EventArgs e) {
-            var textboxSender = (TextBox)sender; //restricts to hexadecimal only
-            var cursorPosition = textboxSender.SelectionStart;
-            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F]", "");
-            textboxSender.SelectionStart = cursorPosition;
-        }
-
-        private void advGenerateButton_Click(object sender, EventArgs e) {
-            BuildCustomPatch(advAddressText.Text,advContentText.Text);
-        }
-
-        private void binFileSelectButton_Click(object sender, EventArgs e) {
-            if (binOpenFileDialog.ShowDialog() == DialogResult.OK) {
-                try {
-                    binFileBytes = File.ReadAllBytes(binOpenFileDialog.FileName);
-                    binFileLength = binFileBytes.Length;
-                    binErrorLabel.Text = Path.GetFileName(binOpenFileDialog.FileName) + " loaded (" + binFileLength + " bytes).";
-                    binErrorLabel.Visible = true;
-                    binFileLoaded = true;
-                }
-                catch (SecurityException ex) {
-                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
-                    $"Details:\n\n{ex.StackTrace}");
-                }
-            }
-        }
-
-        private void binGenerateButton_Click(object sender, EventArgs e) {
-            if (binFileLoaded && binContentTextBox.Text != "" && binContentTextBox.Text != null) {
-                BinRead();
-            }
-        }
-
-        private void binContentTextBox_TextChanged(object sender, EventArgs e) {
-            var textboxSender = (TextBox)sender; //restricts to hexadecimal and comma only
-            var cursorPosition = textboxSender.SelectionStart;
-            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F,]", "");
-            textboxSender.SelectionStart = cursorPosition;
-        }
-
-        private void binFilenameTextBox_TextChanged(object sender, EventArgs e) {
-            var textboxSender = (TextBox)sender; //restricts to alphanumeric/underscore only
-            var cursorPosition = textboxSender.SelectionStart;
-            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z_]", "");
-            textboxSender.SelectionStart = cursorPosition;
-        }
-
-        private void crcFileButton_Click(object sender, EventArgs e) {
-            if (crcOpenFileDialog.ShowDialog() == DialogResult.OK) {
-                try {
-                    fullPath = crcOpenFileDialog.FileName;
-                    crcErrorLabel.Text = "File loaded: " + crcOpenFileDialog.FileName + ".";
-                    crcErrorLabel.Visible = true;
-                    crcFileSelected = true;
-                }
-                catch (SecurityException ex) {
-                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
-                    $"Details:\n\n{ex.StackTrace}");
-                    crcFileSelected = false;
-                }
-            }
-        }
-
-        private void crcRepairButton_Click(object sender, EventArgs e) {
-            int message = RepairCRC();
-            Console.WriteLine(message);
-            if (message == 0) {
-                crcErrorLabel.Visible = true;
-                crcErrorLabel.Text = "Checksum repaired.";
-            }
-
-            if (message == 1) {
-                crcErrorLabel.Visible = true;
-                crcErrorLabel.Text = "ERROR: There was an error. More granular error codes coming soon.";
-            }
-
-            if (message == -1) {
-                crcErrorLabel.Visible = true;
-                crcErrorLabel.Text = "ERROR: File not selected or available.";
-            }
-        }
-
-        private void quaMonsterScaleToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaMonsterScaleToggle.Checked) {
-                quaScalingDropdown.Enabled = true;
-            }
-            else {
-                quaScalingDropdown.Enabled = false;
-                quaScalingDropdown.SelectedIndex = 5;
-                difficultyscale = 10;
-            }
-        }
-
-        private void quaScalingDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            //index 5 is 1.0, which is difficulty scale 10
-            difficultyscale = quaScalingDropdown.SelectedIndex + 5;
         }
 
         private void rndMonsterStatsToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1665,7 +1272,7 @@ namespace Merrow {
         private void rndGiftersDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             itemListTabs.SelectedIndex = 2;
             itemListUpdate(itemListView3, rndGiftersDropdown.SelectedIndex);
-            if (rndGiftersDropdown.SelectedIndex == 0 && rndGiftersToggle.Checked) {
+            if (rndGiftersToggle.Checked) {
                 rndShuffleShannonToggle.Enabled = true;
             }
             else {
@@ -1678,46 +1285,12 @@ namespace Merrow {
             itemListUpdate(itemListView4, rndWingsmithsDropdown.SelectedIndex);
         }
 
-        public void itemListUpdate(ListView currentList, int currentIndex) {
-            lockItemUpdates = true;
-            if (currentIndex == 0) { itemListWipe(currentList); }
-            if (currentIndex >= 1 && currentIndex <= 7) {
-                itemListWipe(currentList);
-                itemListSet(currentList, itemListSelect(currentIndex));
-            }
-            lockItemUpdates = false;
-        }
-
-        public int[] itemListSelect(int option) { //grab the item array from the library
-            if (option == 1) { return library.itemlist_standard; }
-            if (option == 2) { return library.itemlist_standardwings; }
-            if (option == 3) { return library.itemlist_standardgems; }
-            if (option == 4) { return library.itemlist_chaos; }
-            if (option == 5) { return library.itemlist_wings; }
-            if (option == 6) { return library.itemlist_gems; }
-            if (option == 7) { return library.itemlist_wingsgems; }
-
-            return library.itemlist_standard; //return this as a backup, should never happen
-        }
-
-        public void itemListWipe(ListView listID) { //wipe the specified item list so we can set it
-            for (int i = 0; i < 26; i++) {
-                ListViewItem listChestItem = listID.Items[i];
-                listChestItem.Checked = false;
-            }
-        }
-
-        public void itemListSet(ListView listID, int[] listArray) { //set the specified item list
-            for (int i = 0; i < listArray.Length; i++) {
-                ListViewItem listChestItem = listID.Items[listArray[i]];
-                listChestItem.Checked = true;
-            }
-        }
+        //ITEM - Randomizer granular item controls
 
         private void itemListView1_ItemChecked(object sender, ItemCheckedEventArgs e) {
             if (!lockItemUpdates) {
                 rndChestDropdown.SelectedIndex = 8;
-                if(e.Item.Checked) { rndChestToggle.Checked = true; }
+                if (e.Item.Checked) { rndChestToggle.Checked = true; }
             }
         }
 
@@ -1739,6 +1312,181 @@ namespace Merrow {
             if (!lockItemUpdates) {
                 rndWingsmithsDropdown.SelectedIndex = 8;
                 if (e.Item.Checked) { rndWingsmithsToggle.Checked = true; }
+            }
+        }
+
+        //QUA - Randomizer quality of life, etc
+
+        private void quaMaxMessageToggle_CheckedChanged(object sender, EventArgs e) {
+            if (quaMaxMessageToggle.Checked) {
+                rndCRCWarningLabel.Visible = true;
+            }
+            else {
+                rndCRCWarningLabel.Visible = false;
+            }
+        }
+
+        private void quaZoomToggle_CheckedChanged(object sender, EventArgs e) {
+            if (quaZoomToggle.Checked) {
+                quaZoomDropdown.Enabled = true;
+                rndCRCWarningLabel.Visible = true;
+            } else {
+                quaZoomDropdown.Enabled = false;
+                rndCRCWarningLabel.Visible = false;
+            }
+        }
+
+        private void quaAccuracyToggle_CheckedChanged(object sender, EventArgs e) {
+            if (quaAccuracyToggle.Checked) {
+                quaAccuracyDropdown.Enabled = true;
+            } else {
+                quaAccuracyDropdown.Enabled = false;
+            }
+        }
+
+        private void quaMonsterScaleToggle_CheckedChanged(object sender, EventArgs e) {
+            if (quaMonsterScaleToggle.Checked) {
+                quaScalingDropdown.Enabled = true;
+            }
+            else {
+                quaScalingDropdown.Enabled = false;
+                quaScalingDropdown.SelectedIndex = 5;
+                difficultyscale = 10;
+            }
+        }
+
+        private void quaScalingDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            //index 5 is 1.0, which is difficulty scale 10
+            difficultyscale = quaScalingDropdown.SelectedIndex + 5;
+        }
+
+        //EXP - Randomizer export
+
+        private void expSeedTextBox_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to numeric only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9]", "");
+            textboxSender.SelectionStart = cursorPosition;
+            if (expSeedTextBox.Text != "" && expSeedTextBox.Text != null && loadfinished) {
+                rngseed = Convert.ToInt32(expSeedTextBox.Text);
+                Shuffling(true);
+            }
+        }
+
+        private void expFilenameTextBox_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to alphanumeric/underscore only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z_]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        private void expGenerateButton_Click(object sender, EventArgs e) {
+            BuildPatch();
+        }
+
+        private void expVerboseCheckBox_CheckedChanged(object sender, EventArgs e) {
+            verboselog = expVerboseCheckBox.Checked;
+        }
+
+        //ADV - Generic patch generator
+
+        private void advFilenameText_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to alphanumeric/underscore only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z_]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        private void advAddressText_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to hexadecimal only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        private void advContentText_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to hexadecimal only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        private void advGenerateButton_Click(object sender, EventArgs e) {
+            BuildCustomPatch(advAddressText.Text,advContentText.Text);
+        }
+
+        //BIN - Binary file reader
+
+        private void binFileSelectButton_Click(object sender, EventArgs e) {
+            if (binOpenFileDialog.ShowDialog() == DialogResult.OK) {
+                try {
+                    binFileBytes = File.ReadAllBytes(binOpenFileDialog.FileName);
+                    binFileLength = binFileBytes.Length;
+                    binErrorLabel.Text = Path.GetFileName(binOpenFileDialog.FileName) + " loaded (" + binFileLength + " bytes).";
+                    binErrorLabel.Visible = true;
+                    binFileLoaded = true;
+                }
+                catch (SecurityException ex) {
+                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+                }
+            }
+        }
+
+        private void binGenerateButton_Click(object sender, EventArgs e) {
+            if (binFileLoaded && binContentTextBox.Text != "" && binContentTextBox.Text != null) {
+                BinRead();
+            }
+        }
+
+        private void binContentTextBox_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to hexadecimal and comma only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F,]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        private void binFilenameTextBox_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to alphanumeric/underscore only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-zA-Z_]", "");
+            textboxSender.SelectionStart = cursorPosition;
+        }
+
+        //CRC - Checksum repair tool
+
+        private void crcFileButton_Click(object sender, EventArgs e) {
+            if (crcOpenFileDialog.ShowDialog() == DialogResult.OK) {
+                try {
+                    fullPath = crcOpenFileDialog.FileName;
+                    crcErrorLabel.Text = "File loaded: " + crcOpenFileDialog.FileName + ".";
+                    crcErrorLabel.Visible = true;
+                    crcFileSelected = true;
+                }
+                catch (SecurityException ex) {
+                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+                    crcFileSelected = false;
+                }
+            }
+        }
+
+        private void crcRepairButton_Click(object sender, EventArgs e) {
+            int message = RepairCRC();
+            Console.WriteLine(message);
+            if (message == 0) {
+                crcErrorLabel.Visible = true;
+                crcErrorLabel.Text = "Checksum repaired.";
+            }
+
+            if (message == 1) {
+                crcErrorLabel.Visible = true;
+                crcErrorLabel.Text = "ERROR: There was an error. More granular error codes coming soon.";
+            }
+
+            if (message == -1) {
+                crcErrorLabel.Visible = true;
+                crcErrorLabel.Text = "ERROR: File not selected or available.";
             }
         }
     }

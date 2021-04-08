@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Merrow {
     public class DataStore {
+        //DATA STORAGE LIBRARY/REFERENCE, DATA ARRAY COLLECTION
+
         public string[] spells = {
             //name, hex location, hex in dec, spell info
             //spell rule hex code is replace [01] (dec:1) at hex offset+3 (char 6-7 in string)
@@ -143,6 +145,20 @@ namespace Merrow {
             "D4F09000025000",
             "D4B90C0044800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0"
         };
+
+        //crash prevention spell sets and safe/unsafe lists
+        public int[] crashset1 = { 3, 9, 12, 45, 46, 50, 51 }; //HA1, HA2, MBL, WC1, WC2, WC3, LC
+        public int[] safeset1 = { 0, 1, 3, 5, 9, 12, 18, 28, 35, 42, 44, 45, 46, 50, 51, 53, 55 };
+        public int[] crashset2 = { 26 }; //AVA
+        public int[] UNsafeset2 = { 3, 5, 9, 12, 23, 46, 50 };
+        public int[] crashset3 = { 40 }; //H2
+        public int[] UNsafeset3 = { 23, 50 };
+
+        //spell categories
+        public int[] statusspells = { 6, 17, 19, 22, 24, 25, 29, 43, 44, 47, 48, 49, 52, 54, 56, 57, 58 };
+        public int[] offenseSpells = { 0, 1, 3, 4, 5, 8, 9, 10, 12, 13, 14, 15, 16, 18, 20, 21, 23, 26, 28, 30, 31, 34, 35, 36, 42, 45, 46, 50, 51, 53, 55, 59 };
+        public int[] effectSpells = { 17, 19, 22, 25, 27, 32, 38, 40, 43, 44, 47, 48, 49, 52, 54, 56, 57, 58 };
+        public int[] brianSpells = { 2, 6, 7, 11, 24, 29, 33, 37, 39, 41 };
 
         //Replacement magnifier icon for Soul Search
         public string[] magnifier = {

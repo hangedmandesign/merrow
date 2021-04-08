@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="quaSoulToggle.ToolTip" xml:space="preserve">
     <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
 Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.</value>
@@ -134,17 +137,11 @@ All spells: Changes all spells' accuracy to 100 (Also includes Escape, Extinctio
 Export will automatically overwrite any existing file with the same name, and will open a window to the save location. 
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
-  <data name="newLabel.Text" xml:space="preserve">
-    <value>● Overhauled interface arrangement for Quest patch creation, rearranging items into new sections and making invisible UI items appear as disabled instead, so context is much clearer.
-
-● Overhauled item randomization selection to add Gifters and Wingsmiths options, and granular selection controls. Made many small tweaks to handling of item randomization, including distinct options for handling Shuffle and Random options for certain use cases, to avoid softlocks in any instance.
-
-● Added Fast Monastery option, allowing the player to quickly exit the Monastery at the start.</value>
-  </data>
-  <data name="termsLinkLabel.Text" xml:space="preserve">
-    <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
-Merrow is offered without warranty and is experimental software. 
-Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
+  <data name="rndShuffleShannonToggle.ToolTip" xml:space="preserve">
+    <value>Shuffle/randomization will exclude the final two Shannons entirely, 
+so the Eletale Book and the Dark Gaol Key will be in their original locations.
+If this option is *not* enabled, softlock protection will still prevent either
+item from being carried by either Shannon; they will always be found earlier.</value>
   </data>
   <data name="rndChestToggle.ToolTip" xml:space="preserve">
     <value>Change the contents of all chests.
@@ -175,6 +172,53 @@ GEMS: Drops are randomized to contain any Elemental Gem.
 WINGS&amp;GEMS: Drops are randomized to contain any wing or Elemental Gem.
 CUSTOM: Drops are randomized as selected below.</value>
   </data>
+  <data name="rndGiftersToggle.ToolTip" xml:space="preserve">
+    <value>Shuffle/randomize the items granted by item-gifting NPCs. 
+Shannons and their endgame items (Eletale Book and Dark Gaol Key) are included by default, 
+but softlock protection will guarantee that they will be granted by earlier gifters.
+Optionally, use the toggle below to exclude Shannons: they will carry their items as default.
+[WARNING - Including gems or wings can cause sequence breaks.]
+
+SHUFFLED: All default gift items are shuffled among all gift NPCs.
+STANDARD: Gifts are randomized to be any standard item.
+STANDARD&amp;WINGS: Gifts are randomized to be any standard item or wing. 
+STANDARD&amp;GEMS: Gifts are randomized to be any standard item or Elemental Gem.
+CHAOS: Gifts are randomized to be any standard item, wing, or Elemental Gem.
+WINGS: Gifts are randomized to be any wing.
+GEMS: Gifts are randomized to be any Elemental Gem.
+WINGS&amp;GEMS: Gifts are randomized to be any wing or Elemental Gem.
+CUSTOM: Gifts are randomized as set in the below menu.</value>
+  </data>
+  <data name="rndWingsmithsToggle.ToolTip" xml:space="preserve">
+    <value>Change the items granted by Wingsmith NPCs.
+[WARNING - Any of these options can cause sequence breaks.]
+
+SHUFFLED: All wings are shuffled among all wingsmith NPCs.
+STANDARD: Wingsmith items are randomized to be any standard item.
+STANDARD&amp;WINGS: Wingsmith items are randomized to be any standard item or wing. 
+STANDARD&amp;GEMS: Wingsmith items are randomized to be any standard item or Elemental Gem.
+CHAOS: Wingsmith items are randomized to be any standard item, wing, or Elemental Gem.
+WINGS: Wingsmith items are randomized to be any wing.
+GEMS: Wingsmith items are randomized to be any Elemental Gem.
+WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
+CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
+  </data>
+  <data name="newLabel.Text" xml:space="preserve">
+    <value>● Overhauled interface arrangement for Quest patch creation, rearranging items into new sections and making invisible UI items appear as disabled instead, so context is much clearer.
+
+● Overhauled item randomization selection to add Gifters and Wingsmiths options, and granular selection controls. Made many small tweaks to handling of item randomization, including distinct options for handling Shuffle and Random options for certain use cases, to avoid softlocks in any instance.
+
+● Added Fast Monastery option, allowing the player to quickly exit the Monastery at the start.
+
+● Added Vowel Play option, which does something extremely pointless but fun.
+
+● Restructured non-randomizer chunks of the code into other files, to make editing easier.</value>
+  </data>
+  <data name="termsLinkLabel.Text" xml:space="preserve">
+    <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
+Merrow is offered without warranty and is experimental software. 
+Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
+  </data>
   <metadata name="itemImageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>120, 16</value>
   </metadata>
@@ -183,7 +227,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACw
-        IQAAAk1TRnQBSQFMAgEBGgEAAVABAAFQAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IQAAAk1TRnQBSQFMAgEBGgEAAVgBAAFYAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAXADAAEBAQABCAYAARwYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -328,37 +372,6 @@ CUSTOM: Drops are randomized as selected below.</value>
         AfwBAQH4AW8BgAEHAYABBwH8AQEB7AEHAcABAwHAAQMB/AEDAcABBwHBAQEBwQEBAf4BAwHgAQ8B4QGA
         AeEBgAH/AQEB8AEDAfAB4QHwAeEB/wHhAfgBAQH5Af8B+QL/AeEB/wGDBf8B8wL/Cw==
 </value>
-  </data>
-  <data name="rndGiftersToggle.ToolTip" xml:space="preserve">
-    <value>Change the items granted by item-gifting NPCs. 
-Shuffled includes Shannons by default, but guarantees her items will be earlier.
-Optionally, use the toggle below to exclude them: they will be vanilla instead.
-All Random options exclude endgame Shannons, to prevent softlocks.
-[WARNING - Including gems or wings can cause sequence breaks.]
-
-SHUFFLED: All default gift items are shuffled among all gift NPCs.
-STANDARD: Gifts are randomized to be any standard item.
-STANDARD&amp;WINGS: Gifts are randomized to be any standard item or wing. 
-STANDARD&amp;GEMS: Gifts are randomized to be any standard item or Elemental Gem.
-CHAOS: Gifts are randomized to be any standard item, wing, or Elemental Gem.
-WINGS: Gifts are randomized to be any wing.
-GEMS: Gifts are randomized to be any Elemental Gem.
-WINGS&amp;GEMS: Gifts are randomized to be any wing or Elemental Gem.
-CUSTOM: Gifts are randomized as set in the below menu.</value>
-  </data>
-  <data name="rndWingsmithsToggle.ToolTip" xml:space="preserve">
-    <value>Change the items granted by Wingsmith NPCs.
-[WARNING - Any of these options can cause sequence breaks.]
-
-SHUFFLED: All wings are shuffled among all wingsmith NPCs.
-STANDARD: Wingsmith items are randomized to be any standard item.
-STANDARD&amp;WINGS: Wingsmith items are randomized to be any standard item or wing. 
-STANDARD&amp;GEMS: Wingsmith items are randomized to be any standard item or Elemental Gem.
-CHAOS: Wingsmith items are randomized to be any standard item, wing, or Elemental Gem.
-WINGS: Wingsmith items are randomized to be any wing.
-GEMS: Wingsmith items are randomized to be any Elemental Gem.
-WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
-CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
   </data>
   <data name="rndSpellToggle.ToolTip" xml:space="preserve">
     <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
