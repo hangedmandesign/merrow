@@ -45,6 +45,7 @@ This is a short overview of the code structure, contained in the class *MerrowSt
 * *PrepareDropdowns*: WPF interface initialization
 * *Shuffling*: Updating of seed, creation of new Random() and shuffling of all randomized elements performed in a row, to guarantee seed consistency.
 * *BuildPatch*: Assemble Quest 64 randomizer content into *patchcontent* hexadecimal string, convert to bytestream and export as IPS, export spoiler log. This section should not contain any randomization.
+* A few minor data handling functions for item randomization purposes
 * *RepairCRC*: CRC repair tool functionality, calling the fix_crc dll connection.
 * UI interactions, for modifying the interface on interaction and for calling other functions. Roughly ordered by tab. These should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout. None should be left empty.
 
