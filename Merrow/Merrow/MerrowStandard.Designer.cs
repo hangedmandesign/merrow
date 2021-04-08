@@ -25,12 +25,12 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MerrowStandard));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("FB", 9);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("HB", 15);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("HP", 13);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("DP", 5);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "SL"}, 21, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 8.25F));
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("FB", 9);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("HB", 15);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("HP", 13);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("DP", 5);
             System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("DD", 4);
             System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("ML", 16);
             System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("HD", 14);
@@ -52,12 +52,12 @@
             System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("FR", 8);
             System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("EB", 7);
             System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("DG", 3);
-            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("FB", 9);
-            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("HB", 15);
-            System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("HP", 13);
-            System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("DP", 5);
-            System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem(new string[] {
             "SL"}, 21, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 8.25F));
+            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("FB", 9);
+            System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("HB", 15);
+            System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("HP", 13);
+            System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("DP", 5);
             System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem("DD", 4);
             System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem("ML", 16);
             System.Windows.Forms.ListViewItem listViewItem34 = new System.Windows.Forms.ListViewItem("HD", 14);
@@ -79,12 +79,12 @@
             System.Windows.Forms.ListViewItem listViewItem50 = new System.Windows.Forms.ListViewItem("FR", 8);
             System.Windows.Forms.ListViewItem listViewItem51 = new System.Windows.Forms.ListViewItem("EB", 7);
             System.Windows.Forms.ListViewItem listViewItem52 = new System.Windows.Forms.ListViewItem("DG", 3);
-            System.Windows.Forms.ListViewItem listViewItem53 = new System.Windows.Forms.ListViewItem("FB", 9);
-            System.Windows.Forms.ListViewItem listViewItem54 = new System.Windows.Forms.ListViewItem("HB", 15);
-            System.Windows.Forms.ListViewItem listViewItem55 = new System.Windows.Forms.ListViewItem("HP", 13);
-            System.Windows.Forms.ListViewItem listViewItem56 = new System.Windows.Forms.ListViewItem("DP", 5);
-            System.Windows.Forms.ListViewItem listViewItem57 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem53 = new System.Windows.Forms.ListViewItem(new string[] {
             "SL"}, 21, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 8.25F));
+            System.Windows.Forms.ListViewItem listViewItem54 = new System.Windows.Forms.ListViewItem("FB", 9);
+            System.Windows.Forms.ListViewItem listViewItem55 = new System.Windows.Forms.ListViewItem("HB", 15);
+            System.Windows.Forms.ListViewItem listViewItem56 = new System.Windows.Forms.ListViewItem("HP", 13);
+            System.Windows.Forms.ListViewItem listViewItem57 = new System.Windows.Forms.ListViewItem("DP", 5);
             System.Windows.Forms.ListViewItem listViewItem58 = new System.Windows.Forms.ListViewItem("DD", 4);
             System.Windows.Forms.ListViewItem listViewItem59 = new System.Windows.Forms.ListViewItem("ML", 16);
             System.Windows.Forms.ListViewItem listViewItem60 = new System.Windows.Forms.ListViewItem("HD", 14);
@@ -106,12 +106,12 @@
             System.Windows.Forms.ListViewItem listViewItem76 = new System.Windows.Forms.ListViewItem("FR", 8);
             System.Windows.Forms.ListViewItem listViewItem77 = new System.Windows.Forms.ListViewItem("EB", 7);
             System.Windows.Forms.ListViewItem listViewItem78 = new System.Windows.Forms.ListViewItem("DG", 3);
-            System.Windows.Forms.ListViewItem listViewItem79 = new System.Windows.Forms.ListViewItem("FB", 9);
-            System.Windows.Forms.ListViewItem listViewItem80 = new System.Windows.Forms.ListViewItem("HB", 15);
-            System.Windows.Forms.ListViewItem listViewItem81 = new System.Windows.Forms.ListViewItem("HP", 13);
-            System.Windows.Forms.ListViewItem listViewItem82 = new System.Windows.Forms.ListViewItem("DP", 5);
-            System.Windows.Forms.ListViewItem listViewItem83 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem79 = new System.Windows.Forms.ListViewItem(new string[] {
             "SL"}, 21, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 8.25F));
+            System.Windows.Forms.ListViewItem listViewItem80 = new System.Windows.Forms.ListViewItem("FB", 9);
+            System.Windows.Forms.ListViewItem listViewItem81 = new System.Windows.Forms.ListViewItem("HB", 15);
+            System.Windows.Forms.ListViewItem listViewItem82 = new System.Windows.Forms.ListViewItem("HP", 13);
+            System.Windows.Forms.ListViewItem listViewItem83 = new System.Windows.Forms.ListViewItem("DP", 5);
             System.Windows.Forms.ListViewItem listViewItem84 = new System.Windows.Forms.ListViewItem("DD", 4);
             System.Windows.Forms.ListViewItem listViewItem85 = new System.Windows.Forms.ListViewItem("ML", 16);
             System.Windows.Forms.ListViewItem listViewItem86 = new System.Windows.Forms.ListViewItem("HD", 14);
@@ -157,25 +157,28 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.creditsLinkLabel = new System.Windows.Forms.LinkLabel();
             this.termsLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.logoBox = new System.Windows.Forms.PictureBox();
             this.RandomizerTab = new System.Windows.Forms.TabPage();
             this.rndTabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.rndItemsBox = new System.Windows.Forms.GroupBox();
+            this.rndShuffleShannonToggle = new System.Windows.Forms.CheckBox();
             this.rndChestToggle = new System.Windows.Forms.CheckBox();
             this.rndDropsDropdown = new System.Windows.Forms.ComboBox();
             this.rndWeightedChestToggle = new System.Windows.Forms.CheckBox();
             this.rndDropsToggle = new System.Windows.Forms.CheckBox();
             this.itemListTabs = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.ChestsTab = new System.Windows.Forms.TabPage();
             this.itemListView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.itemImageList = new System.Windows.Forms.ImageList(this.components);
+            this.DropsTab = new System.Windows.Forms.TabPage();
             this.itemListView2 = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.GiftersTab = new System.Windows.Forms.TabPage();
             this.itemListView3 = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.WingsmithsTab = new System.Windows.Forms.TabPage();
             this.itemListView4 = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rndChestDropdown = new System.Windows.Forms.ComboBox();
@@ -248,22 +251,22 @@
             this.crcRepairButton = new System.Windows.Forms.Button();
             this.crcFileButton = new System.Windows.Forms.Button();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.logoBox = new System.Windows.Forms.PictureBox();
-            this.itemImageList = new System.Windows.Forms.ImageList(this.components);
+            this.quaVowelsToggle = new System.Windows.Forms.CheckBox();
             this.expGroupBox.SuspendLayout();
             this.rndTabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.newBox.SuspendLayout();
             this.creditsBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
             this.RandomizerTab.SuspendLayout();
             this.rndTabs.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.rndItemsBox.SuspendLayout();
             this.itemListTabs.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
+            this.ChestsTab.SuspendLayout();
+            this.DropsTab.SuspendLayout();
+            this.GiftersTab.SuspendLayout();
+            this.WingsmithsTab.SuspendLayout();
             this.rndTable1.SuspendLayout();
             this.rndSpellBox.SuspendLayout();
             this.rndMonsterBox.SuspendLayout();
@@ -279,7 +282,6 @@
             this.binLengthGroup.SuspendLayout();
             this.binAddrGroup.SuspendLayout();
             this.CRCTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
             this.SuspendLayout();
             // 
             // quaMaxMessageToggle
@@ -302,7 +304,9 @@
             this.quaRestlessToggle.Size = new System.Drawing.Size(96, 17);
             this.quaRestlessToggle.TabIndex = 12;
             this.quaRestlessToggle.Text = "Restless NPCs";
-            this.rndToolTip.SetToolTip(this.quaRestlessToggle, "All NPCs will wander.\r\n[WARNING: May cause unknown issues.]\r\n");
+            this.rndToolTip.SetToolTip(this.quaRestlessToggle, "All NPCs will wander.\r\n[WARNING: May cause unforeseen issues. If a vital\r\nNPC mov" +
+        "es out of reach, try leaving and re-entering\r\nthe room to reset their position.]" +
+        "\r\n");
             this.quaRestlessToggle.UseVisualStyleBackColor = true;
             // 
             // quaLevelToggle
@@ -330,6 +334,7 @@
             // quaAccuracyDropdown
             // 
             this.quaAccuracyDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.quaAccuracyDropdown.Enabled = false;
             this.quaAccuracyDropdown.FormattingEnabled = true;
             this.quaAccuracyDropdown.Items.AddRange(new object[] {
             "Status spells",
@@ -338,16 +343,15 @@
             this.quaAccuracyDropdown.Name = "quaAccuracyDropdown";
             this.quaAccuracyDropdown.Size = new System.Drawing.Size(140, 21);
             this.quaAccuracyDropdown.TabIndex = 9;
-            this.quaAccuracyDropdown.Visible = false;
             // 
             // quaAccuracyToggle
             // 
             this.quaAccuracyToggle.AutoSize = true;
             this.quaAccuracyToggle.Location = new System.Drawing.Point(6, 49);
             this.quaAccuracyToggle.Name = "quaAccuracyToggle";
-            this.quaAccuracyToggle.Size = new System.Drawing.Size(93, 17);
+            this.quaAccuracyToggle.Size = new System.Drawing.Size(119, 17);
             this.quaAccuracyToggle.TabIndex = 8;
-            this.quaAccuracyToggle.Text = "Max accuracy";
+            this.quaAccuracyToggle.Text = "Normalize accuracy";
             this.rndToolTip.SetToolTip(this.quaAccuracyToggle, resources.GetString("quaAccuracyToggle.ToolTip"));
             this.quaAccuracyToggle.UseVisualStyleBackColor = true;
             this.quaAccuracyToggle.CheckedChanged += new System.EventHandler(this.quaAccuracyToggle_CheckedChanged);
@@ -355,6 +359,7 @@
             // quaZoomDropdown
             // 
             this.quaZoomDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.quaZoomDropdown.Enabled = false;
             this.quaZoomDropdown.FormattingEnabled = true;
             this.quaZoomDropdown.Items.AddRange(new object[] {
             "2",
@@ -373,7 +378,6 @@
             this.quaZoomDropdown.Name = "quaZoomDropdown";
             this.quaZoomDropdown.Size = new System.Drawing.Size(112, 21);
             this.quaZoomDropdown.TabIndex = 7;
-            this.quaZoomDropdown.Visible = false;
             // 
             // quaZoomToggle
             // 
@@ -589,6 +593,17 @@
             this.termsLinkLabel.VisitedLinkColor = System.Drawing.Color.MediumBlue;
             this.termsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.terms__LinkClicked);
             // 
+            // logoBox
+            // 
+            this.logoBox.Image = global::Merrow.Properties.Resources.merrowbar;
+            this.logoBox.InitialImage = global::Merrow.Properties.Resources.merrowbar;
+            this.logoBox.Location = new System.Drawing.Point(82, 14);
+            this.logoBox.Name = "logoBox";
+            this.logoBox.Size = new System.Drawing.Size(365, 128);
+            this.logoBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.logoBox.TabIndex = 6;
+            this.logoBox.TabStop = false;
+            // 
             // RandomizerTab
             // 
             this.RandomizerTab.BackColor = System.Drawing.Color.Transparent;
@@ -626,6 +641,7 @@
             // 
             // rndItemsBox
             // 
+            this.rndItemsBox.Controls.Add(this.rndShuffleShannonToggle);
             this.rndItemsBox.Controls.Add(this.rndChestToggle);
             this.rndItemsBox.Controls.Add(this.rndDropsDropdown);
             this.rndItemsBox.Controls.Add(this.rndWeightedChestToggle);
@@ -643,6 +659,20 @@
             this.rndItemsBox.TabStop = false;
             this.rndItemsBox.Text = "ITEMS";
             // 
+            // rndShuffleShannonToggle
+            // 
+            this.rndShuffleShannonToggle.AutoSize = true;
+            this.rndShuffleShannonToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndShuffleShannonToggle.Enabled = false;
+            this.rndShuffleShannonToggle.Location = new System.Drawing.Point(26, 139);
+            this.rndShuffleShannonToggle.Name = "rndShuffleShannonToggle";
+            this.rndShuffleShannonToggle.Size = new System.Drawing.Size(169, 17);
+            this.rndShuffleShannonToggle.TabIndex = 22;
+            this.rndShuffleShannonToggle.Text = "SHUFFLE: Exclude Shannons";
+            this.rndToolTip.SetToolTip(this.rndShuffleShannonToggle, "Shuffle will exclude the final two Shannons entirely, so the Eletale\r\nBook and th" +
+        "e Dark Gaol Key will be in their original locations.");
+            this.rndShuffleShannonToggle.UseVisualStyleBackColor = true;
+            // 
             // rndChestToggle
             // 
             this.rndChestToggle.AutoSize = true;
@@ -658,6 +688,7 @@
             // rndDropsDropdown
             // 
             this.rndDropsDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndDropsDropdown.Enabled = false;
             this.rndDropsDropdown.FormattingEnabled = true;
             this.rndDropsDropdown.Items.AddRange(new object[] {
             "SHUFFLED",
@@ -669,11 +700,10 @@
             "GEMS",
             "WINGS + GEMS",
             "CUSTOM"});
-            this.rndDropsDropdown.Location = new System.Drawing.Point(88, 76);
+            this.rndDropsDropdown.Location = new System.Drawing.Point(88, 75);
             this.rndDropsDropdown.Name = "rndDropsDropdown";
             this.rndDropsDropdown.Size = new System.Drawing.Size(180, 21);
             this.rndDropsDropdown.TabIndex = 13;
-            this.rndDropsDropdown.Visible = false;
             this.rndDropsDropdown.SelectedIndexChanged += new System.EventHandler(this.rndDropsDropdown_SelectedIndexChanged);
             // 
             // rndWeightedChestToggle
@@ -684,13 +714,12 @@
             this.rndWeightedChestToggle.Cursor = System.Windows.Forms.Cursors.Default;
             this.rndWeightedChestToggle.Location = new System.Drawing.Point(26, 49);
             this.rndWeightedChestToggle.Name = "rndWeightedChestToggle";
-            this.rndWeightedChestToggle.Size = new System.Drawing.Size(145, 17);
+            this.rndWeightedChestToggle.Size = new System.Drawing.Size(199, 17);
             this.rndWeightedChestToggle.TabIndex = 15;
-            this.rndWeightedChestToggle.Text = "Weighted chest contents";
+            this.rndWeightedChestToggle.Text = "RANDOM: Weighted chest contents";
             this.rndToolTip.SetToolTip(this.rndWeightedChestToggle, "Chest contents are guaranteed to contain at least one of each item in the selecte" +
         "d category.");
             this.rndWeightedChestToggle.UseVisualStyleBackColor = true;
-            this.rndWeightedChestToggle.Visible = false;
             // 
             // rndDropsToggle
             // 
@@ -707,27 +736,27 @@
             // itemListTabs
             // 
             this.itemListTabs.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.itemListTabs.Controls.Add(this.tabPage3);
-            this.itemListTabs.Controls.Add(this.tabPage4);
-            this.itemListTabs.Controls.Add(this.tabPage5);
-            this.itemListTabs.Controls.Add(this.tabPage6);
-            this.itemListTabs.Location = new System.Drawing.Point(6, 166);
+            this.itemListTabs.Controls.Add(this.ChestsTab);
+            this.itemListTabs.Controls.Add(this.DropsTab);
+            this.itemListTabs.Controls.Add(this.GiftersTab);
+            this.itemListTabs.Controls.Add(this.WingsmithsTab);
+            this.itemListTabs.Location = new System.Drawing.Point(6, 196);
             this.itemListTabs.Name = "itemListTabs";
             this.itemListTabs.SelectedIndex = 0;
             this.itemListTabs.Size = new System.Drawing.Size(262, 159);
             this.itemListTabs.TabIndex = 21;
             this.itemListTabs.Visible = false;
             // 
-            // tabPage3
+            // ChestsTab
             // 
-            this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage3.Controls.Add(this.itemListView1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(254, 130);
-            this.tabPage3.TabIndex = 0;
-            this.tabPage3.Text = "CHESTS";
+            this.ChestsTab.BackColor = System.Drawing.SystemColors.Control;
+            this.ChestsTab.Controls.Add(this.itemListView1);
+            this.ChestsTab.Location = new System.Drawing.Point(4, 25);
+            this.ChestsTab.Name = "ChestsTab";
+            this.ChestsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ChestsTab.Size = new System.Drawing.Size(254, 130);
+            this.ChestsTab.TabIndex = 0;
+            this.ChestsTab.Text = "CHESTS";
             // 
             // itemListView1
             // 
@@ -809,16 +838,47 @@
             this.itemListView1.View = System.Windows.Forms.View.List;
             this.itemListView1.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.itemListView1_ItemChecked);
             // 
-            // tabPage4
+            // itemImageList
             // 
-            this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage4.Controls.Add(this.itemListView2);
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(254, 130);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "DROPS";
+            this.itemImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("itemImageList.ImageStream")));
+            this.itemImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.itemImageList.Images.SetKeyName(0, "BlackWings_Sprite.png");
+            this.itemImageList.Images.SetKeyName(1, "BlueWings_Sprite.png");
+            this.itemImageList.Images.SetKeyName(2, "CelinesBell_Sprite.png");
+            this.itemImageList.Images.SetKeyName(3, "DarkGaolKey_Sprite.png");
+            this.itemImageList.Images.SetKeyName(4, "DewDrop_Sprite.png");
+            this.itemImageList.Images.SetKeyName(5, "DragonsPotion_Sprite.png");
+            this.itemImageList.Images.SetKeyName(6, "EarthOrb_Sprite.png");
+            this.itemImageList.Images.SetKeyName(7, "EletalesBook_Sprite.png");
+            this.itemImageList.Images.SetKeyName(8, "FireRuby_Sprite.png");
+            this.itemImageList.Images.SetKeyName(9, "FreshBread_Sprite.png");
+            this.itemImageList.Images.SetKeyName(10, "GiantsShoes_Sprite.png");
+            this.itemImageList.Images.SetKeyName(11, "GoldenAmulet_Sprite.png");
+            this.itemImageList.Images.SetKeyName(12, "GreenWings_Sprite.png");
+            this.itemImageList.Images.SetKeyName(13, "HealingPotion_Sprite.png");
+            this.itemImageList.Images.SetKeyName(14, "HeroesDrink_Sprite.png");
+            this.itemImageList.Images.SetKeyName(15, "HoneyBread_Sprite.png");
+            this.itemImageList.Images.SetKeyName(16, "MintLeaves_Sprite.png");
+            this.itemImageList.Images.SetKeyName(17, "RedWings_Sprite.png");
+            this.itemImageList.Images.SetKeyName(18, "Replica_Sprite.png");
+            this.itemImageList.Images.SetKeyName(19, "SilentFlute_Sprite.png");
+            this.itemImageList.Images.SetKeyName(20, "SilverAmulet_Sprite.png");
+            this.itemImageList.Images.SetKeyName(21, "SpiritLight_Sprite.png");
+            this.itemImageList.Images.SetKeyName(22, "WaterJewel_Sprite.png");
+            this.itemImageList.Images.SetKeyName(23, "WhiteWings_Sprite.png");
+            this.itemImageList.Images.SetKeyName(24, "WindJade_Sprite.png");
+            this.itemImageList.Images.SetKeyName(25, "YellowWings_Sprites.png");
+            // 
+            // DropsTab
+            // 
+            this.DropsTab.BackColor = System.Drawing.SystemColors.Control;
+            this.DropsTab.Controls.Add(this.itemListView2);
+            this.DropsTab.Location = new System.Drawing.Point(4, 25);
+            this.DropsTab.Name = "DropsTab";
+            this.DropsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.DropsTab.Size = new System.Drawing.Size(254, 130);
+            this.DropsTab.TabIndex = 1;
+            this.DropsTab.Text = "DROPS";
             // 
             // itemListView2
             // 
@@ -900,15 +960,15 @@
             this.itemListView2.View = System.Windows.Forms.View.List;
             this.itemListView2.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.itemListView2_ItemChecked);
             // 
-            // tabPage5
+            // GiftersTab
             // 
-            this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage5.Controls.Add(this.itemListView3);
-            this.tabPage5.Location = new System.Drawing.Point(4, 25);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(254, 130);
-            this.tabPage5.TabIndex = 2;
-            this.tabPage5.Text = "GIFTERS";
+            this.GiftersTab.BackColor = System.Drawing.SystemColors.Control;
+            this.GiftersTab.Controls.Add(this.itemListView3);
+            this.GiftersTab.Location = new System.Drawing.Point(4, 25);
+            this.GiftersTab.Name = "GiftersTab";
+            this.GiftersTab.Size = new System.Drawing.Size(254, 130);
+            this.GiftersTab.TabIndex = 2;
+            this.GiftersTab.Text = "GIFTERS";
             // 
             // itemListView3
             // 
@@ -990,15 +1050,15 @@
             this.itemListView3.View = System.Windows.Forms.View.List;
             this.itemListView3.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.itemListView3_ItemChecked);
             // 
-            // tabPage6
+            // WingsmithsTab
             // 
-            this.tabPage6.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage6.Controls.Add(this.itemListView4);
-            this.tabPage6.Location = new System.Drawing.Point(4, 25);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(254, 130);
-            this.tabPage6.TabIndex = 3;
-            this.tabPage6.Text = "WINGSMITHS";
+            this.WingsmithsTab.BackColor = System.Drawing.SystemColors.Control;
+            this.WingsmithsTab.Controls.Add(this.itemListView4);
+            this.WingsmithsTab.Location = new System.Drawing.Point(4, 25);
+            this.WingsmithsTab.Name = "WingsmithsTab";
+            this.WingsmithsTab.Size = new System.Drawing.Size(254, 130);
+            this.WingsmithsTab.TabIndex = 3;
+            this.WingsmithsTab.Text = "WINGSMITHS";
             // 
             // itemListView4
             // 
@@ -1084,6 +1144,7 @@
             // rndChestDropdown
             // 
             this.rndChestDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndChestDropdown.Enabled = false;
             this.rndChestDropdown.FormattingEnabled = true;
             this.rndChestDropdown.Items.AddRange(new object[] {
             "SHUFFLED",
@@ -1099,12 +1160,12 @@
             this.rndChestDropdown.Name = "rndChestDropdown";
             this.rndChestDropdown.Size = new System.Drawing.Size(180, 21);
             this.rndChestDropdown.TabIndex = 7;
-            this.rndChestDropdown.Visible = false;
             this.rndChestDropdown.SelectedIndexChanged += new System.EventHandler(this.rndChestDropdown_SelectedIndexChanged);
             // 
             // rndWingsmithsDropdown
             // 
             this.rndWingsmithsDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndWingsmithsDropdown.Enabled = false;
             this.rndWingsmithsDropdown.FormattingEnabled = true;
             this.rndWingsmithsDropdown.Items.AddRange(new object[] {
             "SHUFFLED",
@@ -1116,11 +1177,10 @@
             "GEMS",
             "WINGS + GEMS",
             "CUSTOM"});
-            this.rndWingsmithsDropdown.Location = new System.Drawing.Point(88, 138);
+            this.rndWingsmithsDropdown.Location = new System.Drawing.Point(88, 167);
             this.rndWingsmithsDropdown.Name = "rndWingsmithsDropdown";
             this.rndWingsmithsDropdown.Size = new System.Drawing.Size(180, 21);
             this.rndWingsmithsDropdown.TabIndex = 13;
-            this.rndWingsmithsDropdown.Visible = false;
             this.rndWingsmithsDropdown.SelectedIndexChanged += new System.EventHandler(this.rndWingsmithsDropdown_SelectedIndexChanged);
             // 
             // rndGiftersToggle
@@ -1137,7 +1197,7 @@
             // 
             // rndWingsmithsToggle
             // 
-            this.rndWingsmithsToggle.Location = new System.Drawing.Point(6, 139);
+            this.rndWingsmithsToggle.Location = new System.Drawing.Point(6, 169);
             this.rndWingsmithsToggle.Name = "rndWingsmithsToggle";
             this.rndWingsmithsToggle.Size = new System.Drawing.Size(85, 17);
             this.rndWingsmithsToggle.TabIndex = 12;
@@ -1149,6 +1209,7 @@
             // rndGiftersDropdown
             // 
             this.rndGiftersDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndGiftersDropdown.Enabled = false;
             this.rndGiftersDropdown.FormattingEnabled = true;
             this.rndGiftersDropdown.Items.AddRange(new object[] {
             "SHUFFLED",
@@ -1160,11 +1221,10 @@
             "GEMS",
             "WINGS + GEMS",
             "CUSTOM"});
-            this.rndGiftersDropdown.Location = new System.Drawing.Point(88, 108);
+            this.rndGiftersDropdown.Location = new System.Drawing.Point(88, 107);
             this.rndGiftersDropdown.Name = "rndGiftersDropdown";
             this.rndGiftersDropdown.Size = new System.Drawing.Size(180, 21);
             this.rndGiftersDropdown.TabIndex = 7;
-            this.rndGiftersDropdown.Visible = false;
             this.rndGiftersDropdown.SelectedIndexChanged += new System.EventHandler(this.rndGiftersDropdown_SelectedIndexChanged);
             // 
             // rndTable1
@@ -1215,6 +1275,7 @@
             this.rndSpellNamesToggle.Checked = true;
             this.rndSpellNamesToggle.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rndSpellNamesToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndSpellNamesToggle.Enabled = false;
             this.rndSpellNamesToggle.Location = new System.Drawing.Point(26, 49);
             this.rndSpellNamesToggle.Name = "rndSpellNamesToggle";
             this.rndSpellNamesToggle.Size = new System.Drawing.Size(115, 17);
@@ -1222,12 +1283,12 @@
             this.rndSpellNamesToggle.Text = "Hinted spell names";
             this.rndToolTip.SetToolTip(this.rndSpellNamesToggle, resources.GetString("rndSpellNamesToggle.ToolTip"));
             this.rndSpellNamesToggle.UseVisualStyleBackColor = true;
-            this.rndSpellNamesToggle.Visible = false;
             this.rndSpellNamesToggle.CheckedChanged += new System.EventHandler(this.rndSpellNamesToggle_CheckedChanged);
             // 
             // rndSpellNamesDropdown
             // 
             this.rndSpellNamesDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndSpellNamesDropdown.Enabled = false;
             this.rndSpellNamesDropdown.FormattingEnabled = true;
             this.rndSpellNamesDropdown.Items.AddRange(new object[] {
             "Ambiguous",
@@ -1236,11 +1297,11 @@
             this.rndSpellNamesDropdown.Name = "rndSpellNamesDropdown";
             this.rndSpellNamesDropdown.Size = new System.Drawing.Size(124, 21);
             this.rndSpellNamesDropdown.TabIndex = 21;
-            this.rndSpellNamesDropdown.Visible = false;
             // 
             // rndSpellDropdown
             // 
             this.rndSpellDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndSpellDropdown.Enabled = false;
             this.rndSpellDropdown.FormattingEnabled = true;
             this.rndSpellDropdown.Items.AddRange(new object[] {
             "Shuffled",
@@ -1250,7 +1311,6 @@
             this.rndSpellDropdown.Name = "rndSpellDropdown";
             this.rndSpellDropdown.Size = new System.Drawing.Size(124, 21);
             this.rndSpellDropdown.TabIndex = 4;
-            this.rndSpellDropdown.Visible = false;
             // 
             // rndMonsterBox
             // 
@@ -1269,6 +1329,7 @@
             // quaScalingDropdown
             // 
             this.quaScalingDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.quaScalingDropdown.Enabled = false;
             this.quaScalingDropdown.FormattingEnabled = true;
             this.quaScalingDropdown.Items.AddRange(new object[] {
             "0.5",
@@ -1292,7 +1353,6 @@
             this.quaScalingDropdown.Name = "quaScalingDropdown";
             this.quaScalingDropdown.Size = new System.Drawing.Size(118, 21);
             this.quaScalingDropdown.TabIndex = 25;
-            this.quaScalingDropdown.Visible = false;
             // 
             // quaMonsterScaleToggle
             // 
@@ -1327,11 +1387,11 @@
             this.rndExtremityLabel.Size = new System.Drawing.Size(52, 13);
             this.rndExtremityLabel.TabIndex = 23;
             this.rndExtremityLabel.Text = "Variance:";
-            this.rndExtremityLabel.Visible = false;
             // 
             // rndExtremityDropdown
             // 
             this.rndExtremityDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndExtremityDropdown.Enabled = false;
             this.rndExtremityDropdown.FormattingEnabled = true;
             this.rndExtremityDropdown.Items.AddRange(new object[] {
             "1.0 (default)",
@@ -1345,12 +1405,11 @@
             "1.8",
             "1.9",
             "2.0"});
-            this.rndExtremityDropdown.Location = new System.Drawing.Point(86, 46);
+            this.rndExtremityDropdown.Location = new System.Drawing.Point(86, 45);
             this.rndExtremityDropdown.MaxDropDownItems = 11;
             this.rndExtremityDropdown.Name = "rndExtremityDropdown";
             this.rndExtremityDropdown.Size = new System.Drawing.Size(93, 21);
             this.rndExtremityDropdown.TabIndex = 16;
-            this.rndExtremityDropdown.Visible = false;
             this.rndExtremityDropdown.SelectedIndexChanged += new System.EventHandler(this.rndExtremityDropdown_SelectedIndexChanged);
             // 
             // tabPage2
@@ -1384,6 +1443,7 @@
             // 
             // quaFunBox
             // 
+            this.quaFunBox.Controls.Add(this.quaVowelsToggle);
             this.quaFunBox.Controls.Add(this.quaRestlessToggle);
             this.quaFunBox.Location = new System.Drawing.Point(3, 212);
             this.quaFunBox.Name = "quaFunBox";
@@ -1471,10 +1531,12 @@
             this.rndToolTip.SetToolTip(this.rndTextContentToggle, "Redistribute all textbox content.\r\nSHUFFLED: All non-inn textboxes are shuffled t" +
         "ogether, and all inn textboxes are shuffled together.");
             this.rndTextContentToggle.UseVisualStyleBackColor = true;
+            this.rndTextContentToggle.CheckedChanged += new System.EventHandler(this.rndTextContentToggle_CheckedChanged);
             // 
             // rndTextContentDropdown
             // 
             this.rndTextContentDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndTextContentDropdown.Enabled = false;
             this.rndTextContentDropdown.FormattingEnabled = true;
             this.rndTextContentDropdown.Items.AddRange(new object[] {
             "Shuffled"});
@@ -1482,11 +1544,11 @@
             this.rndTextContentDropdown.Name = "rndTextContentDropdown";
             this.rndTextContentDropdown.Size = new System.Drawing.Size(112, 21);
             this.rndTextContentDropdown.TabIndex = 11;
-            this.rndTextContentDropdown.Visible = false;
             // 
             // rndTextPaletteDropdown
             // 
             this.rndTextPaletteDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndTextPaletteDropdown.Enabled = false;
             this.rndTextPaletteDropdown.FormattingEnabled = true;
             this.rndTextPaletteDropdown.Items.AddRange(new object[] {
             "Black (default)",
@@ -1499,7 +1561,6 @@
             this.rndTextPaletteDropdown.Name = "rndTextPaletteDropdown";
             this.rndTextPaletteDropdown.Size = new System.Drawing.Size(112, 21);
             this.rndTextPaletteDropdown.TabIndex = 9;
-            this.rndTextPaletteDropdown.Visible = false;
             this.rndTextPaletteDropdown.SelectedIndexChanged += new System.EventHandler(this.rndTextPaletteDropdown_SelectedIndexChanged);
             // 
             // rndTextPaletteToggle
@@ -1564,6 +1625,7 @@
             // 
             this.rndColorViewToggle.AutoSize = true;
             this.rndColorViewToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndColorViewToggle.Enabled = false;
             this.rndColorViewToggle.Location = new System.Drawing.Point(26, 79);
             this.rndColorViewToggle.Name = "rndColorViewToggle";
             this.rndColorViewToggle.Size = new System.Drawing.Size(127, 17);
@@ -1572,7 +1634,6 @@
             this.rndToolTip.SetToolTip(this.rndColorViewToggle, "If enabled, the text colour palette will be displayed to the right\r\nfor reference" +
         ", so you can ensure it\'s acceptable.");
             this.rndColorViewToggle.UseVisualStyleBackColor = true;
-            this.rndColorViewToggle.Visible = false;
             this.rndColorViewToggle.CheckedChanged += new System.EventHandler(this.rndColorViewToggle_CheckedChanged);
             // 
             // rndCRCWarningLabel
@@ -1984,47 +2045,16 @@
             this.rndToolTip.InitialDelay = 500;
             this.rndToolTip.ReshowDelay = 100;
             // 
-            // logoBox
+            // quaVowelsToggle
             // 
-            this.logoBox.Image = global::Merrow.Properties.Resources.merrowbar;
-            this.logoBox.InitialImage = global::Merrow.Properties.Resources.merrowbar;
-            this.logoBox.Location = new System.Drawing.Point(82, 14);
-            this.logoBox.Name = "logoBox";
-            this.logoBox.Size = new System.Drawing.Size(365, 128);
-            this.logoBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.logoBox.TabIndex = 6;
-            this.logoBox.TabStop = false;
-            // 
-            // itemImageList
-            // 
-            this.itemImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("itemImageList.ImageStream")));
-            this.itemImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.itemImageList.Images.SetKeyName(0, "BlackWings_Sprite.png");
-            this.itemImageList.Images.SetKeyName(1, "BlueWings_Sprite.png");
-            this.itemImageList.Images.SetKeyName(2, "CelinesBell_Sprite.png");
-            this.itemImageList.Images.SetKeyName(3, "DarkGaolKey_Sprite.png");
-            this.itemImageList.Images.SetKeyName(4, "DewDrop_Sprite.png");
-            this.itemImageList.Images.SetKeyName(5, "DragonsPotion_Sprite.png");
-            this.itemImageList.Images.SetKeyName(6, "EarthOrb_Sprite.png");
-            this.itemImageList.Images.SetKeyName(7, "EletalesBook_Sprite.png");
-            this.itemImageList.Images.SetKeyName(8, "FireRuby_Sprite.png");
-            this.itemImageList.Images.SetKeyName(9, "FreshBread_Sprite.png");
-            this.itemImageList.Images.SetKeyName(10, "GiantsShoes_Sprite.png");
-            this.itemImageList.Images.SetKeyName(11, "GoldenAmulet_Sprite.png");
-            this.itemImageList.Images.SetKeyName(12, "GreenWings_Sprite.png");
-            this.itemImageList.Images.SetKeyName(13, "HealingPotion_Sprite.png");
-            this.itemImageList.Images.SetKeyName(14, "HeroesDrink_Sprite.png");
-            this.itemImageList.Images.SetKeyName(15, "HoneyBread_Sprite.png");
-            this.itemImageList.Images.SetKeyName(16, "MintLeaves_Sprite.png");
-            this.itemImageList.Images.SetKeyName(17, "RedWings_Sprite.png");
-            this.itemImageList.Images.SetKeyName(18, "Replica_Sprite.png");
-            this.itemImageList.Images.SetKeyName(19, "SilentFlute_Sprite.png");
-            this.itemImageList.Images.SetKeyName(20, "SilverAmulet_Sprite.png");
-            this.itemImageList.Images.SetKeyName(21, "SpiritLight_Sprite.png");
-            this.itemImageList.Images.SetKeyName(22, "WaterJewel_Sprite.png");
-            this.itemImageList.Images.SetKeyName(23, "WhiteWings_Sprite.png");
-            this.itemImageList.Images.SetKeyName(24, "WindJade_Sprite.png");
-            this.itemImageList.Images.SetKeyName(25, "YellowWings_Sprites.png");
+            this.quaVowelsToggle.AutoSize = true;
+            this.quaVowelsToggle.Location = new System.Drawing.Point(6, 49);
+            this.quaVowelsToggle.Name = "quaVowelsToggle";
+            this.quaVowelsToggle.Size = new System.Drawing.Size(78, 17);
+            this.quaVowelsToggle.TabIndex = 13;
+            this.quaVowelsToggle.Text = "Vowel Play";
+            this.rndToolTip.SetToolTip(this.quaVowelsToggle, "Vowels in Monster names will be randomized.\r\n");
+            this.quaVowelsToggle.UseVisualStyleBackColor = true;
             // 
             // MerrowStandard
             // 
@@ -2046,16 +2076,17 @@
             this.CreditsTab.PerformLayout();
             this.newBox.ResumeLayout(false);
             this.creditsBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).EndInit();
             this.RandomizerTab.ResumeLayout(false);
             this.rndTabs.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.rndItemsBox.ResumeLayout(false);
             this.rndItemsBox.PerformLayout();
             this.itemListTabs.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
+            this.ChestsTab.ResumeLayout(false);
+            this.DropsTab.ResumeLayout(false);
+            this.GiftersTab.ResumeLayout(false);
+            this.WingsmithsTab.ResumeLayout(false);
             this.rndTable1.ResumeLayout(false);
             this.rndSpellBox.ResumeLayout(false);
             this.rndSpellBox.PerformLayout();
@@ -2080,7 +2111,6 @@
             this.binAddrGroup.ResumeLayout(false);
             this.CRCTab.ResumeLayout(false);
             this.CRCTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2192,10 +2222,10 @@
         private System.Windows.Forms.CheckBox rndWingsmithsToggle;
         private System.Windows.Forms.ComboBox rndWingsmithsDropdown;
         private System.Windows.Forms.TabControl itemListTabs;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage ChestsTab;
+        private System.Windows.Forms.TabPage DropsTab;
+        private System.Windows.Forms.TabPage GiftersTab;
+        private System.Windows.Forms.TabPage WingsmithsTab;
         private System.Windows.Forms.ListView itemListView1;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ListView itemListView3;
@@ -2203,6 +2233,8 @@
         private System.Windows.Forms.ListView itemListView4;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ImageList itemImageList;
+        private System.Windows.Forms.CheckBox rndShuffleShannonToggle;
+        private System.Windows.Forms.CheckBox quaVowelsToggle;
     }
 }
 

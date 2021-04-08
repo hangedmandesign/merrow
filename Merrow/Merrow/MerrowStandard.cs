@@ -55,6 +55,8 @@ namespace Merrow {
         List<int> reorg = new List<int>();
         int[] chests = new int[87];
         int[] drops = new int[67];
+        int[] gifts = new int[10];
+        int[] wings = new int[6];
         int[] texts = new int[208];
         int[] inntexts = new int[17];
         string[] hintnames = new string[60];
@@ -62,9 +64,12 @@ namespace Merrow {
         string[] spoilerchests = new string[87];
         string[] spoilerdrops = new string[67];
         string[] spoilerscales = new string[75];
+        string[] spoilergifts = new string[10];
+        string[] spoilerwings = new string[6];
         int[] newmonsterstats = new int[450];
         float difficultyscale = 10;
         float extremity = 0;
+        string[] voweled = new string[75];
         byte[] binFileBytes;
 
         //crash sets and safe lists
@@ -283,101 +288,28 @@ namespace Merrow {
                 else { hintnames[i] = library.shuffleNames[shuffles[i] * 5] + " " + library.shuffleNames[(i * 5) + 1]; }
             }
 
-            //CHEST SHUFFLING (based on Chest Shuffle dropdown value)
-            if (rndChestDropdown.SelectedIndex == 1) { //RANDOM: STANDARD CHEST ITEMS 0-13
-                int c = chests.Length;
-                while (c > 1) {
-                    c--;
-                    if(rndWeightedChestToggle.Checked) {
-                        if (c > 14) { k = SysRand.Next(14); } else { k = c - 1; }
-                    }
-                    if (!rndWeightedChestToggle.Checked) {
-                        k = SysRand.Next(14);
-                    }
-                    chests[c] = k;
-                }
-            }
+            //RANDOM CHESTS--------------------------------------------------------------------------------
 
-            if (rndChestDropdown.SelectedIndex == 2) { //RANDOM: STANDARD AND WINGS 0-19
+            //reinitiate chest list, in case user has gone back to Shuffle
+            for (int j = 0; j < chests.Length; j++) { chests[j] = library.chestdata[j * 2 + 1]; }
+
+            int[] itemset = itemListView1.CheckedIndices.Cast<int>().ToArray();
+            int setlength = itemset.Length;
+
+            if (rndChestDropdown.SelectedIndex >= 1 && setlength > 0) {
                 int c = chests.Length;
-                while (c > 1) {
+
+                while (c > 0) {
                     c--;
                     if (rndWeightedChestToggle.Checked) {
-                        if (c > 20) { k = SysRand.Next(20); } else { k = c - 1; }
+                        if (c >= setlength) { //top of array is random items within set
+                            k = itemset[SysRand.Next(setlength)];
+                        } else { //bottom of array is all weighted items
+                            k = itemset[c];
+                        } 
                     }
-                    if (!rndWeightedChestToggle.Checked) {
-                        k = SysRand.Next(20);
-                    }
-                    chests[c] = k;
-                }
-            }
-
-            if (rndChestDropdown.SelectedIndex == 3) { //RANDOM: STANDARD AND GEMS 0-13, 20-23
-                int c = chests.Length;
-                while (c > 1) {
-                    c--;
-                    if (rndWeightedChestToggle.Checked) {
-                        if (c > 18) { k = SysRand.Next(18); } else { k = c - 1; }
-                    }
-                    if (!rndWeightedChestToggle.Checked) {
-                        k = SysRand.Next(18); //produces 0-17
-                    }
-                    if (k > 13) { k += 6; } //adds 6 if above 13, to get 20-23
-                    chests[c] = k;
-                }
-            }
-
-            if (rndChestDropdown.SelectedIndex == 4) { //CHAOS: STANDARD, WINGS, GEMS 0-23
-                int c = chests.Length;
-                while (c > 1) {
-                    c--;
-                    if (rndWeightedChestToggle.Checked) {
-                        if (c > 24) { k = SysRand.Next(24); } else { k = c - 1; }
-                    }
-                    if (!rndWeightedChestToggle.Checked) {
-                        k = SysRand.Next(24);
-                    }
-                    chests[c] = k;
-                }
-            }
-
-            if (rndChestDropdown.SelectedIndex == 5) { //RANDOM: WINGS 14-19
-                int c = chests.Length;
-                while (c > 1) {
-                    c--;
-                    if (rndWeightedChestToggle.Checked) {
-                        if (c > 6) { k = SysRand.Next(6) + 14; } else { k = c - 1; }
-                    }
-                    if (!rndWeightedChestToggle.Checked) {
-                        k = SysRand.Next(6) + 14; //produces 0-5, adds 14
-                    }
-                    chests[c] = k;
-                }
-            }
-
-            if (rndChestDropdown.SelectedIndex == 6) { //RANDOM: GEMS 20-23
-                int c = chests.Length;
-                while (c > 1) {
-                    c--;
-                    if (rndWeightedChestToggle.Checked) {
-                        if (c > 4) { k = SysRand.Next(4) + 20; } else { k = c - 1; }
-                    }
-                    if (!rndWeightedChestToggle.Checked) {
-                        k = SysRand.Next(4) + 20; //produces 0-3, adds 20
-                    }
-                    chests[c] = k;
-                }
-            }
-
-            if (rndChestDropdown.SelectedIndex == 7) { //RANDOM: WINGS & GEMS 14-23
-                int c = chests.Length;
-                while (c > 1) {
-                    c--;
-                    if (rndWeightedChestToggle.Checked) {
-                        if (c > 10) { k = SysRand.Next(10) + 14; } else { k = c - 1; }
-                    }
-                    if (!rndWeightedChestToggle.Checked) {
-                        k = SysRand.Next(10) + 14; //produces 0-9, adds 14
+                    if (!rndWeightedChestToggle.Checked) { //whole array is random items within set
+                        k = itemset[SysRand.Next(setlength)]; 
                     }
                     chests[c] = k;
                 }
@@ -393,83 +325,128 @@ namespace Merrow {
                 chests[d] = temp;
             }
 
-            //DROP SHUFFLING (based on Item Drops dropdown value)
-            if (rndDropsDropdown.SelectedIndex == 0) { //STANDARD SHUFFLE
-                int c = drops.Length;
-                while (c > 1) {
-                    c--;
-                    k = SysRand.Next(c + 1);
-                    int temp = drops[k];
-                    drops[k] = drops[c];
-                    drops[c] = temp;
-                }
-            }
 
-            if (rndDropsDropdown.SelectedIndex == 1) { //RANDOM: STANDARD CHEST ITEMS 0-13
+            //RANDOM DROPS--------------------------------------------------------------------------------
+
+            //reinitiate item drops list
+            for (int l = 0; l < drops.Length; l++) { drops[l] = library.dropdata[l * 2 + 1]; }
+
+            itemset = itemListView2.CheckedIndices.Cast<int>().ToArray();
+            setlength = itemset.Length;
+
+            if (rndDropsDropdown.SelectedIndex >= 1 && setlength > 0) {
                 int c = drops.Length;
-                while (c > 1) {
+
+                while (c > 0) {
                     c--;
-                    k = SysRand.Next(14);
+                    k = itemset[SysRand.Next(setlength)];
                     drops[c] = k;
                 }
             }
 
-            if (rndDropsDropdown.SelectedIndex == 2) { //RANDOM: STANDARD AND WINGS 0-19
-                int c = drops.Length;
-                while (c > 1) {
+            //STANDARD DROP SHUFFLE (always happens afterwards, or if dropdown index is 0)
+            d = drops.Length;
+            while (d > 1) {
+                d--;
+                k = SysRand.Next(d + 1);
+                int temp = drops[k];
+                drops[k] = drops[d];
+                drops[d] = temp;
+            }
+
+            //RANDOM GIFTS--------------------------------------------------------------------------------
+
+            //random excludes final shannons to prevent softlocks.
+            if (rndGiftersDropdown.SelectedIndex >= 1) { gifts = new int[8]; }
+            if (rndGiftersDropdown.SelectedIndex == 0 && !rndShuffleShannonToggle.Checked) { gifts = new int[10]; }
+            if (rndGiftersDropdown.SelectedIndex == 0 && rndShuffleShannonToggle.Checked) { gifts = new int[8]; }
+
+            //initiate item gifts list
+            for (int l = 0; l < gifts.Length; l++) { gifts[l] = library.itemgranters[l * 2 + 1]; }
+
+            itemset = itemListView3.CheckedIndices.Cast<int>().ToArray();
+            setlength = itemset.Length;
+
+            if (rndGiftersDropdown.SelectedIndex >= 1 && setlength > 0) {
+                int c = gifts.Length;
+
+                while (c > 0) {
                     c--;
-                    k = SysRand.Next(20);
-                    drops[c] = k;
+                    k = itemset[SysRand.Next(setlength)];
+                    gifts[c] = k;
+                }
+
+                d = gifts.Length; //do normal shuffling here because of special exceptions against standard shuffle
+                while (d > 1) {
+                    d--;
+                    k = SysRand.Next(d + 1);
+                    int temp = gifts[k];
+                    gifts[k] = gifts[d];
+                    gifts[d] = temp;
                 }
             }
 
-            if (rndDropsDropdown.SelectedIndex == 3) { //RANDOM: STANDARD AND GEMS 0-13, 20-23
-                int c = drops.Length;
-                while (c > 1) {
-                    c--;
-                    k = SysRand.Next(18); //produces 0-17
-                    if (k > 13) { k += 6; } //adds 6 if above 13, to get 20-23
-                    drops[c] = k;
+            //initial shuffle of all items
+            if (rndGiftersDropdown.SelectedIndex == 0) { 
+                d = gifts.Length;
+                while (d > 1) {
+                    d--;
+                    k = SysRand.Next(d + 1);
+                    int temp = gifts[k];
+                    gifts[k] = gifts[d];
+                    gifts[d] = temp;
+                }
+
+                //shuffle has to guarantee key/book are not on final shannons to avoid softlocks
+                if (!rndShuffleShannonToggle.Checked) { 
+                    int newloc1 = 0;
+                    int newloc2 = 0;
+                    if (gifts[8] == 24 || gifts[8] == 25) {
+                        newloc1 = SysRand.Next(8); //pick a gifter slot from 0-7 to rotate it into
+                        int temp = gifts[8];
+                        gifts[8] = gifts[newloc1];
+                        gifts[newloc1] = temp;
+                    }
+                    if (gifts[9] == 24 || gifts[9] == 25) {
+                        newloc2 = SysRand.Next(8);
+                        while (newloc2 == newloc1) { newloc2 = SysRand.Next(8); } //avoid rotating the first item back into a shannon slot
+                        int temp = gifts[9];
+                        gifts[9] = gifts[newloc2];
+                        gifts[newloc2] = temp;
+                    }
                 }
             }
 
-            if (rndDropsDropdown.SelectedIndex == 4) { //CHAOS: STANDARD, WINGS, GEMS 0-23
-                int c = drops.Length;
-                while (c > 1) {
+            //RANDOM WINGSMITHS-----------------------------------------------------------------------------
+
+            //initiate wingsmiths list
+            for (int l = 0; l < wings.Length; l++) { wings[l] = library.itemgranters[20 + (l * 2 + 1)]; } //20 ahead to get to wingsmiths
+
+            itemset = itemListView4.CheckedIndices.Cast<int>().ToArray();
+            setlength = itemset.Length;
+
+            if (rndWingsmithsDropdown.SelectedIndex >= 1 && setlength > 0) {
+                int c = wings.Length;
+
+                while (c > 0) {
                     c--;
-                    k = SysRand.Next(24);
-                    drops[c] = k;
+                    k = itemset[SysRand.Next(setlength)];
+                    wings[c] = k;
                 }
             }
 
-            if (rndDropsDropdown.SelectedIndex == 5) { //RANDOM: WINGS 14-19
-                int c = drops.Length;
-                while (c > 1) {
-                    c--;
-                    k = SysRand.Next(6) + 14; //produces 0-5, adds 14
-                    drops[c] = k;
-                }
-            }
-
-            if (rndDropsDropdown.SelectedIndex == 6) { //RANDOM: GEMS 20-23
-                int c = drops.Length;
-                while (c > 1) {
-                    c--;
-                    k = SysRand.Next(4) + 20; //produces 0-3, adds 20
-                    drops[c] = k;
-                }
-            }
-
-            if (rndDropsDropdown.SelectedIndex == 7) { //RANDOM: WINGS & GEMS 14-23
-                int c = drops.Length;
-                while (c > 1) {
-                    c--;
-                    k = SysRand.Next(10) + 14; //produces 0-9, adds 14
-                    drops[c] = k;
-                }
+            //STANDARD WINGS SHUFFLE (always happens afterwards, or if dropdown index is 0)
+            d = wings.Length;
+            while (d > 1) {
+                d--;
+                k = SysRand.Next(d + 1);
+                int temp = wings[k];
+                wings[k] = wings[d];
+                wings[d] = temp;
             }
 
             //TEXT SHUFFLING (May be based on dropdown value more later, text shortening, whatever)
+
             if (rndTextContentDropdown.SelectedIndex == 0) {
                 int c = texts.Length;
                 while (c > 1) {
@@ -491,6 +468,7 @@ namespace Merrow {
             }
 
             //TEST COLOUR SHUFFLING (Trying on text colour, cause it's simple)
+
             texPal1 = RGBAToColor(library.baseRedTextPalette[0]); //convert base colours from hex
             texPal2 = RGBAToColor(library.baseRedTextPalette[1]);
             texPal3 = RGBAToColor(library.baseRedTextPalette[2]);
@@ -559,7 +537,26 @@ namespace Merrow {
                     }
                 }
             }
+
+            //VOWEL SHUFFLE
+
+            //populate updated monster name array and vowel list
+            for (int l = 0; l < voweled.Length; l++) { voweled[l] = library.monsternames[l * 2]; }
+            char[] vowels = { 'A', 'E', 'I', 'O', 'U' };
+
+            for (int h = 0; h < voweled.Length; h++) { //iterate through all names
+                char[] charArr = voweled[h].ToCharArray();
+
+                for (int i = 0; i < charArr.Length; i++) { //iterate through name characters
+                    if (charArr[i] == 'A' || charArr[i] == 'E' || charArr[i] == 'I' || charArr[i] == 'O' || charArr[i] == 'U') {
+                        charArr[i] = vowels[SysRand.Next(5)];
+                    }
+                }
+
+                voweled[h] = new string(charArr); //rebuild name
+            }
         }
+
         //BUILD QUEST PATCH----------------------------------------------------------------
 
         public void BuildPatch() {
@@ -580,7 +577,8 @@ namespace Merrow {
                 !quaRestlessToggle.Checked &&
                 !quaMaxMessageToggle.Checked &&
                 !quaMonsterScaleToggle.Checked &&
-                !quaFastMonToggle.Checked
+                !quaFastMonToggle.Checked &&
+                !quaVowelsToggle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -692,7 +690,8 @@ namespace Merrow {
                 }
             }
 
-            if (rndChestToggle.Checked) { //Chest shuffle
+            //Chest shuffle
+            if (rndChestToggle.Checked) { 
                 //add chest addresses, and new byte
                 for (int i = 0; i < chests.Length; i++) {
                     int temp = library.chestdata[i * 2] + 33; //33 is offset to chest item byte
@@ -706,22 +705,122 @@ namespace Merrow {
                 if (rndChestDropdown.SelectedIndex == 0) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents shuffled." + Environment.NewLine);
                 }
-                if (rndChestDropdown.SelectedIndex == 1) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (standard)." + Environment.NewLine);
-                }
-                if (rndChestDropdown.SelectedIndex == 2) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (standard and wings)." + Environment.NewLine);
-                }
-                if (rndChestDropdown.SelectedIndex == 3) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (standard and gems)." + Environment.NewLine);
-                }
-                if (rndChestDropdown.SelectedIndex == 4) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (chaos)." + Environment.NewLine);
-                }
-                if (rndWeightedChestToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents weighted (minimum one of each)." + Environment.NewLine);
+                if (rndChestDropdown.SelectedIndex > 0) {
+                    string randomtype = "";
+                    if (rndChestDropdown.SelectedIndex == 1) { randomtype = "standard"; }
+                    if (rndChestDropdown.SelectedIndex == 2) { randomtype = "standard + wings"; }
+                    if (rndChestDropdown.SelectedIndex == 3) { randomtype = "standard + gems"; }
+                    if (rndChestDropdown.SelectedIndex == 4) { randomtype = "chaos"; }
+                    if (rndChestDropdown.SelectedIndex == 5) { randomtype = "wings"; }
+                    if (rndChestDropdown.SelectedIndex == 6) { randomtype = "gems"; }
+                    if (rndChestDropdown.SelectedIndex == 7) { randomtype = "wings + gems"; }
+                    if (rndWeightedChestToggle.Checked) { randomtype += ", weighted"; }
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (" + randomtype + ")." + Environment.NewLine);
                 }
             }
+
+            //Item Drop Shuffle
+            if (rndDropsToggle.Checked) { 
+                //add drop addresses, and new byte
+                for (int i = 0; i < drops.Length; i++) {
+                    int temp = library.dropdata[i * 2]; //don't need to offset because drop list is pre-offset
+                    patchcontent += Convert.ToString(temp, 16);
+                    patchcontent += "0001";
+                    patchcontent += drops[i].ToString("X2");
+
+                    if (!quaVowelsToggle.Checked) {
+                        if (drops[i] != 255) { spoilerdrops[i] = library.monsternames[i * 2] + ": " + library.items[drops[i] * 3]; }
+                        if (drops[i] == 255) { spoilerdrops[i] = library.monsternames[i * 2] + ": NONE"; }
+                    }
+                    if (quaVowelsToggle.Checked) {
+                        if (drops[i] != 255) { spoilerdrops[i] = voweled[i] + ": " + library.items[drops[i] * 3]; }
+                        if (drops[i] == 255) { spoilerdrops[i] = voweled[i] + ": NONE"; }
+                    }
+                }
+
+                if (rndDropsDropdown.SelectedIndex == 0) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops shuffled." + Environment.NewLine);
+                }
+                if (rndDropsDropdown.SelectedIndex > 0) {
+                    string randomtype = "";
+                    if (rndDropsDropdown.SelectedIndex == 1) { randomtype = "standard"; }
+                    if (rndDropsDropdown.SelectedIndex == 2) { randomtype = "standard + wings"; }
+                    if (rndDropsDropdown.SelectedIndex == 3) { randomtype = "standard + gems"; }
+                    if (rndDropsDropdown.SelectedIndex == 4) { randomtype = "chaos"; }
+                    if (rndDropsDropdown.SelectedIndex == 5) { randomtype = "wings"; }
+                    if (rndDropsDropdown.SelectedIndex == 6) { randomtype = "gems"; }
+                    if (rndDropsDropdown.SelectedIndex == 7) { randomtype = "wings + gems"; }
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (" + randomtype + ")." + Environment.NewLine);
+                }
+            }
+
+            //Item Gift Shuffle
+            if (rndGiftersToggle.Checked) { 
+                //add gift addresses, and new byte
+                for (int i = 0; i < gifts.Length; i++) {
+                    int temp = library.itemgranters[i * 2]; //don't need to offset because gift hex loc list is pre-offset
+                    patchcontent += Convert.ToString(temp, 16);
+                    patchcontent += "0001";
+                    patchcontent += gifts[i].ToString("X2");
+
+                    spoilergifts[i] = library.granternames[i] + ": " + library.items[gifts[i] * 3];
+                }
+
+                if (rndGiftersDropdown.SelectedIndex == 0) {
+                    if (rndShuffleShannonToggle.Checked) {
+                        spoilergifts[8] = "Shannon (Brannoch Castle): ELETALE BOOK (unrandomized)";
+                        spoilergifts[9] = "Shannon (Mammon's World): DARK GAOL KEY (unrandomized)";
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts shuffled (Shannons excluded)." + Environment.NewLine);
+                    } else {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts shuffled." + Environment.NewLine);
+                    }
+                }
+
+                if (rndGiftersDropdown.SelectedIndex > 0) {
+                    spoilergifts[8] = "Shannon (Brannoch Castle): ELETALE BOOK (unrandomized)";
+                    spoilergifts[9] = "Shannon (Mammon's World): DARK GAOL KEY (unrandomized)";
+
+                    string randomtype = "";
+                    if (rndGiftersDropdown.SelectedIndex == 1) { randomtype = "standard"; }
+                    if (rndGiftersDropdown.SelectedIndex == 2) { randomtype = "standard + wings"; }
+                    if (rndGiftersDropdown.SelectedIndex == 3) { randomtype = "standard + gems"; }
+                    if (rndGiftersDropdown.SelectedIndex == 4) { randomtype = "chaos"; }
+                    if (rndGiftersDropdown.SelectedIndex == 5) { randomtype = "wings"; }
+                    if (rndGiftersDropdown.SelectedIndex == 6) { randomtype = "gems"; }
+                    if (rndGiftersDropdown.SelectedIndex == 7) { randomtype = "wings + gems"; }
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts randomized (" + randomtype + ")." + Environment.NewLine);
+                }
+            }
+
+            //Wingsmiths Shuffle
+            if (rndWingsmithsToggle.Checked) { 
+                //add wings addresses, and new byte
+                for (int i = 0; i < wings.Length; i++) {
+                    int temp = library.itemgranters[20 + (i * 2)]; //gift hex loc list is pre-offset, advance 20 to skip gifters
+                    patchcontent += Convert.ToString(temp, 16);
+                    patchcontent += "0001";
+                    patchcontent += wings[i].ToString("X2");
+
+                    spoilerwings[i] = library.granternames[i + 10] + ": " + library.items[wings[i] * 3]; //advance 10 to skip gifters
+                }
+
+                if (rndWingsmithsDropdown.SelectedIndex == 0) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wingsmiths shuffled." + Environment.NewLine);
+                }
+                if (rndWingsmithsDropdown.SelectedIndex > 0) {
+                    string randomtype = "";
+                    if (rndWingsmithsDropdown.SelectedIndex == 1) { randomtype = "standard"; }
+                    if (rndWingsmithsDropdown.SelectedIndex == 2) { randomtype = "standard + wings"; }
+                    if (rndWingsmithsDropdown.SelectedIndex == 3) { randomtype = "standard + gems"; }
+                    if (rndWingsmithsDropdown.SelectedIndex == 4) { randomtype = "chaos"; }
+                    if (rndWingsmithsDropdown.SelectedIndex == 5) { randomtype = "wings"; }
+                    if (rndWingsmithsDropdown.SelectedIndex == 6) { randomtype = "gems"; }
+                    if (rndWingsmithsDropdown.SelectedIndex == 7) { randomtype = "wings + gems"; }
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wingsmiths randomized (" + randomtype + ")." + Environment.NewLine);
+                }
+            }
+
+            //TEXT CONTENT SHUFFLE
 
             if (rndTextContentToggle.Checked) {
                 int temp = 0;
@@ -759,35 +858,6 @@ namespace Merrow {
                 }
             }
 
-            if (rndDropsToggle.Checked) { //Item Drop Shuffle
-                //add drop addresses, and new byte
-                for (int i = 0; i < drops.Length; i++) {
-                    int temp = library.dropdata[i * 2]; //don't need to offset because drop list is pre-offset
-                    patchcontent += Convert.ToString(temp, 16);
-                    patchcontent += "0001";
-                    patchcontent += drops[i].ToString("X2");
-
-                    if (drops[i] != 255) { spoilerdrops[i] = library.monsternames[i] + ": " + library.items[drops[i] * 3]; }
-                    if (drops[i] == 255) { spoilerdrops[i] = library.monsternames[i] + ": NONE"; }
-                }
-
-                if (rndDropsDropdown.SelectedIndex == 0) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops shuffled." + Environment.NewLine);
-                }
-                if (rndDropsDropdown.SelectedIndex == 1) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (standard)." + Environment.NewLine);
-                }
-                if (rndDropsDropdown.SelectedIndex == 2) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (standard and wings)." + Environment.NewLine);
-                }
-                if (rndDropsDropdown.SelectedIndex == 3) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (standard and gems)." + Environment.NewLine);
-                }
-                if (rndDropsDropdown.SelectedIndex == 4) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (chaos)." + Environment.NewLine);
-                }
-            }
-
             //MONSTER SCALING FEATURES
 
             if (rndMonsterStatsToggle.Checked || quaMonsterScaleToggle.Checked) {
@@ -803,13 +873,15 @@ namespace Merrow {
                 }
 
                 for (int i = 0; i < 75; i++) {
-                    spoilerscales[i] = library.monsternames[i] + ": ";
+                    if (!quaVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[i * 2] + ": "; }
+                    if (quaVowelsToggle.Checked) { spoilerscales[i] = voweled[i] + ": "; }
                     spoilerscales[i] += newmonsterstats[i * 6].ToString() + " ";
                     spoilerscales[i] += newmonsterstats[(i * 6) + 1].ToString() + " ";
                     spoilerscales[i] += newmonsterstats[(i * 6) + 2].ToString() + " ";
                     spoilerscales[i] += newmonsterstats[(i * 6) + 3].ToString() + " ";
                     spoilerscales[i] += newmonsterstats[(i * 6) + 4].ToString() + " ";
                     spoilerscales[i] += newmonsterstats[(i * 6) + 5].ToString();
+                    
                 }
 
                 if (rndMonsterStatsToggle.Checked && extremity == 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized within regions." + Environment.NewLine); }
@@ -915,23 +987,46 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Monastery enabled." + Environment.NewLine);
             }
 
+            if (quaVowelsToggle.Checked) { //Vowel Shuffle
+                for (int i = 0; i < voweled.Length; i++) {
+                    patchcontent += library.monsternames[(i * 2) + 1]; //hex location
+
+                    int decLength = voweled[i].Length;
+                    patchcontent += decLength.ToString("X4"); //name length in hex bytes
+
+                    patchcontent += ToHex(voweled[i]);
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Vowel Shuffle enabled." + Environment.NewLine);
+            }
+
             //FINAL ASSEMBLY/OUTPUT
 
             //Verbose spoiler log down at the bottom just to not hide the enabled options above.
             if (verboselog) { 
                 if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED SPELLS:" + Environment.NewLine);
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED SPELLS:" + Environment.NewLine);
                     foreach (string line in spoilerspells) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 
                 if (rndChestToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED CHESTS:" + Environment.NewLine);
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED CHESTS:" + Environment.NewLine);
                     foreach (string line in spoilerchests) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 
                 if (rndDropsToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "SHUFFLED DROPS:" + Environment.NewLine);
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED DROPS:" + Environment.NewLine);
                     foreach (string line in spoilerdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                }
+
+                if (rndGiftersToggle.Checked) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED GIFTS:" + Environment.NewLine);
+                    foreach (string line in spoilergifts) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                }
+
+                if (rndWingsmithsToggle.Checked) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED WINGSMITHS:" + Environment.NewLine);
+                    foreach (string line in spoilerwings) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 
                 if (rndMonsterStatsToggle.Checked || quaMonsterScaleToggle.Checked) {
@@ -1241,33 +1336,33 @@ namespace Merrow {
 
         private void rndSpellToggle_CheckedChanged(object sender, EventArgs e) {
             if(rndSpellToggle.Checked) {
-                rndSpellDropdown.Visible = true;
-                rndSpellNamesToggle.Visible = true;
-                rndSpellNamesDropdown.Visible = true;
+                rndSpellDropdown.Enabled = true;
+                rndSpellNamesToggle.Enabled = true;
+                if (rndSpellNamesToggle.Checked) { rndSpellNamesDropdown.Enabled = true; }
             } else {
-                rndSpellDropdown.Visible = false;
-                rndSpellNamesToggle.Visible = false;
-                rndSpellNamesDropdown.Visible = false;
+                rndSpellDropdown.Enabled = false;
+                rndSpellNamesToggle.Enabled = false;
+                rndSpellNamesDropdown.Enabled = false;
             }
         }
 
         private void rndTextPaletteToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndTextPaletteToggle.Checked) {
-                rndTextPaletteDropdown.Visible = true;
-                if (rndTextPaletteDropdown.SelectedIndex == 5) { rndColorViewToggle.Visible = true; }
+                rndTextPaletteDropdown.Enabled = true;
+                if (rndTextPaletteDropdown.SelectedIndex == 5) { rndColorViewToggle.Enabled = true; }
             } else {
-                rndTextPaletteDropdown.Visible = false;
+                rndTextPaletteDropdown.Enabled = false;
                 rndColorViewPanel.Visible = false;
-                rndColorViewToggle.Visible = false;
-                rndColorViewToggle.Checked = false;
+                rndColorViewToggle.Enabled = false;
+                rndColorViewToggle.Checked = false; //hide again to avoid spoilers if things change
             }
         }
 
         private void rndTextContentToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndTextContentToggle.Checked) {
-                rndTextContentDropdown.Visible = true;
+                rndTextContentDropdown.Enabled = true;
             } else {
-                rndTextContentDropdown.Visible = false;
+                rndTextContentDropdown.Enabled = false;
             }
         }
 
@@ -1285,24 +1380,24 @@ namespace Merrow {
 
         private void rndTextPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             if (rndTextPaletteDropdown.SelectedIndex == 5) {
-                rndColorViewToggle.Visible = true;
+                rndColorViewToggle.Enabled = true;
             }
             else {
-                rndColorViewToggle.Visible = false;
+                rndColorViewToggle.Enabled = false;
                 rndColorViewToggle.Checked = false; //make it false again so as not to spoil the next value, and so the panel's invisible
             }
         }
 
         private void rndChestToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndChestToggle.Checked) {
-                rndChestDropdown.Visible = true;
-                rndWeightedChestToggle.Visible = true;
+                rndChestDropdown.Enabled = true;
+                if (rndChestDropdown.SelectedIndex != 0) { rndWeightedChestToggle.Enabled = true; } //make visible again if they've already been using it
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 0;
             }
             else {
-                rndChestDropdown.Visible = false;
-                rndWeightedChestToggle.Visible = false;
+                rndChestDropdown.Enabled = false;
+                rndWeightedChestToggle.Enabled = false;
                 if(!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
                     itemListTabs.Visible = false;
                 }
@@ -1311,11 +1406,11 @@ namespace Merrow {
 
         private void rndDropsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndDropsToggle.Checked) {
-                rndDropsDropdown.Visible = true;
+                rndDropsDropdown.Enabled = true;
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 1;
             } else {
-                rndDropsDropdown.Visible = false;
+                rndDropsDropdown.Enabled = false;
                 if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
                     itemListTabs.Visible = false;
                 }
@@ -1324,12 +1419,14 @@ namespace Merrow {
 
         private void rndGiftersToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndGiftersToggle.Checked) {
-                rndGiftersDropdown.Visible = true;
+                rndGiftersDropdown.Enabled = true;
+                if (rndGiftersDropdown.SelectedIndex == 0) { rndShuffleShannonToggle.Enabled = true; } //make visible again if they've already been using it
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 2;
             }
             else {
-                rndGiftersDropdown.Visible = false;
+                rndGiftersDropdown.Enabled = false;
+                rndShuffleShannonToggle.Enabled = false;
                 if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
                     itemListTabs.Visible = false;
                 }
@@ -1338,12 +1435,12 @@ namespace Merrow {
 
         private void rndWingsmithsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndWingsmithsToggle.Checked) {
-                rndWingsmithsDropdown.Visible = true;
+                rndWingsmithsDropdown.Enabled = true;
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 3;
             }
             else {
-                rndWingsmithsDropdown.Visible = false;
+                rndWingsmithsDropdown.Enabled = false;
                 if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
                     itemListTabs.Visible = false;
                 }
@@ -1361,16 +1458,20 @@ namespace Merrow {
 
         private void quaZoomToggle_CheckedChanged(object sender, EventArgs e) {
             if (quaZoomToggle.Checked) {
-                quaZoomDropdown.Visible = true;
+                quaZoomDropdown.Enabled = true;
                 rndCRCWarningLabel.Visible = true;
             } else {
-                quaZoomDropdown.Visible = false;
+                quaZoomDropdown.Enabled = false;
                 rndCRCWarningLabel.Visible = false;
             }
         }
 
         private void quaAccuracyToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaAccuracyToggle.Checked) { quaAccuracyDropdown.Visible = true; } else { quaAccuracyDropdown.Visible = false; }
+            if (quaAccuracyToggle.Checked) {
+                quaAccuracyDropdown.Enabled = true;
+            } else {
+                quaAccuracyDropdown.Enabled = false;
+            }
         }
 
         private void expSeedTextBox_TextChanged(object sender, EventArgs e) {
@@ -1497,10 +1598,10 @@ namespace Merrow {
 
         private void quaMonsterScaleToggle_CheckedChanged(object sender, EventArgs e) {
             if (quaMonsterScaleToggle.Checked) {
-                quaScalingDropdown.Visible = true;
+                quaScalingDropdown.Enabled = true;
             }
             else {
-                quaScalingDropdown.Visible = false;
+                quaScalingDropdown.Enabled = false;
                 quaScalingDropdown.SelectedIndex = 5;
                 difficultyscale = 10;
             }
@@ -1513,12 +1614,10 @@ namespace Merrow {
 
         private void rndMonsterStatsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndMonsterStatsToggle.Checked) {
-                rndExtremityDropdown.Visible = true;
-                rndExtremityLabel.Visible = true;
+                rndExtremityDropdown.Enabled = true;
             }
             else {
-                rndExtremityDropdown.Visible = false;
-                rndExtremityLabel.Visible = false;
+                rndExtremityDropdown.Enabled = false;
                 rndExtremityDropdown.SelectedIndex = 0;
                 extremity = 0;
             }
@@ -1531,10 +1630,10 @@ namespace Merrow {
 
         private void rndSpellNamesToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndSpellNamesToggle.Checked) {
-                rndSpellNamesDropdown.Visible = true;
+                rndSpellNamesDropdown.Enabled = true;
             }
             else {
-                rndSpellNamesDropdown.Visible = false;
+                rndSpellNamesDropdown.Enabled = false;
             }
         }
 
@@ -1550,6 +1649,12 @@ namespace Merrow {
         private void rndChestDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             itemListTabs.SelectedIndex = 0;
             itemListUpdate(itemListView1, rndChestDropdown.SelectedIndex);
+            if (rndChestDropdown.SelectedIndex > 0) {
+                rndWeightedChestToggle.Enabled = true;
+            }
+            else {
+                rndWeightedChestToggle.Enabled = false;
+            }
         }
 
         private void rndDropsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1560,6 +1665,12 @@ namespace Merrow {
         private void rndGiftersDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             itemListTabs.SelectedIndex = 2;
             itemListUpdate(itemListView3, rndGiftersDropdown.SelectedIndex);
+            if (rndGiftersDropdown.SelectedIndex == 0 && rndGiftersToggle.Checked) {
+                rndShuffleShannonToggle.Enabled = true;
+            }
+            else {
+                rndShuffleShannonToggle.Enabled = false;
+            }
         }
 
         private void rndWingsmithsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
