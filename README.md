@@ -19,7 +19,9 @@ Latest build and details available at https://hangedman.itch.io/merrow.
 
 # Repo Overview
 The project is a C# Visual Studio WPF application. When compiled, it will create **Merrow.exe**, the standalone application. That entire application is contained in the "Merrow" folder, which contains the Merrow project solution and the Merrow project code:
-* *MerrowStandard.cs*, which contains the actual application code, further detailed below in the **Code Structure** section. 
+* *MerrowStandard.cs*, which contains the randomization and winforms application code, further detailed below in the **Code Structure** section. 
+* *HackFunctions.cs*, which contains the generic patch generator and binary file reader functionality, further detailed below in the **Code Structure** section.
+* *VarFunctions.cs*, which contains various variable translation functions for easy converting of bytes/hex/strings/colors
 * *DataStore.cs*, which contains arrays and tables of reference data used for randomizer calculation and generation.
 * *crc64.dll*, a DLL implementation of some old community code for repairing N64 CRCs, modified to work standalone from a filename rather than requiring a bitstream.
 
@@ -29,7 +31,7 @@ The other folder on the root level "crc64" is a C++ Visual Studio DLL project, w
 
 # MerrowStandard.cs Code Structure
 This is a short overview of the code structure, contained in the class *MerrowStandard:Form*. Comments in the code explain each section in more detail.
-* Variable declarations and small arrays. New winforms objects should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout.
+* Variable declarations. New winforms objects should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout. Large arrays should be stored in DataStore.cs, not here.
   - "library" is the imported DataStore.cs
   - "fix_crc" is the connected crc64.dll
   - Prefixes "rnd","qua","exp" are winforms objects in the *Quest 64 Randomizer* tab
@@ -40,11 +42,12 @@ This is a short overview of the code structure, contained in the class *MerrowSt
 * *PrepareDropdowns*: WPF interface initialization
 * *Shuffling*: Updating of seed, creation of new Random() and shuffling of all randomized elements performed in a row, to guarantee seed consistency.
 * *BuildPatch*: Assemble Quest 64 randomizer content into *patchcontent* hexadecimal string, convert to bytestream and export as IPS, export spoiler log. This section should not contain any randomization.
+* *RepairCRC*: CRC repair tool functionality, calling the fix_crc dll connection.
+* UI interactions, for modifying the interface on interaction and for calling other functions. Roughly ordered by tab. These should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout. None should be left empty.
+
+# HackFunctions.cs Code Structure
 * *BuildCustomPatch*: Assemble custom IPS patch content into *patchcontent* hexadecimal string, convert to bytestream and export as IPS.
 * *BinRead*: Binary file reader functionality, reading from selected file at specified addresses and exported as comma-separated strings.
-* *RepairCRC*: CRC repair tool functionality, calling the fix_crc dll connection.
-* Variable operations, for easy converting of bytes/hex/strings/colors
-* UI interactions, for modifying the interface on interaction and for calling other functions. Roughly ordered by tab. These should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout. None should be left empty.
 
 # License
 Merrow is copyright (c) 2021 Jonah Davidson (Hangedman).
