@@ -22,6 +22,7 @@ The project is a C# Visual Studio WPF application. When compiled, it will create
 * *MerrowStandard.cs*, which contains the randomization and winforms application code, further detailed below in the **Code Structure** section. 
 * *HackFunctions.cs*, which contains the generic patch generator and binary file reader functionality, further detailed below in the **Code Structure** section.
 * *VarFunctions.cs*, which contains various variable translation functions for easy converting of bytes/hex/strings/colors
+The above are all contained in the MerrowStandard namespace.
 * *DataStore.cs*, which contains arrays and tables of reference data used for randomizer calculation and generation.
 * *crc64.dll*, a DLL implementation of some old community code for repairing N64 CRCs, modified to work standalone from a filename rather than requiring a bitstream.
 
