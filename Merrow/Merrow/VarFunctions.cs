@@ -93,7 +93,6 @@ namespace Merrow {
         }
 
         public static string ColorToHex(Color col) { //Convert Color to 4-char hex string
-            Console.WriteLine(col.ToString());
             double dubR = (col.R / 255d) * 31; //convert the 0-255 values to 0-31 for binary conversion
             double dubG = (col.G / 255d) * 31;
             double dubB = (col.B / 255d) * 31;
@@ -115,7 +114,6 @@ namespace Merrow {
 
             int binCol = Convert.ToInt32(binR + binG + binB + binA, 2); //combine into one int
             string ret = binCol.ToString(("X4")); //convert that int to hex
-            Console.WriteLine(ret);
             return ret;
         }
     }

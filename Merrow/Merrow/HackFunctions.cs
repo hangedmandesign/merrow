@@ -99,7 +99,6 @@ namespace Merrow {
                         tempval = Convert.ToInt32(strarray[i]);
                         strarray[i] = tempval.ToString("X2");
                     }
-                    Console.WriteLine(strarray[i]);
                 }
             }
 

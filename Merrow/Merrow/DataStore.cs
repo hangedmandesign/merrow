@@ -142,8 +142,23 @@ namespace Merrow {
         //PREWRITTEN: null boss spell, our new override boss pointer content
         //Since boss spell names are never actually used, we're creating a boss spell name that's just a short junk string, and directing all boss spell name pointers to it.
         public string[] shuffleBossSpellNames = { 
-            "D4F09000025000",
-            "D4B90C0044800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0"
+            "D4F090",
+            "0002",
+            "5000",
+            "D4B90C",
+            "0044",
+            "800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0800C3CD0"
+        };
+
+        public string[] invalidityLocations = {
+            "D4CAE9", //Zel_Cat
+            "D4CBB0", //Npt_Turn
+            "D4CC3D", //Far_Bom
+            "D4CC81", //Sil_Laser
+            "D4CCC5", //Sil_Cat
+            "D4CD09", //Gil_Punch
+            "D4CD91", //Ges_Cat
+            "D4CE10" //On_Light
         };
 
         //crash prevention spell sets and safe/unsafe lists
@@ -209,6 +224,9 @@ namespace Merrow {
             "ELETALE`S BOOK","D86BE0","18",
             "DARK GAOL KEY","E67C52","19"
         };
+
+        //random item types
+        public string[] randomtype = { "shuffle", "standard", "standard + wings", "standard + gems", "chaos", "wings", "gems", "wings + gems", "custom" };
 
         //list of item granter NPCs. +7 offset is already included in value
         //Will need options to shuffle items with protection against two shannon items being inverted, and wings separately or together

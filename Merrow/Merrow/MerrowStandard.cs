@@ -18,12 +18,11 @@ namespace Merrow {
         Random SysRand = new Random();
         private OpenFileDialog binOpenFileDialog;
         private OpenFileDialog crcOpenFileDialog;
+        private OpenFileDialog rndOpenFileDialog;
 
         //crc dll import
         [DllImport("crc64.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int fix_crc(string crcPath);
-        string fullPath;
-        bool crcFileSelected = false;
 
         //variables
         int spellstart = 13941344; //D4BA60
@@ -43,19 +42,28 @@ namespace Merrow {
         int passcheck = 0;
         bool loadfinished = false;
         bool verboselog = true;
+        bool seedName = true;
+        bool dateName = false;
         int binFileLength = 0;
         bool binFileLoaded = false;
+        string rndFileName = "";
+        string fullPath;
+        bool crcFileSelected = false;
+        bool rndFileSelected = false;
+        bool writingPatch = false;
         string textPaletteHex = "00008888FFFF"; //busted default palette to make errors obvious
         Color texPal1 = Color.Black;
         Color texPal2 = Color.Black;
         Color texPal3 = Color.Black;
         bool lockItemUpdates = false;
+        string rndErrorString = "WARNING: Current patch options will cause checksum errors." + Environment.NewLine + "Use the CRC Repair Tool to fix your patched rom.";
+        double riskvalue = 1.0;
 
         //collection arrays and lists
         byte[] patcharray;
         int[] shuffles = new int[60];
         List<int> reorg = new List<int>();
-        int[] chests = new int[87];
+        int[] chests = new int[88];
         int[] drops = new int[67];
         int[] gifts = new int[10];
         int[] wings = new int[6];
@@ -63,16 +71,18 @@ namespace Merrow {
         int[] inntexts = new int[17];
         string[] hintnames = new string[60];
         string[] spoilerspells = new string[60];
-        string[] spoilerchests = new string[87];
+        string[] spoilerchests = new string[88];
         string[] spoilerdrops = new string[67];
         string[] spoilerscales = new string[75];
         string[] spoilergifts = new string[10];
         string[] spoilerwings = new string[6];
         int[] newmonsterstats = new int[450];
-        float difficultyscale = 10;
+        float difficultyscale = 1.0f;
         float extremity = 0;
         string[] voweled = new string[75];
         byte[] binFileBytes;
+        byte[] rndFileBytes;
+        List<string> patchstrings = new List<string>();
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -80,7 +90,7 @@ namespace Merrow {
             //required Winforms function, do not edit or remove
             InitializeComponent(); 
 
-            //initiate fundamental variables
+            //initiate file-opening dialogs
             if (!Directory.Exists(filePath)) { Directory.CreateDirectory(filePath); }
             binOpenFileDialog = new OpenFileDialog() {
                 FileName = "Select a file...",
@@ -91,6 +101,13 @@ namespace Merrow {
                 Filter = "Z64 files (*.z64)|*.z64",
                 Title = "Select Z64 file"
             };
+            rndOpenFileDialog = new OpenFileDialog() {
+                FileName = "Select a Z64...",
+                Filter = "Z64 files (*.z64)|*.z64",
+                Title = "Select Z64 file"
+            };
+
+            //initiate fundamental variables
             shuffles = new int[playerspells];
             spoilerspells = new string[playerspells];
             library = new DataStore();
@@ -132,6 +149,7 @@ namespace Merrow {
         }
 
         //INITIAL UI CLEANUP/PREP------------------------------------------------------------------
+        //this is separate just because it's a big chunk of similar nonsense
 
         private void PrepareDropdowns() { 
             rndSpellDropdown.SelectedIndex = 0;
@@ -146,11 +164,9 @@ namespace Merrow {
             quaAccuracyDropdown.SelectedIndex = 0;
             quaZoomDropdown.SelectedIndex = 0;
             quaScalingDropdown.SelectedIndex = 5;
+            quaWingUnlockDropdown.SelectedIndex = 0;
 
-            rndCRCWarningLabel.Visible = false;
-
-            binAddrHEX.Checked = true;
-            binLengthHEX.Checked = true;
+            expFakeZ64Button.Size = new System.Drawing.Size(110, 78);
         }
 
         //UNIFIED SHUFFLING/RANDOMIZING FUNCTION----------------------------------------------------------------
@@ -287,15 +303,12 @@ namespace Merrow {
             int setlength = itemset.Length;
 
             if (rndChestDropdown.SelectedIndex >= 1 && setlength > 0) {
-                int c = chests.Length;
-
-                while (c > 0) {
-                    c--;
+                for (int c = 0; c < chests.Length; c++) {
                     if (rndWeightedChestToggle.Checked) {
-                        if (c >= setlength) { //top of array is random items within set
-                            k = itemset[SysRand.Next(setlength)];
-                        } else { //bottom of array is all weighted items
+                        if (c < setlength) { //bottom of array is all weighted items
                             k = itemset[c];
+                        } else { //top of array is random items within set
+                            k = itemset[SysRand.Next(setlength)];
                         } 
                     }
                     if (!rndWeightedChestToggle.Checked) { //whole array is random items within set
@@ -410,10 +423,7 @@ namespace Merrow {
             setlength = itemset.Length;
 
             if (rndWingsmithsDropdown.SelectedIndex >= 1 && setlength > 0) {
-                int c = wings.Length;
-
-                while (c > 0) {
-                    c--;
+                for (int c = 0; c < wings.Length; c++) {
                     k = itemset[SysRand.Next(setlength)];
                     wings[c] = k;
                 }
@@ -496,7 +506,7 @@ namespace Merrow {
                             double highend = library.avg_monster[(i * 7) + 5] * (1 + extremity);
                             double lowend = library.avg_monster[(i * 7) + 6] * (1 - extremity);
                             double variance = SysRand.NextDouble() * (highend - lowend) + lowend;
-                            double modifiedstat = (currentstat * (variance / 10) * (difficultyscale / 10));
+                            double modifiedstat = (currentstat * (variance / 10) * (difficultyscale));
                             newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(modifiedstat);
                             if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; }
                         }
@@ -504,11 +514,11 @@ namespace Merrow {
                 }
             }
 
-            //scale bosses only if randomization is checked
+            //scale bosses only after, if randomization is checked
             if (rndMonsterStatsToggle.Checked && quaMonsterScaleToggle.Checked) {
                 for (int i = 67; i < 75; i++) {
                     for (int j = 0; j < 5; j++) {
-                        newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale / 10));
+                        newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale));
                     }
                 }
             }
@@ -517,7 +527,7 @@ namespace Merrow {
             if (!rndMonsterStatsToggle.Checked && quaMonsterScaleToggle.Checked) {
                 for (int i = 0; i < 75; i++) {
                     for (int j = 0; j < 5; j++) {
-                        newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale / 10));
+                        newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale));
                     }
                 }
             }
@@ -545,32 +555,43 @@ namespace Merrow {
 
         public void BuildPatch() {
             //check if nothing is enabled, if not, don't make a patch
-            if (!rndSpellToggle.Checked && 
-                !rndChestToggle.Checked && 
-                !rndTextPaletteToggle.Checked && 
-                !rndTextContentToggle.Checked && 
-                !rndDropsToggle.Checked && 
+            if (!rndSpellToggle.Checked &&
+                !rndChestToggle.Checked &&
+                !rndTextPaletteToggle.Checked &&
+                !rndTextContentToggle.Checked &&
+                !rndDropsToggle.Checked &&
                 !rndMonsterStatsToggle.Checked &&
                 !rndGiftersToggle.Checked &&
                 !rndWingsmithsToggle.Checked &&
-                !quaLevelToggle.Checked && 
-                !quaSoulToggle.Checked && 
-                !quaInvalidityToggle.Checked && 
-                !quaZoomToggle.Checked && 
-                !quaAccuracyToggle.Checked && 
+                !rndDropLimitToggle.Checked &&
+                !quaLevelToggle.Checked &&
+                !quaSoulToggle.Checked &&
+                !quaInvalidityToggle.Checked &&
+                !quaZoomToggle.Checked &&
+                !quaAccuracyToggle.Checked &&
                 !quaRestlessToggle.Checked &&
                 !quaMaxMessageToggle.Checked &&
                 !quaMonsterScaleToggle.Checked &&
                 !quaFastMonToggle.Checked &&
-                !quaVowelsToggle.Checked
+                !quaVowelsToggle.Checked &&
+                !quaHUDLockToggle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
+
+            writingPatch = true;
 
             //update filename one more time here to avoid errors
             if (expFilenameTextBox.Text != "" && expFilenameTextBox.Text != null) {
                 fileName = string.Join("", expFilenameTextBox.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
+                if (seedName) { fileName += "_" + rngseed.ToString(); }
+                if (dateName) { fileName += "_" + DateTime.Now.ToString("yyMMdd-HHmmss"); }
             }
-            else { fileName = "merrowpatch_" + rngseed.ToString(); }
+            else {
+                if (expModePatchZ64.Checked) { fileName = rndFileName + "_p"; }
+                if (expModePatchIPS.Checked) { fileName = "merrowpatch"; }
+                if (seedName) { fileName += "_" + rngseed.ToString(); }
+                if (dateName) { fileName += "_" + DateTime.Now.ToString("yyMMdd-HHmmss"); }
+            }
 
             //reshuffle here so I don't have to shuffle after every option is changed in the UI, only certain ones
             Shuffling(true);
@@ -581,6 +602,7 @@ namespace Merrow {
             File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "PATCH MODIFIERS:" + Environment.NewLine);
             patchbuild = "";
             patchcontent = "";
+            patchstrings.Clear();
 
             //RANDOMIZATION FEATURES
 
@@ -594,16 +616,16 @@ namespace Merrow {
                     tempaddr = Convert.ToInt32(library.spells[(q * 4) + 2]) + 3; //set rule address from dec version of hex, incrementing 3
                     tempstr1 = Convert.ToString(tempaddr, 16); //convert updated address back to hex string
                     tempstr2 = library.spells[(tempq * 4) + 3].Substring(6, 2); //copy other spell rule data
-                    patchcontent += tempstr1; //current spell rule address
-                    patchcontent += "0001"; //spell rule length, hex for 1
-                    patchcontent += tempstr2; //copied spell rule data
+                    patchstrings.Add(tempstr1); //current spell rule address
+                    patchstrings.Add("0001"); //spell rule length, hex for 1
+                    patchstrings.Add(tempstr2); //copied spell rule data
 
                     tempaddr = Convert.ToInt32(library.spells[(q * 4) + 2]) + 11; //set remaining address from dec version of hex, incrementing 11
                     tempstr1 = Convert.ToString(tempaddr, 16); //convert updated address back to hex string
                     tempstr2 = library.spells[(tempq * 4) + 3].Substring(22); //copy other remaining data
-                    patchcontent += tempstr1; //current remaining address
-                    patchcontent += "0039"; //remaining length, hex for 57
-                    patchcontent += tempstr2; //copied remaining data
+                    patchstrings.Add(tempstr1); //current remaining address
+                    patchstrings.Add("0039"); //remaining length, hex for 57
+                    patchstrings.Add(tempstr2); //copied remaining data
 
                     spoilerspells[q] = library.spells[(q * 4)] + " > " + library.spells[(tempq * 4)];
                 }
@@ -612,30 +634,35 @@ namespace Merrow {
 
                 if (rndSpellNamesToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
                     //boss spells
-                    patchcontent += library.shuffleBossSpellNames[0];
-                    patchcontent += library.shuffleBossSpellNames[1];
+                    for (int i = 0; i < 6; i++) {
+                        patchstrings.Add(library.shuffleBossSpellNames[i]); //first three are new null name, second three are boss name pointers
+                    }
+
 
                     //spell pointers
                     for (int i = 0; i < playerspells; i++) {
-                        patchcontent += library.shuffleNames[(i * 5) + 3]; //pointer location
-                        patchcontent += "0004"; //write four bytes
-                        patchcontent += library.shuffleNames[(i * 5) + 4]; //new pointer data
+                        patchstrings.Add(library.shuffleNames[(i * 5) + 3]); //pointer location
+                        patchstrings.Add("0004"); //write four bytes
+                        patchstrings.Add(library.shuffleNames[(i * 5) + 4]); //new pointer data
                     }
 
                     //spell names
                     for (int i = 0; i < playerspells; i++) {
                         string temps = ToHex(hintnames[i]);
                         int zeroes = 32 - temps.Length;
-                        patchcontent += library.shuffleNames[(i * 5) + 2];
-                        patchcontent += "0010";
-                        patchcontent += temps;
+                        patchstrings.Add(library.shuffleNames[(i * 5) + 2]);
+                        patchstrings.Add("0010");
+                        patchcontent = temps;
                         for (int j = 0; j < zeroes; j++) { patchcontent += "0"; }
+                        patchstrings.Add(patchcontent);
                     }
 
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shuffled spells use hinted names." + Environment.NewLine);
                 }
 
-                patchcontent += "667260000C000000060000000100000001"; //Fix for skelebat group in Blue Cave that can cause crashes due to lag
+                patchstrings.Add("667260"); //Fix for skelebat group in Blue Cave that can cause crashes due to lag
+                patchstrings.Add("000C");
+                patchstrings.Add("000000060000000100000001");
             }
 
             if (rndTextPaletteToggle.Checked) { //Text Colour
@@ -648,28 +675,30 @@ namespace Merrow {
                 int temp = rndTextPaletteDropdown.SelectedIndex;
                 if (rndTextPaletteDropdown.SelectedIndex == 4) { temp = SysRand.Next(0, 4); }
 
-                patchcontent += "D3E2400008";
+                patchstrings.Add("D3E240");
+                patchstrings.Add("0008");
+
                 if (temp == 0) {
-                    patchcontent += "F83E9C1B6AD5318D";
+                    patchstrings.Add("F83E9C1B6AD5318D");
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to black [default]." + Environment.NewLine);
                 }
                 if (temp == 1) {
-                    patchcontent += "F83E9C1BBA0DD009";
+                    patchstrings.Add("F83E9C1BBA0DD009");
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to red." + Environment.NewLine);
                 }
                 if (temp == 2) {
-                    patchcontent += "F83E9C1B629D19AB";
+                    patchstrings.Add("F83E9C1B629D19AB");
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to blue." + Environment.NewLine);
                 }
                 if (temp == 3) {
-                    patchcontent += "F83E318DBDEFF735";
+                    patchstrings.Add("F83E318DBDEFF735");
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to white." + Environment.NewLine);
                 }
 
                 if (rndTextPaletteDropdown.SelectedIndex == 5) {
-                    patchcontent += "F83E";
+                    patchcontent = "F83E";
                     patchcontent += textPaletteHex;
-                    Console.WriteLine(textPaletteHex);
+                    patchstrings.Add(patchcontent);
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random." + Environment.NewLine);
                 }
             }
@@ -679,10 +708,10 @@ namespace Merrow {
                 //add chest addresses, and new byte
                 for (int i = 0; i < chests.Length; i++) {
                     int temp = library.chestdata[i * 2] + 33; //33 is offset to chest item byte
-                    patchcontent += Convert.ToString(temp, 16);
-                    patchcontent += "0001";
-                    patchcontent += chests[i].ToString("X2");
-
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0001");
+                    patchstrings.Add(chests[i].ToString("X2"));
+                    Console.WriteLine(Convert.ToString(temp, 16));
                     spoilerchests[i] = i.ToString("00") + ": " + library.items[(chests[i] * 3)];
                 }
 
@@ -690,16 +719,10 @@ namespace Merrow {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents shuffled." + Environment.NewLine);
                 }
                 if (rndChestDropdown.SelectedIndex > 0) {
-                    string randomtype = "";
-                    if (rndChestDropdown.SelectedIndex == 1) { randomtype = "standard"; }
-                    if (rndChestDropdown.SelectedIndex == 2) { randomtype = "standard + wings"; }
-                    if (rndChestDropdown.SelectedIndex == 3) { randomtype = "standard + gems"; }
-                    if (rndChestDropdown.SelectedIndex == 4) { randomtype = "chaos"; }
-                    if (rndChestDropdown.SelectedIndex == 5) { randomtype = "wings"; }
-                    if (rndChestDropdown.SelectedIndex == 6) { randomtype = "gems"; }
-                    if (rndChestDropdown.SelectedIndex == 7) { randomtype = "wings + gems"; }
-                    if (rndWeightedChestToggle.Checked) { randomtype += ", weighted"; }
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (" + randomtype + ")." + Environment.NewLine);
+                    string randomtypeS = library.randomtype[rndChestDropdown.SelectedIndex];
+                    if (rndWeightedChestToggle.Checked) { randomtypeS += ", weighted"; }
+
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (" + randomtypeS + ")." + Environment.NewLine);
                 }
             }
 
@@ -708,9 +731,9 @@ namespace Merrow {
                 //add drop addresses, and new byte
                 for (int i = 0; i < drops.Length; i++) {
                     int temp = library.dropdata[i * 2]; //don't need to offset because drop list is pre-offset
-                    patchcontent += Convert.ToString(temp, 16);
-                    patchcontent += "0001";
-                    patchcontent += drops[i].ToString("X2");
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0001");
+                    patchstrings.Add(drops[i].ToString("X2"));
 
                     if (!quaVowelsToggle.Checked) {
                         if (drops[i] != 255) { spoilerdrops[i] = library.monsternames[i * 2] + ": " + library.items[drops[i] * 3]; }
@@ -724,17 +747,8 @@ namespace Merrow {
 
                 if (rndDropsDropdown.SelectedIndex == 0) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops shuffled." + Environment.NewLine);
-                }
-                if (rndDropsDropdown.SelectedIndex > 0) {
-                    string randomtype = "";
-                    if (rndDropsDropdown.SelectedIndex == 1) { randomtype = "standard"; }
-                    if (rndDropsDropdown.SelectedIndex == 2) { randomtype = "standard + wings"; }
-                    if (rndDropsDropdown.SelectedIndex == 3) { randomtype = "standard + gems"; }
-                    if (rndDropsDropdown.SelectedIndex == 4) { randomtype = "chaos"; }
-                    if (rndDropsDropdown.SelectedIndex == 5) { randomtype = "wings"; }
-                    if (rndDropsDropdown.SelectedIndex == 6) { randomtype = "gems"; }
-                    if (rndDropsDropdown.SelectedIndex == 7) { randomtype = "wings + gems"; }
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (" + randomtype + ")." + Environment.NewLine);
+                } else {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (" + library.randomtype[rndDropsDropdown.SelectedIndex] + ")." + Environment.NewLine);
                 }
             }
 
@@ -743,9 +757,9 @@ namespace Merrow {
                 //add gift addresses, and new byte
                 for (int i = 0; i < gifts.Length; i++) {
                     int temp = library.itemgranters[i * 2]; //don't need to offset because gift hex loc list is pre-offset
-                    patchcontent += Convert.ToString(temp, 16);
-                    patchcontent += "0001";
-                    patchcontent += gifts[i].ToString("X2");
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0001");
+                    patchstrings.Add(gifts[i].ToString("X2"));
 
                     spoilergifts[i] = library.granternames[i] + ": " + library.items[gifts[i] * 3];
                 }
@@ -764,20 +778,10 @@ namespace Merrow {
                 }
 
                 if (rndGiftersDropdown.SelectedIndex > 0) { //random
-                    string randomtype = "";
-                    if (rndGiftersDropdown.SelectedIndex == 1) { randomtype = "standard"; }
-                    if (rndGiftersDropdown.SelectedIndex == 2) { randomtype = "standard + wings"; }
-                    if (rndGiftersDropdown.SelectedIndex == 3) { randomtype = "standard + gems"; }
-                    if (rndGiftersDropdown.SelectedIndex == 4) { randomtype = "chaos"; }
-                    if (rndGiftersDropdown.SelectedIndex == 5) { randomtype = "wings"; }
-                    if (rndGiftersDropdown.SelectedIndex == 6) { randomtype = "gems"; }
-                    if (rndGiftersDropdown.SelectedIndex == 7) { randomtype = "wings + gems"; }
-
                     if (rndShuffleShannonToggle.Checked) {
-                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts randomized (" + randomtype + "), Shannons excluded." + Environment.NewLine);
-                    }
-                    else {
-                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts randomized (" + randomtype + ")." + Environment.NewLine);
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts randomized (" + library.randomtype[rndGiftersDropdown.SelectedIndex] + "), Shannons excluded." + Environment.NewLine);
+                    } else {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts randomized (" + library.randomtype[rndGiftersDropdown.SelectedIndex] + ")." + Environment.NewLine);
                     }
                 }
             }
@@ -787,27 +791,25 @@ namespace Merrow {
                 //add wings addresses, and new byte
                 for (int i = 0; i < wings.Length; i++) {
                     int temp = library.itemgranters[20 + (i * 2)]; //gift hex loc list is pre-offset, advance 20 to skip gifters
-                    patchcontent += Convert.ToString(temp, 16);
-                    patchcontent += "0001";
-                    patchcontent += wings[i].ToString("X2");
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0001");
+                    patchstrings.Add(wings[i].ToString("X2"));
 
                     spoilerwings[i] = library.granternames[i + 10] + ": " + library.items[wings[i] * 3]; //advance 10 to skip gifters
                 }
 
                 if (rndWingsmithsDropdown.SelectedIndex == 0) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wingsmiths shuffled." + Environment.NewLine);
+                } else { 
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wingsmiths randomized (" + library.randomtype[rndWingsmithsDropdown.SelectedIndex] + ")." + Environment.NewLine);
                 }
-                if (rndWingsmithsDropdown.SelectedIndex > 0) {
-                    string randomtype = "";
-                    if (rndWingsmithsDropdown.SelectedIndex == 1) { randomtype = "standard"; }
-                    if (rndWingsmithsDropdown.SelectedIndex == 2) { randomtype = "standard + wings"; }
-                    if (rndWingsmithsDropdown.SelectedIndex == 3) { randomtype = "standard + gems"; }
-                    if (rndWingsmithsDropdown.SelectedIndex == 4) { randomtype = "chaos"; }
-                    if (rndWingsmithsDropdown.SelectedIndex == 5) { randomtype = "wings"; }
-                    if (rndWingsmithsDropdown.SelectedIndex == 6) { randomtype = "gems"; }
-                    if (rndWingsmithsDropdown.SelectedIndex == 7) { randomtype = "wings + gems"; }
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wingsmiths randomized (" + randomtype + ")." + Environment.NewLine);
-                }
+            }
+
+            //Enemy drop limit toggle
+            if (rndDropLimitToggle.Checked) {
+                patchstrings.Add("0042B1");
+                patchstrings.Add("0001");
+                patchstrings.Add("42");
             }
 
             //Text content shuffle
@@ -816,30 +818,30 @@ namespace Merrow {
                 //add single text addresses, and new byte
                 for (int i = 0; i < 72; i++) {
                     temp = library.singletextdata[i * 3] + 8; //text byte at offset 8
-                    patchcontent += Convert.ToString(temp, 16);
-                    patchcontent += "0002";
-                    patchcontent += texts[i].ToString("X4");
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0002");
+                    patchstrings.Add(texts[i].ToString("X4"));
                 }
 
                 //add double text addresses, and new byte
                 for (int i = 0; i < 68; i++) {
                     temp = library.doubletextdata[i * 4] + 8; //first text at offset 8
-                    patchcontent += Convert.ToString(temp, 16);
-                    patchcontent += "0002";
-                    patchcontent += texts[i + 72].ToString("X4");
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0002");
+                    patchstrings.Add(texts[i + 72].ToString("X4"));
 
                     temp = library.doubletextdata[i * 4] + 10; //second text at offset 10
-                    patchcontent += Convert.ToString(temp, 16);
-                    patchcontent += "0002";
-                    patchcontent += texts[i + 72 + 68].ToString("X4");
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0002");
+                    patchstrings.Add(texts[i + 72 + 68].ToString("X4"));
                 }
 
                 //add inn text addresses, and new byte
                 for (int i = 0; i < inntexts.Length; i++) {
                     temp = library.inntextdata[i * 3] + 8; //text byte at offset 8
-                    patchcontent += Convert.ToString(temp, 16);
-                    patchcontent += "0002";
-                    patchcontent += inntexts[i].ToString("X4");
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0002");
+                    patchstrings.Add(inntexts[i].ToString("X4"));
                 }
 
                 if (rndTextContentDropdown.SelectedIndex == 0) {
@@ -851,13 +853,14 @@ namespace Merrow {
 
             if (rndMonsterStatsToggle.Checked || quaMonsterScaleToggle.Checked) {
                 for (int i = 0; i < newmonsterstats.Length; i++) {
-                    patchcontent += library.monsterstatlocations[i].ToString("X6");
-                    patchcontent += "0002";
-                    patchcontent += newmonsterstats[i].ToString("X4");
+                    patchstrings.Add(library.monsterstatlocations[i].ToString("X6"));
+                    patchstrings.Add("0002");
+                    patchstrings.Add(newmonsterstats[i].ToString("X4"));
+
                     if (i % 6 == 0) { //if the current value is HP2, write it again at the HP1 location, offset 04 (HP2 + 2).
-                        patchcontent += (library.monsterstatlocations[i] + 2).ToString("X6");
-                        patchcontent += "0002";
-                        patchcontent += newmonsterstats[i].ToString("X4");
+                        patchstrings.Add((library.monsterstatlocations[i] + 2).ToString("X6"));
+                        patchstrings.Add("0002");
+                        patchstrings.Add(newmonsterstats[i].ToString("X4"));
                     }
                 }
 
@@ -870,45 +873,43 @@ namespace Merrow {
                     spoilerscales[i] += newmonsterstats[(i * 6) + 3].ToString() + " ";
                     spoilerscales[i] += newmonsterstats[(i * 6) + 4].ToString() + " ";
                     spoilerscales[i] += newmonsterstats[(i * 6) + 5].ToString();
-                    
                 }
 
                 if (rndMonsterStatsToggle.Checked && extremity == 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized within regions." + Environment.NewLine); }
-                if (rndMonsterStatsToggle.Checked && extremity != 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized, with Risk level " + (extremity + 1).ToString() + "." + Environment.NewLine); }
-                if (quaMonsterScaleToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats scaled by " + (difficultyscale/10).ToString() + "x." + Environment.NewLine); }
+                if (rndMonsterStatsToggle.Checked && extremity != 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized, with Variance " + (extremity + 1).ToString() + "x." + Environment.NewLine); }
+                if (quaMonsterScaleToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats scaled by " + difficultyscale.ToString("n1") + "x." + Environment.NewLine); }
             }
 
             //QUALITY OF LIFE FEATURES
 
             if (quaInvalidityToggle.Checked) { //Invalidity
-                patchcontent += "D4CAE9000100"; //Zel_Cat
-                patchcontent += "D4CBB0000100"; //Npt_Turn
-                patchcontent += "D4CC3D000100"; //Far_Bom
-                patchcontent += "D4CC81000100"; //Sil_Laser
-                patchcontent += "D4CCC5000100"; //Sil_Cat
-                patchcontent += "D4CD09000100"; //Gil_Punch
-                patchcontent += "D4CD91000100"; //Ges_Cat
-                patchcontent += "D4CE10000100"; //On_Light
+                for (int i = 0; i < 8; i++) {
+                    patchstrings.Add(library.invalidityLocations[i]);
+                    patchstrings.Add("0001");
+                    patchstrings.Add("00");
+                }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss spell passive invalidity disabled." + Environment.NewLine);
             }
 
             if (quaAccuracyToggle.Checked) {
-                if (quaAccuracyDropdown.SelectedIndex == 0) { //Spell Accuracy: Status
+                if (quaAccuracyDropdown.SelectedIndex == 0) { //Spell Accuracy: Status 100
                     for (int i = 0; i < 17; i++) {
                         string spellloc = library.spells[(library.statusspells[i] * 4) + 2];
                         int temploc = Convert.ToInt32(spellloc) + 15;
-                        patchcontent += Convert.ToString(temploc, 16);
-                        patchcontent += "000164";
+                        patchstrings.Add(Convert.ToString(temploc, 16));
+                        patchstrings.Add("0001");
+                        patchstrings.Add("64");
                     }
 
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Status effects' accuracy normalized to 100." + Environment.NewLine);
                 }
 
-                if (quaAccuracyDropdown.SelectedIndex == 1) { //Spell Accuracy: All
+                if (quaAccuracyDropdown.SelectedIndex == 1) { //Spell Accuracy: All 100
                     for (int z = spellstart + 15; z < ((spelloffset * playerspells) + spellstart); z += spelloffset) {
-                        patchcontent += Convert.ToString(z, 16);
-                        patchcontent += "000164";
+                        patchstrings.Add(Convert.ToString(z, 16));
+                        patchstrings.Add("0001");
+                        patchstrings.Add("64");
                     }
 
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "All spells' accuracy normalized to 100." + Environment.NewLine);
@@ -921,18 +922,22 @@ namespace Merrow {
                 //16356 = 3FE4 = lowest stable zoom value
 
                 zoomvalue = quaZoomDropdown.SelectedIndex + 2;
-                patchcontent += "03698A0002";
-                patchcontent += Convert.ToString(16368 - zoomvalue, 16);
-                patchcontent += "036A260002";
-                patchcontent += Convert.ToString(16368 - zoomvalue, 16);
+                patchstrings.Add("03698A");
+                patchstrings.Add("0002");
+                patchstrings.Add(Convert.ToString(16368 - zoomvalue, 16));
+
+                patchstrings.Add("036A26");
+                patchstrings.Add("0002");
+                patchstrings.Add(Convert.ToString(16368 - zoomvalue, 16));
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Zoom out factor set to " + zoomvalue.ToString() + " [Default:1]" + Environment.NewLine);
             }
 
             if (quaLevelToggle.Checked) { //Level 1
                 for (int s = spellstart; s < ((spelloffset * playerspells) + spellstart); s += spelloffset) {
-                    patchcontent += Convert.ToString(s, 16);
-                    patchcontent += "00020001";
+                    patchstrings.Add(Convert.ToString(s, 16));
+                    patchstrings.Add("0002");
+                    patchstrings.Add("0001");
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell unlock levels reduced to 1." + Environment.NewLine);
@@ -940,15 +945,16 @@ namespace Merrow {
 
             if (quaSoulToggle.Checked) { //Soul Search
                 for (int z = spellstart + 57; z < ((spelloffset * playerspells) + spellstart); z += spelloffset) {
-                    patchcontent += Convert.ToString(z, 16);
-                    patchcontent += "000101";
+                    patchstrings.Add(Convert.ToString(z, 16));
+                    patchstrings.Add("0001");
+                    patchstrings.Add("01");
                 }
 
                 tempaddr = Convert.ToInt32("D81C30", 16);
                 for (int i = 0; i < 16; i++) {
-                    patchcontent += Convert.ToString(tempaddr, 16); ; //tempaddr converted back to hex
-                    patchcontent += "0010"; //replace 16 bytes
-                    patchcontent += library.magnifier[i]; //add the 16 replacement bytes from the array
+                    patchstrings.Add(Convert.ToString(tempaddr, 16)); ; //tempaddr converted back to hex
+                    patchstrings.Add("0010"); //replace 16 bytes
+                    patchstrings.Add(library.magnifier[i]); //add the 16 replacement bytes from the array
                     tempaddr += 128; //step to next case
                 }
 
@@ -957,36 +963,68 @@ namespace Merrow {
 
             if (quaRestlessToggle.Checked) { //Restless NPCs
                 for (int i = 0; i < library.npcmovement.Length; i++) {
-                    patchcontent += Convert.ToString(library.npcmovement[i], 16);
-                    patchcontent += "000102"; //Replace movement byte with 02 to cause wandering
+                    patchstrings.Add(Convert.ToString(library.npcmovement[i], 16));
+                    patchstrings.Add("0001");
+                    patchstrings.Add("02"); //Replace movement byte with 02 to cause wandering
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPCs are restless." + Environment.NewLine);
             }
 
             if (quaMaxMessageToggle.Checked) { //Max Message Speed
-                patchcontent += "060600000100";
+                patchstrings.Add("060600");
+                patchstrings.Add("0001");
+                patchstrings.Add("00");
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Message speed set to maximum." + Environment.NewLine);
             }
 
             if (quaFastMonToggle.Checked) { //Fast Monastery
-                patchcontent += "4361A0000400090002"; // write 00090002 as new door target ID at 4361A0
+                patchstrings.Add("4361A0");
+                patchstrings.Add("0004");
+                patchstrings.Add("00090002"); // write 00090002 as new door target ID at 4361A0
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Monastery enabled." + Environment.NewLine);
             }
 
             if (quaVowelsToggle.Checked) { //Vowel Shuffle
                 for (int i = 0; i < voweled.Length; i++) {
-                    patchcontent += library.monsternames[(i * 2) + 1]; //hex location
+                    patchstrings.Add(library.monsternames[(i * 2) + 1]); //hex location
 
                     int decLength = voweled[i].Length;
-                    patchcontent += decLength.ToString("X4"); //name length in hex bytes
+                    patchstrings.Add(decLength.ToString("X4")); //name length in hex bytes
 
-                    patchcontent += ToHex(voweled[i]);
+                    patchstrings.Add(ToHex(voweled[i]));
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Vowel Shuffle enabled." + Environment.NewLine);
+            }
+
+            //HUD lock toggle
+            if (quaHUDLockToggle.Checked) {
+                patchstrings.Add("01F0AF");
+                patchstrings.Add("0001");
+                patchstrings.Add("00");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "HUD Lock enabled." + Environment.NewLine);
+            }
+
+            //Wing unlock toggle
+            if (quaWingUnlockToggle.Checked) {
+                if (quaWingUnlockDropdown.SelectedIndex == 0 || quaWingUnlockDropdown.SelectedIndex == 2) {
+                    patchstrings.Add("022ECB");
+                    patchstrings.Add("0001");
+                    patchstrings.Add("00");
+
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wings enabled indoors." + Environment.NewLine);
+                }
+                if (quaWingUnlockDropdown.SelectedIndex == 1 || quaWingUnlockDropdown.SelectedIndex == 2) {
+                    patchstrings.Add("022EE4");
+                    patchstrings.Add("0001");
+                    patchstrings.Add("10");
+
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wings enabled on the Isle of Skye." + Environment.NewLine);
+                }
             }
 
             //FINAL ASSEMBLY/OUTPUT
@@ -1024,18 +1062,49 @@ namespace Merrow {
                 }
             }
 
-            patchcontent += "DAC040393C"; //main menu logo address/length
-            patchcontent += library.randologo;
-            patchcontent += "DCE070393C"; //animation logo address/length
-            patchcontent += library.randologo;
+            patchstrings.Add("DAC040");
+            patchstrings.Add("393C"); //main menu logo address/length
+            patchstrings.Add(library.randologo);
+            patchstrings.Add("DCE070");
+            patchstrings.Add("393C"); //animation logo address/length
+            patchstrings.Add(library.randologo);
 
-            patchbuild += headerHex;
-            patchbuild += patchcontent;
-            patchbuild += footerHex;
-            patcharray = StringToByteArray(patchbuild);
-            File.WriteAllBytes(filePath + fileName + ".ips", patcharray);
-            filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
-            System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+            int patchparts = patchstrings.Count();
+
+            //Mode: PATCH Z64
+            if (expModePatchZ64.Checked && rndFileSelected) {
+                for (int i = 0; i < patchparts; i += 3) {
+                    int targetAddr = Convert.ToInt32(patchstrings[i], 16);
+                    byte[] targetData = StringToByteArray(patchstrings[i + 2]);
+                    int targetLength = targetData.Length;
+
+                    for (int j = 0; j < targetLength; j++) {
+                        rndFileBytes[targetAddr + j] = targetData[j];
+                    }
+                }
+                string thisFile = filePath + fileName + ".z64";
+                File.WriteAllBytes(thisFile, rndFileBytes);
+                fix_crc(thisFile);
+                filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
+                System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+                rndErrorLabel.Text = "Z64 file creation complete. CRC repaired.";
+            }
+
+            //Mode: CREATE IPS
+            if (expModePatchIPS.Checked) { 
+                patchbuild += headerHex;
+                    for (int ps = 0; ps < patchparts; ps++) {
+                        patchbuild += patchstrings[ps];
+                    }
+                patchbuild += footerHex;
+                patcharray = StringToByteArray(patchbuild);
+                File.WriteAllBytes(filePath + fileName + ".ips", patcharray);
+                filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
+                System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+                rndErrorLabel.Text = "IPS Patch creation complete.";
+            }
+
+            writingPatch = false;
         }
 
         //GRANULAR ITEM RANDOMIZER FUNCTIONS-------------------------------------------------
@@ -1092,12 +1161,12 @@ namespace Merrow {
         //General functions
 
         private void tabsControl_SelectedIndexChanged(object sender, EventArgs e) {
-            rndCRCWarningLabel.Visible = false;
             binErrorLabel.Visible = false;
             binFileLoaded = false;
             binFileBytes = null;
             crcErrorLabel.Visible = false;
             crcFileSelected = false;
+            expModeSet();
         }
 
         private void terms__LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -1222,17 +1291,20 @@ namespace Merrow {
         private void rndMonsterStatsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndMonsterStatsToggle.Checked) {
                 rndExtremityDropdown.Enabled = true;
+                UpdateRisk();
             }
             else {
                 rndExtremityDropdown.Enabled = false;
                 rndExtremityDropdown.SelectedIndex = 0;
                 extremity = 0;
+                UpdateRisk();
             }
         }
 
         private void rndExtremityDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             //index 0 is 1.0, which is variance scale 0
             extremity = rndExtremityDropdown.SelectedIndex * 0.1f;
+            UpdateRisk();
         }
 
         private void rndSpellNamesToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1285,6 +1357,14 @@ namespace Merrow {
             itemListUpdate(itemListView4, rndWingsmithsDropdown.SelectedIndex);
         }
 
+        private void rndDropLimitToggle_CheckedChanged(object sender, EventArgs e) {
+            if (!quaZoomToggle.Checked &&
+                !quaMaxMessageToggle.Checked &&
+                !rndDropLimitToggle.Checked &&
+                !quaWingUnlockToggle.Checked &&
+                !quaHUDLockToggle.Checked) { rndErrorLabel.Text = ""; }
+        }
+
         //ITEM - Randomizer granular item controls
 
         private void itemListView1_ItemChecked(object sender, ItemCheckedEventArgs e) {
@@ -1318,21 +1398,15 @@ namespace Merrow {
         //QUA - Randomizer quality of life, etc
 
         private void quaMaxMessageToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaMaxMessageToggle.Checked) {
-                rndCRCWarningLabel.Visible = true;
-            }
-            else {
-                rndCRCWarningLabel.Visible = false;
-            }
+            expUpdateWarning();
         }
 
         private void quaZoomToggle_CheckedChanged(object sender, EventArgs e) {
+            expUpdateWarning();
             if (quaZoomToggle.Checked) {
                 quaZoomDropdown.Enabled = true;
-                rndCRCWarningLabel.Visible = true;
             } else {
                 quaZoomDropdown.Enabled = false;
-                rndCRCWarningLabel.Visible = false;
             }
         }
 
@@ -1347,17 +1421,81 @@ namespace Merrow {
         private void quaMonsterScaleToggle_CheckedChanged(object sender, EventArgs e) {
             if (quaMonsterScaleToggle.Checked) {
                 quaScalingDropdown.Enabled = true;
+                UpdateRisk();
             }
             else {
                 quaScalingDropdown.Enabled = false;
                 quaScalingDropdown.SelectedIndex = 5;
-                difficultyscale = 10;
+                difficultyscale = 1.0f;
+                UpdateRisk();
             }
         }
 
         private void quaScalingDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             //index 5 is 1.0, which is difficulty scale 10
-            difficultyscale = quaScalingDropdown.SelectedIndex + 5;
+            difficultyscale = 0.5f + (quaScalingDropdown.SelectedIndex * 0.1f);
+            UpdateRisk();
+        }
+
+        public void UpdateRisk() {
+            riskvalue = Math.Round(difficultyscale * difficultyscale * (extremity + 1) * 10);
+            if(!quaMonsterScaleToggle.Checked && !rndMonsterStatsToggle.Checked) {
+                rndRiskLabel.Visible = false;
+                rndRiskLabelText.Visible = false;
+            }
+            if (quaMonsterScaleToggle.Checked || rndMonsterStatsToggle.Checked) {
+                int redRisk = 255;
+                int greenRisk = 255;
+                if (riskvalue <= 20) {
+                    greenRisk = 225 - (int)(225 * (riskvalue / 20));
+                    redRisk = (int)(255 * (riskvalue / 20));
+                }
+                if (riskvalue > 20) {
+                    greenRisk = 0;
+                    redRisk = 255 - (int)(255 * (riskvalue / 80));
+                }
+
+                rndRiskLabel.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
+                rndRiskLabelText.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
+
+                if (riskvalue >= 2 && riskvalue <= 7) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (BREEZE)";
+                    rndRiskLabelText.Text = "Smooth and easy";
+                }
+                if (riskvalue >= 8 && riskvalue <= 13) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (MODERATE)";
+                    rndRiskLabelText.Text = "Roughly vanilla";
+                }
+                if (riskvalue >= 14 && riskvalue <= 25) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (GALE)";
+                    rndRiskLabelText.Text = "Difficult without grinding";
+                }
+                if (riskvalue > 25 && riskvalue < 40) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (STORM)";
+                    rndRiskLabelText.Text = "Extremely challenging and grindy";
+                }
+                if (riskvalue >= 40) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (HURRICANE)";
+                    rndRiskLabelText.Text = "Probably impossible";
+                }
+
+                rndRiskLabel.Visible = true;
+                rndRiskLabelText.Visible = true;
+            }
+        }
+
+        private void quaWingUnlockToggle_CheckedChanged(object sender, EventArgs e) {
+            expUpdateWarning();
+            if (quaWingUnlockToggle.Checked) {
+                quaWingUnlockDropdown.Enabled = true;
+            }
+            else {
+                quaWingUnlockDropdown.Enabled = false;
+            }
+        }
+
+        private void quaHUDLockToggle_CheckedChanged(object sender, EventArgs e) {
+            expUpdateWarning();
         }
 
         //EXP - Randomizer export
@@ -1381,11 +1519,83 @@ namespace Merrow {
         }
 
         private void expGenerateButton_Click(object sender, EventArgs e) {
-            BuildPatch();
+            if (!writingPatch) { BuildPatch(); }
+            if (writingPatch) { rndErrorLabel.Text = "Patch/File currently writing."; }
         }
 
         private void expVerboseCheckBox_CheckedChanged(object sender, EventArgs e) {
             verboselog = expVerboseCheckBox.Checked;
+        }
+
+        private void expSeedNameToggle_CheckedChanged(object sender, EventArgs e) {
+            seedName = expSeedNameToggle.Checked;
+        }
+
+        private void expDatetimeToggle_CheckedChanged(object sender, EventArgs e) {
+            dateName = expDatetimeToggle.Checked;
+        }
+
+        private void expModePatchZ64_CheckedChanged(object sender, EventArgs e) {
+            expModeSet();
+        }
+
+        private void expModePatchIPS_CheckedChanged(object sender, EventArgs e) {
+            expModeSet();
+        }
+
+        public void expModeSet() {
+            if (expModePatchZ64.Checked) {
+                expSelectButton.Enabled = true;
+                expFakeZ64Button.Visible = false;
+                expUpdateWarning();
+                rndFileBytes = null;
+                rndFileSelected = false;
+                patcharray = new byte[0];
+                patchstrings.Clear();
+            }
+            if (expModePatchIPS.Checked) {
+                expSelectButton.Enabled = false;
+                expFakeZ64Button.Visible = true;
+                expUpdateWarning();
+                rndFileBytes = null;
+                rndFileSelected = false;
+                patcharray = new byte[0];
+                patchstrings.Clear();
+            }
+        }
+
+        public void expUpdateWarning() {
+            rndErrorLabel.Text = "";
+
+            if (expModePatchZ64.Checked) { rndErrorLabel.Text = "No file loaded."; }
+            if (expModePatchIPS.Checked) {
+                if (quaZoomToggle.Checked ||
+                quaMaxMessageToggle.Checked ||
+                rndDropLimitToggle.Checked ||
+                quaWingUnlockToggle.Checked ||
+                quaHUDLockToggle.Checked) 
+                { rndErrorLabel.Text = rndErrorString; }
+            }
+        }
+
+        private void expSelectButton_Click(object sender, EventArgs e) {
+            if (!writingPatch) {
+                if (rndOpenFileDialog.ShowDialog() == DialogResult.OK) {
+                    try {
+                        rndFileBytes = File.ReadAllBytes(rndOpenFileDialog.FileName);
+                        fullPath = rndOpenFileDialog.FileName;
+                        rndFileName = Path.GetFileNameWithoutExtension(fullPath);
+                        rndErrorLabel.Text = "File loaded: " + rndOpenFileDialog.FileName + ".";
+                        rndFileSelected = true;
+                    }
+                    catch (SecurityException ex) {
+                        MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
+                        $"Details:\n\n{ex.StackTrace}");
+                        rndFileSelected = false;
+                    }
+                }
+            }
+            if (writingPatch) { rndErrorLabel.Text = "Patch/File currently writing."; }
         }
 
         //ADV - Generic patch generator
