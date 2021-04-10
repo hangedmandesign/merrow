@@ -25,33 +25,6 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MerrowStandard));
-            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem(new string[] {
-            "SL"}, 21, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 8.25F));
-            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("FB", 9);
-            System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("HB", 15);
-            System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("HP", 13);
-            System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("DP", 5);
-            System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem("DD", 4);
-            System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem("ML", 16);
-            System.Windows.Forms.ListViewItem listViewItem34 = new System.Windows.Forms.ListViewItem("HD", 14);
-            System.Windows.Forms.ListViewItem listViewItem35 = new System.Windows.Forms.ListViewItem("SF", 19);
-            System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("CB", 2);
-            System.Windows.Forms.ListViewItem listViewItem37 = new System.Windows.Forms.ListViewItem("RE", 18);
-            System.Windows.Forms.ListViewItem listViewItem38 = new System.Windows.Forms.ListViewItem("GS", 10);
-            System.Windows.Forms.ListViewItem listViewItem39 = new System.Windows.Forms.ListViewItem("SA", 20);
-            System.Windows.Forms.ListViewItem listViewItem40 = new System.Windows.Forms.ListViewItem("GA", 11);
-            System.Windows.Forms.ListViewItem listViewItem41 = new System.Windows.Forms.ListViewItem("WW", 23);
-            System.Windows.Forms.ListViewItem listViewItem42 = new System.Windows.Forms.ListViewItem("YW", 25);
-            System.Windows.Forms.ListViewItem listViewItem43 = new System.Windows.Forms.ListViewItem("BW", 1);
-            System.Windows.Forms.ListViewItem listViewItem44 = new System.Windows.Forms.ListViewItem("GW", 12);
-            System.Windows.Forms.ListViewItem listViewItem45 = new System.Windows.Forms.ListViewItem("RW", 17);
-            System.Windows.Forms.ListViewItem listViewItem46 = new System.Windows.Forms.ListViewItem("KW", 0);
-            System.Windows.Forms.ListViewItem listViewItem47 = new System.Windows.Forms.ListViewItem("EO", 6);
-            System.Windows.Forms.ListViewItem listViewItem48 = new System.Windows.Forms.ListViewItem("WJ", 24);
-            System.Windows.Forms.ListViewItem listViewItem49 = new System.Windows.Forms.ListViewItem("WL", 22);
-            System.Windows.Forms.ListViewItem listViewItem50 = new System.Windows.Forms.ListViewItem("FR", 8);
-            System.Windows.Forms.ListViewItem listViewItem51 = new System.Windows.Forms.ListViewItem("EB", 7);
-            System.Windows.Forms.ListViewItem listViewItem52 = new System.Windows.Forms.ListViewItem("DG", 3);
             System.Windows.Forms.ListViewItem listViewItem53 = new System.Windows.Forms.ListViewItem(new string[] {
             "SL"}, 21, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 8.25F));
             System.Windows.Forms.ListViewItem listViewItem54 = new System.Windows.Forms.ListViewItem("FB", 9);
@@ -133,6 +106,33 @@
             System.Windows.Forms.ListViewItem listViewItem128 = new System.Windows.Forms.ListViewItem("FR", 8);
             System.Windows.Forms.ListViewItem listViewItem129 = new System.Windows.Forms.ListViewItem("EB", 7);
             System.Windows.Forms.ListViewItem listViewItem130 = new System.Windows.Forms.ListViewItem("DG", 3);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "SL"}, 21, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 8.25F));
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("FB", 9);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("HB", 15);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("HP", 13);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("DP", 5);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("DD", 4);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("ML", 16);
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("HD", 14);
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("SF", 19);
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("CB", 2);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("RE", 18);
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("GS", 10);
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("SA", 20);
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("GA", 11);
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("WW", 23);
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("YW", 25);
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("BW", 1);
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("GW", 12);
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("RW", 17);
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("KW", 0);
+            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("EO", 6);
+            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("WJ", 24);
+            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("WL", 22);
+            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("FR", 8);
+            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("EB", 7);
+            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("DG", 3);
             this.quaMaxMessageToggle = new System.Windows.Forms.CheckBox();
             this.quaRestlessToggle = new System.Windows.Forms.CheckBox();
             this.quaLevelToggle = new System.Windows.Forms.CheckBox();
@@ -162,6 +162,7 @@
             this.rndTabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.rndItemsBox = new System.Windows.Forms.GroupBox();
+            this.rndDropLimitToggle = new System.Windows.Forms.CheckBox();
             this.rndShuffleShannonToggle = new System.Windows.Forms.CheckBox();
             this.rndChestToggle = new System.Windows.Forms.CheckBox();
             this.rndDropsDropdown = new System.Windows.Forms.ComboBox();
@@ -194,6 +195,8 @@
             this.rndSpellDropdown = new System.Windows.Forms.ComboBox();
             this.rndMonsterBox = new System.Windows.Forms.GroupBox();
             this.rndRiskBackPanel = new System.Windows.Forms.Panel();
+            this.rndRiskLabelText = new System.Windows.Forms.Label();
+            this.rndRiskLabel = new System.Windows.Forms.Label();
             this.quaScalingDropdown = new System.Windows.Forms.ComboBox();
             this.quaMonsterScaleToggle = new System.Windows.Forms.CheckBox();
             this.rndMonsterStatsToggle = new System.Windows.Forms.CheckBox();
@@ -206,10 +209,13 @@
             this.quaVowelsToggle = new System.Windows.Forms.CheckBox();
             this.rndTextContentDropdown = new System.Windows.Forms.ComboBox();
             this.quaQualityBox = new System.Windows.Forms.GroupBox();
+            this.quaWingUnlockDropdown = new System.Windows.Forms.ComboBox();
+            this.quaWingUnlockToggle = new System.Windows.Forms.CheckBox();
             this.quaFastMonToggle = new System.Windows.Forms.CheckBox();
             this.quaInvalidityToggle = new System.Windows.Forms.CheckBox();
             this.quaTestBox = new System.Windows.Forms.GroupBox();
             this.quaGraphicsBox = new System.Windows.Forms.GroupBox();
+            this.quaHUDLockToggle = new System.Windows.Forms.CheckBox();
             this.rndTextPaletteDropdown = new System.Windows.Forms.ComboBox();
             this.rndTextPaletteToggle = new System.Windows.Forms.CheckBox();
             this.rndColorViewPanel = new System.Windows.Forms.Panel();
@@ -263,12 +269,6 @@
             this.binFilenameTextBox = new System.Windows.Forms.TextBox();
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.rndRiskLabel = new System.Windows.Forms.Label();
-            this.rndRiskLabelText = new System.Windows.Forms.Label();
-            this.rndDropLimitToggle = new System.Windows.Forms.CheckBox();
-            this.quaHUDLockToggle = new System.Windows.Forms.CheckBox();
-            this.quaWingUnlockDropdown = new System.Windows.Forms.ComboBox();
-            this.quaWingUnlockToggle = new System.Windows.Forms.CheckBox();
             this.rndTabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.newBox.SuspendLayout();
@@ -675,12 +675,26 @@
             this.rndItemsBox.TabStop = false;
             this.rndItemsBox.Text = "ITEMS";
             // 
+            // rndDropLimitToggle
+            // 
+            this.rndDropLimitToggle.AutoSize = true;
+            this.rndDropLimitToggle.Location = new System.Drawing.Point(26, 109);
+            this.rndDropLimitToggle.Name = "rndDropLimitToggle";
+            this.rndDropLimitToggle.Size = new System.Drawing.Size(167, 17);
+            this.rndDropLimitToggle.TabIndex = 28;
+            this.rndDropLimitToggle.Text = "Remove Enemy item drop limit";
+            this.rndDropLimitToggle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rndToolTip.SetToolTip(this.rndDropLimitToggle, "Monsters will continue to drop items even if you already have them.\r\nDoes not aff" +
+        "ect drop rates, or chests/gifters/wingsmiths.");
+            this.rndDropLimitToggle.UseVisualStyleBackColor = true;
+            this.rndDropLimitToggle.CheckedChanged += new System.EventHandler(this.rndDropLimitToggle_CheckedChanged);
+            // 
             // rndShuffleShannonToggle
             // 
             this.rndShuffleShannonToggle.AutoSize = true;
             this.rndShuffleShannonToggle.Cursor = System.Windows.Forms.Cursors.Default;
             this.rndShuffleShannonToggle.Enabled = false;
-            this.rndShuffleShannonToggle.Location = new System.Drawing.Point(26, 139);
+            this.rndShuffleShannonToggle.Location = new System.Drawing.Point(26, 169);
             this.rndShuffleShannonToggle.Name = "rndShuffleShannonToggle";
             this.rndShuffleShannonToggle.Size = new System.Drawing.Size(184, 17);
             this.rndShuffleShannonToggle.TabIndex = 22;
@@ -755,7 +769,7 @@
             this.itemListTabs.Controls.Add(this.DropsTab);
             this.itemListTabs.Controls.Add(this.GiftersTab);
             this.itemListTabs.Controls.Add(this.WingsmithsTab);
-            this.itemListTabs.Location = new System.Drawing.Point(6, 196);
+            this.itemListTabs.Location = new System.Drawing.Point(6, 226);
             this.itemListTabs.Name = "itemListTabs";
             this.itemListTabs.SelectedIndex = 0;
             this.itemListTabs.Size = new System.Drawing.Size(262, 165);
@@ -784,68 +798,68 @@
             this.columnHeader1});
             this.itemListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.itemListView1.HideSelection = false;
-            listViewItem27.StateImageIndex = 0;
-            listViewItem28.StateImageIndex = 0;
-            listViewItem29.StateImageIndex = 0;
-            listViewItem30.StateImageIndex = 0;
-            listViewItem31.StateImageIndex = 0;
-            listViewItem32.StateImageIndex = 0;
-            listViewItem33.StateImageIndex = 0;
-            listViewItem33.ToolTipText = "Mint Leaves";
-            listViewItem34.StateImageIndex = 0;
-            listViewItem35.StateImageIndex = 0;
-            listViewItem36.StateImageIndex = 0;
-            listViewItem37.StateImageIndex = 0;
-            listViewItem38.StateImageIndex = 0;
-            listViewItem39.StateImageIndex = 0;
-            listViewItem40.StateImageIndex = 0;
-            listViewItem41.StateImageIndex = 0;
-            listViewItem42.StateImageIndex = 0;
-            listViewItem43.StateImageIndex = 0;
-            listViewItem44.StateImageIndex = 0;
-            listViewItem45.StateImageIndex = 0;
-            listViewItem46.StateImageIndex = 0;
-            listViewItem47.StateImageIndex = 0;
-            listViewItem48.StateImageIndex = 0;
-            listViewItem49.StateImageIndex = 0;
-            listViewItem50.StateImageIndex = 0;
-            listViewItem51.StateImageIndex = 0;
-            listViewItem52.StateImageIndex = 0;
+            listViewItem53.StateImageIndex = 0;
+            listViewItem54.StateImageIndex = 0;
+            listViewItem55.StateImageIndex = 0;
+            listViewItem56.StateImageIndex = 0;
+            listViewItem57.StateImageIndex = 0;
+            listViewItem58.StateImageIndex = 0;
+            listViewItem59.StateImageIndex = 0;
+            listViewItem59.ToolTipText = "Mint Leaves";
+            listViewItem60.StateImageIndex = 0;
+            listViewItem61.StateImageIndex = 0;
+            listViewItem62.StateImageIndex = 0;
+            listViewItem63.StateImageIndex = 0;
+            listViewItem64.StateImageIndex = 0;
+            listViewItem65.StateImageIndex = 0;
+            listViewItem66.StateImageIndex = 0;
+            listViewItem67.StateImageIndex = 0;
+            listViewItem68.StateImageIndex = 0;
+            listViewItem69.StateImageIndex = 0;
+            listViewItem70.StateImageIndex = 0;
+            listViewItem71.StateImageIndex = 0;
+            listViewItem72.StateImageIndex = 0;
+            listViewItem73.StateImageIndex = 0;
+            listViewItem74.StateImageIndex = 0;
+            listViewItem75.StateImageIndex = 0;
+            listViewItem76.StateImageIndex = 0;
+            listViewItem77.StateImageIndex = 0;
+            listViewItem78.StateImageIndex = 0;
             this.itemListView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem27,
-            listViewItem28,
-            listViewItem29,
-            listViewItem30,
-            listViewItem31,
-            listViewItem32,
-            listViewItem33,
-            listViewItem34,
-            listViewItem35,
-            listViewItem36,
-            listViewItem37,
-            listViewItem38,
-            listViewItem39,
-            listViewItem40,
-            listViewItem41,
-            listViewItem42,
-            listViewItem43,
-            listViewItem44,
-            listViewItem45,
-            listViewItem46,
-            listViewItem47,
-            listViewItem48,
-            listViewItem49,
-            listViewItem50,
-            listViewItem51,
-            listViewItem52});
+            listViewItem53,
+            listViewItem54,
+            listViewItem55,
+            listViewItem56,
+            listViewItem57,
+            listViewItem58,
+            listViewItem59,
+            listViewItem60,
+            listViewItem61,
+            listViewItem62,
+            listViewItem63,
+            listViewItem64,
+            listViewItem65,
+            listViewItem66,
+            listViewItem67,
+            listViewItem68,
+            listViewItem69,
+            listViewItem70,
+            listViewItem71,
+            listViewItem72,
+            listViewItem73,
+            listViewItem74,
+            listViewItem75,
+            listViewItem76,
+            listViewItem77,
+            listViewItem78});
             this.itemListView1.LabelWrap = false;
             this.itemListView1.LargeImageList = this.itemImageList;
-            this.itemListView1.Location = new System.Drawing.Point(6, 6);
+            this.itemListView1.Location = new System.Drawing.Point(11, 6);
             this.itemListView1.Name = "itemListView1";
             this.itemListView1.Scrollable = false;
             this.itemListView1.ShowGroups = false;
             this.itemListView1.ShowItemToolTips = true;
-            this.itemListView1.Size = new System.Drawing.Size(242, 124);
+            this.itemListView1.Size = new System.Drawing.Size(238, 138);
             this.itemListView1.SmallImageList = this.itemImageList;
             this.itemListView1.TabIndex = 19;
             this.itemListView1.TileSize = new System.Drawing.Size(36, 36);
@@ -891,7 +905,7 @@
             this.DropsTab.Location = new System.Drawing.Point(4, 25);
             this.DropsTab.Name = "DropsTab";
             this.DropsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.DropsTab.Size = new System.Drawing.Size(254, 130);
+            this.DropsTab.Size = new System.Drawing.Size(254, 136);
             this.DropsTab.TabIndex = 1;
             this.DropsTab.Text = "DROPS";
             // 
@@ -906,96 +920,6 @@
             this.columnHeader4});
             this.itemListView2.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.itemListView2.HideSelection = false;
-            listViewItem53.StateImageIndex = 0;
-            listViewItem54.StateImageIndex = 0;
-            listViewItem55.StateImageIndex = 0;
-            listViewItem56.StateImageIndex = 0;
-            listViewItem57.StateImageIndex = 0;
-            listViewItem58.StateImageIndex = 0;
-            listViewItem59.StateImageIndex = 0;
-            listViewItem59.ToolTipText = "Mint Leaves";
-            listViewItem60.StateImageIndex = 0;
-            listViewItem61.StateImageIndex = 0;
-            listViewItem62.StateImageIndex = 0;
-            listViewItem63.StateImageIndex = 0;
-            listViewItem64.StateImageIndex = 0;
-            listViewItem65.StateImageIndex = 0;
-            listViewItem66.StateImageIndex = 0;
-            listViewItem67.StateImageIndex = 0;
-            listViewItem68.StateImageIndex = 0;
-            listViewItem69.StateImageIndex = 0;
-            listViewItem70.StateImageIndex = 0;
-            listViewItem71.StateImageIndex = 0;
-            listViewItem72.StateImageIndex = 0;
-            listViewItem73.StateImageIndex = 0;
-            listViewItem74.StateImageIndex = 0;
-            listViewItem75.StateImageIndex = 0;
-            listViewItem76.StateImageIndex = 0;
-            listViewItem77.StateImageIndex = 0;
-            listViewItem78.StateImageIndex = 0;
-            this.itemListView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem53,
-            listViewItem54,
-            listViewItem55,
-            listViewItem56,
-            listViewItem57,
-            listViewItem58,
-            listViewItem59,
-            listViewItem60,
-            listViewItem61,
-            listViewItem62,
-            listViewItem63,
-            listViewItem64,
-            listViewItem65,
-            listViewItem66,
-            listViewItem67,
-            listViewItem68,
-            listViewItem69,
-            listViewItem70,
-            listViewItem71,
-            listViewItem72,
-            listViewItem73,
-            listViewItem74,
-            listViewItem75,
-            listViewItem76,
-            listViewItem77,
-            listViewItem78});
-            this.itemListView2.LabelWrap = false;
-            this.itemListView2.LargeImageList = this.itemImageList;
-            this.itemListView2.Location = new System.Drawing.Point(11, 6);
-            this.itemListView2.Name = "itemListView2";
-            this.itemListView2.Scrollable = false;
-            this.itemListView2.ShowGroups = false;
-            this.itemListView2.ShowItemToolTips = true;
-            this.itemListView2.Size = new System.Drawing.Size(238, 138);
-            this.itemListView2.SmallImageList = this.itemImageList;
-            this.itemListView2.TabIndex = 18;
-            this.itemListView2.TileSize = new System.Drawing.Size(36, 36);
-            this.itemListView2.UseCompatibleStateImageBehavior = false;
-            this.itemListView2.View = System.Windows.Forms.View.List;
-            this.itemListView2.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.itemListView2_ItemChecked);
-            // 
-            // GiftersTab
-            // 
-            this.GiftersTab.BackColor = System.Drawing.SystemColors.Control;
-            this.GiftersTab.Controls.Add(this.itemListView3);
-            this.GiftersTab.Location = new System.Drawing.Point(4, 25);
-            this.GiftersTab.Name = "GiftersTab";
-            this.GiftersTab.Size = new System.Drawing.Size(254, 130);
-            this.GiftersTab.TabIndex = 2;
-            this.GiftersTab.Text = "GIFTERS";
-            // 
-            // itemListView3
-            // 
-            this.itemListView3.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.itemListView3.Alignment = System.Windows.Forms.ListViewAlignment.SnapToGrid;
-            this.itemListView3.BackColor = System.Drawing.SystemColors.Control;
-            this.itemListView3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.itemListView3.CheckBoxes = true;
-            this.itemListView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader2});
-            this.itemListView3.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.itemListView3.HideSelection = false;
             listViewItem79.StateImageIndex = 0;
             listViewItem80.StateImageIndex = 0;
             listViewItem81.StateImageIndex = 0;
@@ -1023,7 +947,7 @@
             listViewItem102.StateImageIndex = 0;
             listViewItem103.StateImageIndex = 0;
             listViewItem104.StateImageIndex = 0;
-            this.itemListView3.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            this.itemListView2.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem79,
             listViewItem80,
             listViewItem81,
@@ -1050,43 +974,42 @@
             listViewItem102,
             listViewItem103,
             listViewItem104});
-            this.itemListView3.LabelWrap = false;
-            this.itemListView3.LargeImageList = this.itemImageList;
-            this.itemListView3.Location = new System.Drawing.Point(11, 6);
-            this.itemListView3.Name = "itemListView3";
-            this.itemListView3.Scrollable = false;
-            this.itemListView3.ShowGroups = false;
-            this.itemListView3.ShowItemToolTips = true;
-            this.itemListView3.Size = new System.Drawing.Size(238, 138);
-            this.itemListView3.SmallImageList = this.itemImageList;
-            this.itemListView3.TabIndex = 19;
-            this.itemListView3.TileSize = new System.Drawing.Size(36, 36);
-            this.itemListView3.UseCompatibleStateImageBehavior = false;
-            this.itemListView3.View = System.Windows.Forms.View.List;
-            this.itemListView3.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.itemListView3_ItemChecked);
+            this.itemListView2.LabelWrap = false;
+            this.itemListView2.LargeImageList = this.itemImageList;
+            this.itemListView2.Location = new System.Drawing.Point(11, 6);
+            this.itemListView2.Name = "itemListView2";
+            this.itemListView2.Scrollable = false;
+            this.itemListView2.ShowGroups = false;
+            this.itemListView2.ShowItemToolTips = true;
+            this.itemListView2.Size = new System.Drawing.Size(238, 138);
+            this.itemListView2.SmallImageList = this.itemImageList;
+            this.itemListView2.TabIndex = 18;
+            this.itemListView2.TileSize = new System.Drawing.Size(36, 36);
+            this.itemListView2.UseCompatibleStateImageBehavior = false;
+            this.itemListView2.View = System.Windows.Forms.View.List;
+            this.itemListView2.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.itemListView2_ItemChecked);
             // 
-            // WingsmithsTab
+            // GiftersTab
             // 
-            this.WingsmithsTab.BackColor = System.Drawing.SystemColors.Control;
-            this.WingsmithsTab.Controls.Add(this.itemListView4);
-            this.WingsmithsTab.Location = new System.Drawing.Point(4, 25);
-            this.WingsmithsTab.Name = "WingsmithsTab";
-            this.WingsmithsTab.Size = new System.Drawing.Size(254, 130);
-            this.WingsmithsTab.TabIndex = 3;
-            this.WingsmithsTab.Text = "WINGSMITHS";
+            this.GiftersTab.BackColor = System.Drawing.SystemColors.Control;
+            this.GiftersTab.Controls.Add(this.itemListView3);
+            this.GiftersTab.Location = new System.Drawing.Point(4, 25);
+            this.GiftersTab.Name = "GiftersTab";
+            this.GiftersTab.Size = new System.Drawing.Size(254, 136);
+            this.GiftersTab.TabIndex = 2;
+            this.GiftersTab.Text = "GIFTERS";
             // 
-            // itemListView4
+            // itemListView3
             // 
-            this.itemListView4.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.itemListView4.Alignment = System.Windows.Forms.ListViewAlignment.SnapToGrid;
-            this.itemListView4.BackColor = System.Drawing.SystemColors.Control;
-            this.itemListView4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.itemListView4.CheckBoxes = true;
-            this.itemListView4.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3});
-            this.itemListView4.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.itemListView4.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.itemListView4.HideSelection = false;
+            this.itemListView3.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.itemListView3.Alignment = System.Windows.Forms.ListViewAlignment.SnapToGrid;
+            this.itemListView3.BackColor = System.Drawing.SystemColors.Control;
+            this.itemListView3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.itemListView3.CheckBoxes = true;
+            this.itemListView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2});
+            this.itemListView3.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.itemListView3.HideSelection = false;
             listViewItem105.StateImageIndex = 0;
             listViewItem106.StateImageIndex = 0;
             listViewItem107.StateImageIndex = 0;
@@ -1114,7 +1037,7 @@
             listViewItem128.StateImageIndex = 0;
             listViewItem129.StateImageIndex = 0;
             listViewItem130.StateImageIndex = 0;
-            this.itemListView4.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            this.itemListView3.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem105,
             listViewItem106,
             listViewItem107,
@@ -1141,6 +1064,97 @@
             listViewItem128,
             listViewItem129,
             listViewItem130});
+            this.itemListView3.LabelWrap = false;
+            this.itemListView3.LargeImageList = this.itemImageList;
+            this.itemListView3.Location = new System.Drawing.Point(11, 6);
+            this.itemListView3.Name = "itemListView3";
+            this.itemListView3.Scrollable = false;
+            this.itemListView3.ShowGroups = false;
+            this.itemListView3.ShowItemToolTips = true;
+            this.itemListView3.Size = new System.Drawing.Size(238, 138);
+            this.itemListView3.SmallImageList = this.itemImageList;
+            this.itemListView3.TabIndex = 19;
+            this.itemListView3.TileSize = new System.Drawing.Size(36, 36);
+            this.itemListView3.UseCompatibleStateImageBehavior = false;
+            this.itemListView3.View = System.Windows.Forms.View.List;
+            this.itemListView3.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.itemListView3_ItemChecked);
+            // 
+            // WingsmithsTab
+            // 
+            this.WingsmithsTab.BackColor = System.Drawing.SystemColors.Control;
+            this.WingsmithsTab.Controls.Add(this.itemListView4);
+            this.WingsmithsTab.Location = new System.Drawing.Point(4, 25);
+            this.WingsmithsTab.Name = "WingsmithsTab";
+            this.WingsmithsTab.Size = new System.Drawing.Size(254, 136);
+            this.WingsmithsTab.TabIndex = 3;
+            this.WingsmithsTab.Text = "WINGSMITHS";
+            // 
+            // itemListView4
+            // 
+            this.itemListView4.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.itemListView4.Alignment = System.Windows.Forms.ListViewAlignment.SnapToGrid;
+            this.itemListView4.BackColor = System.Drawing.SystemColors.Control;
+            this.itemListView4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.itemListView4.CheckBoxes = true;
+            this.itemListView4.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3});
+            this.itemListView4.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.itemListView4.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.itemListView4.HideSelection = false;
+            listViewItem1.StateImageIndex = 0;
+            listViewItem2.StateImageIndex = 0;
+            listViewItem3.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
+            listViewItem5.StateImageIndex = 0;
+            listViewItem6.StateImageIndex = 0;
+            listViewItem7.StateImageIndex = 0;
+            listViewItem7.ToolTipText = "Mint Leaves";
+            listViewItem8.StateImageIndex = 0;
+            listViewItem9.StateImageIndex = 0;
+            listViewItem10.StateImageIndex = 0;
+            listViewItem11.StateImageIndex = 0;
+            listViewItem12.StateImageIndex = 0;
+            listViewItem13.StateImageIndex = 0;
+            listViewItem14.StateImageIndex = 0;
+            listViewItem15.StateImageIndex = 0;
+            listViewItem16.StateImageIndex = 0;
+            listViewItem17.StateImageIndex = 0;
+            listViewItem18.StateImageIndex = 0;
+            listViewItem19.StateImageIndex = 0;
+            listViewItem20.StateImageIndex = 0;
+            listViewItem21.StateImageIndex = 0;
+            listViewItem22.StateImageIndex = 0;
+            listViewItem23.StateImageIndex = 0;
+            listViewItem24.StateImageIndex = 0;
+            listViewItem25.StateImageIndex = 0;
+            listViewItem26.StateImageIndex = 0;
+            this.itemListView4.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12,
+            listViewItem13,
+            listViewItem14,
+            listViewItem15,
+            listViewItem16,
+            listViewItem17,
+            listViewItem18,
+            listViewItem19,
+            listViewItem20,
+            listViewItem21,
+            listViewItem22,
+            listViewItem23,
+            listViewItem24,
+            listViewItem25,
+            listViewItem26});
             this.itemListView4.LabelWrap = false;
             this.itemListView4.LargeImageList = this.itemImageList;
             this.itemListView4.Location = new System.Drawing.Point(11, 6);
@@ -1192,7 +1206,7 @@
             "GEMS",
             "WINGS + GEMS",
             "CUSTOM"});
-            this.rndWingsmithsDropdown.Location = new System.Drawing.Point(88, 167);
+            this.rndWingsmithsDropdown.Location = new System.Drawing.Point(88, 197);
             this.rndWingsmithsDropdown.Name = "rndWingsmithsDropdown";
             this.rndWingsmithsDropdown.Size = new System.Drawing.Size(180, 21);
             this.rndWingsmithsDropdown.TabIndex = 13;
@@ -1201,7 +1215,7 @@
             // rndGiftersToggle
             // 
             this.rndGiftersToggle.AutoSize = true;
-            this.rndGiftersToggle.Location = new System.Drawing.Point(6, 109);
+            this.rndGiftersToggle.Location = new System.Drawing.Point(6, 139);
             this.rndGiftersToggle.Name = "rndGiftersToggle";
             this.rndGiftersToggle.Size = new System.Drawing.Size(59, 17);
             this.rndGiftersToggle.TabIndex = 5;
@@ -1212,7 +1226,7 @@
             // 
             // rndWingsmithsToggle
             // 
-            this.rndWingsmithsToggle.Location = new System.Drawing.Point(6, 169);
+            this.rndWingsmithsToggle.Location = new System.Drawing.Point(6, 199);
             this.rndWingsmithsToggle.Name = "rndWingsmithsToggle";
             this.rndWingsmithsToggle.Size = new System.Drawing.Size(85, 17);
             this.rndWingsmithsToggle.TabIndex = 12;
@@ -1236,7 +1250,7 @@
             "GEMS",
             "WINGS + GEMS",
             "CUSTOM"});
-            this.rndGiftersDropdown.Location = new System.Drawing.Point(88, 107);
+            this.rndGiftersDropdown.Location = new System.Drawing.Point(88, 137);
             this.rndGiftersDropdown.Name = "rndGiftersDropdown";
             this.rndGiftersDropdown.Size = new System.Drawing.Size(180, 21);
             this.rndGiftersDropdown.TabIndex = 7;
@@ -1352,6 +1366,34 @@
             this.rndRiskBackPanel.Name = "rndRiskBackPanel";
             this.rndRiskBackPanel.Size = new System.Drawing.Size(265, 52);
             this.rndRiskBackPanel.TabIndex = 27;
+            // 
+            // rndRiskLabelText
+            // 
+            this.rndRiskLabelText.BackColor = System.Drawing.Color.Maroon;
+            this.rndRiskLabelText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.rndRiskLabelText.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.rndRiskLabelText.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.rndRiskLabelText.Location = new System.Drawing.Point(3, 25);
+            this.rndRiskLabelText.Name = "rndRiskLabelText";
+            this.rndRiskLabelText.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this.rndRiskLabelText.Size = new System.Drawing.Size(255, 18);
+            this.rndRiskLabelText.TabIndex = 29;
+            this.rndRiskLabelText.Text = "RISK TEXT";
+            this.rndRiskLabelText.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // rndRiskLabel
+            // 
+            this.rndRiskLabel.BackColor = System.Drawing.Color.Maroon;
+            this.rndRiskLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rndRiskLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.rndRiskLabel.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.rndRiskLabel.Location = new System.Drawing.Point(3, 3);
+            this.rndRiskLabel.Name = "rndRiskLabel";
+            this.rndRiskLabel.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.rndRiskLabel.Size = new System.Drawing.Size(255, 42);
+            this.rndRiskLabel.TabIndex = 28;
+            this.rndRiskLabel.Text = "RISK LEVEL";
+            this.rndRiskLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // quaScalingDropdown
             // 
@@ -1500,9 +1542,9 @@
             this.quaVowelsToggle.AutoSize = true;
             this.quaVowelsToggle.Location = new System.Drawing.Point(6, 49);
             this.quaVowelsToggle.Name = "quaVowelsToggle";
-            this.quaVowelsToggle.Size = new System.Drawing.Size(78, 17);
+            this.quaVowelsToggle.Size = new System.Drawing.Size(77, 17);
             this.quaVowelsToggle.TabIndex = 13;
-            this.quaVowelsToggle.Text = "Vowel Play";
+            this.quaVowelsToggle.Text = "Vowel play";
             this.rndToolTip.SetToolTip(this.quaVowelsToggle, "Vowels in Monster names will be randomized.\r\n");
             this.quaVowelsToggle.UseVisualStyleBackColor = true;
             // 
@@ -1532,6 +1574,34 @@
             this.quaQualityBox.TabIndex = 0;
             this.quaQualityBox.TabStop = false;
             this.quaQualityBox.Text = "QUALITY-OF-LIFE";
+            // 
+            // quaWingUnlockDropdown
+            // 
+            this.quaWingUnlockDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.quaWingUnlockDropdown.Enabled = false;
+            this.quaWingUnlockDropdown.FormattingEnabled = true;
+            this.quaWingUnlockDropdown.Items.AddRange(new object[] {
+            "Houses & Dungeons",
+            "Isle of Skye",
+            "Anywhere"});
+            this.quaWingUnlockDropdown.Location = new System.Drawing.Point(131, 106);
+            this.quaWingUnlockDropdown.Name = "quaWingUnlockDropdown";
+            this.quaWingUnlockDropdown.Size = new System.Drawing.Size(140, 21);
+            this.quaWingUnlockDropdown.TabIndex = 12;
+            // 
+            // quaWingUnlockToggle
+            // 
+            this.quaWingUnlockToggle.AutoSize = true;
+            this.quaWingUnlockToggle.Location = new System.Drawing.Point(6, 109);
+            this.quaWingUnlockToggle.Name = "quaWingUnlockToggle";
+            this.quaWingUnlockToggle.Size = new System.Drawing.Size(108, 17);
+            this.quaWingUnlockToggle.TabIndex = 11;
+            this.quaWingUnlockToggle.Text = "Unlock Wing use";
+            this.rndToolTip.SetToolTip(this.quaWingUnlockToggle, "Unlocks the use of Wings in the specified locations:\r\nin all interior locations, " +
+        "on the Isle of Skye, or both.\r\nDungeons and houses are checked at the same byte," +
+        "\r\nso cannot currently be separated.");
+            this.quaWingUnlockToggle.UseVisualStyleBackColor = true;
+            this.quaWingUnlockToggle.CheckedChanged += new System.EventHandler(this.quaWingUnlockToggle_CheckedChanged);
             // 
             // quaFastMonToggle
             // 
@@ -1587,18 +1657,30 @@
             this.quaGraphicsBox.TabStop = false;
             this.quaGraphicsBox.Text = "GRAPHICS";
             // 
+            // quaHUDLockToggle
+            // 
+            this.quaHUDLockToggle.AutoSize = true;
+            this.quaHUDLockToggle.Location = new System.Drawing.Point(6, 139);
+            this.quaHUDLockToggle.Name = "quaHUDLockToggle";
+            this.quaHUDLockToggle.Size = new System.Drawing.Size(124, 17);
+            this.quaHUDLockToggle.TabIndex = 21;
+            this.quaHUDLockToggle.Text = "Lock HUD onscreen";
+            this.rndToolTip.SetToolTip(this.quaHUDLockToggle, "HUD will always stay visible, and never transition offscreen.");
+            this.quaHUDLockToggle.UseVisualStyleBackColor = true;
+            this.quaHUDLockToggle.CheckedChanged += new System.EventHandler(this.quaHUDLockToggle_CheckedChanged);
+            // 
             // rndTextPaletteDropdown
             // 
             this.rndTextPaletteDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.rndTextPaletteDropdown.Enabled = false;
             this.rndTextPaletteDropdown.FormattingEnabled = true;
             this.rndTextPaletteDropdown.Items.AddRange(new object[] {
-            "Black (default)",
+            "RANDOM",
+            "SHUFFLED",
             "Red",
             "Blue",
             "White",
-            "SHUFFLED",
-            "RANDOM"});
+            "Black (default)"});
             this.rndTextPaletteDropdown.Location = new System.Drawing.Point(160, 16);
             this.rndTextPaletteDropdown.Name = "rndTextPaletteDropdown";
             this.rndTextPaletteDropdown.Size = new System.Drawing.Size(112, 21);
@@ -2217,88 +2299,6 @@
             this.rndToolTip.AutoPopDelay = 30000;
             this.rndToolTip.InitialDelay = 500;
             this.rndToolTip.ReshowDelay = 100;
-            // 
-            // rndRiskLabel
-            // 
-            this.rndRiskLabel.BackColor = System.Drawing.Color.Maroon;
-            this.rndRiskLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rndRiskLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.rndRiskLabel.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.rndRiskLabel.Location = new System.Drawing.Point(3, 3);
-            this.rndRiskLabel.Name = "rndRiskLabel";
-            this.rndRiskLabel.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.rndRiskLabel.Size = new System.Drawing.Size(255, 42);
-            this.rndRiskLabel.TabIndex = 28;
-            this.rndRiskLabel.Text = "RISK LEVEL";
-            this.rndRiskLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // rndRiskLabelText
-            // 
-            this.rndRiskLabelText.BackColor = System.Drawing.Color.Maroon;
-            this.rndRiskLabelText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.rndRiskLabelText.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.rndRiskLabelText.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.rndRiskLabelText.Location = new System.Drawing.Point(3, 25);
-            this.rndRiskLabelText.Name = "rndRiskLabelText";
-            this.rndRiskLabelText.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            this.rndRiskLabelText.Size = new System.Drawing.Size(255, 18);
-            this.rndRiskLabelText.TabIndex = 29;
-            this.rndRiskLabelText.Text = "RISK TEXT";
-            this.rndRiskLabelText.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // rndDropLimitToggle
-            // 
-            this.rndDropLimitToggle.AutoSize = true;
-            this.rndDropLimitToggle.Location = new System.Drawing.Point(6, 368);
-            this.rndDropLimitToggle.Name = "rndDropLimitToggle";
-            this.rndDropLimitToggle.Size = new System.Drawing.Size(167, 17);
-            this.rndDropLimitToggle.TabIndex = 28;
-            this.rndDropLimitToggle.Text = "Remove Enemy item drop limit";
-            this.rndDropLimitToggle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rndToolTip.SetToolTip(this.rndDropLimitToggle, "Monsters will continue to drop items even if you already have them.\r\nDoes not aff" +
-        "ect drop rates, or chests/gifters/wingsmiths.");
-            this.rndDropLimitToggle.UseVisualStyleBackColor = true;
-            this.rndDropLimitToggle.CheckedChanged += new System.EventHandler(this.rndDropLimitToggle_CheckedChanged);
-            // 
-            // quaHUDLockToggle
-            // 
-            this.quaHUDLockToggle.AutoSize = true;
-            this.quaHUDLockToggle.Location = new System.Drawing.Point(6, 139);
-            this.quaHUDLockToggle.Name = "quaHUDLockToggle";
-            this.quaHUDLockToggle.Size = new System.Drawing.Size(124, 17);
-            this.quaHUDLockToggle.TabIndex = 21;
-            this.quaHUDLockToggle.Text = "Lock HUD onscreen";
-            this.rndToolTip.SetToolTip(this.quaHUDLockToggle, "HUD will always stay visible, and never transition offscreen.");
-            this.quaHUDLockToggle.UseVisualStyleBackColor = true;
-            this.quaHUDLockToggle.CheckedChanged += new System.EventHandler(this.quaHUDLockToggle_CheckedChanged);
-            // 
-            // quaWingUnlockDropdown
-            // 
-            this.quaWingUnlockDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.quaWingUnlockDropdown.Enabled = false;
-            this.quaWingUnlockDropdown.FormattingEnabled = true;
-            this.quaWingUnlockDropdown.Items.AddRange(new object[] {
-            "Houses & Dungeons",
-            "Isle of Skye",
-            "Both of the above"});
-            this.quaWingUnlockDropdown.Location = new System.Drawing.Point(131, 106);
-            this.quaWingUnlockDropdown.Name = "quaWingUnlockDropdown";
-            this.quaWingUnlockDropdown.Size = new System.Drawing.Size(140, 21);
-            this.quaWingUnlockDropdown.TabIndex = 12;
-            // 
-            // quaWingUnlockToggle
-            // 
-            this.quaWingUnlockToggle.AutoSize = true;
-            this.quaWingUnlockToggle.Location = new System.Drawing.Point(6, 109);
-            this.quaWingUnlockToggle.Name = "quaWingUnlockToggle";
-            this.quaWingUnlockToggle.Size = new System.Drawing.Size(108, 17);
-            this.quaWingUnlockToggle.TabIndex = 11;
-            this.quaWingUnlockToggle.Text = "Unlock Wing use";
-            this.rndToolTip.SetToolTip(this.quaWingUnlockToggle, "Unlocks the use of Wings in the specified locations:\r\nin all interior locations, " +
-        "on the Isle of Skye, or both.\r\nDungeons and houses are checked at the same byte," +
-        "\r\nso cannot currently be separated.");
-            this.quaWingUnlockToggle.UseVisualStyleBackColor = true;
-            this.quaWingUnlockToggle.CheckedChanged += new System.EventHandler(this.quaWingUnlockToggle_CheckedChanged);
             // 
             // MerrowStandard
             // 

@@ -673,33 +673,32 @@ namespace Merrow {
                 // white: F83E318DBDEFF735
 
                 int temp = rndTextPaletteDropdown.SelectedIndex;
-                if (rndTextPaletteDropdown.SelectedIndex == 4) { temp = SysRand.Next(0, 4); }
+                if (temp == 1) { temp = SysRand.Next(2, 6); }
 
                 patchstrings.Add("D3E240");
                 patchstrings.Add("0008");
 
                 if (temp == 0) {
-                    patchstrings.Add("F83E9C1B6AD5318D");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to black [default]." + Environment.NewLine);
-                }
-                if (temp == 1) {
-                    patchstrings.Add("F83E9C1BBA0DD009");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to red." + Environment.NewLine);
-                }
-                if (temp == 2) {
-                    patchstrings.Add("F83E9C1B629D19AB");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to blue." + Environment.NewLine);
-                }
-                if (temp == 3) {
-                    patchstrings.Add("F83E318DBDEFF735");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to white." + Environment.NewLine);
-                }
-
-                if (rndTextPaletteDropdown.SelectedIndex == 5) {
                     patchcontent = "F83E";
                     patchcontent += textPaletteHex;
                     patchstrings.Add(patchcontent);
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random." + Environment.NewLine);
+                }
+                if (temp == 2) {
+                    patchstrings.Add("F83E9C1BBA0DD009");
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to red." + Environment.NewLine);
+                }
+                if (temp == 3) {
+                    patchstrings.Add("F83E9C1B629D19AB");
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to blue." + Environment.NewLine);
+                }
+                if (temp == 4) {
+                    patchstrings.Add("F83E318DBDEFF735");
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to white." + Environment.NewLine);
+                }
+                if (temp == 5) {
+                    patchstrings.Add("F83E9C1B6AD5318D");
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to black [default]." + Environment.NewLine);
                 }
             }
 
@@ -810,6 +809,8 @@ namespace Merrow {
                 patchstrings.Add("0042B1");
                 patchstrings.Add("0001");
                 patchstrings.Add("42");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drop limit disabled." + Environment.NewLine);
             }
 
             //Text content shuffle
@@ -997,7 +998,7 @@ namespace Merrow {
                     patchstrings.Add(ToHex(voweled[i]));
                 }
 
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Vowel Shuffle enabled." + Environment.NewLine);
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Vowel play enabled." + Environment.NewLine);
             }
 
             //HUD lock toggle
@@ -1006,7 +1007,7 @@ namespace Merrow {
                 patchstrings.Add("0001");
                 patchstrings.Add("00");
 
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "HUD Lock enabled." + Environment.NewLine);
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "HUD onscreen lock enabled." + Environment.NewLine);
             }
 
             //Wing unlock toggle
@@ -1190,7 +1191,7 @@ namespace Merrow {
         private void rndTextPaletteToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndTextPaletteToggle.Checked) {
                 rndTextPaletteDropdown.Enabled = true;
-                if (rndTextPaletteDropdown.SelectedIndex == 5) { rndColorViewToggle.Enabled = true; }
+                if (rndTextPaletteDropdown.SelectedIndex == 0) { rndColorViewToggle.Enabled = true; }
             } else {
                 rndTextPaletteDropdown.Enabled = false;
                 rndColorViewPanel.Visible = false;
@@ -1220,7 +1221,7 @@ namespace Merrow {
         }
 
         private void rndTextPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            if (rndTextPaletteDropdown.SelectedIndex == 5) {
+            if (rndTextPaletteDropdown.SelectedIndex == 0) {
                 rndColorViewToggle.Enabled = true;
             }
             else {
