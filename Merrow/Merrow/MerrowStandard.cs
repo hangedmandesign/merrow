@@ -63,6 +63,9 @@ namespace Merrow {
         byte[] patcharray;
         int[] shuffles = new int[60];
         List<int> reorg = new List<int>();
+        int[] spellitemID = { 58, 52, 38, 57, 17, 22 };
+        int[] newitemspells = new int[6];
+        int[] itemspellfix = new int[6];
         int[] chests = new int[88];
         int[] drops = new int[67];
         int[] gifts = new int[10];
@@ -144,6 +147,7 @@ namespace Merrow {
 
             //initial randomization
             rngseed = SysRand.Next(100000000, 1000000000); //default seed set to a random 9-digit number
+            expSeedTextBox.Text = rngseed.ToString();
             loadfinished = true; //loadfinished being false prevents some UI elements from taking incorrect action during the initial setup
             Shuffling(true);
         }
@@ -174,9 +178,8 @@ namespace Merrow {
         public void Shuffling(bool crashpro) {
             int k = 0;
 
-            //REINITIATE RANDOM WITH NEW SEED
+            //REINITIATE RANDOM WITH SEED
             SysRand = new System.Random(rngseed);
-            expSeedTextBox.Text = rngseed.ToString();
 
             //The reason we reset the seed and reshuffle everything every time, whether they're enabled or not, is because the number of times the random seed is used determines the sequence of random values.
             //So to guarantee the random seed to produce the same results with the same options, it has to do the same number of random checks each time. It might not always be necessary but it prevents errors.
@@ -195,6 +198,10 @@ namespace Merrow {
                 reorg[n] = temp;
             }
 
+            for (int i = 0; i < playerspells; i++) {
+                shuffles[i] = -1;
+            }
+
             //crash protection disabled - dumps reorg directly into shuffles arra
             if (!crashpro) {
                 for (int i = 0; i < playerspells; i++) {
@@ -205,93 +212,244 @@ namespace Merrow {
             //crash protection enabled
             if (crashpro) {
                 bool step = false;
-                int c;
-                int r;
-                int s;
+                //int c;
+                //int r;
+                //int s;
 
-                //crash set 1, with safe set
-                for (c = 0; c < library.crashset1.Length; c++)  //step through crash set
-                {
+                for (int i = 0; i < playerspells; i++) { //spell number
                     step = false;
 
-                    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
-                    {
-                        for (s = 0; s < library.safeset1.Length; s++) //for each reorg value, check it against every safe value
-                        {
-                            if (reorg[r] == library.safeset1[s]) { //found a safe value
-                                shuffles[library.crashset1[c]] = library.safeset1[s]; //replace the -1 value in the correct location in shuffles
-                                reorg.RemoveAt(r); //and then Remove it from reorg
-                                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
-                            }
-
-                            if (step) { break; } //escape to outermost loop
-                        }
-
-                        if (step) { break; } //escape to outermost loop
-                    }
-                }
-
-                //crash set 2, with UNsafe set (since safe set would be longer)
-                for (c = 0; c < library.crashset2.Length; c++) {
-                    step = false;
-
-                    for (r = 0; r < reorg.Count; r++) {
-                        for (s = 0; s < library.UNsafeset2.Length; s++) //for each reorg value, check it against every *unsafe* value
-                        {
-                            if (reorg[r] == library.UNsafeset2[s]) { step = true; } //if it's listed as unsafe, break out of this loop, check the next reorg
-                            if (step) { break; }
-                        }
-
-                        if (!step) { //if innermost loop ended without finding an unsafe value, then set it to the current value and break out
-                            shuffles[library.crashset2[c]] = reorg[r];
-                            reorg.RemoveAt(r);
-                            step = true; //get back to outermost loop, we're done
-                        }
-
-                        if (step) { break; } //escape to outermost loop
-                    }
-                }
-
-                //crash set 3, with UNsafe set
-                for (c = 0; c < library.crashset3.Length; c++) {
-                    step = false;
-
-                    for (r = 0; r < reorg.Count; r++) {
-                        for (s = 0; s < library.UNsafeset3.Length; s++) {
-                            if (reorg[r] == library.UNsafeset3[s]) { step = true; }
-                            if (step) { break; }
-                        }
-
-                        if (!step) {
-                            shuffles[library.crashset3[c]] = reorg[r];
-                            reorg.RemoveAt(r);
+                    for (int j = 0; j < reorg.Count; j++) { //across crashlock array
+                        if (!step && library.crashlock[(i * playerspells) + reorg[j]] == -1 && shuffles[i] == -1) {
+                            shuffles[i] = reorg[j];
+                            reorg.RemoveAt(j);
                             step = true;
                         }
 
-                        if (step) { break; }
+                        if (step) { break; } //escape to outermost loop
                     }
                 }
 
-                r = 0;
-                for (s = 0; s < shuffles.Length; s++) //now that we're done with all the crash sets, we can just fill in the rest of the array
-                {
-                    if (shuffles[s] == -1) //if this value hasn't been set yet, set it to the first remaining value in reorg
-                    {
-                        shuffles[s] = reorg[r];
-                        r++;
-                    }
-                }
+
+                //the little function above this has made all of this junk redundant.
+                //i'm keeping it around for a short time, just so I can make use of chunks of it for streamlining the crashlock array generation.
+
+                //crash set 1, with safe set
+                //for (c = 0; c < library.crashset1.Length; c++)  //step through crash set
+                //{
+                //    step = false;
+
+                //    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
+                //    {
+                //        for (s = 0; s < library.safeset1.Length; s++) //for each reorg value, check it against every safe value
+                //        {
+                //            if (reorg[r] == library.safeset1[s]) { //found a safe value
+                //                Console.WriteLine(library.safeset1[s]);
+                //                shuffles[library.crashset1[c]] = library.safeset1[s]; //replace the -1 value in the correct location in shuffles
+                //                reorg.RemoveAt(r); //and then Remove it from reorg
+                //                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
+                //            }
+
+                //            if (step) { break; } //escape to outermost loop
+                //        }
+
+                //        if (step) { break; } //escape to outermost loop
+                //    }
+                //}
+
+                //////crash set 2, with UNsafe set (since safe set would be longer)
+                ////for (c = 0; c < library.crashset2.Length; c++) {
+                ////    step = false;
+
+                ////    for (r = 0; r < reorg.Count; r++) {
+                ////        for (s = 0; s < library.UNsafeset2.Length; s++) //for each reorg value, check it against every *unsafe* value
+                ////        {
+                ////            if (reorg[r] == library.UNsafeset2[s]) { step = true; } //if it's listed as unsafe, break out of this loop, check the next reorg
+                ////            if (step) { break; }
+                ////        }
+
+                ////        if (!step && shuffles[library.crashset2[c]] == -1) { //if innermost loop ended without finding an unsafe value, then set it to the current value and break out
+                ////            shuffles[library.crashset2[c]] = reorg[r];
+                ////            reorg.RemoveAt(r);
+                ////            step = true; //get back to outermost loop, we're done
+                ////        }
+
+                ////        if (step) { break; } //escape to outermost loop
+                ////    }
+                ////}
+                //for (c = 0; c < library.crashset2.Length; c++)  //step through crash set
+                //{
+                //    step = false;
+
+                //    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
+                //    {
+                //        for (s = 0; s < library.safeset2.Length; s++) //for each reorg value, check it against every safe value
+                //        {
+                //            if (reorg[r] == library.safeset2[s]) { //found a safe value
+                //                shuffles[library.crashset2[c]] = library.safeset2[s]; //replace the -1 value in the correct location in shuffles
+                //                reorg.RemoveAt(r); //and then Remove it from reorg
+                //                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
+                //            }
+
+                //            if (step) { break; } //escape to outermost loop
+                //        }
+
+                //        if (step) { break; } //escape to outermost loop
+                //    }
+                //}
+
+                //////crash set 3, with UNsafe set
+                ////for (c = 0; c < library.crashset3.Length; c++) {
+                ////    step = false;
+
+                ////    for (r = 0; r < reorg.Count; r++) {
+                ////        for (s = 0; s < library.UNsafeset3.Length; s++) {
+                ////            if (reorg[r] == library.UNsafeset3[s]) { step = true; }
+                ////            if (step) { break; }
+                ////        }
+
+                ////        if (!step && shuffles[library.crashset3[c]] == -1) {
+                ////            shuffles[library.crashset3[c]] = reorg[r];
+                ////            reorg.RemoveAt(r);
+                ////            step = true;
+                ////        }
+
+                ////        if (step) { break; }
+                ////    }
+                ////}
+                //for (c = 0; c < library.crashset3.Length; c++)  //step through crash set
+                //{
+                //    step = false;
+
+                //    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
+                //    {
+                //        for (s = 0; s < library.safeset3.Length; s++) //for each reorg value, check it against every safe value
+                //        {
+                //            if (reorg[r] == library.safeset3[s]) { //found a safe value
+                //                shuffles[library.crashset3[c]] = library.safeset3[s]; //replace the -1 value in the correct location in shuffles
+                //                reorg.RemoveAt(r); //and then Remove it from reorg
+                //                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
+                //            }
+
+                //            if (step) { break; } //escape to outermost loop
+                //        }
+
+                //        if (step) { break; } //escape to outermost loop
+                //    }
+                //}
+
+                ////crash set 4, with UNsafe set
+                ////for (c = 0; c < library.crashset4.Length; c++) {
+                ////    step = false;
+
+                ////    for (r = 0; r < reorg.Count; r++) {
+                ////        for (s = 0; s < library.UNsafeset4.Length; s++) {
+                ////            if (reorg[r] == library.UNsafeset4[s]) { step = true; }
+                ////            if (step) { break; }
+                ////        }
+
+                ////        if (!step && shuffles[library.crashset4[c]] == -1) {
+                ////            shuffles[library.crashset4[c]] = reorg[r];
+                ////            reorg.RemoveAt(r);
+                ////            step = true;
+                ////        }
+
+                ////        if (step) { break; }
+                ////    }
+                ////}
+                //for (c = 0; c < library.safesetmod4.Length; c++)  //step through crash set
+                //{
+                //    step = false;
+
+                //    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
+                //    {
+                //        for (s = 0; s < library.crashsetmod4.Length; s++) //for each reorg value, check it against every safe MODIFIER
+                //        {
+                //            if (reorg[r] == library.crashsetmod4[s]) { //found a safe value
+                //                shuffles[library.safesetmod4[c]] = library.crashsetmod4[s]; //replace the -1 value in the correct location in shuffles
+                //                reorg.RemoveAt(r); //and then Remove it from reorg
+                //                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
+                //            }
+
+                //            if (step) { break; } //escape to outermost loop
+                //        }
+
+                //        if (step) { break; } //escape to outermost loop
+                //    }
+                //}
+
+                //for (c = 0; c < library.crashset5.Length; c++)  //step through crash set
+                //{
+                //    step = false;
+
+                //    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
+                //    {
+                //        for (s = 0; s < library.safeset5.Length; s++) //for each reorg value, check it against every safe value
+                //        {
+                //            if (reorg[r] == library.safeset5[s]) { //found a safe value
+                //                shuffles[library.crashset5[c]] = library.safeset5[s]; //replace the -1 value in the correct location in shuffles
+                //                reorg.RemoveAt(r); //and then Remove it from reorg
+                //                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
+                //            }
+
+                //            if (step) { break; } //escape to outermost loop
+                //        }
+
+                //        if (step) { break; } //escape to outermost loop
+                //    }
+                //}
+
+                //for (s = 0; s < shuffles.Length; s++) { //now that we're done with all the crash sets, we can just fill in the rest of the array
+
+                //    if (shuffles[s] == -1 && reorg.Count > 0) { //if this value hasn't been set yet, set it to the first remaining value in reorg
+                //        int temp = reorg[reorg.Count - 1];
+                //        shuffles[s] = temp;
+                //        reorg.RemoveAt(reorg.Count - 1);
+                //    }
+                //}
+
+                ////list all spell combos
+                //for (int i = 0; i < 60; i++) {
+                //    Console.WriteLine(i.ToString() + "/" + shuffles[i].ToString());
+                //}
 
                 //this should prevent all crashes.
-                //Console.WriteLine("Crash protection complete.");
+
+                //ITEM SOFTLOCK PROTECTION
+                //using world-only spell items in battle (or vice versa?) can cause issues up to softlocks.
+                //spell items should have updated rules based on what they are modified to.
+                //silent flute - silence 2 - id58
+                //celine's bell - restriction 2 - id52
+                //replica - escape - id38
+                //giant's shoes - wind walk - id57
+                //silver amulet - spirit armor 1 - id17
+                //golden amulet - spirit armor 2 - id22
+
+                for (int i = 0; i < 6; i++) {
+                    newitemspells[i] = shuffles[spellitemID[i]];
+                    string rule = library.spells[(spellitemID[i] * 4) + 3].Substring(6,2);
+                    if (rule == "12" || rule == "03") {
+                        if (rule == "12") { //out of battle only (exit, return)
+                            itemspellfix[i] = 1;
+                        }
+                        if (rule == "03") { //either (healing)
+                            itemspellfix[i] = 2;
+                        }
+                    } else { //anything else battle only
+                        itemspellfix[i] = 0;
+                    }
+                }
             }
 
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
             for (int i = 0; i < playerspells; i++) {
                 bool fiftyfifty = SysRand.NextDouble() > 0.5; ; 
                 if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfifty = true; } //"Linear" option
-                if (fiftyfifty) { hintnames[i] = library.shuffleNames[i*5] + " " + library.shuffleNames[(shuffles[i] * 5) + 1]; }
-                else { hintnames[i] = library.shuffleNames[shuffles[i] * 5] + " " + library.shuffleNames[(i * 5) + 1]; }
+                if (fiftyfifty) { hintnames[i] = library.shuffleNames[i * 5];
+                    hintnames[i] += " " + library.shuffleNames[(shuffles[i] * 5) + 1]; }
+                else {
+                    hintnames[i] = library.shuffleNames[shuffles[i] * 5];
+                    hintnames[i] += " " + library.shuffleNames[(i * 5) + 1]; }
             }
 
             //RANDOM CHESTS--------------------------------------------------------------------------------
@@ -574,7 +732,8 @@ namespace Merrow {
                 !quaMonsterScaleToggle.Checked &&
                 !quaFastMonToggle.Checked &&
                 !quaVowelsToggle.Checked &&
-                !quaHUDLockToggle.Checked
+                !quaHUDLockToggle.Checked &&
+                !quaStartingStatsToggle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -663,6 +822,22 @@ namespace Merrow {
                 patchstrings.Add("667260"); //Fix for skelebat group in Blue Cave that can cause crashes due to lag
                 patchstrings.Add("000C");
                 patchstrings.Add("000000060000000100000001");
+
+                //spell item fixes
+                for (int i = 0; i < 6; i++) {
+                    patchstrings.Add(library.items[25 + (i * 3)]); //fetching item addresses starting from silent flute address
+                    patchstrings.Add("0002");
+
+                    if (itemspellfix[i] == 0) { //can be used in battle only
+                        patchstrings.Add("000A");
+                    }
+                    if (itemspellfix[i] == 1) { //out of battle
+                        patchstrings.Add("0001");
+                    }
+                    if (itemspellfix[i] == 2) { //anytime
+                        patchstrings.Add("0003");
+                    }
+                }
             }
 
             if (rndTextPaletteToggle.Checked) { //Text Colour
@@ -710,7 +885,6 @@ namespace Merrow {
                     patchstrings.Add(Convert.ToString(temp, 16));
                     patchstrings.Add("0001");
                     patchstrings.Add(chests[i].ToString("X2"));
-                    Console.WriteLine(Convert.ToString(temp, 16));
                     spoilerchests[i] = i.ToString("00") + ": " + library.items[(chests[i] * 3)];
                 }
 
@@ -1028,11 +1202,26 @@ namespace Merrow {
                 }
             }
 
+            if(quaStartingStatsToggle.Checked) {
+                patchstrings.Add("054908");
+                patchstrings.Add("000C");
+                string tempstats = "";
+                tempstats += quaHPTrackBar.Value.ToString("X4");
+                tempstats += quaHPTrackBar.Value.ToString("X4");
+                tempstats += quaMPTrackBar.Value.ToString("X4");
+                tempstats += quaMPTrackBar.Value.ToString("X4");
+                tempstats += quaAgiTrackBar.Value.ToString("X4");
+                tempstats += quaDefTrackBar.Value.ToString("X4");
+                patchstrings.Add(tempstats);
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Starting stats modified: " + quaHPTrackBar.Value.ToString() + "/" + quaMPTrackBar.Value.ToString() + "/" + quaAgiTrackBar.Value.ToString() + "/" + quaDefTrackBar.Value.ToString() + Environment.NewLine);
+            }
+
             //FINAL ASSEMBLY/OUTPUT
 
             //Verbose spoiler log down at the bottom just to not hide the enabled options above.
             if (verboselog) { 
-                if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
+                if (rndSpellToggle.Checked) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED SPELLS:" + Environment.NewLine);
                     foreach (string line in spoilerspells) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
@@ -1173,6 +1362,55 @@ namespace Merrow {
         private void terms__LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
         }
+
+        public void UpdateRisk() {
+            riskvalue = Math.Round(difficultyscale * difficultyscale * (extremity + 1) * 10);
+            if (!quaMonsterScaleToggle.Checked && !rndMonsterStatsToggle.Checked) {
+                rndRiskLabel.Visible = false;
+                rndRiskLabelText.Visible = false;
+            }
+            if (quaMonsterScaleToggle.Checked || rndMonsterStatsToggle.Checked) {
+                int redRisk = 255;
+                int greenRisk = 255;
+                if (riskvalue <= 20) {
+                    greenRisk = 225 - (int)(225 * (riskvalue / 20));
+                    redRisk = (int)(255 * (riskvalue / 20));
+                }
+                if (riskvalue > 20) {
+                    greenRisk = 0;
+                    redRisk = 255 - (int)(255 * (riskvalue / 80));
+                }
+
+                rndRiskLabel.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
+                rndRiskLabelText.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
+
+                if (riskvalue >= 2 && riskvalue <= 7) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (BREEZE)";
+                    rndRiskLabelText.Text = "Smooth and easy";
+                }
+                if (riskvalue >= 8 && riskvalue <= 13) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (MODERATE)";
+                    rndRiskLabelText.Text = "Roughly vanilla";
+                }
+                if (riskvalue >= 14 && riskvalue <= 25) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (GALE)";
+                    rndRiskLabelText.Text = "Difficult without grinding";
+                }
+                if (riskvalue > 25 && riskvalue < 40) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (STORM)";
+                    rndRiskLabelText.Text = "Extremely challenging and grindy";
+                }
+                if (riskvalue >= 40) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (HURRICANE)";
+                    rndRiskLabelText.Text = "Probably impossible";
+                }
+
+                rndRiskLabel.Visible = true;
+                rndRiskLabelText.Visible = true;
+            }
+        }
+
+
 
         //RND - Randomizer randomization
 
@@ -1438,53 +1676,6 @@ namespace Merrow {
             UpdateRisk();
         }
 
-        public void UpdateRisk() {
-            riskvalue = Math.Round(difficultyscale * difficultyscale * (extremity + 1) * 10);
-            if(!quaMonsterScaleToggle.Checked && !rndMonsterStatsToggle.Checked) {
-                rndRiskLabel.Visible = false;
-                rndRiskLabelText.Visible = false;
-            }
-            if (quaMonsterScaleToggle.Checked || rndMonsterStatsToggle.Checked) {
-                int redRisk = 255;
-                int greenRisk = 255;
-                if (riskvalue <= 20) {
-                    greenRisk = 225 - (int)(225 * (riskvalue / 20));
-                    redRisk = (int)(255 * (riskvalue / 20));
-                }
-                if (riskvalue > 20) {
-                    greenRisk = 0;
-                    redRisk = 255 - (int)(255 * (riskvalue / 80));
-                }
-
-                rndRiskLabel.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
-                rndRiskLabelText.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
-
-                if (riskvalue >= 2 && riskvalue <= 7) {
-                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (BREEZE)";
-                    rndRiskLabelText.Text = "Smooth and easy";
-                }
-                if (riskvalue >= 8 && riskvalue <= 13) {
-                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (MODERATE)";
-                    rndRiskLabelText.Text = "Roughly vanilla";
-                }
-                if (riskvalue >= 14 && riskvalue <= 25) {
-                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (GALE)";
-                    rndRiskLabelText.Text = "Difficult without grinding";
-                }
-                if (riskvalue > 25 && riskvalue < 40) {
-                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (STORM)";
-                    rndRiskLabelText.Text = "Extremely challenging and grindy";
-                }
-                if (riskvalue >= 40) {
-                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (HURRICANE)";
-                    rndRiskLabelText.Text = "Probably impossible";
-                }
-
-                rndRiskLabel.Visible = true;
-                rndRiskLabelText.Visible = true;
-            }
-        }
-
         private void quaWingUnlockToggle_CheckedChanged(object sender, EventArgs e) {
             expUpdateWarning();
             if (quaWingUnlockToggle.Checked) {
@@ -1497,6 +1688,29 @@ namespace Merrow {
 
         private void quaHUDLockToggle_CheckedChanged(object sender, EventArgs e) {
             expUpdateWarning();
+        }
+
+        private void quaHPTrackBar_Scroll(object sender, EventArgs e) {
+            quaStartHPValue.Text = quaHPTrackBar.Value.ToString();
+        }
+
+        private void quaMPTrackBar_Scroll(object sender, EventArgs e) {
+            quaStartMPValue.Text = quaMPTrackBar.Value.ToString();
+        }
+
+        private void quaAgiTrackBar_Scroll(object sender, EventArgs e) {
+            quaStartAGIValue.Text = quaAgiTrackBar.Value.ToString();
+        }
+
+        private void quaDefTrackBar_Scroll(object sender, EventArgs e) {
+            quaStartDEFValue.Text = quaDefTrackBar.Value.ToString();
+        }
+
+        private void quaStartingStatsToggle_CheckedChanged(object sender, EventArgs e) {
+            quaHPTrackBar.Enabled = quaStartingStatsToggle.Checked;
+            quaMPTrackBar.Enabled = quaStartingStatsToggle.Checked;
+            quaAgiTrackBar.Enabled = quaStartingStatsToggle.Checked;
+            quaDefTrackBar.Enabled = quaStartingStatsToggle.Checked;
         }
 
         //EXP - Randomizer export
@@ -1574,7 +1788,8 @@ namespace Merrow {
                 quaMaxMessageToggle.Checked ||
                 rndDropLimitToggle.Checked ||
                 quaWingUnlockToggle.Checked ||
-                quaHUDLockToggle.Checked) 
+                quaHUDLockToggle.Checked ||
+                quaStartingStatsToggle.Checked ) 
                 { rndErrorLabel.Text = rndErrorString; }
             }
         }

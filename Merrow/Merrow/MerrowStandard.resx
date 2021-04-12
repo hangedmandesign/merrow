@@ -141,15 +141,9 @@ However, exports will automatically overwrite any existing file with the same na
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● MERROW now supports direct patching of Z64 files, which is the new default option. The patched files are automatically checksum-repaired, and will be placed in the Patches folder like IPS patches.
+    <value>● Rewrote the entire crash protection system to be much more straightforward. It's simple, but it actually works as intended now. No more Exit/Escape/Return/Compression softlocks, enemies can't get any of them.
 
-● Now that checksum repair can be mostly automatic, a whole stack of checksum-dependent features have been added: Disabling the enemy item drop limit, locking the HUD onscreen, and unlocking Wing use in any location.
-
-● Added the RISK assessment meter. Feedback on risk levels is welcomed, they're currently estimates.
-
-● A ton of backend rewrites and bug fixes. Scaling works now!
-
-● Rearranged text colour shuffle options to put RANDOM first.</value>
+● Fixed some other small bugs.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
@@ -199,7 +193,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACw
-        IQAAAk1TRnQBSQFMAgEBGgEAAYgBAAGIAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IQAAAk1TRnQBSQFMAgEBGgEAAZgBAAGYAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAXADAAEBAQABCAYAARwYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
