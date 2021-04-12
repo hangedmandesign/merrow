@@ -202,12 +202,12 @@ namespace Merrow {
                 shuffles[i] = -1;
             }
 
-            //crash protection disabled - dumps reorg directly into shuffles arra
-            if (!crashpro) {
-                for (int i = 0; i < playerspells; i++) {
-                    shuffles[i] = reorg[i];
-                }
-            }
+            //crash protection disabled - dumps reorg directly into shuffles array
+            //if (!crashpro) {
+            //    for (int i = 0; i < playerspells; i++) {
+            //        shuffles[i] = reorg[i];
+            //    }
+            //}
 
             //crash protection enabled
             if (crashpro) {
@@ -216,204 +216,39 @@ namespace Merrow {
                 //int r;
                 //int s;
 
-                for (int i = 0; i < playerspells; i++) { //spell number
-                    step = false;
+                while (reorg.Count > 0) {
+                    for (int i = 0; i < playerspells; i++) { //spell number
+                        step = false;
 
-                    for (int j = 0; j < reorg.Count; j++) { //across crashlock array
-                        if (!step && library.crashlock[(i * playerspells) + reorg[j]] == -1 && shuffles[i] == -1) {
-                            shuffles[i] = reorg[j];
-                            reorg.RemoveAt(j);
-                            step = true;
+                        for (int j = 0; j < reorg.Count; j++) { //across crashlock array
+                            if (!step && library.crashlock[(i * playerspells) + reorg[j]] == -1 && shuffles[i] == -1) {
+                                shuffles[i] = reorg[j];
+                                reorg.RemoveAt(j);
+                                step = true;
+                            }
+
+                            if (step) { break; } //escape to outermost loop
                         }
+                    }
 
-                        if (step) { break; } //escape to outermost loop
+                    //if the assignment wasn't correct, then just reset and do it again.
+                    //this should prevent any errors from ever occurring, since they're pretty infrequent now.
+                    //this is kind of a brute force method of solving it, but fancy alternatives have so many issues.
+                    if (reorg.Count > 0) {
+                        
+                        reorg.Clear();
+                        for (int i = 0; i < playerspells; i++) { reorg.Add(i); }
+                        for (int i = 0; i < playerspells; i++) { shuffles[i] = -1; }
+                        n = reorg.Count;
+                        while (n > 1) {
+                            n--;
+                            k = SysRand.Next(n + 1);
+                            int temp = reorg[k];
+                            reorg[k] = reorg[n];
+                            reorg[n] = temp;
+                        }
                     }
                 }
-
-
-                //the little function above this has made all of this junk redundant.
-                //i'm keeping it around for a short time, just so I can make use of chunks of it for streamlining the crashlock array generation.
-
-                //crash set 1, with safe set
-                //for (c = 0; c < library.crashset1.Length; c++)  //step through crash set
-                //{
-                //    step = false;
-
-                //    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
-                //    {
-                //        for (s = 0; s < library.safeset1.Length; s++) //for each reorg value, check it against every safe value
-                //        {
-                //            if (reorg[r] == library.safeset1[s]) { //found a safe value
-                //                Console.WriteLine(library.safeset1[s]);
-                //                shuffles[library.crashset1[c]] = library.safeset1[s]; //replace the -1 value in the correct location in shuffles
-                //                reorg.RemoveAt(r); //and then Remove it from reorg
-                //                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
-                //            }
-
-                //            if (step) { break; } //escape to outermost loop
-                //        }
-
-                //        if (step) { break; } //escape to outermost loop
-                //    }
-                //}
-
-                //////crash set 2, with UNsafe set (since safe set would be longer)
-                ////for (c = 0; c < library.crashset2.Length; c++) {
-                ////    step = false;
-
-                ////    for (r = 0; r < reorg.Count; r++) {
-                ////        for (s = 0; s < library.UNsafeset2.Length; s++) //for each reorg value, check it against every *unsafe* value
-                ////        {
-                ////            if (reorg[r] == library.UNsafeset2[s]) { step = true; } //if it's listed as unsafe, break out of this loop, check the next reorg
-                ////            if (step) { break; }
-                ////        }
-
-                ////        if (!step && shuffles[library.crashset2[c]] == -1) { //if innermost loop ended without finding an unsafe value, then set it to the current value and break out
-                ////            shuffles[library.crashset2[c]] = reorg[r];
-                ////            reorg.RemoveAt(r);
-                ////            step = true; //get back to outermost loop, we're done
-                ////        }
-
-                ////        if (step) { break; } //escape to outermost loop
-                ////    }
-                ////}
-                //for (c = 0; c < library.crashset2.Length; c++)  //step through crash set
-                //{
-                //    step = false;
-
-                //    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
-                //    {
-                //        for (s = 0; s < library.safeset2.Length; s++) //for each reorg value, check it against every safe value
-                //        {
-                //            if (reorg[r] == library.safeset2[s]) { //found a safe value
-                //                shuffles[library.crashset2[c]] = library.safeset2[s]; //replace the -1 value in the correct location in shuffles
-                //                reorg.RemoveAt(r); //and then Remove it from reorg
-                //                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
-                //            }
-
-                //            if (step) { break; } //escape to outermost loop
-                //        }
-
-                //        if (step) { break; } //escape to outermost loop
-                //    }
-                //}
-
-                //////crash set 3, with UNsafe set
-                ////for (c = 0; c < library.crashset3.Length; c++) {
-                ////    step = false;
-
-                ////    for (r = 0; r < reorg.Count; r++) {
-                ////        for (s = 0; s < library.UNsafeset3.Length; s++) {
-                ////            if (reorg[r] == library.UNsafeset3[s]) { step = true; }
-                ////            if (step) { break; }
-                ////        }
-
-                ////        if (!step && shuffles[library.crashset3[c]] == -1) {
-                ////            shuffles[library.crashset3[c]] = reorg[r];
-                ////            reorg.RemoveAt(r);
-                ////            step = true;
-                ////        }
-
-                ////        if (step) { break; }
-                ////    }
-                ////}
-                //for (c = 0; c < library.crashset3.Length; c++)  //step through crash set
-                //{
-                //    step = false;
-
-                //    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
-                //    {
-                //        for (s = 0; s < library.safeset3.Length; s++) //for each reorg value, check it against every safe value
-                //        {
-                //            if (reorg[r] == library.safeset3[s]) { //found a safe value
-                //                shuffles[library.crashset3[c]] = library.safeset3[s]; //replace the -1 value in the correct location in shuffles
-                //                reorg.RemoveAt(r); //and then Remove it from reorg
-                //                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
-                //            }
-
-                //            if (step) { break; } //escape to outermost loop
-                //        }
-
-                //        if (step) { break; } //escape to outermost loop
-                //    }
-                //}
-
-                ////crash set 4, with UNsafe set
-                ////for (c = 0; c < library.crashset4.Length; c++) {
-                ////    step = false;
-
-                ////    for (r = 0; r < reorg.Count; r++) {
-                ////        for (s = 0; s < library.UNsafeset4.Length; s++) {
-                ////            if (reorg[r] == library.UNsafeset4[s]) { step = true; }
-                ////            if (step) { break; }
-                ////        }
-
-                ////        if (!step && shuffles[library.crashset4[c]] == -1) {
-                ////            shuffles[library.crashset4[c]] = reorg[r];
-                ////            reorg.RemoveAt(r);
-                ////            step = true;
-                ////        }
-
-                ////        if (step) { break; }
-                ////    }
-                ////}
-                //for (c = 0; c < library.safesetmod4.Length; c++)  //step through crash set
-                //{
-                //    step = false;
-
-                //    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
-                //    {
-                //        for (s = 0; s < library.crashsetmod4.Length; s++) //for each reorg value, check it against every safe MODIFIER
-                //        {
-                //            if (reorg[r] == library.crashsetmod4[s]) { //found a safe value
-                //                shuffles[library.safesetmod4[c]] = library.crashsetmod4[s]; //replace the -1 value in the correct location in shuffles
-                //                reorg.RemoveAt(r); //and then Remove it from reorg
-                //                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
-                //            }
-
-                //            if (step) { break; } //escape to outermost loop
-                //        }
-
-                //        if (step) { break; } //escape to outermost loop
-                //    }
-                //}
-
-                //for (c = 0; c < library.crashset5.Length; c++)  //step through crash set
-                //{
-                //    step = false;
-
-                //    for (r = 0; r < reorg.Count; r++) //for each crash set value, step through reorg
-                //    {
-                //        for (s = 0; s < library.safeset5.Length; s++) //for each reorg value, check it against every safe value
-                //        {
-                //            if (reorg[r] == library.safeset5[s]) { //found a safe value
-                //                shuffles[library.crashset5[c]] = library.safeset5[s]; //replace the -1 value in the correct location in shuffles
-                //                reorg.RemoveAt(r); //and then Remove it from reorg
-                //                step = true; //need to exit both inner loops and move forward in the crash set. I'm sure there's a much neater way to do this
-                //            }
-
-                //            if (step) { break; } //escape to outermost loop
-                //        }
-
-                //        if (step) { break; } //escape to outermost loop
-                //    }
-                //}
-
-                //for (s = 0; s < shuffles.Length; s++) { //now that we're done with all the crash sets, we can just fill in the rest of the array
-
-                //    if (shuffles[s] == -1 && reorg.Count > 0) { //if this value hasn't been set yet, set it to the first remaining value in reorg
-                //        int temp = reorg[reorg.Count - 1];
-                //        shuffles[s] = temp;
-                //        reorg.RemoveAt(reorg.Count - 1);
-                //    }
-                //}
-
-                ////list all spell combos
-                //for (int i = 0; i < 60; i++) {
-                //    Console.WriteLine(i.ToString() + "/" + shuffles[i].ToString());
-                //}
-
-                //this should prevent all crashes.
 
                 //ITEM SOFTLOCK PROTECTION
                 //using world-only spell items in battle (or vice versa?) can cause issues up to softlocks.
@@ -426,8 +261,8 @@ namespace Merrow {
                 //golden amulet - spirit armor 2 - id22
 
                 for (int i = 0; i < 6; i++) {
-                    newitemspells[i] = shuffles[spellitemID[i]];
-                    string rule = library.spells[(spellitemID[i] * 4) + 3].Substring(6,2);
+                newitemspells[i] = shuffles[spellitemID[i]];
+                string rule = library.spells[(spellitemID[i] * 4) + 3].Substring(6,2);
                     if (rule == "12" || rule == "03") {
                         if (rule == "12") { //out of battle only (exit, return)
                             itemspellfix[i] = 1;
@@ -442,9 +277,11 @@ namespace Merrow {
             }
 
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
+            Console.WriteLine(rngseed);
             for (int i = 0; i < playerspells; i++) {
                 bool fiftyfifty = SysRand.NextDouble() > 0.5; ; 
                 if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfifty = true; } //"Linear" option
+                Console.WriteLine(i.ToString() + " " + shuffles[i].ToString());
                 if (fiftyfifty) { hintnames[i] = library.shuffleNames[i * 5];
                     hintnames[i] += " " + library.shuffleNames[(shuffles[i] * 5) + 1]; }
                 else {
@@ -733,7 +570,8 @@ namespace Merrow {
                 !quaFastMonToggle.Checked &&
                 !quaVowelsToggle.Checked &&
                 !quaHUDLockToggle.Checked &&
-                !quaStartingStatsToggle.Checked
+                !quaStartingStatsToggle.Checked &&
+                !quaElement99Toggle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -1202,7 +1040,7 @@ namespace Merrow {
                 }
             }
 
-            if(quaStartingStatsToggle.Checked) {
+            if (quaStartingStatsToggle.Checked) {
                 patchstrings.Add("054908");
                 patchstrings.Add("000C");
                 string tempstats = "";
@@ -1215,6 +1053,16 @@ namespace Merrow {
                 patchstrings.Add(tempstats);
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Starting stats modified: " + quaHPTrackBar.Value.ToString() + "/" + quaMPTrackBar.Value.ToString() + "/" + quaAgiTrackBar.Value.ToString() + "/" + quaDefTrackBar.Value.ToString() + Environment.NewLine);
+            }
+
+            if (quaElement99Toggle.Checked) {
+                for (int i = 0; i < 4; i++) {
+                    patchstrings.Add(library.elementCapLocations[i]);
+                    patchstrings.Add("0001");
+                    patchstrings.Add("63");
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Element level maximum raised to 99." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT
@@ -1297,7 +1145,7 @@ namespace Merrow {
             writingPatch = false;
         }
 
-        //GRANULAR ITEM RANDOMIZER FUNCTIONS-------------------------------------------------
+        //GENERAL RANDOMIZER FUNCTIONS-------------------------------------------------
 
         public void itemListUpdate(ListView currentList, int currentIndex) {
             lockItemUpdates = true;

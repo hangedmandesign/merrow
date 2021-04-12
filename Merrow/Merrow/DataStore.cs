@@ -256,6 +256,8 @@ namespace Merrow {
         public int[] effectSpells = { 17, 19, 22, 25, 27, 32, 38, 40, 43, 44, 47, 48, 49, 52, 54, 56, 57, 58 };
         public int[] brianSpells = { 2, 6, 7, 11, 24, 29, 33, 37, 39, 41 };
 
+        public string[] elementCapLocations = { "0202FF", "02033F", "02037F", "0203C7" };
+
         //Replacement magnifier icon for Soul Search
         public string[] magnifier = {
             "00000000000000000000000000000000",
