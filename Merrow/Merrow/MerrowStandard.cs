@@ -599,7 +599,7 @@ namespace Merrow {
                 !quaRestlessToggle.Checked &&
                 !quaMaxMessageToggle.Checked &&
                 !quaMonsterScaleToggle.Checked &&
-                !quaFastMonToggle.Checked &&
+                !quaFastMonasteryToggle.Checked &&
                 !quaVowelsToggle.Checked &&
                 !quaHUDLockToggle.Checked &&
                 !quaStartingStatsToggle.Checked &&
@@ -1024,7 +1024,7 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Message speed set to maximum." + Environment.NewLine);
             }
 
-            if (quaFastMonToggle.Checked) { //Fast Monastery
+            if (quaFastMonasteryToggle.Checked) { //Fast Monastery
                 patchstrings.Add("4361A0");
                 patchstrings.Add("0004");
                 patchstrings.Add("00090002"); // write 00090002 as new door target ID at 4361A0
@@ -1090,7 +1090,19 @@ namespace Merrow {
 
             //Max element uncap
             if (quaElement99Toggle.Checked) {
-                for (int i = 0; i < 4; i++) {
+                patchstrings.Add("00850A"); //Elemental cap Part 1
+                patchstrings.Add("0002");
+                patchstrings.Add("0126");
+
+                patchstrings.Add("008546"); //Elemental cap Part 2
+                patchstrings.Add("0001");
+                patchstrings.Add("64");
+
+                patchstrings.Add("008563"); //EXP growth lock
+                patchstrings.Add("0001");
+                patchstrings.Add("63");
+
+                for (int i = 0; i < 4; i++) { //Individual elemental caps
                     patchstrings.Add(library.elementCapLocations[i]);
                     patchstrings.Add("0001");
                     patchstrings.Add("63");
@@ -1119,7 +1131,7 @@ namespace Merrow {
                     patchstrings.Add("0001");
                     patchstrings.Add(newspeed.ToString("X2")); 
                 }
-
+                
                 if (quaMPRegainTrackBar.Value == 7) { //if OFF, instead of changing rate, just disable it entirely
                     patchstrings.Add("00445B");
                     patchstrings.Add("0001");
@@ -1127,6 +1139,17 @@ namespace Merrow {
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Walking MP regen rate set to " + quaMPRegainValue.Text + "." + Environment.NewLine);
+            }
+
+            //Fast Mammon's World
+            if (quaFastMammonToggle.Checked) {
+                patchstrings.Add("84EE01");
+                patchstrings.Add("0001");
+                patchstrings.Add("0D");
+
+                patchstrings.Add("607920");
+                patchstrings.Add("0008");
+                patchstrings.Add("0000000F000D0000");
             }
 
             //FINAL ASSEMBLY/OUTPUT
@@ -1625,14 +1648,33 @@ namespace Merrow {
         }
 
         private void quaAgiTrackBar_Scroll(object sender, EventArgs e) {
-            quaStartAGIValue.Text = quaAgiTrackBar.Value.ToString();
+            quaStartAgiValue.Text = quaAgiTrackBar.Value.ToString();
         }
 
         private void quaDefTrackBar_Scroll(object sender, EventArgs e) {
-            quaStartDEFValue.Text = quaDefTrackBar.Value.ToString();
+            quaStartDefValue.Text = quaDefTrackBar.Value.ToString();
         }
 
         private void quaStartingStatsToggle_CheckedChanged(object sender, EventArgs e) {
+            if (quaStartingStatsToggle.Checked) {
+                quaStartHPLabel.ForeColor = SystemColors.ControlText;
+                quaStartMPLabel.ForeColor = SystemColors.ControlText;
+                quaStartAgiLabel.ForeColor = SystemColors.ControlText;
+                quaStartDefLabel.ForeColor = SystemColors.ControlText;
+                quaStartHPValue.ForeColor = SystemColors.ControlText;
+                quaStartMPValue.ForeColor = SystemColors.ControlText;
+                quaStartAgiValue.ForeColor = SystemColors.ControlText;
+                quaStartDefValue.ForeColor = SystemColors.ControlText;
+            } else {
+                quaStartHPLabel.ForeColor = SystemColors.ControlDark;
+                quaStartMPLabel.ForeColor = SystemColors.ControlDark;
+                quaStartAgiLabel.ForeColor = SystemColors.ControlDark;
+                quaStartDefLabel.ForeColor = SystemColors.ControlDark;
+                quaStartHPValue.ForeColor = SystemColors.ControlDark;
+                quaStartMPValue.ForeColor = SystemColors.ControlDark;
+                quaStartAgiValue.ForeColor = SystemColors.ControlDark;
+                quaStartDefValue.ForeColor = SystemColors.ControlDark;
+            }
             quaHPTrackBar.Enabled = quaStartingStatsToggle.Checked;
             quaMPTrackBar.Enabled = quaStartingStatsToggle.Checked;
             quaAgiTrackBar.Enabled = quaStartingStatsToggle.Checked;
@@ -1645,6 +1687,14 @@ namespace Merrow {
         }
 
         private void quaMPRegainToggle_CheckedChanged(object sender, EventArgs e) {
+            if (quaMPRegainToggle.Checked) {
+                quaMPRegainLabel.ForeColor = SystemColors.ControlText;
+                quaMPRegainValue.ForeColor = SystemColors.ControlText;
+            }
+            else {
+                quaMPRegainLabel.ForeColor = SystemColors.ControlDark;
+                quaMPRegainValue.ForeColor = SystemColors.ControlDark;
+            }
             quaMPRegainTrackBar.Enabled = quaMPRegainToggle.Checked;
             expUpdateWarning();
         }

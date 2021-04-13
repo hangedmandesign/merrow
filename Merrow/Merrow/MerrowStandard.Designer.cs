@@ -199,6 +199,11 @@
             this.rndSpellDropdown = new System.Windows.Forms.ComboBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.quaGameplayStatsBox = new System.Windows.Forms.GroupBox();
+            this.quaMPRegainToggle = new System.Windows.Forms.CheckBox();
+            this.quaMPRegainLabel = new System.Windows.Forms.Label();
+            this.quaMPRegainTrackBar = new System.Windows.Forms.TrackBar();
+            this.quaMPRegainValue = new System.Windows.Forms.Label();
             this.rndMonsterBox = new System.Windows.Forms.GroupBox();
             this.rndRiskBackPanel = new System.Windows.Forms.Panel();
             this.rndRiskLabelText = new System.Windows.Forms.Label();
@@ -208,31 +213,26 @@
             this.rndMonsterStatsToggle = new System.Windows.Forms.CheckBox();
             this.rndExtremityLabel = new System.Windows.Forms.Label();
             this.rndExtremityDropdown = new System.Windows.Forms.ComboBox();
-            this.quaGameplayStatsBox = new System.Windows.Forms.GroupBox();
-            this.quaMPRegainToggle = new System.Windows.Forms.CheckBox();
-            this.quaMPRegainLabel = new System.Windows.Forms.Label();
-            this.quaMPRegainTrackBar = new System.Windows.Forms.TrackBar();
-            this.quaMPRegainValue = new System.Windows.Forms.Label();
             this.quaStartingStatsBox = new System.Windows.Forms.GroupBox();
             this.quaStartingStatsToggle = new System.Windows.Forms.CheckBox();
             this.quaMPTrackBar = new System.Windows.Forms.TrackBar();
-            this.quaStartDEFValue = new System.Windows.Forms.Label();
+            this.quaStartDefValue = new System.Windows.Forms.Label();
             this.quaStartHPLabel = new System.Windows.Forms.Label();
             this.quaHPTrackBar = new System.Windows.Forms.TrackBar();
-            this.quaStartAGILabel = new System.Windows.Forms.Label();
-            this.quaStartAGIValue = new System.Windows.Forms.Label();
+            this.quaStartAgiLabel = new System.Windows.Forms.Label();
+            this.quaStartAgiValue = new System.Windows.Forms.Label();
             this.quaStartMPValue = new System.Windows.Forms.Label();
             this.quaDefTrackBar = new System.Windows.Forms.TrackBar();
             this.quaStartMPLabel = new System.Windows.Forms.Label();
             this.quaStartHPValue = new System.Windows.Forms.Label();
             this.quaAgiTrackBar = new System.Windows.Forms.TrackBar();
-            this.quaStartDEFLabel = new System.Windows.Forms.Label();
+            this.quaStartDefLabel = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.quaQualityBox = new System.Windows.Forms.GroupBox();
             this.quaWingUnlockDropdown = new System.Windows.Forms.ComboBox();
             this.quaWingUnlockToggle = new System.Windows.Forms.CheckBox();
-            this.quaFastMonToggle = new System.Windows.Forms.CheckBox();
+            this.quaFastMonasteryToggle = new System.Windows.Forms.CheckBox();
             this.quaInvalidityToggle = new System.Windows.Forms.CheckBox();
             this.quaGraphicsBox = new System.Windows.Forms.GroupBox();
             this.quaHUDLockToggle = new System.Windows.Forms.CheckBox();
@@ -293,6 +293,7 @@
             this.binFilenameTextBox = new System.Windows.Forms.TextBox();
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.quaFastMammonToggle = new System.Windows.Forms.CheckBox();
             this.rndTabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.newBox.SuspendLayout();
@@ -311,10 +312,10 @@
             this.rndSpellBox.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.rndMonsterBox.SuspendLayout();
-            this.rndRiskBackPanel.SuspendLayout();
             this.quaGameplayStatsBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quaMPRegainTrackBar)).BeginInit();
+            this.rndMonsterBox.SuspendLayout();
+            this.rndRiskBackPanel.SuspendLayout();
             this.quaStartingStatsBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quaMPTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.quaHPTrackBar)).BeginInit();
@@ -572,8 +573,7 @@
             this.newLabel.Name = "newLabel";
             this.newLabel.Size = new System.Drawing.Size(572, 180);
             this.newLabel.TabIndex = 0;
-            this.newLabel.Text = "● Added Weighting for Drops, and Single/Double-Weighting option for both Chests a" +
-    "nd Drops.\r\n\r\n● Added adjustment of MP Regain while walking.";
+            this.newLabel.Text = resources.GetString("newLabel.Text");
             // 
             // creditsBox
             // 
@@ -1466,6 +1466,66 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(561, 507);
             this.tableLayoutPanel3.TabIndex = 27;
             // 
+            // quaGameplayStatsBox
+            // 
+            this.quaGameplayStatsBox.Controls.Add(this.quaMPRegainToggle);
+            this.quaGameplayStatsBox.Controls.Add(this.quaMPRegainLabel);
+            this.quaGameplayStatsBox.Controls.Add(this.quaMPRegainTrackBar);
+            this.quaGameplayStatsBox.Controls.Add(this.quaMPRegainValue);
+            this.quaGameplayStatsBox.Location = new System.Drawing.Point(283, 256);
+            this.quaGameplayStatsBox.Name = "quaGameplayStatsBox";
+            this.quaGameplayStatsBox.Size = new System.Drawing.Size(275, 248);
+            this.quaGameplayStatsBox.TabIndex = 28;
+            this.quaGameplayStatsBox.TabStop = false;
+            this.quaGameplayStatsBox.Text = "GAMEPLAY STATS";
+            // 
+            // quaMPRegainToggle
+            // 
+            this.quaMPRegainToggle.AutoSize = true;
+            this.quaMPRegainToggle.ForeColor = System.Drawing.Color.DarkRed;
+            this.quaMPRegainToggle.Location = new System.Drawing.Point(6, 19);
+            this.quaMPRegainToggle.Name = "quaMPRegainToggle";
+            this.quaMPRegainToggle.Size = new System.Drawing.Size(168, 17);
+            this.quaMPRegainToggle.TabIndex = 32;
+            this.quaMPRegainToggle.Text = "Modify walking MP regain rate";
+            this.quaMPRegainToggle.UseVisualStyleBackColor = true;
+            this.quaMPRegainToggle.CheckedChanged += new System.EventHandler(this.quaMPRegainToggle_CheckedChanged);
+            // 
+            // quaMPRegainLabel
+            // 
+            this.quaMPRegainLabel.AutoSize = true;
+            this.quaMPRegainLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.quaMPRegainLabel.Location = new System.Drawing.Point(12, 47);
+            this.quaMPRegainLabel.Name = "quaMPRegainLabel";
+            this.quaMPRegainLabel.Size = new System.Drawing.Size(70, 13);
+            this.quaMPRegainLabel.TabIndex = 34;
+            this.quaMPRegainLabel.Text = "Regain Rate:";
+            // 
+            // quaMPRegainTrackBar
+            // 
+            this.quaMPRegainTrackBar.Enabled = false;
+            this.quaMPRegainTrackBar.LargeChange = 2;
+            this.quaMPRegainTrackBar.Location = new System.Drawing.Point(82, 49);
+            this.quaMPRegainTrackBar.Maximum = 12;
+            this.quaMPRegainTrackBar.Minimum = 7;
+            this.quaMPRegainTrackBar.Name = "quaMPRegainTrackBar";
+            this.quaMPRegainTrackBar.Size = new System.Drawing.Size(175, 45);
+            this.quaMPRegainTrackBar.TabIndex = 33;
+            this.quaMPRegainTrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.quaMPRegainTrackBar.Value = 10;
+            this.quaMPRegainTrackBar.Scroll += new System.EventHandler(this.quaMPRegainTrackBar_Scroll);
+            // 
+            // quaMPRegainValue
+            // 
+            this.quaMPRegainValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.quaMPRegainValue.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.quaMPRegainValue.Location = new System.Drawing.Point(16, 63);
+            this.quaMPRegainValue.Name = "quaMPRegainValue";
+            this.quaMPRegainValue.Size = new System.Drawing.Size(58, 26);
+            this.quaMPRegainValue.TabIndex = 35;
+            this.quaMPRegainValue.Text = "1x";
+            this.quaMPRegainValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // rndMonsterBox
             // 
             this.rndMonsterBox.Controls.Add(this.rndRiskBackPanel);
@@ -1608,79 +1668,21 @@
             this.rndExtremityDropdown.TabIndex = 16;
             this.rndExtremityDropdown.SelectedIndexChanged += new System.EventHandler(this.rndExtremityDropdown_SelectedIndexChanged);
             // 
-            // quaGameplayStatsBox
-            // 
-            this.quaGameplayStatsBox.Controls.Add(this.quaMPRegainToggle);
-            this.quaGameplayStatsBox.Controls.Add(this.quaMPRegainLabel);
-            this.quaGameplayStatsBox.Controls.Add(this.quaMPRegainTrackBar);
-            this.quaGameplayStatsBox.Controls.Add(this.quaMPRegainValue);
-            this.quaGameplayStatsBox.Location = new System.Drawing.Point(283, 256);
-            this.quaGameplayStatsBox.Name = "quaGameplayStatsBox";
-            this.quaGameplayStatsBox.Size = new System.Drawing.Size(275, 248);
-            this.quaGameplayStatsBox.TabIndex = 28;
-            this.quaGameplayStatsBox.TabStop = false;
-            this.quaGameplayStatsBox.Text = "GAMEPLAY STATS";
-            // 
-            // quaMPRegainToggle
-            // 
-            this.quaMPRegainToggle.AutoSize = true;
-            this.quaMPRegainToggle.ForeColor = System.Drawing.Color.DarkRed;
-            this.quaMPRegainToggle.Location = new System.Drawing.Point(6, 19);
-            this.quaMPRegainToggle.Name = "quaMPRegainToggle";
-            this.quaMPRegainToggle.Size = new System.Drawing.Size(168, 17);
-            this.quaMPRegainToggle.TabIndex = 32;
-            this.quaMPRegainToggle.Text = "Modify walking MP regain rate";
-            this.quaMPRegainToggle.UseVisualStyleBackColor = true;
-            this.quaMPRegainToggle.CheckedChanged += new System.EventHandler(this.quaMPRegainToggle_CheckedChanged);
-            // 
-            // quaMPRegainLabel
-            // 
-            this.quaMPRegainLabel.AutoSize = true;
-            this.quaMPRegainLabel.Location = new System.Drawing.Point(12, 49);
-            this.quaMPRegainLabel.Name = "quaMPRegainLabel";
-            this.quaMPRegainLabel.Size = new System.Drawing.Size(70, 13);
-            this.quaMPRegainLabel.TabIndex = 34;
-            this.quaMPRegainLabel.Text = "Regain Rate:";
-            // 
-            // quaMPRegainTrackBar
-            // 
-            this.quaMPRegainTrackBar.Enabled = false;
-            this.quaMPRegainTrackBar.LargeChange = 2;
-            this.quaMPRegainTrackBar.Location = new System.Drawing.Point(82, 49);
-            this.quaMPRegainTrackBar.Maximum = 12;
-            this.quaMPRegainTrackBar.Minimum = 7;
-            this.quaMPRegainTrackBar.Name = "quaMPRegainTrackBar";
-            this.quaMPRegainTrackBar.Size = new System.Drawing.Size(175, 45);
-            this.quaMPRegainTrackBar.TabIndex = 33;
-            this.quaMPRegainTrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.quaMPRegainTrackBar.Value = 10;
-            this.quaMPRegainTrackBar.Scroll += new System.EventHandler(this.quaMPRegainTrackBar_Scroll);
-            // 
-            // quaMPRegainValue
-            // 
-            this.quaMPRegainValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.quaMPRegainValue.Location = new System.Drawing.Point(16, 65);
-            this.quaMPRegainValue.Name = "quaMPRegainValue";
-            this.quaMPRegainValue.Size = new System.Drawing.Size(58, 26);
-            this.quaMPRegainValue.TabIndex = 35;
-            this.quaMPRegainValue.Text = "1x";
-            this.quaMPRegainValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // quaStartingStatsBox
             // 
             this.quaStartingStatsBox.Controls.Add(this.quaStartingStatsToggle);
             this.quaStartingStatsBox.Controls.Add(this.quaMPTrackBar);
-            this.quaStartingStatsBox.Controls.Add(this.quaStartDEFValue);
+            this.quaStartingStatsBox.Controls.Add(this.quaStartDefValue);
             this.quaStartingStatsBox.Controls.Add(this.quaStartHPLabel);
             this.quaStartingStatsBox.Controls.Add(this.quaHPTrackBar);
-            this.quaStartingStatsBox.Controls.Add(this.quaStartAGILabel);
-            this.quaStartingStatsBox.Controls.Add(this.quaStartAGIValue);
+            this.quaStartingStatsBox.Controls.Add(this.quaStartAgiLabel);
+            this.quaStartingStatsBox.Controls.Add(this.quaStartAgiValue);
             this.quaStartingStatsBox.Controls.Add(this.quaStartMPValue);
             this.quaStartingStatsBox.Controls.Add(this.quaDefTrackBar);
             this.quaStartingStatsBox.Controls.Add(this.quaStartMPLabel);
             this.quaStartingStatsBox.Controls.Add(this.quaStartHPValue);
             this.quaStartingStatsBox.Controls.Add(this.quaAgiTrackBar);
-            this.quaStartingStatsBox.Controls.Add(this.quaStartDEFLabel);
+            this.quaStartingStatsBox.Controls.Add(this.quaStartDefLabel);
             this.quaStartingStatsBox.Location = new System.Drawing.Point(283, 3);
             this.quaStartingStatsBox.Name = "quaStartingStatsBox";
             this.quaStartingStatsBox.Size = new System.Drawing.Size(275, 247);
@@ -1719,19 +1721,21 @@
             this.quaMPTrackBar.Value = 15;
             this.quaMPTrackBar.Scroll += new System.EventHandler(this.quaMPTrackBar_Scroll);
             // 
-            // quaStartDEFValue
+            // quaStartDefValue
             // 
-            this.quaStartDEFValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.quaStartDEFValue.Location = new System.Drawing.Point(15, 212);
-            this.quaStartDEFValue.Name = "quaStartDEFValue";
-            this.quaStartDEFValue.Size = new System.Drawing.Size(58, 26);
-            this.quaStartDEFValue.TabIndex = 40;
-            this.quaStartDEFValue.Text = "4";
-            this.quaStartDEFValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.quaStartDefValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.quaStartDefValue.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.quaStartDefValue.Location = new System.Drawing.Point(15, 212);
+            this.quaStartDefValue.Name = "quaStartDefValue";
+            this.quaStartDefValue.Size = new System.Drawing.Size(58, 26);
+            this.quaStartDefValue.TabIndex = 40;
+            this.quaStartDefValue.Text = "4";
+            this.quaStartDefValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // quaStartHPLabel
             // 
             this.quaStartHPLabel.AutoSize = true;
+            this.quaStartHPLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.quaStartHPLabel.Location = new System.Drawing.Point(14, 49);
             this.quaStartHPLabel.Name = "quaStartHPLabel";
             this.quaStartHPLabel.Size = new System.Drawing.Size(64, 13);
@@ -1753,28 +1757,31 @@
             this.quaHPTrackBar.Value = 50;
             this.quaHPTrackBar.Scroll += new System.EventHandler(this.quaHPTrackBar_Scroll);
             // 
-            // quaStartAGILabel
+            // quaStartAgiLabel
             // 
-            this.quaStartAGILabel.AutoSize = true;
-            this.quaStartAGILabel.Location = new System.Drawing.Point(13, 147);
-            this.quaStartAGILabel.Name = "quaStartAGILabel";
-            this.quaStartAGILabel.Size = new System.Drawing.Size(64, 13);
-            this.quaStartAGILabel.TabIndex = 36;
-            this.quaStartAGILabel.Text = "Starting Agi:";
+            this.quaStartAgiLabel.AutoSize = true;
+            this.quaStartAgiLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.quaStartAgiLabel.Location = new System.Drawing.Point(13, 147);
+            this.quaStartAgiLabel.Name = "quaStartAgiLabel";
+            this.quaStartAgiLabel.Size = new System.Drawing.Size(64, 13);
+            this.quaStartAgiLabel.TabIndex = 36;
+            this.quaStartAgiLabel.Text = "Starting Agi:";
             // 
-            // quaStartAGIValue
+            // quaStartAgiValue
             // 
-            this.quaStartAGIValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.quaStartAGIValue.Location = new System.Drawing.Point(15, 163);
-            this.quaStartAGIValue.Name = "quaStartAGIValue";
-            this.quaStartAGIValue.Size = new System.Drawing.Size(58, 26);
-            this.quaStartAGIValue.TabIndex = 37;
-            this.quaStartAGIValue.Text = "5";
-            this.quaStartAGIValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.quaStartAgiValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.quaStartAgiValue.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.quaStartAgiValue.Location = new System.Drawing.Point(15, 163);
+            this.quaStartAgiValue.Name = "quaStartAgiValue";
+            this.quaStartAgiValue.Size = new System.Drawing.Size(58, 26);
+            this.quaStartAgiValue.TabIndex = 37;
+            this.quaStartAgiValue.Text = "5";
+            this.quaStartAgiValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // quaStartMPValue
             // 
             this.quaStartMPValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.quaStartMPValue.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.quaStartMPValue.Location = new System.Drawing.Point(15, 114);
             this.quaStartMPValue.Name = "quaStartMPValue";
             this.quaStartMPValue.Size = new System.Drawing.Size(58, 26);
@@ -1800,6 +1807,7 @@
             // quaStartMPLabel
             // 
             this.quaStartMPLabel.AutoSize = true;
+            this.quaStartMPLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.quaStartMPLabel.Location = new System.Drawing.Point(13, 98);
             this.quaStartMPLabel.Name = "quaStartMPLabel";
             this.quaStartMPLabel.Size = new System.Drawing.Size(65, 13);
@@ -1809,6 +1817,7 @@
             // quaStartHPValue
             // 
             this.quaStartHPValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.quaStartHPValue.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.quaStartHPValue.Location = new System.Drawing.Point(16, 65);
             this.quaStartHPValue.Name = "quaStartHPValue";
             this.quaStartHPValue.Size = new System.Drawing.Size(58, 26);
@@ -1831,14 +1840,15 @@
             this.quaAgiTrackBar.Value = 5;
             this.quaAgiTrackBar.Scroll += new System.EventHandler(this.quaAgiTrackBar_Scroll);
             // 
-            // quaStartDEFLabel
+            // quaStartDefLabel
             // 
-            this.quaStartDEFLabel.AutoSize = true;
-            this.quaStartDEFLabel.Location = new System.Drawing.Point(13, 196);
-            this.quaStartDEFLabel.Name = "quaStartDEFLabel";
-            this.quaStartDEFLabel.Size = new System.Drawing.Size(66, 13);
-            this.quaStartDEFLabel.TabIndex = 39;
-            this.quaStartDEFLabel.Text = "Starting Def:";
+            this.quaStartDefLabel.AutoSize = true;
+            this.quaStartDefLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.quaStartDefLabel.Location = new System.Drawing.Point(13, 196);
+            this.quaStartDefLabel.Name = "quaStartDefLabel";
+            this.quaStartDefLabel.Size = new System.Drawing.Size(66, 13);
+            this.quaStartDefLabel.TabIndex = 39;
+            this.quaStartDefLabel.Text = "Starting Def:";
             // 
             // tabPage2
             // 
@@ -1870,9 +1880,10 @@
             // 
             // quaQualityBox
             // 
+            this.quaQualityBox.Controls.Add(this.quaFastMammonToggle);
             this.quaQualityBox.Controls.Add(this.quaWingUnlockDropdown);
             this.quaQualityBox.Controls.Add(this.quaWingUnlockToggle);
-            this.quaQualityBox.Controls.Add(this.quaFastMonToggle);
+            this.quaQualityBox.Controls.Add(this.quaFastMonasteryToggle);
             this.quaQualityBox.Controls.Add(this.quaInvalidityToggle);
             this.quaQualityBox.Controls.Add(this.quaAccuracyDropdown);
             this.quaQualityBox.Controls.Add(this.quaAccuracyToggle);
@@ -1892,7 +1903,7 @@
             "Houses & Dungeons",
             "Isle of Skye",
             "Anywhere"});
-            this.quaWingUnlockDropdown.Location = new System.Drawing.Point(131, 106);
+            this.quaWingUnlockDropdown.Location = new System.Drawing.Point(131, 76);
             this.quaWingUnlockDropdown.Name = "quaWingUnlockDropdown";
             this.quaWingUnlockDropdown.Size = new System.Drawing.Size(140, 21);
             this.quaWingUnlockDropdown.TabIndex = 12;
@@ -1900,7 +1911,7 @@
             // quaWingUnlockToggle
             // 
             this.quaWingUnlockToggle.AutoSize = true;
-            this.quaWingUnlockToggle.Location = new System.Drawing.Point(6, 109);
+            this.quaWingUnlockToggle.Location = new System.Drawing.Point(6, 79);
             this.quaWingUnlockToggle.Name = "quaWingUnlockToggle";
             this.quaWingUnlockToggle.Size = new System.Drawing.Size(108, 17);
             this.quaWingUnlockToggle.TabIndex = 11;
@@ -1911,18 +1922,18 @@
             this.quaWingUnlockToggle.UseVisualStyleBackColor = true;
             this.quaWingUnlockToggle.CheckedChanged += new System.EventHandler(this.quaWingUnlockToggle_CheckedChanged);
             // 
-            // quaFastMonToggle
+            // quaFastMonasteryToggle
             // 
-            this.quaFastMonToggle.AutoSize = true;
-            this.quaFastMonToggle.Cursor = System.Windows.Forms.Cursors.Default;
-            this.quaFastMonToggle.Location = new System.Drawing.Point(6, 79);
-            this.quaFastMonToggle.Name = "quaFastMonToggle";
-            this.quaFastMonToggle.Size = new System.Drawing.Size(98, 17);
-            this.quaFastMonToggle.TabIndex = 10;
-            this.quaFastMonToggle.Text = "Fast Monastery";
-            this.rndToolTip.SetToolTip(this.quaFastMonToggle, "Speeds up the Monastery, by causing the Grand Abbott\'s exit door to\r\nteleport you" +
+            this.quaFastMonasteryToggle.AutoSize = true;
+            this.quaFastMonasteryToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.quaFastMonasteryToggle.Location = new System.Drawing.Point(6, 109);
+            this.quaFastMonasteryToggle.Name = "quaFastMonasteryToggle";
+            this.quaFastMonasteryToggle.Size = new System.Drawing.Size(98, 17);
+            this.quaFastMonasteryToggle.TabIndex = 10;
+            this.quaFastMonasteryToggle.Text = "Fast Monastery";
+            this.rndToolTip.SetToolTip(this.quaFastMonasteryToggle, "Speeds up the Monastery, by causing the Grand Abbott\'s exit door to\r\nteleport you" +
         " into the long hallway by the courtyard and church.");
-            this.quaFastMonToggle.UseVisualStyleBackColor = true;
+            this.quaFastMonasteryToggle.UseVisualStyleBackColor = true;
             // 
             // quaInvalidityToggle
             // 
@@ -2646,6 +2657,19 @@
             this.rndToolTip.InitialDelay = 500;
             this.rndToolTip.ReshowDelay = 100;
             // 
+            // quaFastMammonToggle
+            // 
+            this.quaFastMammonToggle.AutoSize = true;
+            this.quaFastMammonToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.quaFastMammonToggle.ForeColor = System.Drawing.Color.DarkRed;
+            this.quaFastMammonToggle.Location = new System.Drawing.Point(6, 139);
+            this.quaFastMammonToggle.Name = "quaFastMammonToggle";
+            this.quaFastMammonToggle.Size = new System.Drawing.Size(130, 17);
+            this.quaFastMammonToggle.TabIndex = 13;
+            this.quaFastMammonToggle.Text = "Fast Mammon\'s World";
+            this.rndToolTip.SetToolTip(this.quaFastMammonToggle, "Speeds up Mammon\'s World, by skipping both empty maze sections.");
+            this.quaFastMammonToggle.UseVisualStyleBackColor = true;
+            // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2680,12 +2704,12 @@
             this.rndSpellBox.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.rndMonsterBox.ResumeLayout(false);
-            this.rndMonsterBox.PerformLayout();
-            this.rndRiskBackPanel.ResumeLayout(false);
             this.quaGameplayStatsBox.ResumeLayout(false);
             this.quaGameplayStatsBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quaMPRegainTrackBar)).EndInit();
+            this.rndMonsterBox.ResumeLayout(false);
+            this.rndMonsterBox.PerformLayout();
+            this.rndRiskBackPanel.ResumeLayout(false);
             this.quaStartingStatsBox.ResumeLayout(false);
             this.quaStartingStatsBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quaMPTrackBar)).EndInit();
@@ -2803,7 +2827,7 @@
         private System.Windows.Forms.CheckBox rndMonsterStatsToggle;
         private System.Windows.Forms.Label rndExtremityLabel;
         private System.Windows.Forms.ComboBox rndExtremityDropdown;
-        private System.Windows.Forms.CheckBox quaFastMonToggle;
+        private System.Windows.Forms.CheckBox quaFastMonasteryToggle;
         private System.Windows.Forms.CheckBox rndGiftersToggle;
         private System.Windows.Forms.ComboBox rndGiftersDropdown;
         private System.Windows.Forms.ListView itemListView2;
@@ -2849,18 +2873,18 @@
         private System.Windows.Forms.ComboBox quaWingUnlockDropdown;
         private System.Windows.Forms.CheckBox quaWingUnlockToggle;
         private System.Windows.Forms.CheckBox quaStartingStatsToggle;
-        private System.Windows.Forms.Label quaStartDEFValue;
+        private System.Windows.Forms.Label quaStartDefValue;
         private System.Windows.Forms.Label quaStartHPValue;
         private System.Windows.Forms.Label quaStartHPLabel;
-        private System.Windows.Forms.Label quaStartDEFLabel;
+        private System.Windows.Forms.Label quaStartDefLabel;
         private System.Windows.Forms.TrackBar quaMPTrackBar;
         private System.Windows.Forms.TrackBar quaHPTrackBar;
         private System.Windows.Forms.TrackBar quaDefTrackBar;
         private System.Windows.Forms.Label quaStartMPLabel;
-        private System.Windows.Forms.Label quaStartAGILabel;
+        private System.Windows.Forms.Label quaStartAgiLabel;
         private System.Windows.Forms.Label quaStartMPValue;
         private System.Windows.Forms.TrackBar quaAgiTrackBar;
-        private System.Windows.Forms.Label quaStartAGIValue;
+        private System.Windows.Forms.Label quaStartAgiValue;
         private System.Windows.Forms.CheckBox quaElement99Toggle;
         private System.Windows.Forms.TabPage tabPage0;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -2880,6 +2904,7 @@
         private System.Windows.Forms.Label quaMPRegainLabel;
         private System.Windows.Forms.TrackBar quaMPRegainTrackBar;
         private System.Windows.Forms.Label quaMPRegainValue;
+        private System.Windows.Forms.CheckBox quaFastMammonToggle;
     }
 }
 
