@@ -165,10 +165,13 @@ namespace Merrow {
             rndExtremityDropdown.SelectedIndex = 0;
             rndGiftersDropdown.SelectedIndex = 0;
             rndWingsmithsDropdown.SelectedIndex = 0;
+            rndWeightedChestDropdown.SelectedIndex = 0;
+            rndWeightedDropsDropdown.SelectedIndex = 0;
             quaAccuracyDropdown.SelectedIndex = 0;
             quaZoomDropdown.SelectedIndex = 0;
             quaScalingDropdown.SelectedIndex = 5;
             quaWingUnlockDropdown.SelectedIndex = 0;
+
 
             expFakeZ64Button.Size = new System.Drawing.Size(110, 78);
         }
@@ -299,12 +302,23 @@ namespace Merrow {
 
             if (rndChestDropdown.SelectedIndex >= 1 && setlength > 0) {
                 for (int c = 0; c < chests.Length; c++) {
-                    if (rndWeightedChestToggle.Checked) {
+                    if (rndWeightedChestToggle.Checked && rndWeightedChestDropdown.SelectedIndex == 0) {
                         if (c < setlength) { //bottom of array is all weighted items
                             k = itemset[c];
                         } else { //top of array is random items within set
                             k = itemset[SysRand.Next(setlength)];
                         } 
+                    }
+                    if (rndWeightedChestToggle.Checked && rndWeightedChestDropdown.SelectedIndex == 1) {
+                        if (c < setlength) { //bottom of array is all weighted items
+                            k = itemset[c];
+                        }
+                        if (c < setlength * 2) { //double up
+                            k = itemset[c - setlength];
+                        }
+                        if (c >= setlength * 2) { //top of array is random items within set
+                            k = itemset[SysRand.Next(setlength)];
+                        }
                     }
                     if (!rndWeightedChestToggle.Checked) { //whole array is random items within set
                         k = itemset[SysRand.Next(setlength)]; 
@@ -333,11 +347,29 @@ namespace Merrow {
             setlength = itemset.Length;
 
             if (rndDropsDropdown.SelectedIndex >= 1 && setlength > 0) {
-                int c = drops.Length;
-
-                while (c > 0) {
-                    c--;
-                    k = itemset[SysRand.Next(setlength)];
+                for (int c = 0; c < drops.Length; c++) {
+                    if (rndWeightedDropsToggle.Checked && rndWeightedDropsDropdown.SelectedIndex == 0) {
+                        if (c < setlength) { //bottom of array is all weighted items
+                            k = itemset[c];
+                        }
+                        else { //top of array is random items within set
+                            k = itemset[SysRand.Next(setlength)];
+                        }
+                    }
+                    if (rndWeightedDropsToggle.Checked && rndWeightedDropsDropdown.SelectedIndex == 1) {
+                        if (c < setlength) { //bottom of array is all weighted items
+                            k = itemset[c];
+                        }
+                        if (c < setlength * 2) { //double up
+                            k = itemset[c - setlength];
+                        }
+                        if (c >= setlength * 2) { //top of array is random items within set
+                            k = itemset[SysRand.Next(setlength)];
+                        }
+                    }
+                    if (!rndWeightedDropsToggle.Checked) { //whole array is random items within set
+                        k = itemset[SysRand.Next(setlength)];
+                    }
                     drops[c] = k;
                 }
             }
@@ -1040,7 +1072,8 @@ namespace Merrow {
                 }
             }
 
-            if (quaStartingStatsToggle.Checked) {
+            //Starting stats
+            if (quaStartingStatsToggle.Checked) { 
                 patchstrings.Add("054908");
                 patchstrings.Add("000C");
                 string tempstats = "";
@@ -1055,6 +1088,7 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Starting stats modified: " + quaHPTrackBar.Value.ToString() + "/" + quaMPTrackBar.Value.ToString() + "/" + quaAgiTrackBar.Value.ToString() + "/" + quaDefTrackBar.Value.ToString() + Environment.NewLine);
             }
 
+            //Max element uncap
             if (quaElement99Toggle.Checked) {
                 for (int i = 0; i < 4; i++) {
                     patchstrings.Add(library.elementCapLocations[i]);
@@ -1063,6 +1097,36 @@ namespace Merrow {
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Element level maximum raised to 99." + Environment.NewLine);
+            }
+
+            //MP regain rate
+            if (quaMPRegainToggle.Checked) {
+                //the trackbars are restricted to x3 in either direction because of FF limit
+                //also doesn't bother writing if the value's default. Value 7 = OFF.
+                if (quaMPRegainTrackBar.Value != 0 && quaMPRegainTrackBar.Value != 10) { 
+                    double newrate = 1.0;
+                    int newspeed = 65;
+                    if (quaMPRegainTrackBar.Value < 10) {
+                        newrate = 11 - quaMPRegainTrackBar.Value;
+                        newspeed = Convert.ToInt32(65 * newrate); //increasing value slows it down
+                    }
+                    if (quaMPRegainTrackBar.Value > 10) {
+                        newrate = quaMPRegainTrackBar.Value - 9;
+                        newspeed = Convert.ToInt32(65 / newrate); //decreasing value speeds it up
+                    }
+
+                    patchstrings.Add("071B39");
+                    patchstrings.Add("0001");
+                    patchstrings.Add(newspeed.ToString("X2")); 
+                }
+
+                if (quaMPRegainTrackBar.Value == 7) { //if OFF, instead of changing rate, just disable it entirely
+                    patchstrings.Add("00445B");
+                    patchstrings.Add("0001");
+                    patchstrings.Add("00");
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Walking MP regen rate set to " + quaMPRegainValue.Text + "." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT
@@ -1145,7 +1209,7 @@ namespace Merrow {
             writingPatch = false;
         }
 
-        //GENERAL RANDOMIZER FUNCTIONS-------------------------------------------------
+        //ITEM RANDOMIZER FUNCTIONS-------------------------------------------------
 
         public void itemListUpdate(ListView currentList, int currentIndex) {
             lockItemUpdates = true;
@@ -1258,8 +1322,6 @@ namespace Merrow {
             }
         }
 
-
-
         //RND - Randomizer randomization
 
         private void rndSpellToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1319,14 +1381,18 @@ namespace Merrow {
         private void rndChestToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndChestToggle.Checked) {
                 rndChestDropdown.Enabled = true;
-                if (rndChestDropdown.SelectedIndex != 0) { rndWeightedChestToggle.Enabled = true; } //make visible again if they've already been using it
+                if (rndChestDropdown.SelectedIndex != 0) { //make visible again if they've already been using it
+                    rndWeightedChestToggle.Enabled = true;
+                    rndWeightedChestDropdown.Enabled = true;
+                } 
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 0;
             }
             else {
                 rndChestDropdown.Enabled = false;
                 rndWeightedChestToggle.Enabled = false;
-                if(!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
+                rndWeightedChestDropdown.Enabled = false;
+                if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
                     itemListTabs.Visible = false;
                 }
             }
@@ -1335,10 +1401,16 @@ namespace Merrow {
         private void rndDropsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndDropsToggle.Checked) {
                 rndDropsDropdown.Enabled = true;
+                if (rndDropsDropdown.SelectedIndex != 0) { //make visible again if they've already been using it
+                    rndWeightedDropsToggle.Enabled = true;
+                    rndWeightedDropsDropdown.Enabled = true;
+                }
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 1;
             } else {
                 rndDropsDropdown.Enabled = false;
+                rndWeightedDropsToggle.Enabled = false;
+                rndWeightedDropsDropdown.Enabled = false;
                 if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
                     itemListTabs.Visible = false;
                 }
@@ -1417,15 +1489,25 @@ namespace Merrow {
             itemListUpdate(itemListView1, rndChestDropdown.SelectedIndex);
             if (rndChestDropdown.SelectedIndex > 0) {
                 rndWeightedChestToggle.Enabled = true;
+                rndWeightedChestDropdown.Enabled = true;
             }
             else {
                 rndWeightedChestToggle.Enabled = false;
+                rndWeightedChestDropdown.Enabled = false;
             }
         }
 
         private void rndDropsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             itemListTabs.SelectedIndex = 1;
             itemListUpdate(itemListView2, rndDropsDropdown.SelectedIndex);
+            if (rndDropsDropdown.SelectedIndex > 0) {
+                rndWeightedDropsToggle.Enabled = true;
+                rndWeightedDropsDropdown.Enabled = true;
+            }
+            else {
+                rndWeightedDropsToggle.Enabled = false;
+                rndWeightedDropsDropdown.Enabled = false;
+            }
         }
 
         private void rndGiftersDropdown_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1445,11 +1527,7 @@ namespace Merrow {
         }
 
         private void rndDropLimitToggle_CheckedChanged(object sender, EventArgs e) {
-            if (!quaZoomToggle.Checked &&
-                !quaMaxMessageToggle.Checked &&
-                !rndDropLimitToggle.Checked &&
-                !quaWingUnlockToggle.Checked &&
-                !quaHUDLockToggle.Checked) { rndErrorLabel.Text = ""; }
+            expUpdateWarning();
         }
 
         //ITEM - Randomizer granular item controls
@@ -1559,6 +1637,28 @@ namespace Merrow {
             quaMPTrackBar.Enabled = quaStartingStatsToggle.Checked;
             quaAgiTrackBar.Enabled = quaStartingStatsToggle.Checked;
             quaDefTrackBar.Enabled = quaStartingStatsToggle.Checked;
+            expUpdateWarning();
+        }
+
+        private void quaElement99Toggle_CheckedChanged(object sender, EventArgs e) {
+            expUpdateWarning();
+        }
+
+        private void quaMPRegainToggle_CheckedChanged(object sender, EventArgs e) {
+            quaMPRegainTrackBar.Enabled = quaMPRegainToggle.Checked;
+            expUpdateWarning();
+        }
+
+        private void quaMPRegainTrackBar_Scroll(object sender, EventArgs e) {
+            if (quaMPRegainTrackBar.Value == 7) {
+                quaMPRegainValue.Text = "OFF";
+            }
+            if (quaMPRegainTrackBar.Value < 10 && quaMPRegainTrackBar.Value > 7) {
+                quaMPRegainValue.Text = "1/" + (11 - quaMPRegainTrackBar.Value).ToString() + "x";
+            }
+            if (quaMPRegainTrackBar.Value >= 10) {
+                quaMPRegainValue.Text = (quaMPRegainTrackBar.Value - 9).ToString() + "x";
+            }
         }
 
         //EXP - Randomizer export
@@ -1637,7 +1737,9 @@ namespace Merrow {
                 rndDropLimitToggle.Checked ||
                 quaWingUnlockToggle.Checked ||
                 quaHUDLockToggle.Checked ||
-                quaStartingStatsToggle.Checked ) 
+                quaStartingStatsToggle.Checked ||
+                quaElement99Toggle.Checked ||
+                quaMPRegainToggle.Checked) 
                 { rndErrorLabel.Text = rndErrorString; }
             }
         }
