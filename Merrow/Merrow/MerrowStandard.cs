@@ -167,11 +167,11 @@ namespace Merrow {
             rndWingsmithsDropdown.SelectedIndex = 0;
             rndWeightedChestDropdown.SelectedIndex = 0;
             rndWeightedDropsDropdown.SelectedIndex = 0;
-            quaAccuracyDropdown.SelectedIndex = 0;
-            quaZoomDropdown.SelectedIndex = 0;
-            quaScalingDropdown.SelectedIndex = 5;
-            quaWingUnlockDropdown.SelectedIndex = 0;
-
+            rndAccuracyDropdown.SelectedIndex = 0;
+            rndZoomDropdown.SelectedIndex = 0;
+            rndScalingDropdown.SelectedIndex = 5;
+            rndWingUnlockDropdown.SelectedIndex = 0;
+            rndPresetDropdown.SelectedIndex = 0;
 
             expFakeZ64Button.Size = new System.Drawing.Size(110, 78);
         }
@@ -557,7 +557,7 @@ namespace Merrow {
             }
 
             ////scale bosses only after, if randomization is checked
-            //if (rndMonsterStatsToggle.Checked && quaMonsterScaleToggle.Checked) {
+            //if (rndMonsterStatsToggle.Checked && rndMonsterScaleToggle.Checked) {
             //    for (int i = 67; i < 75; i++) {
             //        for (int j = 0; j < 5; j++) {
             //            newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale));
@@ -566,7 +566,7 @@ namespace Merrow {
             //}
 
             //scale all if monster stat randomization isn't active but scaling is
-            if (!rndMonsterStatsToggle.Checked && quaMonsterScaleToggle.Checked) {
+            if (!rndMonsterStatsToggle.Checked && rndMonsterScaleToggle.Checked) {
                 for (int i = 0; i < 75; i++) {
                     for (int j = 0; j < 5; j++) {
                         newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale));
@@ -584,7 +584,6 @@ namespace Merrow {
 
                         //add ATK/DEF/AGI for BST
                         int bst = newmonsterstats[(currentmonster * 6) + 1] + newmonsterstats[(currentmonster * 6) + 2] + newmonsterstats[(currentmonster * 6) + 3];
-                        Console.WriteLine(bst);
                         //Set exp based on Raph's experience curve formula:
                         //x ^ 2 / 45 * tan(x / 375)
                         //double bstcalc = bst * bst / 45d * Math.Tan(bst / 375d);
@@ -592,7 +591,6 @@ namespace Merrow {
                         //temporary holdover bstcalc while we tinker with the formula, simple scaling vs vanilla bst
                         double vanillabst = library.monsterstatvanilla[(currentmonster * 6) + 1] + library.monsterstatvanilla[(currentmonster * 6) + 2] + library.monsterstatvanilla[(currentmonster * 6) + 3];
                         double bstcalc = library.monsterstatvanilla[(currentmonster * 6) + 4] * (bst / vanillabst);
-                        Console.WriteLine(bstcalc);
                         newmonsterstats[(currentmonster * 6) + 4] = (int)Math.Ceiling(bstcalc);
                     }
                 }
@@ -630,19 +628,19 @@ namespace Merrow {
                 !rndGiftersToggle.Checked &&
                 !rndWingsmithsToggle.Checked &&
                 !rndDropLimitToggle.Checked &&
-                !quaLevelToggle.Checked &&
-                !quaSoulToggle.Checked &&
-                !quaInvalidityToggle.Checked &&
-                !quaZoomToggle.Checked &&
-                !quaAccuracyToggle.Checked &&
-                !quaRestlessToggle.Checked &&
-                !quaMaxMessageToggle.Checked &&
-                !quaMonsterScaleToggle.Checked &&
-                !quaFastMonasteryToggle.Checked &&
-                !quaVowelsToggle.Checked &&
-                !quaHUDLockToggle.Checked &&
-                !quaStartingStatsToggle.Checked &&
-                !quaElement99Toggle.Checked
+                !rndLevelToggle.Checked &&
+                !rndSoulToggle.Checked &&
+                !rndInvalidityToggle.Checked &&
+                !rndZoomToggle.Checked &&
+                !rndAccuracyToggle.Checked &&
+                !rndRestlessToggle.Checked &&
+                !rndMaxMessageToggle.Checked &&
+                !rndMonsterScaleToggle.Checked &&
+                !rndFastMonasteryToggle.Checked &&
+                !rndVowelsToggle.Checked &&
+                !rndHUDLockToggle.Checked &&
+                !rndStartingStatsToggle.Checked &&
+                !rndElement99Toggle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -817,11 +815,11 @@ namespace Merrow {
                     patchstrings.Add("0001");
                     patchstrings.Add(drops[i].ToString("X2"));
 
-                    if (!quaVowelsToggle.Checked) {
+                    if (!rndVowelsToggle.Checked) {
                         if (drops[i] != 255) { spoilerdrops[i] = library.monsternames[i * 2] + ": " + library.items[drops[i] * 3]; }
                         if (drops[i] == 255) { spoilerdrops[i] = library.monsternames[i * 2] + ": NONE"; }
                     }
-                    if (quaVowelsToggle.Checked) {
+                    if (rndVowelsToggle.Checked) {
                         if (drops[i] != 255) { spoilerdrops[i] = voweled[i] + ": " + library.items[drops[i] * 3]; }
                         if (drops[i] == 255) { spoilerdrops[i] = voweled[i] + ": NONE"; }
                     }
@@ -935,7 +933,7 @@ namespace Merrow {
 
             //MONSTER SCALING FEATURES
 
-            if (rndMonsterStatsToggle.Checked || quaMonsterScaleToggle.Checked) {
+            if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked) {
                 for (int i = 0; i < newmonsterstats.Length; i++) {
                     patchstrings.Add(library.monsterstatlocations[i].ToString("X6"));
                     patchstrings.Add("0002");
@@ -949,8 +947,8 @@ namespace Merrow {
                 }
 
                 for (int i = 0; i < 75; i++) {
-                    if (!quaVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[i * 2] + ": "; }
-                    if (quaVowelsToggle.Checked) { spoilerscales[i] = voweled[i] + ": "; }
+                    if (!rndVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[i * 2] + ": "; }
+                    if (rndVowelsToggle.Checked) { spoilerscales[i] = voweled[i] + ": "; }
                     spoilerscales[i] += newmonsterstats[i * 6].ToString() + " ";
                     spoilerscales[i] += newmonsterstats[(i * 6) + 1].ToString() + " ";
                     spoilerscales[i] += newmonsterstats[(i * 6) + 2].ToString() + " ";
@@ -961,13 +959,13 @@ namespace Merrow {
 
                 if (rndMonsterStatsToggle.Checked && extremity == 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized within regions." + Environment.NewLine); }
                 if (rndMonsterStatsToggle.Checked && extremity != 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized, with Variance " + (extremity + 1).ToString() + "x." + Environment.NewLine); }
-                if (quaMonsterScaleToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats scaled by " + difficultyscale.ToString("n1") + "x." + Environment.NewLine); }
+                if (rndMonsterScaleToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats scaled by " + difficultyscale.ToString("n1") + "x." + Environment.NewLine); }
                 if (rndMonsterExpToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster experience scaled to new stat values." + Environment.NewLine); }
             }
 
             //QUALITY OF LIFE FEATURES
 
-            if (quaInvalidityToggle.Checked) { //Invalidity
+            if (rndInvalidityToggle.Checked) { //Invalidity
                 for (int i = 0; i < 8; i++) {
                     patchstrings.Add(library.invalidityLocations[i]);
                     patchstrings.Add("0001");
@@ -977,8 +975,8 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss spell passive invalidity disabled." + Environment.NewLine);
             }
 
-            if (quaAccuracyToggle.Checked) {
-                if (quaAccuracyDropdown.SelectedIndex == 0) { //Spell Accuracy: Status 100
+            if (rndAccuracyToggle.Checked) {
+                if (rndAccuracyDropdown.SelectedIndex == 0) { //Spell Accuracy: Status 100
                     for (int i = 0; i < 17; i++) {
                         string spellloc = library.spells[(library.statusspells[i] * 4) + 2];
                         int temploc = Convert.ToInt32(spellloc) + 15;
@@ -990,7 +988,7 @@ namespace Merrow {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Status effects' accuracy normalized to 100." + Environment.NewLine);
                 }
 
-                if (quaAccuracyDropdown.SelectedIndex == 1) { //Spell Accuracy: All 100
+                if (rndAccuracyDropdown.SelectedIndex == 1) { //Spell Accuracy: All 100
                     for (int z = spellstart + 15; z < ((spelloffset * playerspells) + spellstart); z += spelloffset) {
                         patchstrings.Add(Convert.ToString(z, 16));
                         patchstrings.Add("0001");
@@ -1001,12 +999,12 @@ namespace Merrow {
                 }
             }
 
-            if (quaZoomToggle.Checked) { //Zoom Option
+            if (rndZoomToggle.Checked) { //Zoom Option
                 //width 03698A height 036A26
                 //16368 = 3FF0 = default zoom value
                 //16356 = 3FE4 = lowest stable zoom value
 
-                zoomvalue = quaZoomDropdown.SelectedIndex + 2;
+                zoomvalue = rndZoomDropdown.SelectedIndex + 2;
                 patchstrings.Add("03698A");
                 patchstrings.Add("0002");
                 patchstrings.Add(Convert.ToString(16368 - zoomvalue, 16));
@@ -1018,7 +1016,7 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Zoom out factor set to " + zoomvalue.ToString() + " [Default:1]" + Environment.NewLine);
             }
 
-            if (quaLevelToggle.Checked) { //Level 1
+            if (rndLevelToggle.Checked) { //Level 1
                 for (int s = spellstart; s < ((spelloffset * playerspells) + spellstart); s += spelloffset) {
                     patchstrings.Add(Convert.ToString(s, 16));
                     patchstrings.Add("0002");
@@ -1028,7 +1026,7 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell unlock levels reduced to 1." + Environment.NewLine);
             }
 
-            if (quaSoulToggle.Checked) { //Soul Search
+            if (rndSoulToggle.Checked) { //Soul Search
                 for (int z = spellstart + 57; z < ((spelloffset * playerspells) + spellstart); z += spelloffset) {
                     patchstrings.Add(Convert.ToString(z, 16));
                     patchstrings.Add("0001");
@@ -1046,7 +1044,7 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Soul search applied to all spells." + Environment.NewLine);
             }
 
-            if (quaRestlessToggle.Checked) { //Restless NPCs
+            if (rndRestlessToggle.Checked) { //Restless NPCs
                 for (int i = 0; i < library.npcmovement.Length; i++) {
                     patchstrings.Add(Convert.ToString(library.npcmovement[i], 16));
                     patchstrings.Add("0001");
@@ -1056,7 +1054,7 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPCs are restless." + Environment.NewLine);
             }
 
-            if (quaMaxMessageToggle.Checked) { //Max Message Speed
+            if (rndMaxMessageToggle.Checked) { //Max Message Speed
                 patchstrings.Add("060600");
                 patchstrings.Add("0001");
                 patchstrings.Add("00");
@@ -1064,7 +1062,7 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Message speed set to maximum." + Environment.NewLine);
             }
 
-            if (quaFastMonasteryToggle.Checked) { //Fast Monastery
+            if (rndFastMonasteryToggle.Checked) { //Fast Monastery
                 patchstrings.Add("4361A0");
                 patchstrings.Add("0004");
                 patchstrings.Add("00090002"); // write 00090002 as new door target ID at 4361A0
@@ -1072,7 +1070,7 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Monastery enabled." + Environment.NewLine);
             }
 
-            if (quaVowelsToggle.Checked) { //Vowel Shuffle
+            if (rndVowelsToggle.Checked) { //Vowel Shuffle
                 for (int i = 0; i < voweled.Length; i++) {
                     patchstrings.Add(library.monsternames[(i * 2) + 1]); //hex location
 
@@ -1086,7 +1084,7 @@ namespace Merrow {
             }
 
             //HUD lock toggle
-            if (quaHUDLockToggle.Checked) {
+            if (rndHUDLockToggle.Checked) {
                 patchstrings.Add("01F0AF");
                 patchstrings.Add("0001");
                 patchstrings.Add("00");
@@ -1095,15 +1093,15 @@ namespace Merrow {
             }
 
             //Wing unlock toggle
-            if (quaWingUnlockToggle.Checked) {
-                if (quaWingUnlockDropdown.SelectedIndex == 0 || quaWingUnlockDropdown.SelectedIndex == 2) {
+            if (rndWingUnlockToggle.Checked) {
+                if (rndWingUnlockDropdown.SelectedIndex == 0 || rndWingUnlockDropdown.SelectedIndex == 2) {
                     patchstrings.Add("022ECB");
                     patchstrings.Add("0001");
                     patchstrings.Add("00");
 
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wings enabled indoors." + Environment.NewLine);
                 }
-                if (quaWingUnlockDropdown.SelectedIndex == 1 || quaWingUnlockDropdown.SelectedIndex == 2) {
+                if (rndWingUnlockDropdown.SelectedIndex == 1 || rndWingUnlockDropdown.SelectedIndex == 2) {
                     patchstrings.Add("022EE4");
                     patchstrings.Add("0001");
                     patchstrings.Add("10");
@@ -1113,23 +1111,23 @@ namespace Merrow {
             }
 
             //Starting stats
-            if (quaStartingStatsToggle.Checked) { 
+            if (rndStartingStatsToggle.Checked) { 
                 patchstrings.Add("054908");
                 patchstrings.Add("000C");
                 string tempstats = "";
-                tempstats += quaHPTrackBar.Value.ToString("X4");
-                tempstats += quaHPTrackBar.Value.ToString("X4");
-                tempstats += quaMPTrackBar.Value.ToString("X4");
-                tempstats += quaMPTrackBar.Value.ToString("X4");
-                tempstats += quaAgiTrackBar.Value.ToString("X4");
-                tempstats += quaDefTrackBar.Value.ToString("X4");
+                tempstats += rndHPTrackBar.Value.ToString("X4");
+                tempstats += rndHPTrackBar.Value.ToString("X4");
+                tempstats += rndMPTrackBar.Value.ToString("X4");
+                tempstats += rndMPTrackBar.Value.ToString("X4");
+                tempstats += rndAgiTrackBar.Value.ToString("X4");
+                tempstats += rndDefTrackBar.Value.ToString("X4");
                 patchstrings.Add(tempstats);
 
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Starting stats modified: " + quaHPTrackBar.Value.ToString() + "/" + quaMPTrackBar.Value.ToString() + "/" + quaAgiTrackBar.Value.ToString() + "/" + quaDefTrackBar.Value.ToString() + Environment.NewLine);
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Starting stats modified: " + rndHPTrackBar.Value.ToString() + "/" + rndMPTrackBar.Value.ToString() + "/" + rndAgiTrackBar.Value.ToString() + "/" + rndDefTrackBar.Value.ToString() + Environment.NewLine);
             }
 
             //Max element uncap
-            if (quaElement99Toggle.Checked) {
+            if (rndElement99Toggle.Checked) {
                 patchstrings.Add("00850A"); //Elemental cap Part 1
                 patchstrings.Add("0002");
                 patchstrings.Add("0126");
@@ -1152,18 +1150,18 @@ namespace Merrow {
             }
 
             //MP regain rate
-            if (quaMPRegainToggle.Checked) {
+            if (rndMPRegainToggle.Checked) {
                 //the trackbars are restricted to x3 in either direction because of FF limit
                 //also doesn't bother writing if the value's default. Value 7 = OFF.
-                if (quaMPRegainTrackBar.Value != 0 && quaMPRegainTrackBar.Value != 10) { 
+                if (rndMPRegainTrackBar.Value != 0 && rndMPRegainTrackBar.Value != 10) { 
                     double newrate = 1.0;
                     int newspeed = 65;
-                    if (quaMPRegainTrackBar.Value < 10) {
-                        newrate = 11 - quaMPRegainTrackBar.Value;
+                    if (rndMPRegainTrackBar.Value < 10) {
+                        newrate = 11 - rndMPRegainTrackBar.Value;
                         newspeed = Convert.ToInt32(65 * newrate); //increasing value slows it down
                     }
-                    if (quaMPRegainTrackBar.Value > 10) {
-                        newrate = quaMPRegainTrackBar.Value - 9;
+                    if (rndMPRegainTrackBar.Value > 10) {
+                        newrate = rndMPRegainTrackBar.Value - 9;
                         newspeed = Convert.ToInt32(65 / newrate); //decreasing value speeds it up
                     }
 
@@ -1172,17 +1170,17 @@ namespace Merrow {
                     patchstrings.Add(newspeed.ToString("X2")); 
                 }
                 
-                if (quaMPRegainTrackBar.Value == 7) { //if OFF, instead of changing rate, just disable it entirely
+                if (rndMPRegainTrackBar.Value == 7) { //if OFF, instead of changing rate, just disable it entirely
                     patchstrings.Add("00445B");
                     patchstrings.Add("0001");
                     patchstrings.Add("00");
                 }
 
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Walking MP regen rate set to " + quaMPRegainValue.Text + "." + Environment.NewLine);
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Walking MP regen rate set to " + rndMPRegainValue.Text + "." + Environment.NewLine);
             }
 
             //Fast Mammon's World
-            if (quaFastMammonToggle.Checked) {
+            if (rndFastMammonToggle.Checked) {
                 patchstrings.Add("84EE01");
                 patchstrings.Add("0001");
                 patchstrings.Add("0D");
@@ -1221,7 +1219,7 @@ namespace Merrow {
                     foreach (string line in spoilerwings) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 
-                if (rndMonsterStatsToggle.Checked || quaMonsterScaleToggle.Checked) {
+                if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED MONSTER STATS (HP, ATK, DEF, AGI, EXP, ELEMENT):" + Environment.NewLine);
                     foreach (string line in spoilerscales) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
@@ -1340,11 +1338,11 @@ namespace Merrow {
         public void UpdateRisk() {
             float variance = extremity + 1;
             riskvalue = Math.Round((difficultyscale * difficultyscale) * (variance * variance) * 10);
-            if (!quaMonsterScaleToggle.Checked && !rndMonsterStatsToggle.Checked) {
+            if (!rndMonsterScaleToggle.Checked && !rndMonsterStatsToggle.Checked) {
                 rndRiskLabel.Visible = false;
                 rndRiskLabelText.Visible = false;
             }
-            if (quaMonsterScaleToggle.Checked || rndMonsterStatsToggle.Checked) {
+            if (rndMonsterScaleToggle.Checked || rndMonsterStatsToggle.Checked) {
                 int redRisk = 255;
                 int greenRisk = 255;
                 if (riskvalue <= 20) {
@@ -1388,6 +1386,94 @@ namespace Merrow {
             }
         }
 
+        private static List<CheckBox> GetAllToggles(Control container) {
+            var controlList = new List<CheckBox>();
+            foreach (Control c in container.Controls) {
+                controlList.AddRange(GetAllToggles(c));
+
+                if (c is CheckBox box)
+                    controlList.Add(box);
+            }
+            return controlList;
+        }
+
+        private static List<ComboBox> GetAllDropdowns(Control container) {
+            var controlList = new List<ComboBox>();
+            foreach (Control c in container.Controls) {
+                controlList.AddRange(GetAllDropdowns(c));
+
+                if (c is ComboBox box)
+                    controlList.Add(box);
+            }
+            return controlList;
+        }
+
+        private static List<TrackBar> GetAllSliders(Control container) {
+            var controlList = new List<TrackBar>();
+            foreach (Control c in container.Controls) {
+                controlList.AddRange(GetAllSliders(c));
+
+                if (c is TrackBar box)
+                    controlList.Add(box);
+            }
+            return controlList;
+        }
+
+        public void UpdateCode() {
+            int tabpagestocheck = 3;
+            string codeString = labelVersion.Text.Substring(1);
+            string tempString;
+            byte[] tempBytes = null;
+            var toggles = new List<CheckBox>();
+            var dropdowns = new List<ComboBox>();
+            var sliders = new List<TrackBar>();
+
+            if (loadfinished) { 
+                //check each page in turn, convert each page's values and add it to the code string
+                for (int i = 0; i < tabpagestocheck; i++) {
+                    toggles.AddRange(GetAllToggles(rndTabs.TabPages[i]));
+                    dropdowns.AddRange(GetAllDropdowns(rndTabs.TabPages[i]));
+                    sliders.AddRange(GetAllSliders(rndTabs.TabPages[i]));
+                }
+
+                tempString = "";
+                foreach (var toggle in toggles) {
+                    if (toggle.Checked) { tempString += 1; } else { tempString += 0; } //build binary string
+                }
+                int test = Convert.ToInt32(tempString, 2); //convert binary to int to hex
+                codeString += "T" + test.ToString("X");
+
+                tempString = "";
+                foreach (var dropdown in dropdowns) {
+                    string temp = dropdown.Name;
+                    //one possible shortening method: count consecutive 0 values and amalgamate them in a separate counter
+
+                    if (dropdown.SelectedIndex == 8) { //if custom
+                        if (temp == "rndChestDropdown" || temp == "rndDropsDropdown" || temp == "rndGiftersDropdown" || temp == "rndWingsmithsDropdown") {
+                            //still need to account for custom values
+
+                        }
+                        else { tempString += "." + dropdown.SelectedIndex.ToString("X"); } //convert values to hex
+                    }
+                    else { tempString += "." + dropdown.SelectedIndex.ToString("X"); } //convert values to hex
+
+                    //tempBytes = StringToByteArray(tempString);
+                }
+                codeString += "L" + tempString;
+
+                tempString = "";
+                if(sliders.Count() > 0) {
+                    foreach (var slider in sliders) {
+                        tempString += "." + slider.Value.ToString("X"); //convert values to hex
+                    }
+                } else { tempString = "X"; }
+                    
+                codeString += "S" + tempString;
+                
+                rndShortcodeText.Text = codeString;
+            }
+        }
+
         //RND - Randomizer randomization
 
         private void rndSpellToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1400,6 +1486,7 @@ namespace Merrow {
                 rndSpellNamesToggle.Enabled = false;
                 rndSpellNamesDropdown.Enabled = false;
             }
+            UpdateCode();
         }
 
         private void rndTextPaletteToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1412,6 +1499,7 @@ namespace Merrow {
                 rndColorViewToggle.Enabled = false;
                 rndColorViewToggle.Checked = false; //hide again to avoid spoilers if things change
             }
+            UpdateCode();
         }
 
         private void rndTextContentToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1420,6 +1508,7 @@ namespace Merrow {
             } else {
                 rndTextContentDropdown.Enabled = false;
             }
+            UpdateCode();
         }
 
         private void rndColorViewCheckbox_CheckedChanged(object sender, EventArgs e) {
@@ -1432,6 +1521,7 @@ namespace Merrow {
                 rndColorViewToggle.Text = "View random colours";
                 rndColorViewPanel.Visible = false;
             }
+            UpdateCode();
         }
 
         private void rndTextPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1442,6 +1532,7 @@ namespace Merrow {
                 rndColorViewToggle.Enabled = false;
                 rndColorViewToggle.Checked = false; //make it false again so as not to spoil the next value, and so the panel's invisible
             }
+            UpdateCode();
         }
 
         private void rndChestToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1462,6 +1553,7 @@ namespace Merrow {
                     itemListTabs.Visible = false;
                 }
             }
+            UpdateCode();
         }
 
         private void rndDropsToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1481,6 +1573,7 @@ namespace Merrow {
                     itemListTabs.Visible = false;
                 }
             }
+            UpdateCode();
         }
 
         private void rndGiftersToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1497,6 +1590,7 @@ namespace Merrow {
                     itemListTabs.Visible = false;
                 }
             }
+            UpdateCode();
         }
 
         private void rndWingsmithsToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1511,6 +1605,7 @@ namespace Merrow {
                     itemListTabs.Visible = false;
                 }
             }
+            UpdateCode();
         }
 
         private void rndMonsterStatsToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1520,18 +1615,20 @@ namespace Merrow {
                 UpdateRisk();
             }
             else {
-                if(!quaMonsterScaleToggle.Checked) { rndMonsterExpToggle.Enabled = false; }
+                if(!rndMonsterScaleToggle.Checked) { rndMonsterExpToggle.Enabled = false; }
                 rndExtremityDropdown.Enabled = false;
                 rndExtremityDropdown.SelectedIndex = 0;
                 extremity = 0;
                 UpdateRisk();
             }
+            UpdateCode();
         }
 
         private void rndExtremityDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             //index 0 is 1.0, which is variance scale 0
             extremity = rndExtremityDropdown.SelectedIndex * 0.1f;
             UpdateRisk();
+            UpdateCode();
         }
 
         private void rndSpellNamesToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1541,6 +1638,7 @@ namespace Merrow {
             else {
                 rndSpellNamesDropdown.Enabled = false;
             }
+            UpdateCode();
         }
 
         private void rndColorViewToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1550,6 +1648,7 @@ namespace Merrow {
             else {
                 rndColorViewPanel.Visible = false;
             }
+            UpdateCode();
         }
 
         private void rndChestDropdown_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1563,6 +1662,7 @@ namespace Merrow {
                 rndWeightedChestToggle.Enabled = false;
                 rndWeightedChestDropdown.Enabled = false;
             }
+            UpdateCode();
         }
 
         private void rndDropsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1576,6 +1676,7 @@ namespace Merrow {
                 rndWeightedDropsToggle.Enabled = false;
                 rndWeightedDropsDropdown.Enabled = false;
             }
+            UpdateCode();
         }
 
         private void rndGiftersDropdown_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1587,15 +1688,212 @@ namespace Merrow {
             else {
                 rndShuffleShannonToggle.Enabled = false;
             }
+            UpdateCode();
         }
 
         private void rndWingsmithsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             itemListTabs.SelectedIndex = 3;
             itemListUpdate(itemListView4, rndWingsmithsDropdown.SelectedIndex);
+            UpdateCode();
         }
 
         private void rndDropLimitToggle_CheckedChanged(object sender, EventArgs e) {
             expUpdateWarning();
+            UpdateCode();
+        }
+
+        private void rndSoulToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndLevelToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndWeightedChestToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndWeightedDropsToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndMaxMessageToggle_CheckedChanged(object sender, EventArgs e) {
+            expUpdateWarning();
+            UpdateCode();
+        }
+
+        private void rndZoomToggle_CheckedChanged(object sender, EventArgs e) {
+
+        }
+
+        private void rndAccuracyToggle_CheckedChanged(object sender, EventArgs e) {
+
+        }
+
+        private void rndMonsterScaleToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndMonsterScaleToggle.Checked) {
+                rndMonsterExpToggle.Enabled = true;
+                rndScalingDropdown.Enabled = true;
+                UpdateRisk();
+            }
+            else {
+                if (!rndMonsterStatsToggle.Checked) { rndMonsterExpToggle.Enabled = false; }
+                rndScalingDropdown.Enabled = false;
+                rndScalingDropdown.SelectedIndex = 5;
+                difficultyscale = 1.0f;
+                UpdateRisk();
+            }
+            UpdateCode();
+        }
+
+        private void rndScalingDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            //index 5 is 1.0, which is difficulty scale 10
+            difficultyscale = 0.5f + (rndScalingDropdown.SelectedIndex * 0.1f);
+            UpdateRisk();
+            UpdateCode();
+        }
+
+        private void rndWingUnlockToggle_CheckedChanged(object sender, EventArgs e) {
+
+        }
+
+        private void rndHUDLockToggle_CheckedChanged(object sender, EventArgs e) {
+            expUpdateWarning();
+            UpdateCode();
+        }
+
+        private void rndHPTrackBar_Scroll(object sender, EventArgs e) {
+            rndStartHPValue.Text = rndHPTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndMPTrackBar_Scroll(object sender, EventArgs e) {
+            rndStartMPValue.Text = rndMPTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndAgiTrackBar_Scroll(object sender, EventArgs e) {
+            rndStartAgiValue.Text = rndAgiTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndDefTrackBar_Scroll(object sender, EventArgs e) {
+            rndStartDefValue.Text = rndDefTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndStartingStatsToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndStartingStatsToggle.Checked) {
+                rndStartHPLabel.ForeColor = SystemColors.ControlText;
+                rndStartMPLabel.ForeColor = SystemColors.ControlText;
+                rndStartAgiLabel.ForeColor = SystemColors.ControlText;
+                rndStartDefLabel.ForeColor = SystemColors.ControlText;
+                rndStartHPValue.ForeColor = SystemColors.ControlText;
+                rndStartMPValue.ForeColor = SystemColors.ControlText;
+                rndStartAgiValue.ForeColor = SystemColors.ControlText;
+                rndStartDefValue.ForeColor = SystemColors.ControlText;
+            }
+            else {
+                rndStartHPLabel.ForeColor = SystemColors.ControlDark;
+                rndStartMPLabel.ForeColor = SystemColors.ControlDark;
+                rndStartAgiLabel.ForeColor = SystemColors.ControlDark;
+                rndStartDefLabel.ForeColor = SystemColors.ControlDark;
+                rndStartHPValue.ForeColor = SystemColors.ControlDark;
+                rndStartMPValue.ForeColor = SystemColors.ControlDark;
+                rndStartAgiValue.ForeColor = SystemColors.ControlDark;
+                rndStartDefValue.ForeColor = SystemColors.ControlDark;
+            }
+            rndHPTrackBar.Enabled = rndStartingStatsToggle.Checked;
+            rndMPTrackBar.Enabled = rndStartingStatsToggle.Checked;
+            rndAgiTrackBar.Enabled = rndStartingStatsToggle.Checked;
+            rndDefTrackBar.Enabled = rndStartingStatsToggle.Checked;
+            expUpdateWarning();
+            UpdateCode();
+        }
+
+        private void rndElement99Toggle_CheckedChanged(object sender, EventArgs e) {
+            expUpdateWarning();
+            UpdateCode();
+        }
+
+        private void rndMPRegainToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndMPRegainToggle.Checked) {
+                rndMPRegainLabel.ForeColor = SystemColors.ControlText;
+                rndMPRegainValue.ForeColor = SystemColors.ControlText;
+            }
+            else {
+                rndMPRegainLabel.ForeColor = SystemColors.ControlDark;
+                rndMPRegainValue.ForeColor = SystemColors.ControlDark;
+            }
+            rndMPRegainTrackBar.Enabled = rndMPRegainToggle.Checked;
+            expUpdateWarning();
+            UpdateCode();
+        }
+
+        private void rndMPRegainTrackBar_Scroll(object sender, EventArgs e) {
+            if (rndMPRegainTrackBar.Value == 7) {
+                rndMPRegainValue.Text = "OFF";
+            }
+            if (rndMPRegainTrackBar.Value < 10 && rndMPRegainTrackBar.Value > 7) {
+                rndMPRegainValue.Text = "1/" + (11 - rndMPRegainTrackBar.Value).ToString() + "x";
+            }
+            if (rndMPRegainTrackBar.Value >= 10) {
+                rndMPRegainValue.Text = (rndMPRegainTrackBar.Value - 9).ToString() + "x";
+            }
+            UpdateCode();
+        }
+
+        private void rndShuffleShannonToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndWeightedChestDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndWeightedDropsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndMonsterExpToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndInvalidityToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndAccuracyDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndWingUnlockDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndFastMonasteryToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndFastMammonToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndRestlessToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndVowelsToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndTextContentDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndZoomDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
         }
 
         //ITEM - Randomizer granular item controls
@@ -1604,6 +1902,7 @@ namespace Merrow {
             if (!lockItemUpdates) {
                 rndChestDropdown.SelectedIndex = 8;
                 if (e.Item.Checked) { rndChestToggle.Checked = true; }
+                UpdateCode();
             }
         }
 
@@ -1611,6 +1910,7 @@ namespace Merrow {
             if (!lockItemUpdates) {
                 rndDropsDropdown.SelectedIndex = 8;
                 if (e.Item.Checked) { rndDropsToggle.Checked = true; }
+                UpdateCode();
             }
         }
 
@@ -1618,6 +1918,7 @@ namespace Merrow {
             if (!lockItemUpdates) {
                 rndGiftersDropdown.SelectedIndex = 8;
                 if (e.Item.Checked) { rndGiftersToggle.Checked = true; }
+                UpdateCode();
             }
         }
 
@@ -1625,136 +1926,7 @@ namespace Merrow {
             if (!lockItemUpdates) {
                 rndWingsmithsDropdown.SelectedIndex = 8;
                 if (e.Item.Checked) { rndWingsmithsToggle.Checked = true; }
-            }
-        }
-
-        //QUA - Randomizer quality of life, etc
-
-        private void quaMaxMessageToggle_CheckedChanged(object sender, EventArgs e) {
-            expUpdateWarning();
-        }
-
-        private void quaZoomToggle_CheckedChanged(object sender, EventArgs e) {
-            expUpdateWarning();
-            if (quaZoomToggle.Checked) {
-                quaZoomDropdown.Enabled = true;
-            } else {
-                quaZoomDropdown.Enabled = false;
-            }
-        }
-
-        private void quaAccuracyToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaAccuracyToggle.Checked) {
-                quaAccuracyDropdown.Enabled = true;
-            } else {
-                quaAccuracyDropdown.Enabled = false;
-            }
-        }
-
-        private void quaMonsterScaleToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaMonsterScaleToggle.Checked) {
-                rndMonsterExpToggle.Enabled = true;
-                quaScalingDropdown.Enabled = true;
-                UpdateRisk();
-            }
-            else {
-                if (!rndMonsterStatsToggle.Checked) { rndMonsterExpToggle.Enabled = false; }
-                quaScalingDropdown.Enabled = false;
-                quaScalingDropdown.SelectedIndex = 5;
-                difficultyscale = 1.0f;
-                UpdateRisk();
-            }
-        }
-
-        private void quaScalingDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            //index 5 is 1.0, which is difficulty scale 10
-            difficultyscale = 0.5f + (quaScalingDropdown.SelectedIndex * 0.1f);
-            UpdateRisk();
-        }
-
-        private void quaWingUnlockToggle_CheckedChanged(object sender, EventArgs e) {
-            expUpdateWarning();
-            if (quaWingUnlockToggle.Checked) {
-                quaWingUnlockDropdown.Enabled = true;
-            }
-            else {
-                quaWingUnlockDropdown.Enabled = false;
-            }
-        }
-
-        private void quaHUDLockToggle_CheckedChanged(object sender, EventArgs e) {
-            expUpdateWarning();
-        }
-
-        private void quaHPTrackBar_Scroll(object sender, EventArgs e) {
-            quaStartHPValue.Text = quaHPTrackBar.Value.ToString();
-        }
-
-        private void quaMPTrackBar_Scroll(object sender, EventArgs e) {
-            quaStartMPValue.Text = quaMPTrackBar.Value.ToString();
-        }
-
-        private void quaAgiTrackBar_Scroll(object sender, EventArgs e) {
-            quaStartAgiValue.Text = quaAgiTrackBar.Value.ToString();
-        }
-
-        private void quaDefTrackBar_Scroll(object sender, EventArgs e) {
-            quaStartDefValue.Text = quaDefTrackBar.Value.ToString();
-        }
-
-        private void quaStartingStatsToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaStartingStatsToggle.Checked) {
-                quaStartHPLabel.ForeColor = SystemColors.ControlText;
-                quaStartMPLabel.ForeColor = SystemColors.ControlText;
-                quaStartAgiLabel.ForeColor = SystemColors.ControlText;
-                quaStartDefLabel.ForeColor = SystemColors.ControlText;
-                quaStartHPValue.ForeColor = SystemColors.ControlText;
-                quaStartMPValue.ForeColor = SystemColors.ControlText;
-                quaStartAgiValue.ForeColor = SystemColors.ControlText;
-                quaStartDefValue.ForeColor = SystemColors.ControlText;
-            } else {
-                quaStartHPLabel.ForeColor = SystemColors.ControlDark;
-                quaStartMPLabel.ForeColor = SystemColors.ControlDark;
-                quaStartAgiLabel.ForeColor = SystemColors.ControlDark;
-                quaStartDefLabel.ForeColor = SystemColors.ControlDark;
-                quaStartHPValue.ForeColor = SystemColors.ControlDark;
-                quaStartMPValue.ForeColor = SystemColors.ControlDark;
-                quaStartAgiValue.ForeColor = SystemColors.ControlDark;
-                quaStartDefValue.ForeColor = SystemColors.ControlDark;
-            }
-            quaHPTrackBar.Enabled = quaStartingStatsToggle.Checked;
-            quaMPTrackBar.Enabled = quaStartingStatsToggle.Checked;
-            quaAgiTrackBar.Enabled = quaStartingStatsToggle.Checked;
-            quaDefTrackBar.Enabled = quaStartingStatsToggle.Checked;
-            expUpdateWarning();
-        }
-
-        private void quaElement99Toggle_CheckedChanged(object sender, EventArgs e) {
-            expUpdateWarning();
-        }
-
-        private void quaMPRegainToggle_CheckedChanged(object sender, EventArgs e) {
-            if (quaMPRegainToggle.Checked) {
-                quaMPRegainLabel.ForeColor = SystemColors.ControlText;
-                quaMPRegainValue.ForeColor = SystemColors.ControlText;
-            }
-            else {
-                quaMPRegainLabel.ForeColor = SystemColors.ControlDark;
-                quaMPRegainValue.ForeColor = SystemColors.ControlDark;
-            }
-            quaMPRegainTrackBar.Enabled = quaMPRegainToggle.Checked;
-            expUpdateWarning();
-        }
-
-        private void quaMPRegainTrackBar_Scroll(object sender, EventArgs e) {
-            if (quaMPRegainTrackBar.Value == 7) {
-                quaMPRegainValue.Text = "OFF";
-            }
-            if (quaMPRegainTrackBar.Value < 10 && quaMPRegainTrackBar.Value > 7) {
-                quaMPRegainValue.Text = "1/" + (11 - quaMPRegainTrackBar.Value).ToString() + "x";
-            }
-            if (quaMPRegainTrackBar.Value >= 10) {
-                quaMPRegainValue.Text = (quaMPRegainTrackBar.Value - 9).ToString() + "x";
+                UpdateCode();
             }
         }
 
@@ -1829,14 +2001,14 @@ namespace Merrow {
 
             if (expModePatchZ64.Checked) { rndErrorLabel.Text = "No file loaded."; }
             if (expModePatchIPS.Checked) {
-                if (quaZoomToggle.Checked ||
-                quaMaxMessageToggle.Checked ||
+                if (rndZoomToggle.Checked ||
+                rndMaxMessageToggle.Checked ||
                 rndDropLimitToggle.Checked ||
-                quaWingUnlockToggle.Checked ||
-                quaHUDLockToggle.Checked ||
-                quaStartingStatsToggle.Checked ||
-                quaElement99Toggle.Checked ||
-                quaMPRegainToggle.Checked) 
+                rndWingUnlockToggle.Checked ||
+                rndHUDLockToggle.Checked ||
+                rndStartingStatsToggle.Checked ||
+                rndElement99Toggle.Checked ||
+                rndMPRegainToggle.Checked) 
                 { rndErrorLabel.Text = rndErrorString; }
             }
         }
@@ -1961,6 +2133,18 @@ namespace Merrow {
                 crcErrorLabel.Visible = true;
                 crcErrorLabel.Text = "ERROR: File not selected or available.";
             }
+        }
+
+        private void rndSpellDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndSpellNamesDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndShortcodeText_TextChanged(object sender, EventArgs e) {
+
         }
     }
 }
