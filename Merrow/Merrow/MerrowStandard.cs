@@ -284,7 +284,6 @@ namespace Merrow {
             for (int i = 0; i < playerspells; i++) {
                 bool fiftyfifty = SysRand.NextDouble() > 0.5; ; 
                 if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfifty = true; } //"Linear" option
-                Console.WriteLine(i.ToString() + " " + shuffles[i].ToString());
                 if (fiftyfifty) { hintnames[i] = library.shuffleNames[i * 5];
                     hintnames[i] += " " + library.shuffleNames[(shuffles[i] * 5) + 1]; }
                 else {
@@ -529,7 +528,7 @@ namespace Merrow {
                     for (int j = 0; j < locals; j++) { //steps through each area's monster set one by one
                         int currentmonster = library.mon_locations[locale + j];
                         for (int m = 0; m < 5; m++) { //sets each of their 5 new stats, based on area average, variance, and difficulty modifier
-                            int currentstat = (int)Math.Round(library.avg_monster[(i * 7) + m]);
+                            double currentstat = library.avg_monster[(i * 7) + m];
                             double highend = library.avg_monster[(i * 7) + 5] * (1 + extremity);
                             double lowend = library.avg_monster[(i * 7) + 6] * (1 - extremity);
                             double variance = SysRand.NextDouble() * (highend - lowend) + lowend;
@@ -539,22 +538,62 @@ namespace Merrow {
                         }
                     }
                 }
-            }
 
-            //scale bosses only after, if randomization is checked
-            if (rndMonsterStatsToggle.Checked && quaMonsterScaleToggle.Checked) {
-                for (int i = 67; i < 75; i++) {
-                    for (int j = 0; j < 5; j++) {
-                        newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale));
+                //boss randomization, ranges are hard-coded rn based on local area
+                //variance is halved on bosses to restrain balance, since higher values mean wilder varied numbers
+                for (int i = 0; i < 8; i++) {
+                    int currentmonster = 67 + i;
+                    int region = library.boss_regions[i];
+                    for (int m = 0; m < 5; m++) { //sets each of their 5 new stats, based on area average, variance, and difficulty modifier
+                        double currentstat = library.monsterstatvanilla[currentmonster * 6 + m];
+                        double highend = ((library.avg_monster[(region * 7) + 5] + 10) / 2) * (1 + extremity); //+10/2 halves variance
+                        double lowend = ((library.avg_monster[(region * 7) + 6] + 10) / 2) * (1 - extremity); //+10/2 halves variance
+                        double variance = SysRand.NextDouble() * (highend - lowend) + lowend;
+                        double modifiedstat = (currentstat * (variance / 10) * (difficultyscale));
+                        newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(modifiedstat);
+                        if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; }
                     }
                 }
             }
+
+            ////scale bosses only after, if randomization is checked
+            //if (rndMonsterStatsToggle.Checked && quaMonsterScaleToggle.Checked) {
+            //    for (int i = 67; i < 75; i++) {
+            //        for (int j = 0; j < 5; j++) {
+            //            newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale));
+            //        }
+            //    }
+            //}
 
             //scale all if monster stat randomization isn't active but scaling is
             if (!rndMonsterStatsToggle.Checked && quaMonsterScaleToggle.Checked) {
                 for (int i = 0; i < 75; i++) {
                     for (int j = 0; j < 5; j++) {
                         newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale));
+                    }
+                }
+            }
+
+            //Adjust EXP by BST
+            if (rndMonsterExpToggle.Checked) {
+                for (int i = 17; i > -1; i--) { //17: 16 areas and bosses
+                    int locals = library.mon_enemycount[i];
+                    int locale = library.mon_locationsindex[i];
+                    for (int j = 0; j < locals; j++) { //steps through each area's monster set one by one
+                        int currentmonster = library.mon_locations[locale + j];
+
+                        //add ATK/DEF/AGI for BST
+                        int bst = newmonsterstats[(currentmonster * 6) + 1] + newmonsterstats[(currentmonster * 6) + 2] + newmonsterstats[(currentmonster * 6) + 3];
+                        Console.WriteLine(bst);
+                        //Set exp based on Raph's experience curve formula:
+                        //x ^ 2 / 45 * tan(x / 375)
+                        //double bstcalc = bst * bst / 45d * Math.Tan(bst / 375d);
+
+                        //temporary holdover bstcalc while we tinker with the formula, simple scaling vs vanilla bst
+                        double vanillabst = library.monsterstatvanilla[(currentmonster * 6) + 1] + library.monsterstatvanilla[(currentmonster * 6) + 2] + library.monsterstatvanilla[(currentmonster * 6) + 3];
+                        double bstcalc = library.monsterstatvanilla[(currentmonster * 6) + 4] * (bst / vanillabst);
+                        Console.WriteLine(bstcalc);
+                        newmonsterstats[(currentmonster * 6) + 4] = (int)Math.Ceiling(bstcalc);
                     }
                 }
             }
@@ -923,6 +962,7 @@ namespace Merrow {
                 if (rndMonsterStatsToggle.Checked && extremity == 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized within regions." + Environment.NewLine); }
                 if (rndMonsterStatsToggle.Checked && extremity != 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized, with Variance " + (extremity + 1).ToString() + "x." + Environment.NewLine); }
                 if (quaMonsterScaleToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats scaled by " + difficultyscale.ToString("n1") + "x." + Environment.NewLine); }
+                if (rndMonsterExpToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster experience scaled to new stat values." + Environment.NewLine); }
             }
 
             //QUALITY OF LIFE FEATURES
@@ -1275,7 +1315,6 @@ namespace Merrow {
         public int RepairCRC() {
             int check = -1;
             if (crcFileSelected) { check = fix_crc(fullPath); }
-            Console.WriteLine(check);
             return check;
         }
 
@@ -1299,7 +1338,8 @@ namespace Merrow {
         }
 
         public void UpdateRisk() {
-            riskvalue = Math.Round(difficultyscale * difficultyscale * (extremity + 1) * 10);
+            float variance = extremity + 1;
+            riskvalue = Math.Round((difficultyscale * difficultyscale) * (variance * variance) * 10);
             if (!quaMonsterScaleToggle.Checked && !rndMonsterStatsToggle.Checked) {
                 rndRiskLabel.Visible = false;
                 rndRiskLabelText.Visible = false;
@@ -1315,6 +1355,9 @@ namespace Merrow {
                     greenRisk = 0;
                     redRisk = 255 - (int)(255 * (riskvalue / 80));
                 }
+
+                redRisk = Math.Min(255, Math.Max(0, redRisk));
+                greenRisk = Math.Min(255, Math.Max(0, greenRisk));
 
                 rndRiskLabel.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
                 rndRiskLabelText.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
@@ -1472,10 +1515,12 @@ namespace Merrow {
 
         private void rndMonsterStatsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndMonsterStatsToggle.Checked) {
+                rndMonsterExpToggle.Enabled = true;
                 rndExtremityDropdown.Enabled = true;
                 UpdateRisk();
             }
             else {
+                if(!quaMonsterScaleToggle.Checked) { rndMonsterExpToggle.Enabled = false; }
                 rndExtremityDropdown.Enabled = false;
                 rndExtremityDropdown.SelectedIndex = 0;
                 extremity = 0;
@@ -1608,10 +1653,12 @@ namespace Merrow {
 
         private void quaMonsterScaleToggle_CheckedChanged(object sender, EventArgs e) {
             if (quaMonsterScaleToggle.Checked) {
+                rndMonsterExpToggle.Enabled = true;
                 quaScalingDropdown.Enabled = true;
                 UpdateRisk();
             }
             else {
+                if (!rndMonsterStatsToggle.Checked) { rndMonsterExpToggle.Enabled = false; }
                 quaScalingDropdown.Enabled = false;
                 quaScalingDropdown.SelectedIndex = 5;
                 difficultyscale = 1.0f;

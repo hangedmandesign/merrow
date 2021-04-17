@@ -467,8 +467,8 @@ namespace Merrow {
         public int[] mon_mammonsworld = { 63, 64, 65, 66 }; //63-66
         public int[] mon_bosses = { 67, 68, 69, 70, 71, 72, 73, 74 }; //67-74
 
-        public int[] mon_enemycount = { 6,5,7,4,7,4,7,7,4,6,4,5,5,4,4,2,4 };
-        public int[] mon_locationsindex = { 0,6,11,18,22,29,33,40,47,51,57,61,66,71,75,79,81,85 };
+        public int[] mon_enemycount = { 6,5,7,4,7,4,7,7,4,6,4,5,5,4,4,2,4,8 }; //does not include bosses
+        public int[] mon_locationsindex = { 0,6,11,18,22,29,33,40,47,51,57,61,66,71,75,79,81,85,93 }; //addition of above enemy count values
 
         public int[] mon_locations = {
             0, 1, 2, 3, 4, 5, //0-5
@@ -487,7 +487,8 @@ namespace Merrow {
             44, 45, 49, 50, //44-45,49-50
             42, 43, 49, 50, //42-43,49-50
             49, 50, //49-50
-            63, 64, 65, 66 //63-66
+            63, 64, 65, 66, //63-66
+            67, 68, 69, 70, 71, 72, 73, 74 //67-74
     };
 
         //Average stats by area - HP, ATK, DEF, AGI, EXP, ELEM, HIGH, LOW. Comment is stat variance by area from low to high, e.g. "+30-30" is (0.7*avg to 1.3*avg)
@@ -527,6 +528,10 @@ namespace Merrow {
             299.75, 40.00, 71.00, 95.00, 515.00, 13, 7, //+30-30
             280.90, 46.00, 73.00, 92.50, 600.00, 11, 9, //+10-10
             461.00, 45.25, 68.25, 115.00, 842.50, 13, 8 //+30-20
+        };
+
+        public int[] boss_regions = {
+            1, 6, 8, 10, 12, 15, 15, 16
         };
 
         //locations of monster stat values in ROM. 
@@ -681,7 +686,7 @@ namespace Merrow {
             480,45,63,120,850,3,
             580,46,70,130,900,0,
             462,46,62,110,820,2,
-            200,6,15,17,100,1,
+            200,6,15,17,100,1, //402 is the first index in this line for boss values
             680,22,30,60,1200,3,
             880,24,65,80,2000,2,
             1000,27,77,90,2800,3,
