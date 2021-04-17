@@ -1440,36 +1440,38 @@ namespace Merrow {
                 foreach (var toggle in toggles) {
                     if (toggle.Checked) { tempString += 1; } else { tempString += 0; } //build binary string
                 }
-                int test = Convert.ToInt32(tempString, 2); //convert binary to int to hex
-                codeString += "T" + test.ToString("X");
+                int test = Convert.ToInt32(tempString, 2); //convert binary string to int
+                codeString += "T" + "." + HexToBase64(test.ToString("X")) + "."; //int to hex to 64b
+                Console.WriteLine(codeString);
 
                 tempString = "";
                 foreach (var dropdown in dropdowns) {
-                    string temp = dropdown.Name;
                     //one possible shortening method: count consecutive 0 values and amalgamate them in a separate counter
-
                     if (dropdown.SelectedIndex == 8) { //if custom
-                        if (temp == "rndChestDropdown" || temp == "rndDropsDropdown" || temp == "rndGiftersDropdown" || temp == "rndWingsmithsDropdown") {
+                        if (dropdown.Name == "rndChestDropdown" || dropdown.Name == "rndDropsDropdown" || dropdown.Name == "rndGiftersDropdown" || dropdown.Name == "rndWingsmithsDropdown") {
                             //still need to account for custom values
 
                         }
-                        else { tempString += "." + dropdown.SelectedIndex.ToString("X"); } //convert values to hex
+                        else { tempString += dropdown.SelectedIndex.ToString("X2"); } //convert values to hex
                     }
-                    else { tempString += "." + dropdown.SelectedIndex.ToString("X"); } //convert values to hex
-
-                    //tempBytes = StringToByteArray(tempString);
+                    else { tempString += dropdown.SelectedIndex.ToString("X2"); } //convert values to hex
                 }
-                codeString += "L" + tempString;
+                codeString += "L" + "." + HexToBase64(tempString) + ".";
+                Console.WriteLine(codeString);
 
                 tempString = "";
-                if(sliders.Count() > 0) {
+                if(sliders.Count > 0) { 
                     foreach (var slider in sliders) {
-                        tempString += "." + slider.Value.ToString("X"); //convert values to hex
+                        tempString += slider.Value.ToString("X3"); //convert values to hex
                     }
-                } else { tempString = "X"; }
-                    
-                codeString += "S" + tempString;
+                    if (tempString.Length % 2 != 0) { tempString = "0" + tempString; } //ensure it's an even number of characters
+                    codeString += "S" + "." + HexToBase64(tempString);
+                } else {
+                    codeString += "SZ";
+                }
                 
+                Console.WriteLine(codeString);
+
                 rndShortcodeText.Text = codeString;
             }
         }

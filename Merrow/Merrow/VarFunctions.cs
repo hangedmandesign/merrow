@@ -34,6 +34,10 @@ namespace Merrow {
             return bytes;
         }
 
+        public static string HexToBase64(string input) { //convert hex string to base64 string
+            return System.Convert.ToBase64String(StringToByteArray(input));
+        }
+
         public static string ToHex(string input) { //Convert ascii string to hex string
             StringBuilder sb = new StringBuilder();
             foreach (char c in input)
