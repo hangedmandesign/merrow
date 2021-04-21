@@ -58,6 +58,7 @@ namespace Merrow {
         bool lockItemUpdates = false;
         string rndErrorString = "WARNING: Current patch options will cause checksum errors." + Environment.NewLine + "Use the CRC Repair Tool to fix your patched rom.";
         double riskvalue = 1.0;
+        bool updatingcode = false;
 
         //collection arrays and lists
         byte[] patcharray;
@@ -144,6 +145,7 @@ namespace Merrow {
 
             //initiate UI
             PrepareDropdowns();
+            PopulateReference();
 
             //initial randomization
             rngseed = SysRand.Next(100000000, 1000000000); //default seed set to a random 9-digit number
@@ -312,7 +314,7 @@ namespace Merrow {
                         if (c < setlength) { //bottom of array is all weighted items
                             k = itemset[c];
                         }
-                        if (c < setlength * 2) { //double up
+                        if (c >= setlength && c < setlength * 2) { //double up
                             k = itemset[c - setlength];
                         }
                         if (c >= setlength * 2) { //top of array is random items within set
@@ -359,7 +361,7 @@ namespace Merrow {
                         if (c < setlength) { //bottom of array is all weighted items
                             k = itemset[c];
                         }
-                        if (c < setlength * 2) { //double up
+                        if (c >= setlength && c < setlength * 2) { //double up
                             k = itemset[c - setlength];
                         }
                         if (c >= setlength * 2) { //top of array is random items within set
@@ -1295,7 +1297,7 @@ namespace Merrow {
         }
 
         public void itemListWipe(ListView listID) { //wipe the specified item list so we can set it
-            for (int i = 0; i < 26; i++) {
+            for (int i = 0; i < listID.Items.Count; i++) {
                 ListViewItem listChestItem = listID.Items[i];
                 listChestItem.Checked = false;
             }
@@ -1305,6 +1307,36 @@ namespace Merrow {
             for (int i = 0; i < listArray.Length; i++) {
                 ListViewItem listChestItem = listID.Items[listArray[i]];
                 listChestItem.Checked = true;
+            }
+        }
+
+        public string itemListSkim(ListView listID) {
+            string hexencode = "";
+
+            for (int i = 0; i < listID.Items.Count; i++) {
+                ListViewItem listChestItem = listID.Items[i];
+                if (listChestItem.Checked) { hexencode += "1"; }
+                if (!listChestItem.Checked) { hexencode += "0"; }
+            }
+
+            int bintohex = Convert.ToInt32(hexencode, 2); //binary string to int
+
+            return bintohex.ToString("X8"); //return int as hex string
+        }
+
+        public void itemListUnpack(ListView listID, string hexdecode) {
+            bool[] unpacks = new bool[listID.Items.Count];
+            int hextoint = Convert.ToInt32(hexdecode, 16);
+            string inttobin = Convert.ToString(hextoint, 2);
+
+            while(inttobin.Length < listID.Items.Count) { inttobin = "0" + inttobin; }
+
+            Console.WriteLine(inttobin.Length.ToString() + ">" + listID.Items.Count.ToString());
+
+            for (int i = 0; i < listID.Items.Count; i++) {
+                ListViewItem listChestItem = listID.Items[i];
+                if (inttobin[i] == '1') { listChestItem.Checked = true; }
+                if (inttobin[i] == '0') { listChestItem.Checked = false; }
             }
         }
 
@@ -1420,10 +1452,10 @@ namespace Merrow {
         }
 
         public void UpdateCode() {
+            updatingcode = true;
             int tabpagestocheck = 3;
             string codeString = labelVersion.Text.Substring(1);
             string tempString;
-            byte[] tempBytes = null;
             var toggles = new List<CheckBox>();
             var dropdowns = new List<ComboBox>();
             var sliders = new List<TrackBar>();
@@ -1441,23 +1473,53 @@ namespace Merrow {
                     if (toggle.Checked) { tempString += 1; } else { tempString += 0; } //build binary string
                 }
                 int test = Convert.ToInt32(tempString, 2); //convert binary string to int
-                codeString += "T" + "." + HexToBase64(test.ToString("X")) + "."; //int to hex to 64b
-                Console.WriteLine(codeString);
+                codeString += ".T." + HexToBase64(test.ToString("X")) + "."; //int to hex to 64b
+
+                //this string needs to be encoded piece by piece
+                //custom values will have custom delimiter and format
+                //for custom values, collect each 4 items in each list as a binary>hex conversion, single hex character 0-F
 
                 tempString = "";
-                foreach (var dropdown in dropdowns) {
-                    //one possible shortening method: count consecutive 0 values and amalgamate them in a separate counter
-                    if (dropdown.SelectedIndex == 8) { //if custom
-                        if (dropdown.Name == "rndChestDropdown" || dropdown.Name == "rndDropsDropdown" || dropdown.Name == "rndGiftersDropdown" || dropdown.Name == "rndWingsmithsDropdown") {
-                            //still need to account for custom values
+                string itemString = "";
+                codeString += "L.";
 
+                foreach (var dropdown in dropdowns) {
+                    bool bighex = false;
+                    string listString = "";
+                    if (dropdown.Items.Count > 16) { bighex = true; }
+
+                    //one possible shortening method: count consecutive 0 values and amalgamate them in a separate counter
+                    if (dropdown.SelectedIndex == 8) { //if custom items
+                        if (dropdown.Name == "rndChestDropdown" || dropdown.Name == "rndDropsDropdown" || dropdown.Name == "rndGiftersDropdown" || dropdown.Name == "rndWingsmithsDropdown") {
+                            if (dropdown.Name == "rndChestDropdown") {
+                                listString = itemListSkim(itemListView1);
+                                itemString += ":!" + HexToBase64(listString);
+                            }
+                            if (dropdown.Name == "rndDropsDropdown") {
+                                listString = itemListSkim(itemListView2);
+                                itemString += ":@" + HexToBase64(listString);
+                            }
+                            if (dropdown.Name == "rndGiftersDropdown") {
+                                listString = itemListSkim(itemListView3);
+                                itemString += ":#" + HexToBase64(listString);
+                            }
+                            if (dropdown.Name == "rndWingsmithsDropdown") {
+                                listString = itemListSkim(itemListView4);
+                                itemString += ":$" + HexToBase64(listString);
+                            }
+                            if (!bighex) { tempString += dropdown.SelectedIndex.ToString("X1"); } //also put the 8 in tempstring for reference
                         }
-                        else { tempString += dropdown.SelectedIndex.ToString("X2"); } //convert values to hex
+                        else { //convert values to hex and then add as base64
+                            if (bighex) { tempString += dropdown.SelectedIndex.ToString("X2"); }
+                            if (!bighex) { tempString += dropdown.SelectedIndex.ToString("X1"); }
+                        } 
                     }
-                    else { tempString += dropdown.SelectedIndex.ToString("X2"); } //convert values to hex
+                    else { //convert values to hex and then add as base64
+                        if (bighex) { tempString += dropdown.SelectedIndex.ToString("X2"); }
+                        if (!bighex) { tempString += dropdown.SelectedIndex.ToString("X1"); }
+                    }
                 }
-                codeString += "L" + "." + HexToBase64(tempString) + ".";
-                Console.WriteLine(codeString);
+                codeString += HexToBase64(tempString) + itemString + "."; 
 
                 tempString = "";
                 if(sliders.Count > 0) { 
@@ -1465,15 +1527,152 @@ namespace Merrow {
                         tempString += slider.Value.ToString("X3"); //convert values to hex
                     }
                     if (tempString.Length % 2 != 0) { tempString = "0" + tempString; } //ensure it's an even number of characters
-                    codeString += "S" + "." + HexToBase64(tempString);
+                    codeString += "S." + HexToBase64(tempString);
                 } else {
                     codeString += "SZ";
                 }
-                
-                Console.WriteLine(codeString);
-
                 rndShortcodeText.Text = codeString;
             }
+            updatingcode = false;
+        }
+
+        public int ApplyCode() {
+            updatingcode = true;
+            string currentCode = rndShortcodeText.Text;
+            int tabpagestocheck = 3;
+            string versionNumber = labelVersion.Text.Substring(1);
+            string tempString;
+            var toggles = new List<CheckBox>();
+            var dropdowns = new List<ComboBox>();
+            var sliders = new List<TrackBar>();
+            //all of these could be an array but for the purposes of building this, i'm brute-forcing it.
+            string togglestring = "";
+            string dropdownstring = "";
+            string sliderstring = "";
+            string itemstring1 = "%"; //percent sign persists if unedited
+            string itemstring2 = "%";
+            string itemstring3 = "%";
+            string itemstring4 = "%";
+            int togglestart = 0; //starting locations of values in code
+            int dropdownstart = 0;
+            int sliderstart = 0;
+            int dropdownend = 0;
+            int firstcolon = -1; //-1 persists if no itemstrings
+
+            if (currentCode.Length < 2) { return 0; }
+
+            if (currentCode.Substring(0, 2) != versionNumber) { return 0; } //wrong version number fails out immediately
+
+            //check each page in turn, convert each page's values and add it to the lists
+            for (int i = 0; i < tabpagestocheck; i++) {
+                toggles.AddRange(GetAllToggles(rndTabs.TabPages[i]));
+                dropdowns.AddRange(GetAllDropdowns(rndTabs.TabPages[i]));
+                sliders.AddRange(GetAllSliders(rndTabs.TabPages[i]));
+            }
+
+            //search string for starting and ending points
+            for (int i = 0; i < currentCode.Length-3; i++) { //only go near end of the string to prevent overflow
+                if (currentCode.Substring(i, 3) == ".T.") { togglestart = i + 3; }
+                if (currentCode.Substring(i, 3) == ".L.") {
+                    dropdownstart = i + 3;
+                    togglestring = currentCode.Substring(togglestart, i - togglestart);
+                }
+                if (currentCode.Substring(i, 3) == ".S.") {
+                    sliderstart = i + 3;
+                    dropdownend = i - 1; //set dropdownstring below, depending on if there are itemstrings or not
+                    sliderstring = currentCode.Substring(sliderstart);
+                }
+                if (currentCode.Substring(i, 3) == ".SZ") { //if there are no sliders
+                    sliderstart = -1;
+                    dropdownstring = currentCode.Substring(dropdownstart, i - dropdownstart);
+                } 
+
+                if (currentCode[i] == ':' && firstcolon == -1) { firstcolon = i; } //to mark end of dropdownstring
+
+                if (currentCode.Substring(i, 2) == ":!") { itemstring1 = currentCode.Substring(i + 2, 8); } //always 8 characters, so we can just grab them now
+                if (currentCode.Substring(i, 2) == ":@") { itemstring2 = currentCode.Substring(i + 2, 8); } 
+                if (currentCode.Substring(i, 2) == ":#") { itemstring3 = currentCode.Substring(i + 2, 8); } 
+                if (currentCode.Substring(i, 2) == ":$") { itemstring4 = currentCode.Substring(i + 2, 8); } 
+            }
+
+            Console.WriteLine(itemstring1);
+
+            //now define dropdownstring
+            if (itemstring1 == "%" && itemstring2 == "%" && itemstring3 == "%" && itemstring4 == "%") { //no itemstrings
+                dropdownstring = currentCode.Substring(dropdownstart, 1 + dropdownend - dropdownstart); //+1 for length value
+            } else { dropdownstring = currentCode.Substring(dropdownstart, firstcolon - dropdownstart); } //already +1
+
+            if (togglestart == 0 || dropdownstart == 0 || sliderstart == 0) { return 0; } //kick out, malformatted string
+
+            if (togglestring.Length % 2 != 0 || dropdownstring.Length % 2 != 0 || sliderstring.Length % 2 != 0) { return 0; }
+
+            //DECODE TOGGLES
+            //64b to hex to int to binary
+            string toggletemp = Base64ToHex(togglestring);
+            toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2);
+
+            var x = 0;
+            foreach (var toggle in toggles) {
+                if (toggletemp[x] == '1') { toggle.Checked = true; } else { toggle.Checked = false; } //read binary string
+                x++;
+            }
+
+            //DECODE DROPDOWNS
+            //set all them first: check the dropdown's length, and iterate the count by either 1 or 2 if bighex.
+            //and then override the item lists after if needed
+
+            string dropdowntemp = Base64ToHex(dropdownstring);
+            x = 0;
+            foreach (var dropdown in dropdowns) {
+                bool bighex = false;
+                int currentvalue = 0;
+                if (dropdown.Items.Count > 16) { bighex = true; }
+
+                if (bighex) {
+                    currentvalue = Convert.ToInt32(dropdowntemp.Substring(x, 2), 16); //two hex chars as int
+                    x += 2;
+                }
+                if (!bighex) {
+                    currentvalue = Convert.ToInt32(dropdowntemp.Substring(x, 1), 16); //one hex char as int
+                    x += 1;
+                }
+                dropdown.SelectedIndex = currentvalue; //update the dropdown
+            }
+
+            if (firstcolon != -1) { //any itemstrings
+                if (itemstring1 != "%") {
+                    tempString = Base64ToHex(itemstring1);
+                    itemListUnpack(itemListView1, tempString);
+                }
+                if (itemstring2 != "%") {
+                    tempString = Base64ToHex(itemstring2);
+                    itemListUnpack(itemListView2, tempString);
+                }
+                if (itemstring3 != "%") {
+                    tempString = Base64ToHex(itemstring3);
+                    itemListUnpack(itemListView3, tempString);
+                }
+                if (itemstring4 != "%") {
+                    tempString = Base64ToHex(itemstring4);
+                    itemListUnpack(itemListView4, tempString);
+                }
+            }
+
+            //DECODE SLIDERS
+
+            if (sliderstart != -1) { //only if sliders exist
+                string slidertemp = Base64ToHex(sliderstring);
+                if (slidertemp.Length % 3 != 0) { slidertemp = slidertemp.Substring(1); } //remove the optional leading zero
+                x = 0;
+                foreach (var slider in sliders) {
+                    slider.Value = Convert.ToInt32(slidertemp.Substring(x, 3),16); //convert each 3-char hex value to int
+                    x += 3;
+                }
+            }
+
+            //DONE
+            updatingcode = false;
+            return 1;
         }
 
         //RND - Randomizer randomization
@@ -1726,11 +1925,14 @@ namespace Merrow {
         }
 
         private void rndZoomToggle_CheckedChanged(object sender, EventArgs e) {
-
+            rndZoomDropdown.Enabled = rndZoomToggle.Checked;
+            expUpdateWarning();
+            UpdateCode();
         }
 
         private void rndAccuracyToggle_CheckedChanged(object sender, EventArgs e) {
-
+            rndAccuracyDropdown.Enabled = rndAccuracyToggle.Checked;
+            UpdateCode();
         }
 
         private void rndMonsterScaleToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1757,7 +1959,9 @@ namespace Merrow {
         }
 
         private void rndWingUnlockToggle_CheckedChanged(object sender, EventArgs e) {
-
+            rndWingUnlockDropdown.Enabled = rndWingUnlockToggle.Checked;
+            expUpdateWarning();
+            UpdateCode();
         }
 
         private void rndHUDLockToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1895,6 +2099,59 @@ namespace Merrow {
         }
 
         private void rndZoomDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndSpellDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndSpellNamesDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndShortcodeText_TextChanged(object sender, EventArgs e) {
+            if (!updatingcode && loadfinished) { //if the code is not auto-updated, ie only when user input happens
+                int errorcode = ApplyCode();
+
+                if (errorcode == 0) {
+                    updatingcode = true;
+                    rndShortcodeText.Text = "";
+                    updatingcode = false;
+                }
+            }
+        }
+
+        private void rndHPTrackBar_ValueChanged(object sender, EventArgs e) {
+            rndStartHPValue.Text = rndHPTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndMPTrackBar_ValueChanged(object sender, EventArgs e) {
+            rndStartMPValue.Text = rndMPTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndAgiTrackBar_ValueChanged(object sender, EventArgs e) {
+            rndStartAgiValue.Text = rndAgiTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndDefTrackBar_ValueChanged(object sender, EventArgs e) {
+            rndStartDefValue.Text = rndDefTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndMPRegainTrackBar_ValueChanged(object sender, EventArgs e) {
+            if (rndMPRegainTrackBar.Value == 7) {
+                rndMPRegainValue.Text = "OFF";
+            }
+            if (rndMPRegainTrackBar.Value < 10 && rndMPRegainTrackBar.Value > 7) {
+                rndMPRegainValue.Text = "1/" + (11 - rndMPRegainTrackBar.Value).ToString() + "x";
+            }
+            if (rndMPRegainTrackBar.Value >= 10) {
+                rndMPRegainValue.Text = (rndMPRegainTrackBar.Value - 9).ToString() + "x";
+            }
             UpdateCode();
         }
 
@@ -2137,16 +2394,40 @@ namespace Merrow {
             }
         }
 
-        private void rndSpellDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            UpdateCode();
-        }
+        public void PopulateReference() {
+            //Spells
+            for (int i = 2; i < 5; i++) {
+                spellsDataGridView.Columns[i].ValueType = typeof(int);
+            }
 
-        private void rndSpellNamesDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            UpdateCode();
-        }
+            for (int i = 0; i < 60; i++) {
+                spellsDataGridView.Rows.Add();
+                for (int j = 0; j < 5; j++) {
+                    if (j <= 1) {
+                        spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 5 + j];
+                    }
+                    if (j >= 2) {
+                        spellsDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.spelldatatable[i * 5 + j]);
+                    }
+                }
+            }
 
-        private void rndShortcodeText_TextChanged(object sender, EventArgs e) {
+            //Monsters
+            for (int i = 1; i < 6; i++) {
+                monsterDataGridView.Columns[i].ValueType = typeof(int);
+            }
 
+            for (int i = 0; i < 75; i++) {
+                monsterDataGridView.Rows.Add();
+                for (int j = 0; j < 7; j++) {
+                    if (j == 0 || j == 6) {
+                        monsterDataGridView.Rows[i].Cells[j].Value = library.monsterdatatable[i * 7 + j];
+                    }
+                    if (j >= 1 && j <= 5) {
+                        monsterDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.monsterdatatable[i * 7 + j]);
+                    }
+                }
+            }
         }
     }
 }

@@ -28,14 +28,21 @@ namespace Merrow {
 
         public static byte[] StringToByteArray(string hex) { //Convert hex string to byte array
             int NumberChars = hex.Length;
+            if (NumberChars % 2 != 0) {
+                hex = "0" + hex;
+                NumberChars++;
+            }
             byte[] bytes = new byte[NumberChars / 2];
-            //Console.WriteLine(hex);
             for (int i = 0; i < NumberChars; i += 2) { bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16); }
             return bytes;
         }
 
         public static string HexToBase64(string input) { //convert hex string to base64 string
             return System.Convert.ToBase64String(StringToByteArray(input));
+        }
+
+        public static string Base64ToHex(string input) { //convert hex string to base64 string
+            return ByteArrayToString(System.Convert.FromBase64String(input));
         }
 
         public static string ToHex(string input) { //Convert ascii string to hex string
