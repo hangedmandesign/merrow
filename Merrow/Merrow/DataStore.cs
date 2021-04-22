@@ -353,7 +353,6 @@ namespace Merrow {
             "Tom (Brannoch Wingsmith)"
         };
 
-
         //item lists for the item randomization options.
         //these are slightly different than the game IDs, Spirit Light is not first.
         public int[] itemlist_standard = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
@@ -442,6 +441,17 @@ namespace Merrow {
             "GUILTY","D87A80",
             "BEIGIS","D87A88",
             "MAMMON","D87A90"
+        };
+
+        public string[] bosslocdata = { //boss location: map/submap addr, map/submap data (len 4b), other addr, other data (len 12b)
+            "D873A0","001F0001","D873B0","C0400000C18C000000000000",
+            "D873B8","00210000","D873C8","43BB8000C3820000C0333333",
+            "D873D0","00230000","D873E0","43D20000C32D0000BFE28F5C",
+            "D873E8","001C0000","D873F8","45786000C4E10000BFC9096C",
+            "D87400","001D0000","D87410","45DC20004490C000BFE51EB8",
+            "D87418","001E000A","D87428","00000000000000004048F5C3",
+            "D87430","001E000E","D87440","3FC00000422B333340466666",
+            "D87448","0022000A","D87458","C1A00000C3AF0000BE4CCCCD"
         };
 
         //foreach monster ID set, give it randomized new stats within the default difficulty range
@@ -764,7 +774,23 @@ namespace Merrow {
             13386860,13,
             13386916,3,
             13386972,9,
-            13387028,7
+            13387028,7,
+            14186532,20,
+            14186588,21,
+            14186644,22,
+            14186716,255,
+            14186756,23,
+            14186812,255,
+            14186868,255,
+            14186924,255,
+            14186532,20, //bosses start here
+            14186588,21,
+            14186644,22,
+            14186716,255,
+            14186756,23,
+            14186812,255,
+            14186868,255,
+            14186924,255
         };
 
         //87 entries, chest item ID location is 33 offset from addr

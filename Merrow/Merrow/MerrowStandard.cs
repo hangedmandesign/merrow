@@ -87,6 +87,7 @@ namespace Merrow {
         byte[] binFileBytes;
         byte[] rndFileBytes;
         List<string> patchstrings = new List<string>();
+        int[] newbossorder = new int[7];
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -142,6 +143,7 @@ namespace Merrow {
 
             //initiate monster stats
             for (int i = 0; i < 450; i++) { newmonsterstats[i] = library.monsterstatvanilla[i]; }
+            for (int i = 0; i < 7; i++) { newbossorder[i] = i; }
 
             //initiate UI
             PrepareDropdowns();
@@ -338,7 +340,6 @@ namespace Merrow {
                 chests[d] = temp;
             }
 
-
             //RANDOM DROPS--------------------------------------------------------------------------------
 
             //reinitiate item drops list
@@ -517,14 +518,30 @@ namespace Merrow {
             rndColourPanel3.BackColor = texPal2;
             rndColourPanel4.BackColor = texPal3;
 
-            //MONSTER STAT RANDOMIZATION
+            //MONSTER STAT AND BOSS ORDER RANDOMIZATION
 
             //initiate monster stats again, in case this is happening for the nth time
             for (int i = 0; i < 450; i++) { newmonsterstats[i] = library.monsterstatvanilla[i]; }
 
+            if (rndBossOrderToggle.Checked) {
+                //shuffle boss order array
+                int[] tempstats = new int[6];
+                d = newbossorder.Length;
+                while (d > 1) {
+                    d--;
+                    k = SysRand.Next(d + 1);
+                    int temp = newbossorder[k];
+                    //for (int i = 0; i < 6; i++) { tempstats[i] = newmonsterstats[(newbossorder[k] * 6) + 402 + i]; }
+                    newbossorder[k] = newbossorder[d];
+                    //for (int i = 0; i < 6; i++) { newmonsterstats[(newbossorder[k] * 6) + 402 + i] = newmonsterstats[(newbossorder[d] * 6) + 402 + i]; }
+                    newbossorder[d] = temp;
+                    //for (int i = 0; i < 6; i++) { newmonsterstats[(newbossorder[d] * 6) + 402 + i] = tempstats[i]; }
+                }
+            }
+
             //if monster stat randomization is active
             if (rndMonsterStatsToggle.Checked) {
-                for (int i = 16; i > -1; i--) { //17 areas
+                for (int i = 16; i > -1; i--) { //16 areas, no bosses
                     int locals = library.mon_enemycount[i];
                     int locale = library.mon_locationsindex[i];
                     for (int j = 0; j < locals; j++) { //steps through each area's monster set one by one
@@ -642,7 +659,13 @@ namespace Merrow {
                 !rndVowelsToggle.Checked &&
                 !rndHUDLockToggle.Checked &&
                 !rndStartingStatsToggle.Checked &&
-                !rndElement99Toggle.Checked
+                !rndElement99Toggle.Checked &&
+                !rndFastMammonToggle.Checked &&
+                !rndMPRegainToggle.Checked &&
+                !rndMonsterExpToggle.Checked &&
+                !rndDriftToggle.Checked &&
+                !rndCrystalReturnToggle.Checked &&
+                !rndBossOrderToggle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -933,30 +956,62 @@ namespace Merrow {
                 }
             }
 
-            //MONSTER SCALING FEATURES
+            //MONSTER SCALING AND BOSS SHUFFLING FEATURES
 
-            if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked) {
+            if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked || rndBossOrderToggle.Checked) {
+                int moncount = 0;
                 for (int i = 0; i < newmonsterstats.Length; i++) {
-                    patchstrings.Add(library.monsterstatlocations[i].ToString("X6"));
-                    patchstrings.Add("0002");
-                    patchstrings.Add(newmonsterstats[i].ToString("X4"));
-
-                    if (i % 6 == 0) { //if the current value is HP2, write it again at the HP1 location, offset 04 (HP2 + 2).
-                        patchstrings.Add((library.monsterstatlocations[i] + 2).ToString("X6"));
+                    moncount = (i - (i % 6)) / 6;
+                    if (moncount < 67 || moncount == 74) {
+                        patchstrings.Add(library.monsterstatlocations[i].ToString("X6"));
                         patchstrings.Add("0002");
                         patchstrings.Add(newmonsterstats[i].ToString("X4"));
+
+                        if (i % 6 == 0) { //if the current value is HP2, write it again at the HP1 location, offset 04 (HP2 + 2).
+                            patchstrings.Add((library.monsterstatlocations[i] + 2).ToString("X6"));
+                            patchstrings.Add("0002");
+                            patchstrings.Add(newmonsterstats[i].ToString("X4"));
+                        }
                     }
+                    if (moncount >= 67 && moncount < 74) {
+                        int columnstep = i % 6;
+                        int rowstep = newbossorder[moncount - 67];
+                        patchstrings.Add(library.monsterstatlocations[402 + (rowstep * 6) + columnstep].ToString("X6"));
+                        patchstrings.Add("0002");
+                        patchstrings.Add(newmonsterstats[i].ToString("X4"));
+
+                        if (i % 6 == 0) { //if the current value is HP2, write it again at the HP1 location, offset 04 (HP2 + 2).
+                            patchstrings.Add((library.monsterstatlocations[402 + (rowstep * 6) + columnstep] + 2).ToString("X6"));
+                            patchstrings.Add("0002");
+                            patchstrings.Add(newmonsterstats[i].ToString("X4"));
+                        }
+                    }
+                    //if (i != 0 && i % 6 == 0) { moncount++; } //if advanced a line in array
                 }
 
                 for (int i = 0; i < 75; i++) {
-                    if (!rndVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[i * 2] + ": "; }
-                    if (rndVowelsToggle.Checked) { spoilerscales[i] = voweled[i] + ": "; }
-                    spoilerscales[i] += newmonsterstats[i * 6].ToString() + " ";
-                    spoilerscales[i] += newmonsterstats[(i * 6) + 1].ToString() + " ";
-                    spoilerscales[i] += newmonsterstats[(i * 6) + 2].ToString() + " ";
-                    spoilerscales[i] += newmonsterstats[(i * 6) + 3].ToString() + " ";
-                    spoilerscales[i] += newmonsterstats[(i * 6) + 4].ToString() + " ";
-                    spoilerscales[i] += newmonsterstats[(i * 6) + 5].ToString();
+                    if (i < 67 || i == 74) {
+                        if (!rndVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[i * 2] + ": "; }
+                        if (rndVowelsToggle.Checked) { spoilerscales[i] = voweled[i] + ": "; }
+                        spoilerscales[i] += newmonsterstats[i * 6].ToString() + " ";
+                        spoilerscales[i] += newmonsterstats[(i * 6) + 1].ToString() + " ";
+                        spoilerscales[i] += newmonsterstats[(i * 6) + 2].ToString() + " ";
+                        spoilerscales[i] += newmonsterstats[(i * 6) + 3].ToString() + " ";
+                        spoilerscales[i] += newmonsterstats[(i * 6) + 4].ToString() + " ";
+                        spoilerscales[i] += newmonsterstats[(i * 6) + 5].ToString();
+                    }
+                    if (i >= 67 && i < 74) {
+                        int falsei = i;
+                        if (rndBossOrderToggle.Checked) { falsei = 67 + newbossorder[i - 67]; }
+                        if (!rndVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[falsei * 2] + ": "; }
+                        if (rndVowelsToggle.Checked) { spoilerscales[i] = voweled[falsei] + ": "; }
+                        spoilerscales[i] += newmonsterstats[i * 6].ToString() + " ";
+                        spoilerscales[i] += newmonsterstats[(i * 6) + 1].ToString() + " ";
+                        spoilerscales[i] += newmonsterstats[(i * 6) + 2].ToString() + " ";
+                        spoilerscales[i] += newmonsterstats[(i * 6) + 3].ToString() + " ";
+                        spoilerscales[i] += newmonsterstats[(i * 6) + 4].ToString() + " ";
+                        spoilerscales[i] += newmonsterstats[(i * 6) + 5].ToString();
+                    }
                 }
 
                 if (rndMonsterStatsToggle.Checked && extremity == 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized within regions." + Environment.NewLine); }
@@ -965,6 +1020,25 @@ namespace Merrow {
                 if (rndMonsterExpToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster experience scaled to new stat values." + Environment.NewLine); }
             }
 
+            if (rndBossOrderToggle.Checked) { //Boss Order Shuffle
+                for (int i = 0; i < 7; i++) {
+                    patchstrings.Add(library.bosslocdata[newbossorder[i] * 4]);
+                    patchstrings.Add("0004");
+                    patchstrings.Add(library.bosslocdata[(i * 4) + 1]);
+
+                    patchstrings.Add(library.bosslocdata[(newbossorder[i] * 4) + 2]);
+                    patchstrings.Add("000C");
+                    patchstrings.Add(library.bosslocdata[(i * 4) + 3]);
+
+                    int bossaddr = library.dropdata[(i + 67) * 2];
+                    int newitem = library.dropdata[((newbossorder[i] + 67) * 2) + 1];
+                    patchstrings.Add(bossaddr.ToString("X6"));
+                    patchstrings.Add("0001");
+                    patchstrings.Add(newitem.ToString("X2"));
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss order shuffled." + Environment.NewLine);
+            }
             //QUALITY OF LIFE FEATURES
 
             if (rndInvalidityToggle.Checked) { //Invalidity
@@ -1190,6 +1264,26 @@ namespace Merrow {
                 patchstrings.Add("607920");
                 patchstrings.Add("0008");
                 patchstrings.Add("0000000F000D0000");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Mammon's World enabled." + Environment.NewLine);
+            }
+
+            //Celtland Drift
+            if (rndDriftToggle.Checked) {
+                patchstrings.Add("071B50");
+                patchstrings.Add("0004");
+                patchstrings.Add("3ff44444");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Celtland Drift enabled." + Environment.NewLine);
+            }
+
+            //Crystal Valley Postern
+            if (rndCrystalReturnToggle.Checked) {
+                patchstrings.Add("206EB0");
+                patchstrings.Add("0024");
+                patchstrings.Add("42020000C3BC0000BFC90FF940C0000040E0000000160016000000090007001A00020003");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Crystal Valley return warp enabled." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT
@@ -1221,7 +1315,7 @@ namespace Merrow {
                     foreach (string line in spoilerwings) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 
-                if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked) {
+                if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked || rndBossOrderToggle.Checked) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED MONSTER STATS (HP, ATK, DEF, AGI, EXP, ELEMENT):" + Environment.NewLine);
                     foreach (string line in spoilerscales) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
@@ -1360,6 +1454,8 @@ namespace Merrow {
             binFileBytes = null;
             crcErrorLabel.Visible = false;
             crcFileSelected = false;
+            if (tabsControl.SelectedIndex > 2) { helpLabel.Visible = false; }
+            else { helpLabel.Visible = true; }
             expModeSet();
         }
 
@@ -1456,6 +1552,7 @@ namespace Merrow {
             int tabpagestocheck = 3;
             string codeString = labelVersion.Text.Substring(1);
             string tempString;
+            string binString2;
             var toggles = new List<CheckBox>();
             var dropdowns = new List<ComboBox>();
             var sliders = new List<TrackBar>();
@@ -1468,12 +1565,24 @@ namespace Merrow {
                     sliders.AddRange(GetAllSliders(rndTabs.TabPages[i]));
                 }
 
+                int steps = 0;
                 tempString = "";
-                foreach (var toggle in toggles) {
-                    if (toggle.Checked) { tempString += 1; } else { tempString += 0; } //build binary string
+                binString2 = "";
+                foreach (var toggle in toggles) { //build binary strings
+                    steps++;
+                    if (toggle.Checked) {
+                        if (steps <= 32) { tempString += 1; }
+                        if (steps > 32) { binString2 += 1; }
+                    } else {
+                        if (steps <= 32) { tempString += 0; }
+                        if (steps > 32) { binString2 += 0; }
+                    } 
                 }
                 int test = Convert.ToInt32(tempString, 2); //convert binary string to int
-                codeString += ".T." + HexToBase64(test.ToString("X")) + "."; //int to hex to 64b
+                int test2 = 0;
+                if (steps > 32) { test2 = Convert.ToInt32(binString2, 2); }
+                if (steps > 32) { codeString += ".T." + test.ToString("X") + "-" + test2.ToString("X") + "."; }//int to hex to 64b
+                else { codeString += ".T." + test.ToString("X") + "."; }
 
                 //this string needs to be encoded piece by piece
                 //custom values will have custom delimiter and format
@@ -1608,8 +1717,17 @@ namespace Merrow {
 
             //DECODE TOGGLES
             //64b to hex to int to binary
-            string toggletemp = Base64ToHex(togglestring);
+            string toggletemp = togglestring;
+            string toggletemp2 = "";
+            for (int i = 0; i < togglestring.Length; i++) {
+                if (togglestring[i] == '-') {
+                    toggletemp = togglestring.Substring(0, i); //first half of string, up to hyphen
+                    toggletemp2 = togglestring.Substring(i + 1); //separate out second half of string, skip hyphen
+                } 
+            }
+            
             toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2);
+            if (toggletemp2 != "") { toggletemp += Convert.ToString(Convert.ToInt32(toggletemp2, 16), 2); } //just add it to the binary string
 
             var x = 0;
             foreach (var toggle in toggles) {
@@ -2155,6 +2273,11 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndDriftToggle_CheckedChanged(object sender, EventArgs e) {
+            expUpdateWarning();
+            UpdateCode();
+        }
+
         //ITEM - Randomizer granular item controls
 
         private void itemListView1_ItemChecked(object sender, ItemCheckedEventArgs e) {
@@ -2267,7 +2390,8 @@ namespace Merrow {
                 rndHUDLockToggle.Checked ||
                 rndStartingStatsToggle.Checked ||
                 rndElement99Toggle.Checked ||
-                rndMPRegainToggle.Checked) 
+                rndMPRegainToggle.Checked ||
+                rndDriftToggle.Checked) 
                 { rndErrorLabel.Text = rndErrorString; }
             }
         }
@@ -2404,7 +2528,7 @@ namespace Merrow {
                 spellsDataGridView.Rows.Add();
                 for (int j = 0; j < 5; j++) {
                     if (j <= 1) {
-                        spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 5 + j];
+                        spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 5 + j].ToUpper();
                     }
                     if (j >= 2) {
                         spellsDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.spelldatatable[i * 5 + j]);
@@ -2419,15 +2543,23 @@ namespace Merrow {
 
             for (int i = 0; i < 75; i++) {
                 monsterDataGridView.Rows.Add();
-                for (int j = 0; j < 7; j++) {
+                for (int j = 0; j < 8; j++) {
                     if (j == 0 || j == 6) {
                         monsterDataGridView.Rows[i].Cells[j].Value = library.monsterdatatable[i * 7 + j];
                     }
                     if (j >= 1 && j <= 5) {
                         monsterDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.monsterdatatable[i * 7 + j]);
                     }
+                    if (j == 7) {
+                        if (library.dropdata[i * 2 + 1] == 255) { monsterDataGridView.Rows[i].Cells[j].Value = "-"; }
+                        if (library.dropdata[i * 2 + 1] != 255) { monsterDataGridView.Rows[i].Cells[j].Value = library.items[library.dropdata[i * 2 + 1] * 3]; }
+                    }
                 }
             }
+        }
+
+        private void rndBossOrderToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
         }
     }
 }
