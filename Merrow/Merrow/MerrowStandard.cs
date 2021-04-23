@@ -522,6 +522,7 @@ namespace Merrow {
 
             //initiate monster stats again, in case this is happening for the nth time
             for (int i = 0; i < 450; i++) { newmonsterstats[i] = library.monsterstatvanilla[i]; }
+            for (int i = 0; i < 7; i++) { newbossorder[i] = i; }
 
             if (rndBossOrderToggle.Checked) {
                 //shuffle boss order array
