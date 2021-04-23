@@ -109,24 +109,24 @@ namespace Merrow {
             "DECAY","ENTROPY","D4EEA0","D4B890","800C3AE0",
             "WATER","PILLAR","D4EEB0","D4B894","800C3AF0",
             "OCEAN","COLUMN","D4EEC0","D4B898","800C3B00",
-            "HEALING","HEAL","D4EED0","D4B89C","800C3B10",
+            "HEALING","MENDING","D4EED0","D4B89C","800C3B10",
             "SCAN","VISION","D4EEE0","D4B8A0","800C3B20",
             "DROWN","SPIRE","D4EEF0","D4B8A4","800C3B30",
             "CRYSTAL","ICE","D4EF00","D4B8A8","800C3B40",
             "FROZEN","COLD","D4EF10","D4B8AC","800C3B50",
-            "FREEING","EXIT","D4EF20","D4B8B0","800C3B60",
-            "FLEEING","ESCAPE","D4EF30","D4B8B4","800C3B70",
-            "RETURN","RECALL","D4EF40","D4B8B8","800C3B80",
+            "FREEING","DOORWAY","D4EF20","D4B8B0","800C3B60",
+            "FLEEING","VANISH","D4EF30","D4B8B4","800C3B70",
+            "RECALL","PORTAL","D4EF40","D4B8B8","800C3B80",
             "BLESSED","BLESS","D4EF50","D4B8BC","800C3B90",
             "SIGHT","SEARCH","D4EF60","D4B8C0","800C3BA0",
             "WALKING","WAVES","D4EF70","D4B8C4","800C3BB0",
             "DRAIN","MAGIC","D4EF80","D4B8C8","800C3BC0",
             "CURE","PANACEA","D4EF90","D4B8CC","800C3BD0",
-            "WIND","CUTTER","D4EFA0","D4B8D0","800C3BE0",
+            "WINDY","CUTTER","D4EFA0","D4B8D0","800C3BE0",
             "ROILING","SLICER","D4EFB0","D4B8D4","800C3BF0",
             "LOCKING","PRISON","D4EFC0","D4B8D8","800C3C00",
             "QUICKEN","SPEED","D4EFD0","D4B8DC","800C3C10",
-            "QUIET","MUTE","D4EFE0","D4B8E0","800C3C20",
+            "QUIET","WHISPER","D4EFE0","D4B8E0","800C3C20",
             "RAGING","BLADES","D4EFF0","D4B8E4","800C3C30",
             "SLICING","CLEAVER","D4F000","D4B8E8","800C3C40",
             "BINDING","BONDS","D4F010","D4B8EC","800C3C50",
@@ -249,6 +249,9 @@ namespace Merrow {
             -1,-1,-1,-1,-1,-1,6,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,37,38,39,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
             -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
         };
+
+        public int[] noearlyhealing = { -1, -1, -1, 32, -1, -1, -1, -1, -1, 32, -1, -1, 32, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 32, 32, -1, -1, -1, 32, 32, -1, -1, -1, -1, -1, -1, -1, -1 };
+        public int[] earlyhealingmodifier = { 32, -1, -1, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, -1, -1, -1, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, -1, -1, -1, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, -1, -1, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 };
 
         //spell categories
         public int[] statusspells = { 6, 17, 19, 22, 24, 25, 29, 43, 44, 47, 48, 49, 52, 54, 56, 57, 58 };
@@ -542,6 +545,17 @@ namespace Merrow {
 
         public int[] boss_regions = {
             1, 6, 8, 10, 12, 15, 15, 16
+        };
+
+        //rather than scaling shuffled bosses, we can recalculate their stats based on their BST:stat ratios
+        public double[] bossbstratios = { //BST, ATK%, DEF%, AGI%
+            38d, 0.16, 0.39, 0.45,  //Solvaring - 6,15,17: BST 38
+            112d, 0.20, 0.27, 0.53, //Zelse - 22,30,60: BST 112
+            169d, 0.15, 0.38, 0.47, //Nepty - 24,65,80: BST 169
+            194d, 0.14, 0.40, 0.46, //Shilf - 27,77,90: BST 194
+            220d, 0.15, 0.40, 0.45, //Fargo - 32,88,100: BST 220
+            242d, 0.15, 0.37, 0.48, //Guilty - 34,88,120: BST 242
+            276d, 0.14, 0.36, 0.50  //Beigis - 36,100,140: BST 276
         };
 
         //locations of monster stat values in ROM. 

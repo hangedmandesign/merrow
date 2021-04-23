@@ -124,7 +124,10 @@
     <value>17, 17</value>
   </metadata>
   <data name="rndAccuracyToggle.ToolTip" xml:space="preserve">
-    <value>Normalizes accuracy values. This does not mean no misses, but instead the normal Agi-based hit rate of most spells. 
+    <value>Normalizes spell accuracy values to 100. 
+All spells will pass the initial accuracy check, but offensive spells can still miss 
+since they always roll a comparative-Agility hit rate calculation after the base chance.
+
 Status spells: Changes positive/negative status effects' accuracy to 100.
 All spells: Changes all spells' accuracy to 100 (Also includes Escape, Extinction, etc.)</value>
   </data>
@@ -136,36 +139,14 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
-  <data name="rndMonsterExpToggle.ToolTip" xml:space="preserve">
-    <value>Uses an approximate formula based on enemy Base Stat Total (BST)
-to recalculate experience gained on victory. Useful for making more 
-significantly scaled/randomized runs theoretically possible.
-
-Requires either randomized or scaled stats to be enabled.</value>
-  </data>
-  <data name="rndMonsterScaleToggle.ToolTip" xml:space="preserve">
-    <value>Scales enemy stats by simple multiplication.
-Applies to bosses. Has a more severe effect than variance.
-
-NOTE: The 'Enemy stat scaling' feature is applied AFTER the effects of 
-'Randomize monster stats'. Setting both to higher values may cause 
-extreme results.
-</value>
-  </data>
-  <data name="rndMonsterStatsToggle.ToolTip" xml:space="preserve">
-    <value>Randomizes enemy stats.
-All monsters in each region will receive new stats, randomly chosen
-from a range from lowest to highest local vanilla values for that stat.
-Increasing the Variance modifier will increase the width of that range,
-beyond the vanilla lowest-highest bounds.
-Bosses are included in stat randomization, but their Variance scaling
-is halved to make up for their generally larger numbers skewing output.
-
-Example: At Variance 1.0, all Holy Plain enemies will get a new random 
-HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
-
-NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
-and Variance. Setting both values higher may have extreme results.</value>
+  <data name="newLabel.Text" xml:space="preserve">
+    <value>● Added Boss Shuffle. Shuffled bosses inherit the stat totals and item drops of the boss they're replacing, to avoid softlocks. This may still be wildly unstable, and also we don't know how to adjust boss arena size so Solvaring-arena fights may get weird.
+● Added the option to randomize the elements of the 'Dark' (resistant to all element) bosses: Guilty and Mammon.
+● Added Guarantee early Healing, which ensures Healing 1 appears in the first few slots of one of the elements. 
+● Added the Quest 64 Reference. Just spells and monsters and spell name hints so far, but if there's something else that might be useful it can be added easily.
+● Moved most of the QoL features into other categories where they make more sense.
+● Updated RISK calculation to take other Monster changes into account.
+● Reworked of some internal code structures and a massive cleanup of object and variable names.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
@@ -225,7 +206,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACw
-        IQAAAk1TRnQBSQFMAgEBGgEAARgBAQEYAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IQAAAk1TRnQBSQFMAgEBGgEAASABAQEgAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAXADAAEBAQABCAYAARwYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -427,6 +408,42 @@ SHUFFLED: Redistribute spell properties randomly, with some crash protection rul
 Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
 Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
   </data>
+  <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
+    <value>Randomize the order of all bosses other than Mammon.
+Boss stats will maintain their stat:BST ratios, but BST will be scaled to the level of
+the boss they're replacing, and they will drop the appropriate progression items.</value>
+  </data>
+  <data name="rndMonsterExpToggle.ToolTip" xml:space="preserve">
+    <value>Uses an approximate formula based on enemy Base Stat Total (BST)
+to recalculate experience gained on victory. Useful for making more 
+significantly scaled/randomized runs theoretically possible.
+
+Requires either randomized or scaled stats to be enabled.</value>
+  </data>
+  <data name="rndMonsterScaleToggle.ToolTip" xml:space="preserve">
+    <value>Scales enemy stats by simple multiplication.
+Applies to bosses. Has a more severe effect than variance.
+
+NOTE: The 'Enemy stat scaling' feature is applied AFTER the effects of 
+'Randomize monster stats'. Setting both to higher values may cause 
+extreme results.
+</value>
+  </data>
+  <data name="rndMonsterStatsToggle.ToolTip" xml:space="preserve">
+    <value>Randomizes enemy stats.
+All monsters in each region will receive new stats, randomly chosen
+from a range from lowest to highest local vanilla values for that stat.
+Increasing the Variance modifier will increase the width of that range,
+beyond the vanilla lowest-highest bounds.
+Bosses are included in stat randomization, but their Variance scaling
+is halved to make up for their generally larger numbers skewing output.
+
+Example: At Variance 1.0, all Holy Plain enemies will get a new random 
+HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
+
+NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
+and Variance. Setting both values higher may have extreme results.</value>
+  </data>
   <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
     <value>Changes the text colour palette.
 &lt;COLOUR&gt;: Use one of four default included colours.
@@ -535,6 +552,24 @@ Each entry should follow this format: (address),(length),...
 The binary file will be read starting at [address], for [length] bytes.
 After entry, ensure you select below what format each value type is in.</value>
   </data>
+  <metadata name="dataGridViewTextBoxColumn6.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="dataGridViewTextBoxColumn7.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="dataGridViewTextBoxColumn8.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Column8.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Column9.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Column10.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

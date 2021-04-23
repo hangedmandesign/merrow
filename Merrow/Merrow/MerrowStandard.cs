@@ -223,6 +223,21 @@ namespace Merrow {
                 //int r;
                 //int s;
 
+                //early healing 
+                if (rndSpellToggle.Checked && rndEarlyHealingToggle.Checked) {
+                    for (int i = 0; i < playerspells; i++) {
+                        library.crashlock[(i * playerspells) + 32] = library.earlyhealingmodifier[i];
+                    }
+                }
+
+                //no early healing, fix the array in case it's been changed
+                if (!rndEarlyHealingToggle.Checked) {
+                    for (int i = 0; i < playerspells; i++) {
+                        library.crashlock[(i * playerspells) + 32] = library.noearlyhealing[i];
+                    }
+                }
+
+                //spell distribution
                 while (reorg.Count > 0) {
                     for (int i = 0; i < playerspells; i++) { //spell number
                         step = false;
@@ -558,20 +573,37 @@ namespace Merrow {
                         }
                     }
                 }
+            }
 
-                //boss randomization, ranges are hard-coded rn based on local area
-                //variance is halved on bosses to restrain balance, since higher values mean wilder varied numbers
+            //boss randomization is done separately, ranges are hard-coded rn based on local area
+            //variance is halved on bosses to restrain balance, since higher values mean wilder varied numbers
+            if (rndMonsterStatsToggle.Checked || rndBossOrderToggle.Checked) {
                 for (int i = 0; i < 8; i++) {
                     int currentmonster = 67 + i;
                     int region = library.boss_regions[i];
                     for (int m = 0; m < 5; m++) { //sets each of their 5 new stats, based on area average, variance, and difficulty modifier
                         double currentstat = library.monsterstatvanilla[currentmonster * 6 + m];
-                        double highend = ((library.avg_monster[(region * 7) + 5] + 10) / 2) * (1 + extremity); //+10/2 halves variance
-                        double lowend = ((library.avg_monster[(region * 7) + 6] + 10) / 2) * (1 - extremity); //+10/2 halves variance
-                        double variance = SysRand.NextDouble() * (highend - lowend) + lowend;
-                        double modifiedstat = (currentstat * (variance / 10) * (difficultyscale));
-                        newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(modifiedstat);
-                        if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; }
+
+                        //new method for ATK/DEF/AGI based on BST calc. i<7 check because it doesn't apply to mammon.
+                        //the new stat will be old boss's BST multiplied by the new bosses BST-stat ratio.
+                        if (m > 0 && m < 4 && i < 7) {
+                            currentstat = library.bossbstratios[i * 4] * library.bossbstratios[(newbossorder[i] * 4) + m];
+                        }
+
+                        if (rndMonsterStatsToggle.Checked) { 
+                            //if randomized
+                            double highend = ((library.avg_monster[(region * 7) + 5] + 10) / 2) * (1 + extremity); //+10/2 halves variance
+                            double lowend = ((library.avg_monster[(region * 7) + 6] + 10) / 2) * (1 - extremity); //+10/2 halves variance
+                            double variance = SysRand.NextDouble() * (highend - lowend) + lowend;
+                            double modifiedstat = (currentstat * (variance / 10) * (difficultyscale));
+                            newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(modifiedstat);
+                            if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; }
+                        }
+                        else { 
+                            //if unrandomized, just redistribute the BST-adjusted stats
+                            newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(currentstat);
+                            if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; }
+                        }
                     }
                 }
             }
@@ -666,7 +698,8 @@ namespace Merrow {
                 !rndMonsterExpToggle.Checked &&
                 !rndDriftToggle.Checked &&
                 !rndCrystalReturnToggle.Checked &&
-                !rndBossOrderToggle.Checked
+                !rndBossOrderToggle.Checked &&
+                !rndBossElementToggle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -724,12 +757,16 @@ namespace Merrow {
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spells overridden." + Environment.NewLine);
 
+                //Early Healing
+                if (rndEarlyHealingToggle.Checked) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Early Healing enabled." + Environment.NewLine);
+                }
+
                 if (rndSpellNamesToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
                     //boss spells
                     for (int i = 0; i < 6; i++) {
                         patchstrings.Add(library.shuffleBossSpellNames[i]); //first three are new null name, second three are boss name pointers
                     }
-
 
                     //spell pointers
                     for (int i = 0; i < playerspells; i++) {
@@ -1040,6 +1077,23 @@ namespace Merrow {
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss order shuffled." + Environment.NewLine);
             }
+
+            //Randomize Dark boss elements
+            if (rndBossElementToggle.Checked) {
+                //Guilty: 14186798/D8792E, Mammon: 14186910/D8799E
+                int temprand = SysRand.Next(0, 4);
+                patchstrings.Add("D8792C");
+                patchstrings.Add("0004");
+                patchstrings.Add("000" + temprand.ToString() + "000" + temprand.ToString());
+
+                temprand = SysRand.Next(0, 4);
+                patchstrings.Add("D8799C");
+                patchstrings.Add("0004");
+                patchstrings.Add("000" + temprand.ToString() + "000" + temprand.ToString());
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Randomized Guilty and Mammon's elements." + Environment.NewLine);
+            }
+
             //QUALITY OF LIFE FEATURES
 
             if (rndInvalidityToggle.Checked) { //Invalidity
@@ -1467,11 +1521,26 @@ namespace Merrow {
         public void UpdateRisk() {
             float variance = extremity + 1;
             riskvalue = Math.Round((difficultyscale * difficultyscale) * (variance * variance) * 10);
-            if (!rndMonsterScaleToggle.Checked && !rndMonsterStatsToggle.Checked) {
+            if (rndBossOrderToggle.Checked) { riskvalue *= 1.2; }
+            if (rndBossElementToggle.Checked) { riskvalue *= 0.9; }
+            if (rndInvalidityToggle.Checked) { riskvalue *= 0.9; }
+            if (!rndMonsterExpToggle.Checked) { riskvalue *= 1.2; }
+
+            if (!rndMonsterScaleToggle.Checked && 
+                !rndMonsterStatsToggle.Checked &&
+                !rndBossOrderToggle.Checked &&
+                !rndBossElementToggle.Checked &&
+                !rndInvalidityToggle.Checked) {
+
                 rndRiskLabel.Visible = false;
                 rndRiskLabelText.Visible = false;
             }
-            if (rndMonsterScaleToggle.Checked || rndMonsterStatsToggle.Checked) {
+            if (rndMonsterScaleToggle.Checked || 
+                rndMonsterStatsToggle.Checked ||
+                rndBossOrderToggle.Checked ||
+                rndBossElementToggle.Checked ||
+                rndInvalidityToggle.Checked) {
+
                 int redRisk = 255;
                 int greenRisk = 255;
                 if (riskvalue <= 20) {
@@ -1561,9 +1630,9 @@ namespace Merrow {
             if (loadfinished) { 
                 //check each page in turn, convert each page's values and add it to the code string
                 for (int i = 0; i < tabpagestocheck; i++) {
-                    toggles.AddRange(GetAllToggles(rndTabs.TabPages[i]));
-                    dropdowns.AddRange(GetAllDropdowns(rndTabs.TabPages[i]));
-                    sliders.AddRange(GetAllSliders(rndTabs.TabPages[i]));
+                    toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
+                    dropdowns.AddRange(GetAllDropdowns(rndTabsControl.TabPages[i]));
+                    sliders.AddRange(GetAllSliders(rndTabsControl.TabPages[i]));
                 }
 
                 int steps = 0;
@@ -1675,9 +1744,9 @@ namespace Merrow {
 
             //check each page in turn, convert each page's values and add it to the lists
             for (int i = 0; i < tabpagestocheck; i++) {
-                toggles.AddRange(GetAllToggles(rndTabs.TabPages[i]));
-                dropdowns.AddRange(GetAllDropdowns(rndTabs.TabPages[i]));
-                sliders.AddRange(GetAllSliders(rndTabs.TabPages[i]));
+                toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
+                dropdowns.AddRange(GetAllDropdowns(rndTabsControl.TabPages[i]));
+                sliders.AddRange(GetAllSliders(rndTabsControl.TabPages[i]));
             }
 
             //search string for starting and ending points
@@ -1800,11 +1869,13 @@ namespace Merrow {
             if(rndSpellToggle.Checked) {
                 rndSpellDropdown.Enabled = true;
                 rndSpellNamesToggle.Enabled = true;
+                rndEarlyHealingToggle.Enabled = true;
                 if (rndSpellNamesToggle.Checked) { rndSpellNamesDropdown.Enabled = true; }
             } else {
                 rndSpellDropdown.Enabled = false;
                 rndSpellNamesToggle.Enabled = false;
                 rndSpellNamesDropdown.Enabled = false;
+                rndEarlyHealingToggle.Enabled = false;
             }
             UpdateCode();
         }
@@ -2182,10 +2253,12 @@ namespace Merrow {
         }
 
         private void rndMonsterExpToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateRisk();
             UpdateCode();
         }
 
         private void rndInvalidityToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateRisk();
             UpdateCode();
         }
 
@@ -2276,6 +2349,20 @@ namespace Merrow {
 
         private void rndDriftToggle_CheckedChanged(object sender, EventArgs e) {
             expUpdateWarning();
+            UpdateCode();
+        }
+
+        private void rndBossOrderToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateRisk();
+            UpdateCode();
+        }
+
+        private void rndEarlyHealingToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndBossElementToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateRisk();
             UpdateCode();
         }
 
@@ -2530,6 +2617,10 @@ namespace Merrow {
                 for (int j = 0; j < 5; j++) {
                     if (j <= 1) {
                         spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 5 + j].ToUpper();
+                        if (i < 15) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose; }
+                        if (i >= 15 && i < 30) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
+                        if (i >= 30 && i < 45) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure; }
+                        if (i >= 45) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew; }
                     }
                     if (j >= 2) {
                         spellsDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.spelldatatable[i * 5 + j]);
@@ -2557,10 +2648,32 @@ namespace Merrow {
                     }
                 }
             }
-        }
 
-        private void rndBossOrderToggle_CheckedChanged(object sender, EventArgs e) {
-            UpdateCode();
+            //Hinted Names
+            for (int i = 0; i < 30; i++) {
+                hintedDataGridView.Rows.Add();
+                for (int j = 0; j < 3; j++) {
+                    if (j == 0) { //grab spell name
+                        hintedDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 5].ToUpper();
+                        if (i < 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose; }
+                        if (i >= 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
+                    }
+                    if (j > 0) { //grab 0,1 hints
+                        hintedDataGridView.Rows[i].Cells[j].Value = library.shuffleNames[(i) * 5 + (j - 1)];
+                    }
+                }
+
+                for (int j = 0; j < 3; j++) {
+                    if (j == 0) { //grab spell name
+                        hintedDataGridView.Rows[i].Cells[j + 3].Value = library.spelldatatable[(i + 30) * 5].ToUpper();
+                        if (i < 15) { hintedDataGridView.Rows[i].Cells[j + 3].Style.BackColor = Color.Azure; }
+                        if (i >= 15) { hintedDataGridView.Rows[i].Cells[j + 3].Style.BackColor = Color.Honeydew; }
+                    }
+                    if (j > 0) { //grab 0,1 hints
+                        hintedDataGridView.Rows[i].Cells[j + 3].Value = library.shuffleNames[(i + 30) * 5 + (j - 1)];
+                    }
+                }
+            }
         }
     }
 }
