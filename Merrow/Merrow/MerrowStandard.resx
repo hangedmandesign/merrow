@@ -139,6 +139,25 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
+  <data name="crcHelpLabel.ToolTip" xml:space="preserve">
+    <value>This is a CRC (N64 file checksum) Repair Tool.
+The checksum is a value calculated based on a certain portion of a Z64 file, 
+that is used to verify that the file is legitimate. Making modifications (with 
+tools or patches) to that portion of the file will cause the checksum to be
+incorrect, which causes certain hardware and emulation to fail on boot.
+
+This tool can be used to recalculate and update the checksum of a Z64 file,
+allowing hardware to recognize it as legitimate without errors or issues.
+It uses a DLL compiled from existing checksum calculation code in C. Full
+details of the algorithm and the license information for the C script are
+available in the repo, under the CRC64 subfolder.
+
+This tool is restricted to Z64 files, to prevent possible memory errors and
+other problems, but it is experimental software. Please ensure you back up any
+files before attempting any checksum repairs. It is your responsibility to 
+know what you are doing to files, and why. Merrow is offered without warranty: 
+please refer to the license readme file for more info.</value>
+  </data>
   <data name="newLabel.Text" xml:space="preserve">
     <value>● Added Boss Shuffle. Shuffled bosses inherit the stat totals and item drops of the boss they're replacing, to avoid softlocks. This may still be wildly unstable, and also we don't know how to adjust boss arena size so Solvaring-arena fights may get weird.
 ● Added the option to randomize the elements of the 'Dark' (resistant to all element) bosses: Guilty and Mammon.
@@ -207,7 +226,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACw
-        IQAAAk1TRnQBSQFMAgEBGgEAATABAQEwAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IQAAAk1TRnQBSQFMAgEBGgEAATgBAQE4AQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAXADAAEBAQABCAYAARwYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -450,25 +469,6 @@ and Variance. Setting both values higher may have extreme results.</value>
 &lt;COLOUR&gt;: Use one of four default included colours.
 SHUFFLED: Select one of those four included colours at random.
 RANDOM: Generate a palette at random. [Feature unfinished, quality not guaranteed.]</value>
-  </data>
-  <data name="crcHelpLabel.ToolTip" xml:space="preserve">
-    <value>This is a CRC (N64 file checksum) Repair Tool.
-The checksum is a value calculated based on a certain portion of a Z64 file, 
-that is used to verify that the file is legitimate. Making modifications (with 
-tools or patches) to that portion of the file will cause the checksum to be
-incorrect, which causes certain hardware and emulation to fail on boot.
-
-This tool can be used to recalculate and update the checksum of a Z64 file,
-allowing hardware to recognize it as legitimate without errors or issues.
-It uses a DLL compiled from existing checksum calculation code in C. Full
-details of the algorithm and the license information for the C script are
-available in the repo, under the CRC64 subfolder.
-
-This tool is restricted to Z64 files, to prevent possible memory errors and
-other problems, but it is experimental software. Please ensure you back up any
-files before attempting any checksum repairs. It is your responsibility to 
-know what you are doing to files, and why. Merrow is offered without warranty: 
-please refer to the license readme file for more info.</value>
   </data>
   <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

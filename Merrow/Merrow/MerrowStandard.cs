@@ -87,7 +87,7 @@ namespace Merrow {
         byte[] binFileBytes;
         byte[] rndFileBytes;
         List<string> patchstrings = new List<string>();
-        int[] newbossorder = new int[7];
+        int[] newbossorder = new int[6]; //V30: changed to <6 to exclude beigis
         int[] newbosselem = { 4, 4 };
 
         //INITIALIZATION----------------------------------------------------------------
@@ -144,7 +144,7 @@ namespace Merrow {
 
             //initiate monster stats
             for (int i = 0; i < 450; i++) { newmonsterstats[i] = library.monsterstatvanilla[i]; }
-            for (int i = 0; i < 7; i++) { newbossorder[i] = i; }
+            for (int i = 0; i < 6; i++) { newbossorder[i] = i; } //V30: changed to <6 to exclude beigis
 
             //initiate UI
             PrepareDropdowns();
@@ -538,7 +538,7 @@ namespace Merrow {
 
             //initiate monster stats again, in case this is happening for the nth time
             for (int i = 0; i < 450; i++) { newmonsterstats[i] = library.monsterstatvanilla[i]; }
-            for (int i = 0; i < 7; i++) { newbossorder[i] = i; }
+            for (int i = 0; i < 6; i++) { newbossorder[i] = i; } //V30: changed to <6 to exclude beigis
             for (int i = 0; i < 2; i++) { newbosselem[i] = 4; }
 
             if (rndBossOrderToggle.Checked) {
@@ -596,7 +596,8 @@ namespace Merrow {
 
                         //new method for ATK/DEF/AGI based on BST calc. i<7 check because it doesn't apply to mammon.
                         //the new stat will be old boss's BST multiplied by the new bosses BST-stat ratio.
-                        if (m > 0 && m < 4 && i < 7) {
+                        //V30: changed to i<6 check because it doesn't apply to mammon or beigis.
+                        if (m > 0 && m < 4 && i < 6) {
                             currentstat = library.bossbstratios[i * 4] * library.bossbstratios[(newbossorder[i] * 4) + m];
                         }
 
@@ -1010,7 +1011,7 @@ namespace Merrow {
                 int moncount = 0;
                 for (int i = 0; i < newmonsterstats.Length; i++) {
                     moncount = (i - (i % 6)) / 6;
-                    if (moncount < 67 || moncount == 74) {
+                    if (moncount < 67 || moncount >= 73) { //V30: changed to >= 73 to exclude Beigis for now
                         patchstrings.Add(library.monsterstatlocations[i].ToString("X6"));
                         patchstrings.Add("0002");
                         patchstrings.Add(newmonsterstats[i].ToString("X4"));
@@ -1021,7 +1022,7 @@ namespace Merrow {
                             patchstrings.Add(newmonsterstats[i].ToString("X4"));
                         }
                     }
-                    if (moncount >= 67 && moncount < 74) {
+                    if (moncount >= 67 && moncount < 73) { //V30: changed to < 73 to exclude Beigis for now
                         int columnstep = i % 6;
                         int rowstep = newbossorder[moncount - 67];
                         patchstrings.Add(library.monsterstatlocations[402 + (rowstep * 6) + columnstep].ToString("X6"));
@@ -1038,7 +1039,7 @@ namespace Merrow {
                 }
 
                 for (int i = 0; i < 75; i++) {
-                    if (i < 67 || i == 74) {
+                    if (i < 67 || i >= 73) { //V30: changed to >= 73 to exclude Beigis for now
                         if (!rndVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[i * 2] + ": "; }
                         if (rndVowelsToggle.Checked) { spoilerscales[i] = voweled[i] + ": "; }
                         spoilerscales[i] += newmonsterstats[i * 6].ToString() + " ";
@@ -1048,7 +1049,7 @@ namespace Merrow {
                         spoilerscales[i] += newmonsterstats[(i * 6) + 4].ToString() + " ";
                         spoilerscales[i] += newmonsterstats[(i * 6) + 5].ToString();
                     }
-                    if (i >= 67 && i < 74) {
+                    if (i >= 67 && i < 73) { //V30: changed to < 73 to exclude Beigis for now
                         int falsei = i;
                         if (rndBossOrderToggle.Checked) { falsei = 67 + newbossorder[i - 67]; }
                         if (!rndVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[falsei * 2] + ": "; }
@@ -1069,7 +1070,7 @@ namespace Merrow {
             }
 
             if (rndBossOrderToggle.Checked) { //Boss Order Shuffle
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 6; i++) { //V30: changed this to 6 to exclude Beigis for now
                     patchstrings.Add(library.bosslocdata[newbossorder[i] * 4]); //location data replacement
                     patchstrings.Add("0004");
                     patchstrings.Add(library.bosslocdata[(i * 4) + 1]);
