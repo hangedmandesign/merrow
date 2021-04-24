@@ -88,6 +88,7 @@ namespace Merrow {
         byte[] rndFileBytes;
         List<string> patchstrings = new List<string>();
         int[] newbossorder = new int[7];
+        int[] newbosselem = { 4, 4 };
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -538,22 +539,31 @@ namespace Merrow {
             //initiate monster stats again, in case this is happening for the nth time
             for (int i = 0; i < 450; i++) { newmonsterstats[i] = library.monsterstatvanilla[i]; }
             for (int i = 0; i < 7; i++) { newbossorder[i] = i; }
+            for (int i = 0; i < 2; i++) { newbosselem[i] = 4; }
 
             if (rndBossOrderToggle.Checked) {
                 //shuffle boss order array
                 int[] tempstats = new int[6];
+
                 d = newbossorder.Length;
                 while (d > 1) {
                     d--;
                     k = SysRand.Next(d + 1);
                     int temp = newbossorder[k];
-                    //for (int i = 0; i < 6; i++) { tempstats[i] = newmonsterstats[(newbossorder[k] * 6) + 402 + i]; }
                     newbossorder[k] = newbossorder[d];
-                    //for (int i = 0; i < 6; i++) { newmonsterstats[(newbossorder[k] * 6) + 402 + i] = newmonsterstats[(newbossorder[d] * 6) + 402 + i]; }
                     newbossorder[d] = temp;
-                    //for (int i = 0; i < 6; i++) { newmonsterstats[(newbossorder[d] * 6) + 402 + i] = tempstats[i]; }
                 }
             }
+
+            if (rndBossElementToggle.Checked) {
+                newbosselem[0] = SysRand.Next(0, 4); //roll Guilty element
+                newmonsterstats[437] = newbosselem[0]; //assign into array for spoiler log
+
+                newbosselem[1] = SysRand.Next(0, 4); //roll Mammon element
+                newmonsterstats[449] = newbosselem[1]; //assign into array for spoiler log
+            }
+
+            //As of V30, I'm testing a new setup where I'm halving the effect of variance. Right now it's wayyy too wide, even with low values, due to existing region variances.
 
             //if monster stat randomization is active
             if (rndMonsterStatsToggle.Checked) {
@@ -564,8 +574,8 @@ namespace Merrow {
                         int currentmonster = library.mon_locations[locale + j];
                         for (int m = 0; m < 5; m++) { //sets each of their 5 new stats, based on area average, variance, and difficulty modifier
                             double currentstat = library.avg_monster[(i * 7) + m];
-                            double highend = library.avg_monster[(i * 7) + 5] * (1 + extremity);
-                            double lowend = library.avg_monster[(i * 7) + 6] * (1 - extremity);
+                            double highend = ((library.avg_monster[(i * 7) + 5] + 10) / 2) * (1 + extremity); //+10/2 halves variance
+                            double lowend = ((library.avg_monster[(i * 7) + 6] + 10) / 2) * (1 - extremity); //+10/2 halves variance
                             double variance = SysRand.NextDouble() * (highend - lowend) + lowend;
                             double modifiedstat = (currentstat * (variance / 10) * (difficultyscale));
                             newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(modifiedstat);
@@ -576,7 +586,7 @@ namespace Merrow {
             }
 
             //boss randomization is done separately, ranges are hard-coded rn based on local area
-            //variance is halved on bosses to restrain balance, since higher values mean wilder varied numbers
+            //variance is thirded on bosses to restrain balance, since higher values mean wilder varied numbers
             if (rndMonsterStatsToggle.Checked || rndBossOrderToggle.Checked) {
                 for (int i = 0; i < 8; i++) {
                     int currentmonster = 67 + i;
@@ -592,8 +602,8 @@ namespace Merrow {
 
                         if (rndMonsterStatsToggle.Checked) { 
                             //if randomized
-                            double highend = ((library.avg_monster[(region * 7) + 5] + 10) / 2) * (1 + extremity); //+10/2 halves variance
-                            double lowend = ((library.avg_monster[(region * 7) + 6] + 10) / 2) * (1 - extremity); //+10/2 halves variance
+                            double highend = ((library.avg_monster[(region * 7) + 5] + 20) / 3) * (1 + extremity); //+20/3 thirds variance
+                            double lowend = ((library.avg_monster[(region * 7) + 6] + 20) / 3) * (1 - extremity); //+20/3 thirds variance
                             double variance = SysRand.NextDouble() * (highend - lowend) + lowend;
                             double modifiedstat = (currentstat * (variance / 10) * (difficultyscale));
                             newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(modifiedstat);
@@ -1060,19 +1070,20 @@ namespace Merrow {
 
             if (rndBossOrderToggle.Checked) { //Boss Order Shuffle
                 for (int i = 0; i < 7; i++) {
-                    patchstrings.Add(library.bosslocdata[newbossorder[i] * 4]);
+                    patchstrings.Add(library.bosslocdata[newbossorder[i] * 4]); //location data replacement
                     patchstrings.Add("0004");
                     patchstrings.Add(library.bosslocdata[(i * 4) + 1]);
 
-                    patchstrings.Add(library.bosslocdata[(newbossorder[i] * 4) + 2]);
+                    patchstrings.Add(library.bosslocdata[(newbossorder[i] * 4) + 2]); //other boss data replacement
                     patchstrings.Add("000C");
                     patchstrings.Add(library.bosslocdata[(i * 4) + 3]);
 
-                    int bossaddr = library.dropdata[(i + 67) * 2];
-                    int newitem = library.dropdata[((newbossorder[i] + 67) * 2) + 1];
-                    patchstrings.Add(bossaddr.ToString("X6"));
+                    int bossitem = library.dropdata[((newbossorder[i] + 67) * 2) + 1]; //item drops
+                    Console.WriteLine(library.dropdata[(i + 67) * 2 + 1] + ">" + library.dropdata[((newbossorder[i] + 67) * 2) + 1]);
+                    int newitemaddr = library.dropdata[(i + 67) * 2];
+                    patchstrings.Add(newitemaddr.ToString("X6"));
                     patchstrings.Add("0001");
-                    patchstrings.Add(newitem.ToString("X2"));
+                    patchstrings.Add(bossitem.ToString("X2"));
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss order shuffled." + Environment.NewLine);
@@ -1081,15 +1092,13 @@ namespace Merrow {
             //Randomize Dark boss elements
             if (rndBossElementToggle.Checked) {
                 //Guilty: 14186798/D8792E, Mammon: 14186910/D8799E
-                int temprand = SysRand.Next(0, 4);
                 patchstrings.Add("D8792C");
                 patchstrings.Add("0004");
-                patchstrings.Add("000" + temprand.ToString() + "000" + temprand.ToString());
+                patchstrings.Add("000" + newbosselem[0].ToString() + "000" + newbosselem[0].ToString());
 
-                temprand = SysRand.Next(0, 4);
                 patchstrings.Add("D8799C");
                 patchstrings.Add("0004");
-                patchstrings.Add("000" + temprand.ToString() + "000" + temprand.ToString());
+                patchstrings.Add("000" + newbosselem[1].ToString() + "000" + newbosselem[1].ToString());
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Randomized Guilty and Mammon's elements." + Environment.NewLine);
             }

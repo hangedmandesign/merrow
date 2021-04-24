@@ -720,7 +720,7 @@ namespace Merrow {
             2300,41,100,150,0,4
         };
 
-        //67 entries, item drop location is already 50 offset
+        //75 entries, item drop location is already 50 offset
         public int[] dropdata = { 
             11387076,1,
             11387132,5,
@@ -789,15 +789,7 @@ namespace Merrow {
             13386916,3,
             13386972,9,
             13387028,7,
-            14186532,20,
-            14186588,21,
-            14186644,22,
-            14186716,255,
-            14186756,23,
-            14186812,255,
-            14186868,255,
-            14186924,255,
-            14186532,20, //bosses start here
+            14186532,20, //bosses
             14186588,21,
             14186644,22,
             14186716,255,
