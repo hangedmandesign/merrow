@@ -22,7 +22,7 @@ The project is a C# Visual Studio WPF application. When compiled, it will create
 * *MerrowStandard.cs*, which contains the randomization and winforms application code, further detailed below in the **Code Structure** section.
 * *QuestPatch.cs*, which contains the Quest randomizer patch builder and related functions, detailed below in the **Code Structure** section.
 * *HackFunctions.cs*, which contains the generic patch generator and binary file reader functionality, further detailed below in the **Code Structure** section.
-* *VarFunctions.cs*, which contains various variable translation functions for easy converting of bytes/hex/strings/colors
+* *VarFunctions.cs*, which contains various variable translation functions for easy converting of bytes/hex/strings/colors.
 
 The above are all partial classes in the MerrowStandard namespace. The following are kept deliberately separate:
 * *DataStore.cs*, which contains arrays and tables of reference data used for randomizer calculation and generation.
@@ -41,15 +41,15 @@ This is a short overview of the code structure, contained in the class *MerrowSt
   - Prefix "adv" are winforms objects in the *Generic Patch Generator* tab
   - Prefix "bin" are winforms objects in the *Binary File Reader* tab
   - Prefix "crc" are winforms objects in the *CRC Repair Tool* tab
-* *MerrowStandard*: initialization functions
+* *MerrowStandard*: initialization functions.
 * *Shuffling*: Updating of seed, creation of new Random() and shuffling of all randomized elements performed in a row, to guarantee seed consistency.
 * General functions not created by Winforms, including *RepairCRC*, which calls the fix_crc dll connection.
 * UI interactions, for modifying the interface on interaction and for calling other functions. Roughly ordered by tab. These should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout. None should be left empty.
 
 # QuestPatch.cs Code Structure
-* UI-object list building functions
+* UI-object list building functions.
 * *BuildPatch*: Assemble Quest 64 randomizer content into *patchcontent* hexadecimal string, convert to bytestream and export as IPS, export spoiler log. This section should not contain any randomization.
-* A few minor data handling functions for item randomization purposes
+* A few minor data handling functions for item randomization purposes.
 
 # HackFunctions.cs Code Structure
 * *BuildCustomPatch*: Assemble custom IPS patch content into *patchcontent* hexadecimal string, convert to bytestream and export as IPS.
