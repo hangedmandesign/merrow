@@ -66,6 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QuestPatchBuild.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShortCodes.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataStore.cs" />
     <Compile Include="HackFunctions.cs">
       <SubType>Form</SubType>

@@ -94,7 +94,7 @@ namespace Merrow {
         //INITIALIZATION----------------------------------------------------------------
 
         public MerrowStandard() {
-            //required Winforms function, do not edit or remove
+            //required Winforms initialization, do not edit or remove
             InitializeComponent(); 
 
             //initiate file-opening dialogs
@@ -120,7 +120,7 @@ namespace Merrow {
             library = new DataStore();
             fileName = "merrowpatch_" + rngseed.ToString();
 
-            //initiate spell list with SHUFFLED option before
+            //initiate spell list with SHUFFLED option ahead of the individual ones
             List<string> options = new List<string> { "SHUFFLED" };
             for (int i = 0; i < playerspells; i++) {
                 shuffles[i] = -1;
@@ -147,21 +147,15 @@ namespace Merrow {
             for (int i = 0; i < 450; i++) { newmonsterstats[i] = library.monsterstatvanilla[i]; }
             for (int i = 0; i < 6; i++) { newbossorder[i] = i; } //V30: changed to <6 to exclude beigis
 
-            //initiate UI
-            PrepareDropdowns();
-            PopulateReference();
+            //fix item list order, because we had to change it. even though they look wrong in editor this fixes them on run
+            for (int i = 0; i < 26; i++) {
+                itemListView1.Items[i].ImageIndex = i;
+                itemListView2.Items[i].ImageIndex = i;
+                itemListView3.Items[i].ImageIndex = i;
+                itemListView4.Items[i].ImageIndex = i;
+            }
 
-            //initial randomization
-            rngseed = SysRand.Next(100000000, 1000000000); //default seed set to a random 9-digit number
-            expSeedTextBox.Text = rngseed.ToString();
-            loadfinished = true; //loadfinished being false prevents some UI elements from taking incorrect action during the initial setup
-            Shuffling(true);
-        }
-
-        //INITIAL UI CLEANUP/PREP------------------------------------------------------------------
-        //this is separate just because it's a big chunk of similar nonsense
-
-        private void PrepareDropdowns() { 
+            //initiate UI elements
             rndSpellDropdown.SelectedIndex = 0;
             rndChestDropdown.SelectedIndex = 0;
             rndTextPaletteDropdown.SelectedIndex = 0;
@@ -178,15 +172,16 @@ namespace Merrow {
             rndScalingDropdown.SelectedIndex = 5;
             rndWingUnlockDropdown.SelectedIndex = 0;
             rndPresetDropdown.SelectedIndex = 0;
-
             expFakeZ64Button.Size = new System.Drawing.Size(110, 78);
 
-            for (int i = 0; i < 26; i++) {
-                itemListView1.Items[i].ImageIndex = i;
-                itemListView2.Items[i].ImageIndex = i;
-                itemListView3.Items[i].ImageIndex = i;
-                itemListView4.Items[i].ImageIndex = i;
-            }
+            //fill the reference from arrays
+            PopulateReference();
+
+            //initial randomization
+            rngseed = SysRand.Next(100000000, 1000000000); //default seed set to a random 9-digit number
+            expSeedTextBox.Text = rngseed.ToString();
+            loadfinished = true; //loadfinished being false prevents some UI elements from taking incorrect action during the initial setup
+            Shuffling(true);
         }
 
         //UNIFIED SHUFFLING/RANDOMIZING FUNCTION----------------------------------------------------------------
@@ -202,6 +197,7 @@ namespace Merrow {
             //That's also why this doesn't check for checkboxes: checkbox state & dropdown visible state, or not tied to rerolling the RNG so this removes having to know what state every object is in.
 
             //SPELL SHUFFLING
+
             //first, clear and fill the 'reorg' list in order, then shuffle it
             reorg.Clear();
             for (int i = 0; i < playerspells; i++) { reorg.Add(i); }
@@ -219,18 +215,15 @@ namespace Merrow {
             }
 
             //crash protection disabled - dumps reorg directly into shuffles array
-            //if (!crashpro) {
-            //    for (int i = 0; i < playerspells; i++) {
-            //        shuffles[i] = reorg[i];
-            //    }
-            //}
+            if (!crashpro) {
+                for (int i = 0; i < playerspells; i++) {
+                    shuffles[i] = reorg[i];
+                }
+            }
 
             //crash protection enabled
             if (crashpro) {
                 bool step = false;
-                //int c;
-                //int r;
-                //int s;
 
                 //early healing 
                 if (rndSpellToggle.Checked && rndEarlyHealingToggle.Checked) {
@@ -281,7 +274,6 @@ namespace Merrow {
                     }
                 }
 
-                //ITEM SOFTLOCK PROTECTION
                 //using world-only spell items in battle (or vice versa?) can cause issues up to softlocks.
                 //spell items should have updated rules based on what they are modified to.
                 //silent flute - silence 2 - id58
@@ -291,6 +283,7 @@ namespace Merrow {
                 //silver amulet - spirit armor 1 - id17
                 //golden amulet - spirit armor 2 - id22
 
+                //item softlock protection
                 for (int i = 0; i < 6; i++) {
                 newitemspells[i] = shuffles[spellitemID[i]];
                 string rule = library.spells[(spellitemID[i] * 4) + 3].Substring(6,2);
@@ -308,6 +301,7 @@ namespace Merrow {
             }
 
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
+
             Console.WriteLine(rngseed);
             for (int i = 0; i < playerspells; i++) {
                 bool fiftyfifty = SysRand.NextDouble() > 0.5; ; 
@@ -319,7 +313,7 @@ namespace Merrow {
                     hintnames[i] += " " + library.shuffleNames[(i * 5) + 1]; }
             }
 
-            //RANDOM CHESTS--------------------------------------------------------------------------------
+            //RANDOM CHESTS
 
             //reinitiate chest list, in case user has gone back to Shuffle
             for (int j = 0; j < chests.Length; j++) { chests[j] = library.chestdata[j * 2 + 1]; }
@@ -354,7 +348,7 @@ namespace Merrow {
                 }
             }
 
-            //STANDARD CHEST SHUFFLE (always happens afterwards, or if dropdown index is 0)
+            //chest shuffling, happens for both random/shuffle options
             int d = chests.Length;
             while (d > 1) {
                 d--;
@@ -364,7 +358,7 @@ namespace Merrow {
                 chests[d] = temp;
             }
 
-            //RANDOM DROPS--------------------------------------------------------------------------------
+            //RANDOM DROPS
 
             //reinitiate item drops list
             for (int l = 0; l < drops.Length; l++) { drops[l] = library.dropdata[l * 2 + 1]; }
@@ -400,7 +394,7 @@ namespace Merrow {
                 }
             }
 
-            //STANDARD DROP SHUFFLE (always happens afterwards, or if dropdown index is 0)
+            //drop shuffling, happens for both random/shuffle options
             d = drops.Length;
             while (d > 1) {
                 d--;
@@ -410,7 +404,7 @@ namespace Merrow {
                 drops[d] = temp;
             }
 
-            //RANDOM GIFTS--------------------------------------------------------------------------------
+            //RANDOM GIFTS
 
             //option to exclude final shannons, forcing them to be vanilla. Either way, the game will prevent softlocks.
             if (!rndShuffleShannonToggle.Checked) { gifts = new int[10]; }
@@ -438,7 +432,7 @@ namespace Merrow {
                 }
             }
 
-            //shuffling, happens for both random/shuffle options
+            //gift shuffling, happens for both random/shuffle options
             d = gifts.Length;
             while (d > 1) {
                 d--;
@@ -467,7 +461,7 @@ namespace Merrow {
                 }
             }
 
-            //RANDOM WINGSMITHS-----------------------------------------------------------------------------
+            //RANDOM WINGSMITHS
 
             //initiate wingsmiths list
             for (int l = 0; l < wings.Length; l++) { wings[l] = library.itemgranters[20 + (l * 2 + 1)]; } //20 ahead to get to wingsmiths
@@ -482,7 +476,7 @@ namespace Merrow {
                 }
             }
 
-            //STANDARD WINGS SHUFFLE (always happens afterwards, or if dropdown index is 0)
+            //wing shuffling, happens for both random/shuffle options
             d = wings.Length;
             while (d > 1) {
                 d--;
@@ -626,15 +620,6 @@ namespace Merrow {
                 }
             }
 
-            ////scale bosses only after, if randomization is checked
-            //if (rndMonsterStatsToggle.Checked && rndMonsterScaleToggle.Checked) {
-            //    for (int i = 67; i < 75; i++) {
-            //        for (int j = 0; j < 5; j++) {
-            //            newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale));
-            //        }
-            //    }
-            //}
-
             //scale all if monster stat randomization isn't active but scaling is
             if (!rndMonsterStatsToggle.Checked && rndMonsterScaleToggle.Checked) {
                 for (int i = 0; i < 75; i++) {
@@ -644,24 +629,31 @@ namespace Merrow {
                 }
             }
 
-            //Adjust EXP by BST
+            //adjust EXP by BST
             if (rndMonsterExpToggle.Checked) {
-                for (int i = 17; i > -1; i--) { //17: 16 areas and bosses
-                    int locals = library.mon_enemycount[i];
-                    int locale = library.mon_locationsindex[i];
-                    for (int j = 0; j < locals; j++) { //steps through each area's monster set one by one
-                        int currentmonster = library.mon_locations[locale + j];
 
-                        //add ATK/DEF/AGI for BST
-                        int bst = newmonsterstats[(currentmonster * 6) + 1] + newmonsterstats[(currentmonster * 6) + 2] + newmonsterstats[(currentmonster * 6) + 3];
-                        //Set exp based on Raph's experience curve formula:
-                        //x ^ 2 / 45 * tan(x / 375)
-                        //double bstcalc = bst * bst / 45d * Math.Tan(bst / 375d);
+                //don't bother doing this if bosses are shuffled but no scaling/randomization has happened
+                if (rndMonsterScaleToggle.Checked || rndMonsterStatsToggle.Checked) { 
+                    for (int i = 17; i > -1; i--) { //17: 16 areas and bosses
+                        int locals = library.mon_enemycount[i];
+                        int locale = library.mon_locationsindex[i];
 
-                        //temporary holdover bstcalc while we tinker with the formula, simple scaling vs vanilla bst
-                        double vanillabst = library.monsterstatvanilla[(currentmonster * 6) + 1] + library.monsterstatvanilla[(currentmonster * 6) + 2] + library.monsterstatvanilla[(currentmonster * 6) + 3];
-                        double bstcalc = library.monsterstatvanilla[(currentmonster * 6) + 4] * (bst / vanillabst);
-                        newmonsterstats[(currentmonster * 6) + 4] = (int)Math.Ceiling(bstcalc);
+                        //if boss order isn't checked, don't bother recalculating and writing bosses
+
+                        for (int j = 0; j < locals; j++) { //steps through each area's monster set one by one
+                            int currentmonster = library.mon_locations[locale + j];
+
+                            //add ATK/DEF/AGI for BST
+                            int bst = newmonsterstats[(currentmonster * 6) + 1] + newmonsterstats[(currentmonster * 6) + 2] + newmonsterstats[(currentmonster * 6) + 3];
+                            //Set exp based on Raph's experience curve formula:
+                            //x ^ 2 / 45 * tan(x / 375)
+                            //double bstcalc = bst * bst / 45d * Math.Tan(bst / 375d);
+
+                            //temporary holdover bstcalc while we tinker with the formula, simple scaling vs vanilla bst
+                            double vanillabst = library.monsterstatvanilla[(currentmonster * 6) + 1] + library.monsterstatvanilla[(currentmonster * 6) + 2] + library.monsterstatvanilla[(currentmonster * 6) + 3];
+                            double bstcalc = library.monsterstatvanilla[(currentmonster * 6) + 4] * (bst / vanillabst);
+                            newmonsterstats[(currentmonster * 6) + 4] = (int)Math.Ceiling(bstcalc);
+                        }
                     }
                 }
             }
@@ -685,882 +677,17 @@ namespace Merrow {
             }
         }
 
-        //BUILD QUEST PATCH----------------------------------------------------------------
+        //MERROW CUSTOM FUNCTIONS--------------------------------------------------------------------
+        //Anything that isn't directly tied to randomization (above this section) and Winforms interactions (below).
 
-        public void BuildPatch() {
-            //check if nothing is enabled, if not, don't make a patch
-            if (!rndSpellToggle.Checked &&
-                !rndElement99Toggle.Checked &&
-                !rndSoulToggle.Checked &&
-                !rndAccuracyToggle.Checked &&
-                !rndLevelToggle.Checked &&
-
-                !rndChestToggle.Checked &&
-                !rndDropsToggle.Checked &&
-                !rndDropLimitToggle.Checked &&
-                !rndGiftersToggle.Checked &&
-                !rndWingsmithsToggle.Checked &&
-                !rndWingUnlockToggle.Checked &&
-
-                !rndMonsterStatsToggle.Checked &&
-                !rndMonsterScaleToggle.Checked &&
-                !rndBossOrderToggle.Checked &&
-                !rndInvalidityToggle.Checked &&
-                !rndBossElementToggle.Checked &&
-
-                !rndStartingStatsToggle.Checked &&
-                !rndMPRegainToggle.Checked &&
-
-                !rndFastMonasteryToggle.Checked &&
-                !rndFastMammonToggle.Checked &&
-                !rndCrystalReturnToggle.Checked &&
-
-                !rndTextPaletteToggle.Checked &&
-                !rndZoomToggle.Checked &&
-                !rndMaxMessageToggle.Checked &&
-                !rndHUDLockToggle.Checked &&
-
-                !rndRestlessToggle.Checked &&
-                !rndVowelsToggle.Checked &&
-                !rndTextContentToggle.Checked &&
-                !rndDriftToggle.Checked
-               ) { return; }
-            //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
-
-            writingPatch = true;
-
-            //update filename one more time here to avoid errors
-            if (expFilenameTextBox.Text != "" && expFilenameTextBox.Text != null) {
-                fileName = string.Join("", expFilenameTextBox.Text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries)); //strip all whitespace to avoid errors
-                if (seedName) { fileName += "_" + rngseed.ToString(); }
-                if (dateName) { fileName += "_" + DateTime.Now.ToString("yyMMdd-HHmmss"); }
-            }
-            else {
-                if (expModePatchZ64.Checked) { fileName = rndFileName + "_p"; }
-                if (expModePatchIPS.Checked) { fileName = "merrowpatch"; }
-                if (seedName) { fileName += "_" + rngseed.ToString(); }
-                if (dateName) { fileName += "_" + DateTime.Now.ToString("yyMMdd-HHmmss"); }
-            }
-
-            //reshuffle here so I don't have to shuffle after every option is changed in the UI, only certain ones
-            Shuffling(true);
-
-            //start spoiler log and initialize empty patch content strings
-            File.WriteAllText(filePath + fileName + "_spoiler.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
-            File.AppendAllText(filePath + fileName + "_spoiler.txt", "Seed: " + rngseed.ToString() + Environment.NewLine);
-            File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shortcode: " + rndShortcodeText.Text + Environment.NewLine);
-            File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "PSA: You can use the same Controller Pak save file across multiple different rando patches." + Environment.NewLine + "Only inventory, stats, defeated bosses, and collected chests/spirits will be retained." + Environment.NewLine + "Save states override all settings and cannot be used for testing randomization across different patches." + Environment.NewLine);
-            File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "Please report any bugs or quirks (or funny stuff): @JonahD on Twitter, or hangedman#5757 on Discord." + Environment.NewLine);
-            File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "PATCH MODIFIERS:" + Environment.NewLine);
-            patchbuild = "";
-            patchcontent = "";
-            patchstrings.Clear();
-
-            //RANDOMIZATION FEATURES
-
-            if (rndSpellToggle.Checked) { //Spell Shuffle
-                for (int q = 0; q < playerspells; q++) {
-                    int tempq = 0;
-
-                    if (rndSpellDropdown.SelectedIndex == 0) { tempq = shuffles[q]; } //set spell q to use spell shuffles[q] data
-                    if (rndSpellDropdown.SelectedIndex != 0) { tempq = rndSpellDropdown.SelectedIndex - 1; }
-
-                    tempaddr = Convert.ToInt32(library.spells[(q * 4) + 2]) + 3; //set rule address from dec version of hex, incrementing 3
-                    tempstr1 = Convert.ToString(tempaddr, 16); //convert updated address back to hex string
-                    tempstr2 = library.spells[(tempq * 4) + 3].Substring(6, 2); //copy other spell rule data
-                    patchstrings.Add(tempstr1); //current spell rule address
-                    patchstrings.Add("0001"); //spell rule length, hex for 1
-                    patchstrings.Add(tempstr2); //copied spell rule data
-
-                    tempaddr = Convert.ToInt32(library.spells[(q * 4) + 2]) + 11; //set remaining address from dec version of hex, incrementing 11
-                    tempstr1 = Convert.ToString(tempaddr, 16); //convert updated address back to hex string
-                    tempstr2 = library.spells[(tempq * 4) + 3].Substring(22); //copy other remaining data
-                    patchstrings.Add(tempstr1); //current remaining address
-                    patchstrings.Add("0039"); //remaining length, hex for 57
-                    patchstrings.Add(tempstr2); //copied remaining data
-
-                    spoilerspells[q] = library.spells[(q * 4)] + " > " + library.spells[(tempq * 4)];
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spells overridden." + Environment.NewLine);
-
-                //Early Healing
-                if (rndEarlyHealingToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Early Healing enabled." + Environment.NewLine);
-                }
-
-                if (rndSpellNamesToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
-                    //boss spells
-                    for (int i = 0; i < 6; i++) {
-                        patchstrings.Add(library.shuffleBossSpellNames[i]); //first three are new null name, second three are boss name pointers
-                    }
-
-                    //spell pointers
-                    for (int i = 0; i < playerspells; i++) {
-                        patchstrings.Add(library.shuffleNames[(i * 5) + 3]); //pointer location
-                        patchstrings.Add("0004"); //write four bytes
-                        patchstrings.Add(library.shuffleNames[(i * 5) + 4]); //new pointer data
-                    }
-
-                    //spell names
-                    for (int i = 0; i < playerspells; i++) {
-                        string temps = ToHex(hintnames[i]);
-                        int zeroes = 32 - temps.Length;
-                        patchstrings.Add(library.shuffleNames[(i * 5) + 2]);
-                        patchstrings.Add("0010");
-                        patchcontent = temps;
-                        for (int j = 0; j < zeroes; j++) { patchcontent += "0"; }
-                        patchstrings.Add(patchcontent);
-                    }
-
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shuffled spells use hinted names." + Environment.NewLine);
-                }
-
-                patchstrings.Add("667260"); //Fix for skelebat group in Blue Cave that can cause crashes due to lag
-                patchstrings.Add("000C");
-                patchstrings.Add("000000060000000100000001");
-
-                //spell item fixes
-                for (int i = 0; i < 6; i++) {
-                    patchstrings.Add(library.items[25 + (i * 3)]); //fetching item addresses starting from silent flute address
-                    patchstrings.Add("0002");
-
-                    if (itemspellfix[i] == 0) { //can be used in battle only
-                        patchstrings.Add("000A");
-                    }
-                    if (itemspellfix[i] == 1) { //out of battle
-                        patchstrings.Add("0001");
-                    }
-                    if (itemspellfix[i] == 2) { //anytime
-                        patchstrings.Add("0003");
-                    }
-                }
-            }
-
-            if (rndTextPaletteToggle.Checked) { //Text Colour
-                //default black palette is stored at D3E240
-                // black: F83E9C1B6AD5318D
-                // red: F83E9C1BBA0DD009
-                // blue: F83E9C1B629D19AB
-                // white: F83E318DBDEFF735
-
-                int temp = rndTextPaletteDropdown.SelectedIndex;
-                if (temp == 1) { temp = SysRand.Next(2, 6); }
-
-                patchstrings.Add("D3E240");
-                patchstrings.Add("0008");
-
-                if (temp == 0) {
-                    patchcontent = "F83E";
-                    patchcontent += textPaletteHex;
-                    patchstrings.Add(patchcontent);
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random." + Environment.NewLine);
-                }
-                if (temp == 2) {
-                    patchstrings.Add("F83E9C1BBA0DD009");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to red." + Environment.NewLine);
-                }
-                if (temp == 3) {
-                    patchstrings.Add("F83E9C1B629D19AB");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to blue." + Environment.NewLine);
-                }
-                if (temp == 4) {
-                    patchstrings.Add("F83E318DBDEFF735");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to white." + Environment.NewLine);
-                }
-                if (temp == 5) {
-                    patchstrings.Add("F83E9C1B6AD5318D");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to black [default]." + Environment.NewLine);
-                }
-            }
-
-            //Chest shuffle
-            if (rndChestToggle.Checked) { 
-                //add chest addresses, and new byte
-                for (int i = 0; i < chests.Length; i++) {
-                    int temp = library.chestdata[i * 2] + 33; //33 is offset to chest item byte
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0001");
-                    patchstrings.Add(chests[i].ToString("X2"));
-                    spoilerchests[i] = i.ToString("00") + ": " + library.items[(chests[i] * 3)];
-                }
-
-                if (rndChestDropdown.SelectedIndex == 0) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents shuffled." + Environment.NewLine);
-                }
-                if (rndChestDropdown.SelectedIndex > 0) {
-                    string randomtypeS = library.randomtype[rndChestDropdown.SelectedIndex];
-                    if (rndWeightedChestToggle.Checked) { randomtypeS += ", weighted"; }
-
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Chest contents randomized (" + randomtypeS + ")." + Environment.NewLine);
-                }
-            }
-
-            //Item Drop Shuffle
-            if (rndDropsToggle.Checked) { 
-                //add drop addresses, and new byte
-                for (int i = 0; i < drops.Length; i++) {
-                    int temp = library.dropdata[i * 2]; //don't need to offset because drop list is pre-offset
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0001");
-                    patchstrings.Add(drops[i].ToString("X2"));
-
-                    if (!rndVowelsToggle.Checked) {
-                        if (drops[i] != 255) { spoilerdrops[i] = library.monsternames[i * 2] + ": " + library.items[drops[i] * 3]; }
-                        if (drops[i] == 255) { spoilerdrops[i] = library.monsternames[i * 2] + ": NONE"; }
-                    }
-                    if (rndVowelsToggle.Checked) {
-                        if (drops[i] != 255) { spoilerdrops[i] = voweled[i] + ": " + library.items[drops[i] * 3]; }
-                        if (drops[i] == 255) { spoilerdrops[i] = voweled[i] + ": NONE"; }
-                    }
-                }
-
-                if (rndDropsDropdown.SelectedIndex == 0) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops shuffled." + Environment.NewLine);
-                } else {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drops randomized (" + library.randomtype[rndDropsDropdown.SelectedIndex] + ")." + Environment.NewLine);
-                }
-            }
-
-            //Item Gift Shuffle
-            if (rndGiftersToggle.Checked) { 
-                //add gift addresses, and new byte
-                for (int i = 0; i < gifts.Length; i++) {
-                    int temp = library.itemgranters[i * 2]; //don't need to offset because gift hex loc list is pre-offset
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0001");
-                    patchstrings.Add(gifts[i].ToString("X2"));
-
-                    spoilergifts[i] = library.granternames[i] + ": " + library.items[gifts[i] * 3];
-                }
-
-                if (rndShuffleShannonToggle.Checked) { //if shannons are forced vanilla, add this note about them being vanilla
-                    spoilergifts[8] = "Shannon (Brannoch Castle): ELETALE BOOK (unrandomized)";
-                    spoilergifts[9] = "Shannon (Mammon's World): DARK GAOL KEY (unrandomized)";
-                }
-
-                if (rndGiftersDropdown.SelectedIndex == 0) { //shuffle
-                    if (rndShuffleShannonToggle.Checked) {
-                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts shuffled (Shannons excluded)." + Environment.NewLine);
-                    } else {
-                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts shuffled." + Environment.NewLine);
-                    }
-                }
-
-                if (rndGiftersDropdown.SelectedIndex > 0) { //random
-                    if (rndShuffleShannonToggle.Checked) {
-                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts randomized (" + library.randomtype[rndGiftersDropdown.SelectedIndex] + "), Shannons excluded." + Environment.NewLine);
-                    } else {
-                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPC gifts randomized (" + library.randomtype[rndGiftersDropdown.SelectedIndex] + ")." + Environment.NewLine);
-                    }
-                }
-            }
-
-            //Wingsmiths Shuffle
-            if (rndWingsmithsToggle.Checked) { 
-                //add wings addresses, and new byte
-                for (int i = 0; i < wings.Length; i++) {
-                    int temp = library.itemgranters[20 + (i * 2)]; //gift hex loc list is pre-offset, advance 20 to skip gifters
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0001");
-                    patchstrings.Add(wings[i].ToString("X2"));
-
-                    spoilerwings[i] = library.granternames[i + 10] + ": " + library.items[wings[i] * 3]; //advance 10 to skip gifters
-                }
-
-                if (rndWingsmithsDropdown.SelectedIndex == 0) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wingsmiths shuffled." + Environment.NewLine);
-                } else { 
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wingsmiths randomized (" + library.randomtype[rndWingsmithsDropdown.SelectedIndex] + ")." + Environment.NewLine);
-                }
-            }
-
-            //Enemy drop limit toggle
-            if (rndDropLimitToggle.Checked) {
-                patchstrings.Add("0042B1");
-                patchstrings.Add("0001");
-                patchstrings.Add("42");
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drop limit disabled." + Environment.NewLine);
-            }
-
-            //Text content shuffle
-            if (rndTextContentToggle.Checked) {
-                int temp = 0;
-                //add single text addresses, and new byte
-                for (int i = 0; i < 72; i++) {
-                    temp = library.singletextdata[i * 3] + 8; //text byte at offset 8
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0002");
-                    patchstrings.Add(texts[i].ToString("X4"));
-                }
-
-                //add double text addresses, and new byte
-                for (int i = 0; i < 68; i++) {
-                    temp = library.doubletextdata[i * 4] + 8; //first text at offset 8
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0002");
-                    patchstrings.Add(texts[i + 72].ToString("X4"));
-
-                    temp = library.doubletextdata[i * 4] + 10; //second text at offset 10
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0002");
-                    patchstrings.Add(texts[i + 72 + 68].ToString("X4"));
-                }
-
-                //add inn text addresses, and new byte
-                for (int i = 0; i < inntexts.Length; i++) {
-                    temp = library.inntextdata[i * 3] + 8; //text byte at offset 8
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0002");
-                    patchstrings.Add(inntexts[i].ToString("X4"));
-                }
-
-                if (rndTextContentDropdown.SelectedIndex == 0) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text content shuffled." + Environment.NewLine);
-                }
-            }
-
-            //MONSTER SCALING AND BOSS SHUFFLING FEATURES
-
-            if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked || rndBossOrderToggle.Checked) {
-                int moncount = 0;
-                for (int i = 0; i < newmonsterstats.Length; i++) {
-                    moncount = (i - (i % 6)) / 6;
-                    if (moncount < 67 || moncount >= 73) { //V30: changed to >= 73 to exclude Beigis for now
-                        patchstrings.Add(library.monsterstatlocations[i].ToString("X6"));
-                        patchstrings.Add("0002");
-                        patchstrings.Add(newmonsterstats[i].ToString("X4"));
-
-                        if (i % 6 == 0) { //if the current value is HP2, write it again at the HP1 location, offset 04 (HP2 + 2).
-                            patchstrings.Add((library.monsterstatlocations[i] + 2).ToString("X6"));
-                            patchstrings.Add("0002");
-                            patchstrings.Add(newmonsterstats[i].ToString("X4"));
-                        }
-                    }
-                    if (moncount >= 67 && moncount < 73) { //V30: changed to < 73 to exclude Beigis for now
-                        int columnstep = i % 6;
-                        int rowstep = newbossorder[moncount - 67];
-                        patchstrings.Add(library.monsterstatlocations[402 + (rowstep * 6) + columnstep].ToString("X6"));
-                        patchstrings.Add("0002");
-                        patchstrings.Add(newmonsterstats[i].ToString("X4"));
-
-                        if (i % 6 == 0) { //if the current value is HP2, write it again at the HP1 location, offset 04 (HP2 + 2).
-                            patchstrings.Add((library.monsterstatlocations[402 + (rowstep * 6) + columnstep] + 2).ToString("X6"));
-                            patchstrings.Add("0002");
-                            patchstrings.Add(newmonsterstats[i].ToString("X4"));
-                        }
-                    }
-                    //if (i != 0 && i % 6 == 0) { moncount++; } //if advanced a line in array
-                }
-
-                for (int i = 0; i < 75; i++) {
-                    if (i < 67 || i >= 73) { //V30: changed to >= 73 to exclude Beigis for now
-                        if (!rndVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[i * 2] + ": "; }
-                        if (rndVowelsToggle.Checked) { spoilerscales[i] = voweled[i] + ": "; }
-                        spoilerscales[i] += newmonsterstats[i * 6].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 1].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 2].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 3].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 4].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 5].ToString();
-                    }
-                    if (i >= 67 && i < 73) { //V30: changed to < 73 to exclude Beigis for now
-                        int falsei = i;
-                        if (rndBossOrderToggle.Checked) { falsei = 67 + newbossorder[i - 67]; }
-                        if (!rndVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[falsei * 2] + ": "; }
-                        if (rndVowelsToggle.Checked) { spoilerscales[i] = voweled[falsei] + ": "; }
-                        spoilerscales[i] += newmonsterstats[i * 6].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 1].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 2].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 3].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 4].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 5].ToString();
-                    }
-                }
-
-                if (rndMonsterStatsToggle.Checked && extremity == 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized within regions." + Environment.NewLine); }
-                if (rndMonsterStatsToggle.Checked && extremity != 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats randomized, with Variance " + (extremity + 1).ToString() + "x." + Environment.NewLine); }
-                if (rndMonsterScaleToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster stats scaled by " + difficultyscale.ToString("n1") + "x." + Environment.NewLine); }
-                if (rndMonsterExpToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster experience scaled to new stat values." + Environment.NewLine); }
-            }
-
-            if (rndBossOrderToggle.Checked) { //Boss Order Shuffle
-                int[] bossitemslist = { 20, 21, 22, 255, 23, 255 };
-                string[] bossitemnames = { "EARTH ORB", "WIND JADE", "WATER JEWEL", "NOTHING", "FIRE RUBY", "NOTHING" };
-                int[] bossaddresses = { 14186532, 14186588, 14186644, 14186700, 14186756, 14186812 };
-                int[] backassign = new int[6];
-
-                //14186532,4,14186588,4,14186644,4,14186700,4,14186756,4,14186812,4,14186868,4,14186924,4 :: data extraction for items, in boss order
-                //D87824,D8785C,D87894,D878CC,D87904,D8793C
-
-                for (int j = 0; j < 6; j++) { //items have to be handed backwards
-                    backassign[j] = bossaddresses[newbossorder[j]];
-                }
-
-                for (int i = 0; i < 6; i++) { //V30: changed this to 6 to exclude Beigis for now
-                    patchstrings.Add(library.bosslocdata[newbossorder[i] * 4]); //location data replacement
-                    patchstrings.Add("0004");
-                    patchstrings.Add(library.bosslocdata[(i * 4) + 1]);
-
-                    patchstrings.Add(library.bosslocdata[(newbossorder[i] * 4) + 2]); //other boss data replacement
-                    patchstrings.Add("000C");
-                    patchstrings.Add(library.bosslocdata[(i * 4) + 3]);
-
-                    //int bossitem = library.dropdata[((i + 67) * 2) + 1]; //item drops
-                    int newitemaddr = library.dropdata[(newbossorder[i] + 67) * 2];
-                    spoilerbossdrops[i] = (library.monsternames[(newbossorder[i] + 67) * 2] + " carries " + bossitemnames[i]);
-                    patchstrings.Add(backassign[i].ToString("X6"));
-                    patchstrings.Add("0001");
-                    patchstrings.Add(bossitemslist[i].ToString("X2"));
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss order shuffled." + Environment.NewLine);
-            }
-
-            //Randomize Dark boss elements
-            if (rndBossElementToggle.Checked) {
-                //Guilty: 14186798/D8792E, Mammon: 14186910/D8799E
-                patchstrings.Add("D8792C");
-                patchstrings.Add("0004");
-                patchstrings.Add("000" + newbosselem[0].ToString() + "000" + newbosselem[0].ToString());
-
-                patchstrings.Add("D8799C");
-                patchstrings.Add("0004");
-                patchstrings.Add("000" + newbosselem[1].ToString() + "000" + newbosselem[1].ToString());
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Randomized Guilty and Mammon's elements." + Environment.NewLine);
-            }
-
-            //QUALITY OF LIFE FEATURES
-
-            if (rndInvalidityToggle.Checked) { //Invalidity
-                for (int i = 0; i < 8; i++) {
-                    patchstrings.Add(library.invalidityLocations[i]);
-                    patchstrings.Add("0001");
-                    patchstrings.Add("00");
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss spell passive invalidity disabled." + Environment.NewLine);
-            }
-
-            if (rndAccuracyToggle.Checked) {
-                if (rndAccuracyDropdown.SelectedIndex == 0) { //Spell Accuracy: Status 100
-                    for (int i = 0; i < 17; i++) {
-                        string spellloc = library.spells[(library.statusspells[i] * 4) + 2];
-                        int temploc = Convert.ToInt32(spellloc) + 15;
-                        patchstrings.Add(Convert.ToString(temploc, 16));
-                        patchstrings.Add("0001");
-                        patchstrings.Add("64");
-                    }
-
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Status effects' accuracy normalized to 100." + Environment.NewLine);
-                }
-
-                if (rndAccuracyDropdown.SelectedIndex == 1) { //Spell Accuracy: All 100
-                    for (int z = spellstart + 15; z < ((spelloffset * playerspells) + spellstart); z += spelloffset) {
-                        patchstrings.Add(Convert.ToString(z, 16));
-                        patchstrings.Add("0001");
-                        patchstrings.Add("64");
-                    }
-
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "All spells' accuracy normalized to 100." + Environment.NewLine);
-                }
-            }
-
-            if (rndZoomToggle.Checked) { //Zoom Option
-                //width 03698A height 036A26
-                //16368 = 3FF0 = default zoom value
-                //16356 = 3FE4 = lowest stable zoom value
-
-                zoomvalue = rndZoomDropdown.SelectedIndex + 2;
-                patchstrings.Add("03698A");
-                patchstrings.Add("0002");
-                patchstrings.Add(Convert.ToString(16368 - zoomvalue, 16));
-
-                patchstrings.Add("036A26");
-                patchstrings.Add("0002");
-                patchstrings.Add(Convert.ToString(16368 - zoomvalue, 16));
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Zoom out factor set to " + zoomvalue.ToString() + " [Default:1]" + Environment.NewLine);
-            }
-
-            if (rndLevelToggle.Checked) { //Level 1
-                for (int s = spellstart; s < ((spelloffset * playerspells) + spellstart); s += spelloffset) {
-                    patchstrings.Add(Convert.ToString(s, 16));
-                    patchstrings.Add("0002");
-                    patchstrings.Add("0001");
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell unlock levels reduced to 1." + Environment.NewLine);
-            }
-
-            if (rndSoulToggle.Checked) { //Soul Search
-                for (int z = spellstart + 57; z < ((spelloffset * playerspells) + spellstart); z += spelloffset) {
-                    patchstrings.Add(Convert.ToString(z, 16));
-                    patchstrings.Add("0001");
-                    patchstrings.Add("01");
-                }
-
-                tempaddr = Convert.ToInt32("D81C30", 16);
-                for (int i = 0; i < 16; i++) {
-                    patchstrings.Add(Convert.ToString(tempaddr, 16)); ; //tempaddr converted back to hex
-                    patchstrings.Add("0010"); //replace 16 bytes
-                    patchstrings.Add(library.magnifier[i]); //add the 16 replacement bytes from the array
-                    tempaddr += 128; //step to next case
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Soul search applied to all spells." + Environment.NewLine);
-            }
-
-            if (rndRestlessToggle.Checked) { //Restless NPCs
-                for (int i = 0; i < library.npcmovement.Length; i++) {
-                    patchstrings.Add(Convert.ToString(library.npcmovement[i], 16));
-                    patchstrings.Add("0001");
-                    patchstrings.Add("02"); //Replace movement byte with 02 to cause wandering
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPCs are restless." + Environment.NewLine);
-            }
-
-            if (rndMaxMessageToggle.Checked) { //Max Message Speed
-                patchstrings.Add("060600");
-                patchstrings.Add("0001");
-                patchstrings.Add("00");
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Message speed set to maximum." + Environment.NewLine);
-            }
-
-            if (rndFastMonasteryToggle.Checked) { //Fast Monastery
-                patchstrings.Add("4361A0");
-                patchstrings.Add("0004");
-                patchstrings.Add("00090002"); // write 00090002 as new door target ID at 4361A0
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Monastery enabled." + Environment.NewLine);
-            }
-
-            if (rndVowelsToggle.Checked) { //Vowel Shuffle
-                for (int i = 0; i < voweled.Length; i++) {
-                    patchstrings.Add(library.monsternames[(i * 2) + 1]); //hex location
-
-                    int decLength = voweled[i].Length;
-                    patchstrings.Add(decLength.ToString("X4")); //name length in hex bytes
-
-                    patchstrings.Add(ToHex(voweled[i]));
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Vowel play enabled." + Environment.NewLine);
-            }
-
-            //HUD lock toggle
-            if (rndHUDLockToggle.Checked) {
-                patchstrings.Add("01F0AF");
-                patchstrings.Add("0001");
-                patchstrings.Add("00");
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "HUD onscreen lock enabled." + Environment.NewLine);
-            }
-
-            //Wing unlock toggle
-            if (rndWingUnlockToggle.Checked) {
-                if (rndWingUnlockDropdown.SelectedIndex == 0 || rndWingUnlockDropdown.SelectedIndex == 2) {
-                    patchstrings.Add("022ECB");
-                    patchstrings.Add("0001");
-                    patchstrings.Add("00");
-
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wings enabled indoors." + Environment.NewLine);
-                }
-                if (rndWingUnlockDropdown.SelectedIndex == 1 || rndWingUnlockDropdown.SelectedIndex == 2) {
-                    patchstrings.Add("022EE4");
-                    patchstrings.Add("0001");
-                    patchstrings.Add("10");
-
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wings enabled on the Isle of Skye." + Environment.NewLine);
-                }
-            }
-
-            //Starting stats
-            if (rndStartingStatsToggle.Checked) { 
-                patchstrings.Add("054908");
-                patchstrings.Add("000C");
-                string tempstats = "";
-                tempstats += rndHPTrackBar.Value.ToString("X4");
-                tempstats += rndHPTrackBar.Value.ToString("X4");
-                tempstats += rndMPTrackBar.Value.ToString("X4");
-                tempstats += rndMPTrackBar.Value.ToString("X4");
-                tempstats += rndAgiTrackBar.Value.ToString("X4");
-                tempstats += rndDefTrackBar.Value.ToString("X4");
-                patchstrings.Add(tempstats);
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Starting stats modified: " + rndHPTrackBar.Value.ToString() + "/" + rndMPTrackBar.Value.ToString() + "/" + rndAgiTrackBar.Value.ToString() + "/" + rndDefTrackBar.Value.ToString() + Environment.NewLine);
-            }
-
-            //Max element uncap
-            if (rndElement99Toggle.Checked) {
-                patchstrings.Add("00850A"); //Elemental cap Part 1
-                patchstrings.Add("0002");
-                patchstrings.Add("0126");
-
-                patchstrings.Add("008546"); //Elemental cap Part 2
-                patchstrings.Add("0001");
-                patchstrings.Add("64");
-
-                patchstrings.Add("008563"); //EXP growth lock
-                patchstrings.Add("0001");
-                patchstrings.Add("63");
-
-                for (int i = 0; i < 4; i++) { //Individual elemental caps
-                    patchstrings.Add(library.elementCapLocations[i]);
-                    patchstrings.Add("0001");
-                    patchstrings.Add("63");
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Element level maximum raised to 99." + Environment.NewLine);
-            }
-
-            //MP regain rate
-            if (rndMPRegainToggle.Checked) {
-                //the trackbars are restricted to x3 in either direction because of FF limit
-                //also doesn't bother writing if the value's default. Value 7 = OFF.
-                if (rndMPRegainTrackBar.Value != 0 && rndMPRegainTrackBar.Value != 10) { 
-                    double newrate = 1.0;
-                    int newspeed = 65;
-                    if (rndMPRegainTrackBar.Value < 10) {
-                        newrate = 11 - rndMPRegainTrackBar.Value;
-                        newspeed = Convert.ToInt32(65 * newrate); //increasing value slows it down
-                    }
-                    if (rndMPRegainTrackBar.Value > 10) {
-                        newrate = rndMPRegainTrackBar.Value - 9;
-                        newspeed = Convert.ToInt32(65 / newrate); //decreasing value speeds it up
-                    }
-
-                    patchstrings.Add("071B39");
-                    patchstrings.Add("0001");
-                    patchstrings.Add(newspeed.ToString("X2")); 
-                }
-                
-                if (rndMPRegainTrackBar.Value == 7) { //if OFF, instead of changing rate, just disable it entirely
-                    patchstrings.Add("00445B");
-                    patchstrings.Add("0001");
-                    patchstrings.Add("00");
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Walking MP regen rate set to " + rndMPRegainValue.Text + "." + Environment.NewLine);
-            }
-
-            //Fast Mammon's World
-            if (rndFastMammonToggle.Checked) {
-                patchstrings.Add("84EDFE");
-                patchstrings.Add("0004");
-                patchstrings.Add("000E000D");
-
-                patchstrings.Add("607920");
-                patchstrings.Add("0008");
-                patchstrings.Add("0000000F000D0000");
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Mammon's World enabled." + Environment.NewLine);
-            }
-
-            //Celtland Drift
-            if (rndDriftToggle.Checked) {
-                patchstrings.Add("071B50");
-                patchstrings.Add("0004");
-                patchstrings.Add("3ff44444");
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Celtland Drift enabled." + Environment.NewLine);
-            }
-
-            //Crystal Valley Postern
-            if (rndCrystalReturnToggle.Checked) {
-                patchstrings.Add("206EB0");
-                patchstrings.Add("0024");
-                patchstrings.Add("42020000C3BC0000BFC90FF940C0000040E0000000160016000000090007001A00020003");
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Crystal Valley return warp enabled." + Environment.NewLine);
-            }
-
-            //FINAL ASSEMBLY/OUTPUT
-
-            //Verbose spoiler log down at the bottom just to not hide the enabled options above.
-            if (verboselog) { 
-                if (rndSpellToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED SPELLS:" + Environment.NewLine);
-                    foreach (string line in spoilerspells) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-                }
-
-                if (rndChestToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED CHESTS:" + Environment.NewLine);
-                    foreach (string line in spoilerchests) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-                }
-
-                if (rndDropsToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED DROPS:" + Environment.NewLine);
-                    foreach (string line in spoilerdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-                }
-
-                if (rndGiftersToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED GIFTS:" + Environment.NewLine);
-                    foreach (string line in spoilergifts) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-                }
-
-                if (rndWingsmithsToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED WINGSMITHS:" + Environment.NewLine);
-                    foreach (string line in spoilerwings) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-                }
-
-                if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked || rndBossOrderToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED MONSTER STATS (HP, ATK, DEF, AGI, EXP, ELEMENT):" + Environment.NewLine);
-                    foreach (string line in spoilerscales) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-                }
-
-                if (rndBossOrderToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED BOSS DROPS:" + Environment.NewLine);
-                    foreach (string line in spoilerbossdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-                }
-            }
-
-            patchstrings.Add("DAC040");
-            patchstrings.Add("393C"); //main menu logo address/length
-            patchstrings.Add(library.randologo);
-            patchstrings.Add("DCE070");
-            patchstrings.Add("393C"); //animation logo address/length
-            patchstrings.Add(library.randologo);
-
-            int patchparts = patchstrings.Count();
-
-            //Mode: PATCH Z64
-            if (expModePatchZ64.Checked && rndFileSelected) {
-                for (int i = 0; i < patchparts; i += 3) {
-                    int targetAddr = Convert.ToInt32(patchstrings[i], 16);
-                    byte[] targetData = StringToByteArray(patchstrings[i + 2]);
-                    int targetLength = targetData.Length;
-
-                    for (int j = 0; j < targetLength; j++) {
-                        rndFileBytes[targetAddr + j] = targetData[j];
-                    }
-                }
-                string thisFile = filePath + fileName + ".z64";
-                File.WriteAllBytes(thisFile, rndFileBytes);
-                fix_crc(thisFile);
-                filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
-                System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
-                rndErrorLabel.Text = "Z64 file creation complete. CRC repaired.";
-            }
-
-            //Mode: CREATE IPS
-            if (expModePatchIPS.Checked) { 
-                patchbuild += headerHex;
-                    for (int ps = 0; ps < patchparts; ps++) {
-                        patchbuild += patchstrings[ps];
-                    }
-                patchbuild += footerHex;
-                patcharray = StringToByteArray(patchbuild);
-                File.WriteAllBytes(filePath + fileName + ".ips", patcharray);
-                filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
-                System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
-                rndErrorLabel.Text = "IPS Patch creation complete.";
-            }
-
-            writingPatch = false;
-        }
-
-        //ITEM RANDOMIZER FUNCTIONS-------------------------------------------------
-
-        public void itemListUpdate(ListView currentList, int currentIndex) {
-            lockItemUpdates = true;
-            if (currentIndex == 0) { itemListWipe(currentList); }
-            if (currentIndex >= 1 && currentIndex <= 7) {
-                itemListWipe(currentList);
-                itemListSet(currentList, itemListSelect(currentIndex));
-            }
-            lockItemUpdates = false;
-        }
-
-        public int[] itemListSelect(int option) { //grab the item array from the library
-            if (option == 1) { return library.itemlist_standard; }
-            if (option == 2) { return library.itemlist_standardwings; }
-            if (option == 3) { return library.itemlist_standardgems; }
-            if (option == 4) { return library.itemlist_chaos; }
-            if (option == 5) { return library.itemlist_wings; }
-            if (option == 6) { return library.itemlist_gems; }
-            if (option == 7) { return library.itemlist_wingsgems; }
-
-            return library.itemlist_standard; //return this as a backup, should never happen
-        }
-
-        public void itemListWipe(ListView listID) { //wipe the specified item list so we can set it
-            for (int i = 0; i < listID.Items.Count; i++) {
-                ListViewItem listChestItem = listID.Items[i];
-                listChestItem.Checked = false;
-            }
-        }
-
-        public void itemListSet(ListView listID, int[] listArray) { //set the specified item list
-            for (int i = 0; i < listArray.Length; i++) {
-                ListViewItem listChestItem = listID.Items[listArray[i]];
-                listChestItem.Checked = true;
-            }
-        }
-
-        public string itemListSkim(ListView listID) {
-            string hexencode = "";
-
-            for (int i = 0; i < listID.Items.Count; i++) {
-                ListViewItem listChestItem = listID.Items[i];
-                if (listChestItem.Checked) { hexencode += "1"; }
-                if (!listChestItem.Checked) { hexencode += "0"; }
-            }
-
-            int bintohex = Convert.ToInt32(hexencode, 2); //binary string to int
-
-            return bintohex.ToString("X8"); //return int as hex string
-        }
-
-        public void itemListUnpack(ListView listID, string hexdecode) {
-            bool[] unpacks = new bool[listID.Items.Count];
-            int hextoint = Convert.ToInt32(hexdecode, 16);
-            string inttobin = Convert.ToString(hextoint, 2);
-
-            while(inttobin.Length < listID.Items.Count) { inttobin = "0" + inttobin; }
-
-            Console.WriteLine(inttobin.Length.ToString() + ">" + listID.Items.Count.ToString());
-
-            for (int i = 0; i < listID.Items.Count; i++) {
-                ListViewItem listChestItem = listID.Items[i];
-                if (inttobin[i] == '1') { listChestItem.Checked = true; }
-                if (inttobin[i] == '0') { listChestItem.Checked = false; }
-            }
-        }
-
-        //CRC REPAIR TOOL--------------------------------------------------------------------
-
+        //simplified CRC function call to return error messages
         public int RepairCRC() {
             int check = -1;
             if (crcFileSelected) { check = fix_crc(fullPath); }
             return check;
         }
 
-        //WINFORMS UI INTERACTIONS-------------------------------------------------------------------
-        //These declarations should not be manually edited without care, as they're partially auto-generated by the Winforms Designer.
-        //The content can be edited as needed. They're kept here for logical sake, because this is the :Form type function.
-
-        //General functions
-
-        private void tabsControl_SelectedIndexChanged(object sender, EventArgs e) {
-            binErrorLabel.Visible = false;
-            binFileLoaded = false;
-            binFileBytes = null;
-            crcErrorLabel.Visible = false;
-            crcFileSelected = false;
-            if (tabsControl.SelectedIndex > 2) { helpLabel.Visible = false; }
-            else { helpLabel.Visible = true; }
-            expModeSet();
-        }
-
-        private void terms__LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
-        }
-
+        //update risk value
         public void UpdateRisk() {
             float variance = extremity + 1.1f;
             if (difficultyscale > 1.0) {
@@ -1574,7 +701,7 @@ namespace Merrow {
             if (rndInvalidityToggle.Checked) { riskvalue *= 0.9; }
             if (!rndMonsterExpToggle.Checked) { riskvalue *= 1.2; }
 
-            if (!rndMonsterScaleToggle.Checked && 
+            if (!rndMonsterScaleToggle.Checked &&
                 !rndMonsterStatsToggle.Checked &&
                 !rndBossOrderToggle.Checked &&
                 !rndBossElementToggle.Checked &&
@@ -1583,7 +710,7 @@ namespace Merrow {
                 rndRiskLabel.Visible = false;
                 rndRiskLabelText.Visible = false;
             }
-            if (rndMonsterScaleToggle.Checked || 
+            if (rndMonsterScaleToggle.Checked ||
                 rndMonsterStatsToggle.Checked ||
                 rndBossOrderToggle.Checked ||
                 rndBossElementToggle.Checked ||
@@ -1632,295 +759,171 @@ namespace Merrow {
             }
         }
 
-        private static List<CheckBox> GetAllToggles(Control container) {
-            var controlList = new List<CheckBox>();
-            foreach (Control c in container.Controls) {
-                controlList.AddRange(GetAllToggles(c));
-
-                if (c is CheckBox box)
-                    controlList.Add(box);
+        //populate Quest reference
+        public void PopulateReference() {
+            //spell reference
+            for (int i = 2; i < 6; i++) {
+                if (i != 3) { spellsDataGridView.Columns[i].ValueType = typeof(int); }
             }
-            return controlList;
-        }
 
-        private static List<ComboBox> GetAllDropdowns(Control container) {
-            var controlList = new List<ComboBox>();
-            foreach (Control c in container.Controls) {
-                controlList.AddRange(GetAllDropdowns(c));
-
-                if (c is ComboBox box)
-                    controlList.Add(box);
-            }
-            return controlList;
-        }
-
-        private static List<TrackBar> GetAllSliders(Control container) {
-            var controlList = new List<TrackBar>();
-            foreach (Control c in container.Controls) {
-                controlList.AddRange(GetAllSliders(c));
-
-                if (c is TrackBar box)
-                    controlList.Add(box);
-            }
-            return controlList;
-        }
-
-        public void UpdateCode() {
-            updatingcode = true;
-            int tabpagestocheck = 3;
-            string codeString = labelVersion.Text.Substring(1);
-            string tempString;
-            string binString2;
-            var toggles = new List<CheckBox>();
-            var dropdowns = new List<ComboBox>();
-            var sliders = new List<TrackBar>();
-
-            if (loadfinished) { 
-                //check each page in turn, convert each page's values and add it to the code string
-                for (int i = 0; i < tabpagestocheck; i++) {
-                    toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
-                    dropdowns.AddRange(GetAllDropdowns(rndTabsControl.TabPages[i]));
-                    sliders.AddRange(GetAllSliders(rndTabsControl.TabPages[i]));
-                }
-
-                int steps = 0;
-                tempString = "";
-                binString2 = "";
-                foreach (var toggle in toggles) { //build binary strings
-                    steps++;
-                    if (toggle.Checked) {
-                        if (steps <= 32) { tempString += 1; }
-                        if (steps > 32) { binString2 += 1; }
-                    } else {
-                        if (steps <= 32) { tempString += 0; }
-                        if (steps > 32) { binString2 += 0; }
-                    } 
-                }
-                int test = Convert.ToInt32(tempString, 2); //convert binary string to int
-                int test2 = 0;
-                if (steps > 32) { test2 = Convert.ToInt32(binString2, 2); }
-                if (steps > 32) { codeString += ".T." + test.ToString("X") + "-" + test2.ToString("X") + "."; }//int to hex to 64b
-                else { codeString += ".T." + test.ToString("X") + "."; }
-
-                //this string needs to be encoded piece by piece
-                //custom values will have custom delimiter and format
-                //for custom values, collect each 4 items in each list as a binary>hex conversion, single hex character 0-F
-
-                tempString = "";
-                string itemString = "";
-                codeString += "L.";
-
-                foreach (var dropdown in dropdowns) {
-                    bool bighex = false;
-                    string listString = "";
-                    if (dropdown.Items.Count > 16) { bighex = true; }
-
-                    //one possible shortening method: count consecutive 0 values and amalgamate them in a separate counter
-                    if (dropdown.SelectedIndex == 8) { //if custom items
-                        if (dropdown.Name == "rndChestDropdown" || dropdown.Name == "rndDropsDropdown" || dropdown.Name == "rndGiftersDropdown" || dropdown.Name == "rndWingsmithsDropdown") {
-                            if (dropdown.Name == "rndChestDropdown") {
-                                listString = itemListSkim(itemListView1);
-                                itemString += ":!" + HexToBase64(listString);
-                            }
-                            if (dropdown.Name == "rndDropsDropdown") {
-                                listString = itemListSkim(itemListView2);
-                                itemString += ":@" + HexToBase64(listString);
-                            }
-                            if (dropdown.Name == "rndGiftersDropdown") {
-                                listString = itemListSkim(itemListView3);
-                                itemString += ":#" + HexToBase64(listString);
-                            }
-                            if (dropdown.Name == "rndWingsmithsDropdown") {
-                                listString = itemListSkim(itemListView4);
-                                itemString += ":$" + HexToBase64(listString);
-                            }
-                            if (!bighex) { tempString += dropdown.SelectedIndex.ToString("X1"); } //also put the 8 in tempstring for reference
+            for (int i = 0; i < 60; i++) {
+                spellsDataGridView.Rows.Add();
+                for (int j = 0; j < 6; j++) {
+                    if (j == 0) {
+                        spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6 + j].ToUpper();
+                        if (i < 15) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose; }
+                        if (i >= 15 && i < 30) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
+                        if (i >= 30 && i < 45) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure; }
+                        if (i >= 45) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew; }
+                    }
+                    if (j == 1) {
+                        if (i < 15) {
+                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[27];
+                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose;
                         }
-                        else { //convert values to hex and then add as base64
-                            if (bighex) { tempString += dropdown.SelectedIndex.ToString("X2"); }
-                            if (!bighex) { tempString += dropdown.SelectedIndex.ToString("X1"); }
-                        } 
+                        if (i >= 15 && i < 30) {
+                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[28];
+                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque;
+                        }
+                        if (i >= 30 && i < 45) {
+                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[29];
+                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure;
+                        }
+                        if (i >= 45) {
+                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[30];
+                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew;
+                        }
                     }
-                    else { //convert values to hex and then add as base64
-                        if (bighex) { tempString += dropdown.SelectedIndex.ToString("X2"); }
-                        if (!bighex) { tempString += dropdown.SelectedIndex.ToString("X1"); }
+                    if (j == 2 || j >= 4) {
+                        spellsDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.spelldatatable[i * 6 + j]);
+                    }
+                    if (j == 3) {
+                        spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6 + j];
                     }
                 }
-                codeString += HexToBase64(tempString) + itemString + "."; 
-
-                tempString = "";
-                if(sliders.Count > 0) { 
-                    foreach (var slider in sliders) {
-                        tempString += slider.Value.ToString("X3"); //convert values to hex
-                    }
-                    if (tempString.Length % 2 != 0) { tempString = "0" + tempString; } //ensure it's an even number of characters
-                    codeString += "S." + HexToBase64(tempString);
-                } else {
-                    codeString += "SZ";
-                }
-                rndShortcodeText.Text = codeString;
             }
-            updatingcode = false;
+
+            //monster reference
+            for (int i = 1; i < 6; i++) {
+                monsterDataGridView.Columns[i].ValueType = typeof(int);
+            }
+
+            for (int i = 0; i < 75; i++) {
+                monsterDataGridView.Rows.Add();
+                for (int j = 0; j < 10; j++) {
+                    if (j == 0) {
+                        monsterDataGridView.Rows[i].Cells[j].Value = library.monsterdatatable[i * 10 + j];
+                    }
+                    if (j == 6) {
+                        //monsterDataGridView.Rows[i].Cells[j].Value = library.monsterdatatable[i * 10 + j].Substring(0,2);
+                        if (library.monsterdatatable[i * 10 + j] == "FIRE") {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[27];
+                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose;
+                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.MistyRose;
+                        }
+                        if (library.monsterdatatable[i * 10 + j] == "EARTH") {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[28];
+                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque;
+                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Bisque;
+                        }
+                        if (library.monsterdatatable[i * 10 + j] == "WATER") {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[29];
+                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure;
+                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Azure;
+                        }
+                        if (library.monsterdatatable[i * 10 + j] == "WIND") {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[30];
+                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew;
+                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Honeydew;
+                        }
+                        if (library.monsterdatatable[i * 10 + j] == "DARK") {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[26];
+                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Thistle;
+                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Thistle;
+                        }
+                    }
+                    if (j >= 1 && j <= 5) {
+                        monsterDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.monsterdatatable[i * 10 + j]);
+                    }
+                    if (j == 7) {
+                        if (library.dropdata[i * 2 + 1] == 255) { monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[26]; }
+                        if (library.dropdata[i * 2 + 1] != 255) {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[library.dropdata[i * 2 + 1]];
+                            monsterDataGridView.Rows[i].Cells[j].ToolTipText = library.items[library.dropdata[i * 2 + 1] * 3];
+                        }
+                    }
+                    if (j >= 8) {
+                        string spellcode = library.monsterdatatable[i * 10 + j];
+                        int spellelement = 0;
+                        int spellvalue = 0;
+
+                        if (spellcode == "M") { monsterDataGridView.Rows[i].Cells[j].Value = "MELEE"; }
+                        if (spellcode == "X") { monsterDataGridView.Rows[i].Cells[j].Value = "-"; }
+                        if (spellcode != "M" && spellcode != "X") {
+                            spellelement = Convert.ToInt32(spellcode.Substring(1, 1)); //just get second value, it's element index
+                            spellvalue = Convert.ToInt32(spellcode.Substring(2), 16); //convert 3rd/4th to hex, to int
+
+                            monsterDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[((15 * spellelement) + spellvalue) * 6].ToUpper();
+                        }
+                    }
+
+                }
+            }
+            monsterDataGridView.Rows[63].Cells[8].Value += "*"; //adding third attack notes to Judgment
+            monsterDataGridView.Rows[63].Cells[8].ToolTipText = "JUDGMENT has a third attack: FIRE PILLAR";
+            monsterDataGridView.Rows[63].Cells[9].Value += "*";
+            monsterDataGridView.Rows[63].Cells[9].ToolTipText = "JUDGMENT has a third attack: FIRE PILLAR";
+
+
+            //hinted name reference
+            for (int i = 0; i < 30; i++) {
+                hintedDataGridView.Rows.Add();
+                for (int j = 0; j < 3; j++) {
+                    if (j == 0) { //grab spell name
+                        hintedDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6].ToUpper();
+                        if (i < 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose; }
+                        if (i >= 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
+                    }
+                    if (j > 0) { //grab 0,1 hints
+                        hintedDataGridView.Rows[i].Cells[j].Value = library.shuffleNames[(i * 5) + (j - 1)];
+                    }
+                }
+
+                for (int j = 0; j < 3; j++) {
+                    if (j == 0) { //grab spell name
+                        hintedDataGridView.Rows[i].Cells[j + 3].Value = library.spelldatatable[(i + 30) * 6].ToUpper();
+                        if (i < 15) { hintedDataGridView.Rows[i].Cells[j + 3].Style.BackColor = Color.Azure; }
+                        if (i >= 15) { hintedDataGridView.Rows[i].Cells[j + 3].Style.BackColor = Color.Honeydew; }
+                    }
+                    if (j > 0) { //grab 0,1 hints
+                        hintedDataGridView.Rows[i].Cells[j + 3].Value = library.shuffleNames[(i + 30) * 5 + (j - 1)];
+                    }
+                }
+            }
         }
 
-        public int ApplyCode() {
-            updatingcode = true;
-            string currentCode = rndShortcodeText.Text;
-            int tabpagestocheck = 3;
-            string versionNumber = labelVersion.Text.Substring(1);
-            string tempString;
-            var toggles = new List<CheckBox>();
-            var dropdowns = new List<ComboBox>();
-            var sliders = new List<TrackBar>();
-            //all of these could be an array but for the purposes of building this, i'm brute-forcing it.
-            string togglestring = "";
-            string dropdownstring = "";
-            string sliderstring = "";
-            string itemstring1 = "%"; //percent sign persists if unedited
-            string itemstring2 = "%";
-            string itemstring3 = "%";
-            string itemstring4 = "%";
-            int togglestart = 0; //starting locations of values in code
-            int dropdownstart = 0;
-            int sliderstart = 0;
-            int dropdownend = 0;
-            int firstcolon = -1; //-1 persists if no itemstrings
+        //WINFORMS UI INTERACTIONS-------------------------------------------------------------------
+        //These declarations should not be manually edited without care, as they're partially auto-generated by the Winforms Designer.
+        //The content can be edited as needed. They're kept here for logical sake, because this is the :Form type function.
 
-            if (currentCode.Length < 2) { return 0; }
+        //GENERAL FUNCTIONS
 
-            if (currentCode.Substring(0, 2) != versionNumber) { return 0; } //wrong version number fails out immediately
-
-            //check each page in turn, convert each page's values and add it to the lists
-            for (int i = 0; i < tabpagestocheck; i++) {
-                toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
-                dropdowns.AddRange(GetAllDropdowns(rndTabsControl.TabPages[i]));
-                sliders.AddRange(GetAllSliders(rndTabsControl.TabPages[i]));
-            }
-
-            //search string for starting and ending points
-            for (int i = 0; i < currentCode.Length-3; i++) { //only go near end of the string to prevent overflow
-                if (currentCode.Substring(i, 3) == ".T.") { togglestart = i + 3; }
-                if (currentCode.Substring(i, 3) == ".L.") {
-                    dropdownstart = i + 3;
-                    togglestring = currentCode.Substring(togglestart, i - togglestart);
-                }
-                if (currentCode.Substring(i, 3) == ".S.") {
-                    sliderstart = i + 3;
-                    dropdownend = i - 1; //set dropdownstring below, depending on if there are itemstrings or not
-                    sliderstring = currentCode.Substring(sliderstart);
-                }
-                if (currentCode.Substring(i, 3) == ".SZ") { //if there are no sliders
-                    sliderstart = -1;
-                    dropdownstring = currentCode.Substring(dropdownstart, i - dropdownstart);
-                } 
-
-                if (currentCode[i] == ':' && firstcolon == -1) { firstcolon = i; } //to mark end of dropdownstring
-
-                if (currentCode.Substring(i, 2) == ":!") { itemstring1 = currentCode.Substring(i + 2, 8); } //always 8 characters, so we can just grab them now
-                if (currentCode.Substring(i, 2) == ":@") { itemstring2 = currentCode.Substring(i + 2, 8); } 
-                if (currentCode.Substring(i, 2) == ":#") { itemstring3 = currentCode.Substring(i + 2, 8); } 
-                if (currentCode.Substring(i, 2) == ":$") { itemstring4 = currentCode.Substring(i + 2, 8); } 
-            }
-
-            Console.WriteLine(itemstring1);
-
-            //now define dropdownstring
-            if (itemstring1 == "%" && itemstring2 == "%" && itemstring3 == "%" && itemstring4 == "%") { //no itemstrings
-                dropdownstring = currentCode.Substring(dropdownstart, 1 + dropdownend - dropdownstart); //+1 for length value
-            } else { dropdownstring = currentCode.Substring(dropdownstart, firstcolon - dropdownstart); } //already +1
-
-            if (togglestart == 0 || dropdownstart == 0 || sliderstart == 0) { return 0; } //kick out, malformatted string
-
-            if (togglestring.Length % 2 != 0 || dropdownstring.Length % 2 != 0 || sliderstring.Length % 2 != 0) { return 0; }
-
-            //DECODE TOGGLES
-            //64b to hex to int to binary
-            string toggletemp = togglestring;
-            string toggletemp2 = "";
-            for (int i = 0; i < togglestring.Length; i++) {
-                if (togglestring[i] == '-') {
-                    toggletemp = togglestring.Substring(0, i); //first half of string, up to hyphen
-                    toggletemp2 = togglestring.Substring(i + 1); //separate out second half of string, skip hyphen
-                } 
-            }
-
-
-            //converting back to strings, PadLeft prevents the binary conversion from removing leading zeroes
-            if (toggles.Count <= 32) {
-                toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2).PadLeft(toggles.Count, '0'); 
-            }
-            if (toggles.Count > 32) {
-                toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2).PadLeft(32, '0');
-
-                //just add toggletemp2 to the binary string, since it's not bound by 32-char limit like the binary number
-                toggletemp += Convert.ToString(Convert.ToInt32(toggletemp2, 16), 2).PadLeft(toggles.Count - 32, '0');
-            }
-
-            var x = 0;
-            foreach (var toggle in toggles) {
-                if (toggletemp[x] == '1') { toggle.Checked = true; } else { toggle.Checked = false; } //read binary string
-                x++;
-            }
-
-            //DECODE DROPDOWNS
-            //set all them first: check the dropdown's length, and iterate the count by either 1 or 2 if bighex.
-            //and then override the item lists after if needed
-
-            string dropdowntemp = Base64ToHex(dropdownstring);
-            x = 0;
-            foreach (var dropdown in dropdowns) {
-                bool bighex = false;
-                int currentvalue = 0;
-                if (dropdown.Items.Count > 16) { bighex = true; }
-
-                if (bighex) {
-                    currentvalue = Convert.ToInt32(dropdowntemp.Substring(x, 2), 16); //two hex chars as int
-                    x += 2;
-                }
-                if (!bighex) {
-                    currentvalue = Convert.ToInt32(dropdowntemp.Substring(x, 1), 16); //one hex char as int
-                    x += 1;
-                }
-                dropdown.SelectedIndex = currentvalue; //update the dropdown
-            }
-
-            if (firstcolon != -1) { //any itemstrings
-                if (itemstring1 != "%") {
-                    tempString = Base64ToHex(itemstring1);
-                    itemListUnpack(itemListView1, tempString);
-                }
-                if (itemstring2 != "%") {
-                    tempString = Base64ToHex(itemstring2);
-                    itemListUnpack(itemListView2, tempString);
-                }
-                if (itemstring3 != "%") {
-                    tempString = Base64ToHex(itemstring3);
-                    itemListUnpack(itemListView3, tempString);
-                }
-                if (itemstring4 != "%") {
-                    tempString = Base64ToHex(itemstring4);
-                    itemListUnpack(itemListView4, tempString);
-                }
-            }
-
-            //DECODE SLIDERS
-
-            if (sliderstart != -1) { //only if sliders exist
-                string slidertemp = Base64ToHex(sliderstring);
-                if (slidertemp.Length % 3 != 0) { slidertemp = slidertemp.Substring(1); } //remove the optional leading zero
-                x = 0;
-                foreach (var slider in sliders) {
-                    slider.Value = Convert.ToInt32(slidertemp.Substring(x, 3),16); //convert each 3-char hex value to int
-                    x += 3;
-                }
-            }
-
-            //DONE
-            updatingcode = false;
-            return 1;
+        private void tabsControl_SelectedIndexChanged(object sender, EventArgs e) {
+            binErrorLabel.Visible = false;
+            binFileLoaded = false;
+            binFileBytes = null;
+            crcErrorLabel.Visible = false;
+            crcFileSelected = false;
+            if (tabsControl.SelectedIndex > 2) { helpLabel.Visible = false; }
+            else { helpLabel.Visible = true; }
+            expModeSet();
         }
 
-        //RND - Randomizer randomization
+        private void terms__LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            System.Diagnostics.Process.Start("https://github.com/hangedmandesign/merrow");
+        }
+
+        //RND - Randomizer functions
 
         private void rndSpellToggle_CheckedChanged(object sender, EventArgs e) {
             if(rndSpellToggle.Checked) {
@@ -2660,148 +1663,6 @@ namespace Merrow {
             if (message == -1) {
                 crcErrorLabel.Visible = true;
                 crcErrorLabel.Text = "ERROR: File not selected or available.";
-            }
-        }
-
-        public void PopulateReference() {
-            //Spells
-            for (int i = 2; i < 6; i++) {
-                if (i != 3) { spellsDataGridView.Columns[i].ValueType = typeof(int); }
-            }
-
-            for (int i = 0; i < 60; i++) {
-                spellsDataGridView.Rows.Add();
-                for (int j = 0; j < 6; j++) {
-                    if (j == 0) {
-                        spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6 + j].ToUpper();
-                        if (i < 15) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose; }
-                        if (i >= 15 && i < 30) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
-                        if (i >= 30 && i < 45) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure; }
-                        if (i >= 45) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew; }
-                    }
-                    if (j == 1) {
-                        if (i < 15) {
-                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[27];
-                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose;
-                        }
-                        if (i >= 15 && i < 30) {
-                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[28];
-                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque;
-                        }
-                        if (i >= 30 && i < 45) {
-                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[29];
-                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure;
-                        }
-                        if (i >= 45) {
-                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[30];
-                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew;
-                        }
-                    }
-                    if (j == 2 || j >= 4) {
-                        spellsDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.spelldatatable[i * 6 + j]);
-                    }
-                    if (j == 3) {
-                        spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6 + j];
-                    }
-                }
-            }
-
-            //Monsters
-            for (int i = 1; i < 6; i++) {
-                monsterDataGridView.Columns[i].ValueType = typeof(int);
-            }
-
-            for (int i = 0; i < 75; i++) {
-                monsterDataGridView.Rows.Add();
-                for (int j = 0; j < 10; j++) {
-                    if (j == 0) {
-                        monsterDataGridView.Rows[i].Cells[j].Value = library.monsterdatatable[i * 10 + j];
-                    }
-                    if (j == 6) {
-                        //monsterDataGridView.Rows[i].Cells[j].Value = library.monsterdatatable[i * 10 + j].Substring(0,2);
-                        if (library.monsterdatatable[i * 10 + j] == "FIRE") {
-                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[27];
-                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose;
-                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.MistyRose;
-                        }
-                        if (library.monsterdatatable[i * 10 + j] == "EARTH") {
-                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[28];
-                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque;
-                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Bisque;
-                        }
-                        if (library.monsterdatatable[i * 10 + j] == "WATER") {
-                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[29];
-                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure;
-                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Azure;
-                        }
-                        if (library.monsterdatatable[i * 10 + j] == "WIND") {
-                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[30];
-                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew;
-                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Honeydew;
-                        }
-                        if (library.monsterdatatable[i * 10 + j] == "DARK") {
-                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[26];
-                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Thistle;
-                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Thistle;
-                        }
-                    }
-                    if (j >= 1 && j <= 5) {
-                        monsterDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.monsterdatatable[i * 10 + j]);
-                    }
-                    if (j == 7) {
-                        if (library.dropdata[i * 2 + 1] == 255) { monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[26]; }
-                        if (library.dropdata[i * 2 + 1] != 255) {
-                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[library.dropdata[i * 2 + 1]];
-                            monsterDataGridView.Rows[i].Cells[j].ToolTipText = library.items[library.dropdata[i * 2 + 1] * 3];
-                        }
-                    }
-                    if (j >= 8) {
-                        string spellcode = library.monsterdatatable[i * 10 + j];
-                        int spellelement = 0;
-                        int spellvalue = 0;
-
-                        if (spellcode == "M") { monsterDataGridView.Rows[i].Cells[j].Value = "MELEE"; }
-                        if (spellcode == "X") { monsterDataGridView.Rows[i].Cells[j].Value = "-"; }
-                        if (spellcode != "M" && spellcode != "X") {
-                            spellelement = Convert.ToInt32(spellcode.Substring(1, 1)); //just get second value, it's element index
-                            spellvalue = Convert.ToInt32(spellcode.Substring(2), 16); //convert 3rd/4th to hex, to int
-
-                            monsterDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[((15 * spellelement) + spellvalue) * 6].ToUpper();
-                        }
-                    }
-
-                }
-            }
-            monsterDataGridView.Rows[63].Cells[8].Value += "*"; //adding third attack notes to Judgment
-            monsterDataGridView.Rows[63].Cells[8].ToolTipText = "JUDGMENT has a third attack: FIRE PILLAR";
-            monsterDataGridView.Rows[63].Cells[9].Value += "*";
-            monsterDataGridView.Rows[63].Cells[9].ToolTipText = "JUDGMENT has a third attack: FIRE PILLAR";
-
-
-            //Hinted Names
-            for (int i = 0; i < 30; i++) {
-                hintedDataGridView.Rows.Add();
-                for (int j = 0; j < 3; j++) {
-                    if (j == 0) { //grab spell name
-                        hintedDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6].ToUpper();
-                        if (i < 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose; }
-                        if (i >= 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
-                    }
-                    if (j > 0) { //grab 0,1 hints
-                        hintedDataGridView.Rows[i].Cells[j].Value = library.shuffleNames[(i * 5) + (j - 1)];
-                    }
-                }
-
-                for (int j = 0; j < 3; j++) {
-                    if (j == 0) { //grab spell name
-                        hintedDataGridView.Rows[i].Cells[j + 3].Value = library.spelldatatable[(i + 30) * 6].ToUpper();
-                        if (i < 15) { hintedDataGridView.Rows[i].Cells[j + 3].Style.BackColor = Color.Azure; }
-                        if (i >= 15) { hintedDataGridView.Rows[i].Cells[j + 3].Style.BackColor = Color.Honeydew; }
-                    }
-                    if (j > 0) { //grab 0,1 hints
-                        hintedDataGridView.Rows[i].Cells[j + 3].Value = library.shuffleNames[(i + 30) * 5 + (j - 1)];
-                    }
-                }
             }
         }
     }
