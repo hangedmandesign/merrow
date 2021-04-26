@@ -77,6 +77,7 @@ namespace Merrow {
         string[] spoilerspells = new string[60];
         string[] spoilerchests = new string[88];
         string[] spoilerdrops = new string[67];
+        string[] spoilerbossdrops = new string[6];
         string[] spoilerscales = new string[75];
         string[] spoilergifts = new string[10];
         string[] spoilerwings = new string[6];
@@ -179,6 +180,13 @@ namespace Merrow {
             rndPresetDropdown.SelectedIndex = 0;
 
             expFakeZ64Button.Size = new System.Drawing.Size(110, 78);
+
+            for (int i = 0; i < 26; i++) {
+                itemListView1.Items[i].ImageIndex = i;
+                itemListView2.Items[i].ImageIndex = i;
+                itemListView3.Items[i].ImageIndex = i;
+                itemListView4.Items[i].ImageIndex = i;
+            }
         }
 
         //UNIFIED SHUFFLING/RANDOMIZING FUNCTION----------------------------------------------------------------
@@ -543,7 +551,6 @@ namespace Merrow {
 
             if (rndBossOrderToggle.Checked) {
                 //shuffle boss order array
-                int[] tempstats = new int[6];
 
                 d = newbossorder.Length;
                 while (d > 1) {
@@ -683,34 +690,40 @@ namespace Merrow {
         public void BuildPatch() {
             //check if nothing is enabled, if not, don't make a patch
             if (!rndSpellToggle.Checked &&
+                !rndElement99Toggle.Checked &&
+                !rndSoulToggle.Checked &&
+                !rndAccuracyToggle.Checked &&
+                !rndLevelToggle.Checked &&
+
                 !rndChestToggle.Checked &&
-                !rndTextPaletteToggle.Checked &&
-                !rndTextContentToggle.Checked &&
                 !rndDropsToggle.Checked &&
-                !rndMonsterStatsToggle.Checked &&
+                !rndDropLimitToggle.Checked &&
                 !rndGiftersToggle.Checked &&
                 !rndWingsmithsToggle.Checked &&
-                !rndDropLimitToggle.Checked &&
-                !rndLevelToggle.Checked &&
-                !rndSoulToggle.Checked &&
-                !rndInvalidityToggle.Checked &&
-                !rndZoomToggle.Checked &&
-                !rndAccuracyToggle.Checked &&
-                !rndRestlessToggle.Checked &&
-                !rndMaxMessageToggle.Checked &&
+                !rndWingUnlockToggle.Checked &&
+
+                !rndMonsterStatsToggle.Checked &&
                 !rndMonsterScaleToggle.Checked &&
-                !rndFastMonasteryToggle.Checked &&
-                !rndVowelsToggle.Checked &&
-                !rndHUDLockToggle.Checked &&
-                !rndStartingStatsToggle.Checked &&
-                !rndElement99Toggle.Checked &&
-                !rndFastMammonToggle.Checked &&
-                !rndMPRegainToggle.Checked &&
-                !rndMonsterExpToggle.Checked &&
-                !rndDriftToggle.Checked &&
-                !rndCrystalReturnToggle.Checked &&
                 !rndBossOrderToggle.Checked &&
-                !rndBossElementToggle.Checked
+                !rndInvalidityToggle.Checked &&
+                !rndBossElementToggle.Checked &&
+
+                !rndStartingStatsToggle.Checked &&
+                !rndMPRegainToggle.Checked &&
+
+                !rndFastMonasteryToggle.Checked &&
+                !rndFastMammonToggle.Checked &&
+                !rndCrystalReturnToggle.Checked &&
+
+                !rndTextPaletteToggle.Checked &&
+                !rndZoomToggle.Checked &&
+                !rndMaxMessageToggle.Checked &&
+                !rndHUDLockToggle.Checked &&
+
+                !rndRestlessToggle.Checked &&
+                !rndVowelsToggle.Checked &&
+                !rndTextContentToggle.Checked &&
+                !rndDriftToggle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -735,6 +748,9 @@ namespace Merrow {
             //start spoiler log and initialize empty patch content strings
             File.WriteAllText(filePath + fileName + "_spoiler.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
             File.AppendAllText(filePath + fileName + "_spoiler.txt", "Seed: " + rngseed.ToString() + Environment.NewLine);
+            File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shortcode: " + rndShortcodeText.Text + Environment.NewLine);
+            File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "PSA: You can use the same Controller Pak save file across multiple different rando patches." + Environment.NewLine + "Only inventory, stats, defeated bosses, and collected chests/spirits will be retained." + Environment.NewLine + "Save states override all settings and cannot be used for testing randomization across different patches." + Environment.NewLine);
+            File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "Please report any bugs or quirks (or funny stuff): @JonahD on Twitter, or hangedman#5757 on Discord." + Environment.NewLine);
             File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "PATCH MODIFIERS:" + Environment.NewLine);
             patchbuild = "";
             patchcontent = "";
@@ -1070,6 +1086,18 @@ namespace Merrow {
             }
 
             if (rndBossOrderToggle.Checked) { //Boss Order Shuffle
+                int[] bossitemslist = { 20, 21, 22, 255, 23, 255 };
+                string[] bossitemnames = { "EARTH ORB", "WIND JADE", "WATER JEWEL", "NOTHING", "FIRE RUBY", "NOTHING" };
+                int[] bossaddresses = { 14186532, 14186588, 14186644, 14186700, 14186756, 14186812 };
+                int[] backassign = new int[6];
+
+                //14186532,4,14186588,4,14186644,4,14186700,4,14186756,4,14186812,4,14186868,4,14186924,4 :: data extraction for items, in boss order
+                //D87824,D8785C,D87894,D878CC,D87904,D8793C
+
+                for (int j = 0; j < 6; j++) { //items have to be handed backwards
+                    backassign[j] = bossaddresses[newbossorder[j]];
+                }
+
                 for (int i = 0; i < 6; i++) { //V30: changed this to 6 to exclude Beigis for now
                     patchstrings.Add(library.bosslocdata[newbossorder[i] * 4]); //location data replacement
                     patchstrings.Add("0004");
@@ -1079,12 +1107,12 @@ namespace Merrow {
                     patchstrings.Add("000C");
                     patchstrings.Add(library.bosslocdata[(i * 4) + 3]);
 
-                    int bossitem = library.dropdata[((newbossorder[i] + 67) * 2) + 1]; //item drops
-                    Console.WriteLine(library.dropdata[(i + 67) * 2 + 1] + ">" + library.dropdata[((newbossorder[i] + 67) * 2) + 1]);
-                    int newitemaddr = library.dropdata[(i + 67) * 2];
-                    patchstrings.Add(newitemaddr.ToString("X6"));
+                    //int bossitem = library.dropdata[((i + 67) * 2) + 1]; //item drops
+                    int newitemaddr = library.dropdata[(newbossorder[i] + 67) * 2];
+                    spoilerbossdrops[i] = (library.monsternames[(newbossorder[i] + 67) * 2] + " carries " + bossitemnames[i]);
+                    patchstrings.Add(backassign[i].ToString("X6"));
                     patchstrings.Add("0001");
-                    patchstrings.Add(bossitem.ToString("X2"));
+                    patchstrings.Add(bossitemslist[i].ToString("X2"));
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss order shuffled." + Environment.NewLine);
@@ -1322,9 +1350,9 @@ namespace Merrow {
 
             //Fast Mammon's World
             if (rndFastMammonToggle.Checked) {
-                patchstrings.Add("84EE01");
-                patchstrings.Add("0001");
-                patchstrings.Add("0D");
+                patchstrings.Add("84EDFE");
+                patchstrings.Add("0004");
+                patchstrings.Add("000E000D");
 
                 patchstrings.Add("607920");
                 patchstrings.Add("0008");
@@ -1383,6 +1411,11 @@ namespace Merrow {
                 if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked || rndBossOrderToggle.Checked) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED MONSTER STATS (HP, ATK, DEF, AGI, EXP, ELEMENT):" + Environment.NewLine);
                     foreach (string line in spoilerscales) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                }
+
+                if (rndBossOrderToggle.Checked) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED BOSS DROPS:" + Environment.NewLine);
+                    foreach (string line in spoilerbossdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
             }
 
@@ -1529,8 +1562,13 @@ namespace Merrow {
         }
 
         public void UpdateRisk() {
-            float variance = extremity + 1;
-            riskvalue = Math.Round((difficultyscale * difficultyscale) * (variance * variance) * 10);
+            float variance = extremity + 1.1f;
+            if (difficultyscale > 1.0) {
+                riskvalue = Math.Round((difficultyscale * difficultyscale * difficultyscale) * (variance * variance) * 10);
+            }
+            if (difficultyscale <= 1.0) {
+                riskvalue = Math.Round((difficultyscale * difficultyscale) * (variance * variance) * 10);
+            }
             if (rndBossOrderToggle.Checked) { riskvalue *= 1.2; }
             if (rndBossElementToggle.Checked) { riskvalue *= 0.9; }
             if (rndInvalidityToggle.Checked) { riskvalue *= 0.9; }
@@ -1805,9 +1843,18 @@ namespace Merrow {
                     toggletemp2 = togglestring.Substring(i + 1); //separate out second half of string, skip hyphen
                 } 
             }
-            
-            toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2);
-            if (toggletemp2 != "") { toggletemp += Convert.ToString(Convert.ToInt32(toggletemp2, 16), 2); } //just add it to the binary string
+
+
+            //converting back to strings, PadLeft prevents the binary conversion from removing leading zeroes
+            if (toggles.Count <= 32) {
+                toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2).PadLeft(toggles.Count, '0'); 
+            }
+            if (toggles.Count > 32) {
+                toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2).PadLeft(32, '0');
+
+                //just add toggletemp2 to the binary string, since it's not bound by 32-char limit like the binary number
+                toggletemp += Convert.ToString(Convert.ToInt32(toggletemp2, 16), 2).PadLeft(toggles.Count - 32, '0');
+            }
 
             var x = 0;
             foreach (var toggle in toggles) {
@@ -2618,22 +2665,43 @@ namespace Merrow {
 
         public void PopulateReference() {
             //Spells
-            for (int i = 2; i < 5; i++) {
-                spellsDataGridView.Columns[i].ValueType = typeof(int);
+            for (int i = 2; i < 6; i++) {
+                if (i != 3) { spellsDataGridView.Columns[i].ValueType = typeof(int); }
             }
 
             for (int i = 0; i < 60; i++) {
                 spellsDataGridView.Rows.Add();
-                for (int j = 0; j < 5; j++) {
-                    if (j <= 1) {
-                        spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 5 + j].ToUpper();
+                for (int j = 0; j < 6; j++) {
+                    if (j == 0) {
+                        spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6 + j].ToUpper();
                         if (i < 15) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose; }
                         if (i >= 15 && i < 30) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
                         if (i >= 30 && i < 45) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure; }
                         if (i >= 45) { spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew; }
                     }
-                    if (j >= 2) {
-                        spellsDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.spelldatatable[i * 5 + j]);
+                    if (j == 1) {
+                        if (i < 15) {
+                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[27];
+                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose;
+                        }
+                        if (i >= 15 && i < 30) {
+                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[28];
+                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque;
+                        }
+                        if (i >= 30 && i < 45) {
+                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[29];
+                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure;
+                        }
+                        if (i >= 45) {
+                            spellsDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[30];
+                            spellsDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew;
+                        }
+                    }
+                    if (j == 2 || j >= 4) {
+                        spellsDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.spelldatatable[i * 6 + j]);
+                    }
+                    if (j == 3) {
+                        spellsDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6 + j];
                     }
                 }
             }
@@ -2645,37 +2713,88 @@ namespace Merrow {
 
             for (int i = 0; i < 75; i++) {
                 monsterDataGridView.Rows.Add();
-                for (int j = 0; j < 8; j++) {
-                    if (j == 0 || j == 6) {
-                        monsterDataGridView.Rows[i].Cells[j].Value = library.monsterdatatable[i * 7 + j];
+                for (int j = 0; j < 10; j++) {
+                    if (j == 0) {
+                        monsterDataGridView.Rows[i].Cells[j].Value = library.monsterdatatable[i * 10 + j];
+                    }
+                    if (j == 6) {
+                        //monsterDataGridView.Rows[i].Cells[j].Value = library.monsterdatatable[i * 10 + j].Substring(0,2);
+                        if (library.monsterdatatable[i * 10 + j] == "FIRE") {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[27];
+                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose;
+                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.MistyRose;
+                        }
+                        if (library.monsterdatatable[i * 10 + j] == "EARTH") {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[28];
+                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque;
+                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Bisque;
+                        }
+                        if (library.monsterdatatable[i * 10 + j] == "WATER") {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[29];
+                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure;
+                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Azure;
+                        }
+                        if (library.monsterdatatable[i * 10 + j] == "WIND") {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[30];
+                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew;
+                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Honeydew;
+                        }
+                        if (library.monsterdatatable[i * 10 + j] == "DARK") {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[26];
+                            monsterDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Thistle;
+                            monsterDataGridView.Rows[i].Cells[0].Style.BackColor = Color.Thistle;
+                        }
                     }
                     if (j >= 1 && j <= 5) {
-                        monsterDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.monsterdatatable[i * 7 + j]);
+                        monsterDataGridView.Rows[i].Cells[j].Value = Convert.ToInt32(library.monsterdatatable[i * 10 + j]);
                     }
                     if (j == 7) {
-                        if (library.dropdata[i * 2 + 1] == 255) { monsterDataGridView.Rows[i].Cells[j].Value = "-"; }
-                        if (library.dropdata[i * 2 + 1] != 255) { monsterDataGridView.Rows[i].Cells[j].Value = library.items[library.dropdata[i * 2 + 1] * 3]; }
+                        if (library.dropdata[i * 2 + 1] == 255) { monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[26]; }
+                        if (library.dropdata[i * 2 + 1] != 255) {
+                            monsterDataGridView.Rows[i].Cells[j].Value = itemImageList.Images[library.dropdata[i * 2 + 1]];
+                            monsterDataGridView.Rows[i].Cells[j].ToolTipText = library.items[library.dropdata[i * 2 + 1] * 3];
+                        }
                     }
+                    if (j >= 8) {
+                        string spellcode = library.monsterdatatable[i * 10 + j];
+                        int spellelement = 0;
+                        int spellvalue = 0;
+
+                        if (spellcode == "M") { monsterDataGridView.Rows[i].Cells[j].Value = "MELEE"; }
+                        if (spellcode == "X") { monsterDataGridView.Rows[i].Cells[j].Value = "-"; }
+                        if (spellcode != "M" && spellcode != "X") {
+                            spellelement = Convert.ToInt32(spellcode.Substring(1, 1)); //just get second value, it's element index
+                            spellvalue = Convert.ToInt32(spellcode.Substring(2), 16); //convert 3rd/4th to hex, to int
+
+                            monsterDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[((15 * spellelement) + spellvalue) * 6].ToUpper();
+                        }
+                    }
+
                 }
             }
+            monsterDataGridView.Rows[63].Cells[8].Value += "*"; //adding third attack notes to Judgment
+            monsterDataGridView.Rows[63].Cells[8].ToolTipText = "JUDGMENT has a third attack: FIRE PILLAR";
+            monsterDataGridView.Rows[63].Cells[9].Value += "*";
+            monsterDataGridView.Rows[63].Cells[9].ToolTipText = "JUDGMENT has a third attack: FIRE PILLAR";
+
 
             //Hinted Names
             for (int i = 0; i < 30; i++) {
                 hintedDataGridView.Rows.Add();
                 for (int j = 0; j < 3; j++) {
                     if (j == 0) { //grab spell name
-                        hintedDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 5].ToUpper();
+                        hintedDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6].ToUpper();
                         if (i < 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose; }
                         if (i >= 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
                     }
                     if (j > 0) { //grab 0,1 hints
-                        hintedDataGridView.Rows[i].Cells[j].Value = library.shuffleNames[(i) * 5 + (j - 1)];
+                        hintedDataGridView.Rows[i].Cells[j].Value = library.shuffleNames[(i * 5) + (j - 1)];
                     }
                 }
 
                 for (int j = 0; j < 3; j++) {
                     if (j == 0) { //grab spell name
-                        hintedDataGridView.Rows[i].Cells[j + 3].Value = library.spelldatatable[(i + 30) * 5].ToUpper();
+                        hintedDataGridView.Rows[i].Cells[j + 3].Value = library.spelldatatable[(i + 30) * 6].ToUpper();
                         if (i < 15) { hintedDataGridView.Rows[i].Cells[j + 3].Style.BackColor = Color.Azure; }
                         if (i >= 15) { hintedDataGridView.Rows[i].Cells[j + 3].Style.BackColor = Color.Honeydew; }
                     }
