@@ -1,6 +1,7 @@
 # MERROW
-Merrow is a Quest 64 randomizer: a tool for generating IPS patches, primarily to be applied to the NA/U dotZ64 version of Quest 64, offering many randomizer and quality-of-life options. For the full feature list, follow the itch link in the Downloads section below.
-You'll need an IPS-capable patching tool to use the patches it creates, like Lunar or Ninja.
+Merrow is a Quest 64 randomizer: a tool for randomizing the NA/U dotZ64 version of Quest 64, offering many randomization, difficulty modification, and quality-of-life options. For the full feature list, follow the itch link in the Downloads section below.
+
+Merrow can also output randomizer options as IPS patches. You'll need an IPS-capable patching tool (ex. Lunar or Ninja) to use the patches it creates.
 
 Along with the randomizer, Merrow has three advanced data tools that may be handy to coders and romhackers and aren't necessarily specific to Quest 64. For more detailed tool explanations, follow the itch link in the Downloads section below.
 * A universal IPS patch generator, for those who know what they're doing and just want to test some specific hex address patching. 
