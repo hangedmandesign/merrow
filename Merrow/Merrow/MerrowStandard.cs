@@ -65,6 +65,7 @@ namespace Merrow {
         int[] shuffles = new int[60];
         List<int> reorg = new List<int>();
         int[] spellitemID = { 58, 52, 38, 57, 17, 22 };
+        int[] defaultspellitemrules = {  };
         int[] newitemspells = new int[6];
         int[] itemspellfix = new int[6];
         int[] chests = new int[88];
@@ -283,10 +284,13 @@ namespace Merrow {
                 //silver amulet - spirit armor 1 - id17
                 //golden amulet - spirit armor 2 - id22
 
+                //i need to check the modifier spells, since their default rules are being transplanted
+
                 //item softlock protection
                 for (int i = 0; i < 6; i++) {
-                newitemspells[i] = shuffles[spellitemID[i]];
-                string rule = library.spells[(spellitemID[i] * 4) + 3].Substring(6,2);
+                    newitemspells[i] = shuffles[spellitemID[i]];
+                    string rule = library.spells[(newitemspells[i] * 4) + 3].Substring(6,2);
+
                     if (rule == "12" || rule == "03") {
                         if (rule == "12") { //out of battle only (exit, return)
                             itemspellfix[i] = 1;
@@ -294,7 +298,8 @@ namespace Merrow {
                         if (rule == "03") { //either (healing)
                             itemspellfix[i] = 2;
                         }
-                    } else { //anything else battle only
+                    }
+                    else { //anything else battle only
                         itemspellfix[i] = 0;
                     }
                 }
@@ -914,6 +919,14 @@ namespace Merrow {
                 agidefDataGridView.Rows.Add();
                 for (int j = 0; j < 6; j++) {
                     agidefDataGridView.Rows[i].Cells[j].Value = library.agidefdatatable[i * 6 + j];
+                }
+            }
+
+            //combat level reference
+            for (int i = 0; i < 49; i++) {
+                combatDataGridView.Rows.Add();
+                for (int j = 0; j < 6; j++) {
+                    combatDataGridView.Rows[i].Cells[j].Value = library.combatlvldatatable[i * 6 + j];
                 }
             }
         }
