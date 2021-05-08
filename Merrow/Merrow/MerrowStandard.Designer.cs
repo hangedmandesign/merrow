@@ -139,6 +139,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.rndMaxMessageToggle = new System.Windows.Forms.CheckBox();
             this.rndRestlessToggle = new System.Windows.Forms.CheckBox();
             this.rndLevelToggle = new System.Windows.Forms.CheckBox();
@@ -340,6 +344,22 @@
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.helpLabel = new System.Windows.Forms.Label();
+            this.refHPTab = new System.Windows.Forms.TabPage();
+            this.hpmpDataGridView = new System.Windows.Forms.DataGridView();
+            this.refAGITab = new System.Windows.Forms.TabPage();
+            this.agidefDataGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.newBox.SuspendLayout();
@@ -391,6 +411,10 @@
             this.ReaderTab.SuspendLayout();
             this.binLengthGroup.SuspendLayout();
             this.binAddrGroup.SuspendLayout();
+            this.refHPTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hpmpDataGridView)).BeginInit();
+            this.refAGITab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.agidefDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // rndMaxMessageToggle
@@ -503,7 +527,7 @@
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(73, 45);
             this.labelVersion.TabIndex = 3;
-            this.labelVersion.Text = "v31";
+            this.labelVersion.Text = "v32";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // expSelectButton
@@ -634,7 +658,7 @@
             this.newLabel.Name = "newLabel";
             this.newLabel.Size = new System.Drawing.Size(572, 196);
             this.newLabel.TabIndex = 0;
-            this.newLabel.Text = resources.GetString("newLabel.Text");
+            this.newLabel.Text = "● ";
             // 
             // creditsBox
             // 
@@ -2579,6 +2603,8 @@
             this.refTabControl.Controls.Add(this.refSpellTab);
             this.refTabControl.Controls.Add(this.refMonstersTab);
             this.refTabControl.Controls.Add(this.refHintedTab);
+            this.refTabControl.Controls.Add(this.refHPTab);
+            this.refTabControl.Controls.Add(this.refAGITab);
             this.refTabControl.Location = new System.Drawing.Point(3, 3);
             this.refTabControl.Name = "refTabControl";
             this.refTabControl.SelectedIndex = 0;
@@ -3259,6 +3285,194 @@
             this.rndToolTip.SetToolTip(this.helpLabel, "Every function and option has a mouse-over tooltip \r\n(usually on the text label) " +
         "that explains what it does \r\nand what all related options do.");
             // 
+            // refHPTab
+            // 
+            this.refHPTab.BackColor = System.Drawing.SystemColors.Control;
+            this.refHPTab.Controls.Add(this.hpmpDataGridView);
+            this.refHPTab.Location = new System.Drawing.Point(4, 22);
+            this.refHPTab.Name = "refHPTab";
+            this.refHPTab.Padding = new System.Windows.Forms.Padding(3);
+            this.refHPTab.Size = new System.Drawing.Size(582, 526);
+            this.refHPTab.TabIndex = 3;
+            this.refHPTab.Text = "HP/MP";
+            // 
+            // hpmpDataGridView
+            // 
+            this.hpmpDataGridView.AllowUserToAddRows = false;
+            this.hpmpDataGridView.AllowUserToDeleteRows = false;
+            this.hpmpDataGridView.AllowUserToResizeColumns = false;
+            this.hpmpDataGridView.AllowUserToResizeRows = false;
+            this.hpmpDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.hpmpDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.hpmpDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.hpmpDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.hpmpDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn9,
+            this.dataGridViewTextBoxColumn10,
+            this.dataGridViewTextBoxColumn11,
+            this.dataGridViewTextBoxColumn12,
+            this.dataGridViewTextBoxColumn13,
+            this.dataGridViewTextBoxColumn14});
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.hpmpDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
+            this.hpmpDataGridView.Location = new System.Drawing.Point(6, 6);
+            this.hpmpDataGridView.Name = "hpmpDataGridView";
+            this.hpmpDataGridView.ReadOnly = true;
+            this.hpmpDataGridView.RowHeadersVisible = false;
+            this.hpmpDataGridView.RowTemplate.Height = 20;
+            this.hpmpDataGridView.ShowCellErrors = false;
+            this.hpmpDataGridView.ShowEditingIcon = false;
+            this.hpmpDataGridView.ShowRowErrors = false;
+            this.hpmpDataGridView.Size = new System.Drawing.Size(570, 514);
+            this.hpmpDataGridView.TabIndex = 2;
+            // 
+            // refAGITab
+            // 
+            this.refAGITab.BackColor = System.Drawing.SystemColors.Control;
+            this.refAGITab.Controls.Add(this.agidefDataGridView);
+            this.refAGITab.Location = new System.Drawing.Point(4, 22);
+            this.refAGITab.Name = "refAGITab";
+            this.refAGITab.Padding = new System.Windows.Forms.Padding(3);
+            this.refAGITab.Size = new System.Drawing.Size(582, 526);
+            this.refAGITab.TabIndex = 4;
+            this.refAGITab.Text = "AGI/DEF";
+            // 
+            // agidefDataGridView
+            // 
+            this.agidefDataGridView.AllowUserToAddRows = false;
+            this.agidefDataGridView.AllowUserToDeleteRows = false;
+            this.agidefDataGridView.AllowUserToResizeColumns = false;
+            this.agidefDataGridView.AllowUserToResizeRows = false;
+            this.agidefDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.agidefDataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.agidefDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.agidefDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.agidefDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn15,
+            this.dataGridViewTextBoxColumn16,
+            this.dataGridViewTextBoxColumn17,
+            this.dataGridViewTextBoxColumn18,
+            this.dataGridViewTextBoxColumn19,
+            this.dataGridViewTextBoxColumn20});
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.agidefDataGridView.DefaultCellStyle = dataGridViewCellStyle10;
+            this.agidefDataGridView.Location = new System.Drawing.Point(6, 6);
+            this.agidefDataGridView.Name = "agidefDataGridView";
+            this.agidefDataGridView.ReadOnly = true;
+            this.agidefDataGridView.RowHeadersVisible = false;
+            this.agidefDataGridView.RowTemplate.Height = 20;
+            this.agidefDataGridView.ShowCellErrors = false;
+            this.agidefDataGridView.ShowEditingIcon = false;
+            this.agidefDataGridView.ShowRowErrors = false;
+            this.agidefDataGridView.Size = new System.Drawing.Size(570, 514);
+            this.agidefDataGridView.TabIndex = 3;
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewTextBoxColumn15.HeaderText = "AGILITY";
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            this.dataGridViewTextBoxColumn15.ReadOnly = true;
+            this.dataGridViewTextBoxColumn15.Width = 73;
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.HeaderText = "EXP TO LVL";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            this.dataGridViewTextBoxColumn17.HeaderText = "TOTAL EXP";
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewTextBoxColumn18.HeaderText = "DEFENSE";
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.ReadOnly = true;
+            this.dataGridViewTextBoxColumn18.Width = 82;
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            this.dataGridViewTextBoxColumn19.HeaderText = "EXP TO LVL";
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            this.dataGridViewTextBoxColumn19.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn20
+            // 
+            this.dataGridViewTextBoxColumn20.HeaderText = "TOTAL EXP";
+            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
+            this.dataGridViewTextBoxColumn20.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewTextBoxColumn9.HeaderText = "HP VALUE*";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 89;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.HeaderText = "EXP TO LVL";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.HeaderText = "TOTAL EXP";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewTextBoxColumn12.HeaderText = "MP VALUE";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ReadOnly = true;
+            this.dataGridViewTextBoxColumn12.Width = 86;
+            // 
+            // dataGridViewTextBoxColumn13
+            // 
+            this.dataGridViewTextBoxColumn13.HeaderText = "EXP TO LVL";
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.HeaderText = "TOTAL EXP";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.ReadOnly = true;
+            // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3337,6 +3551,10 @@
             this.ReaderTab.PerformLayout();
             this.binLengthGroup.ResumeLayout(false);
             this.binAddrGroup.ResumeLayout(false);
+            this.refHPTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.hpmpDataGridView)).EndInit();
+            this.refAGITab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.agidefDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3544,6 +3762,22 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
+        private System.Windows.Forms.TabPage refHPTab;
+        private System.Windows.Forms.DataGridView hpmpDataGridView;
+        private System.Windows.Forms.TabPage refAGITab;
+        private System.Windows.Forms.DataGridView agidefDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
     }
 }
 
