@@ -215,11 +215,13 @@ namespace Merrow {
             if (rndChestToggle.Checked) {
                 //add chest addresses, and new byte
                 for (int i = 0; i < chests.Length; i++) {
-                    int temp = library.chestdata[i * 2] + 33; //33 is offset to chest item byte
+                    int temp = library.chestdata[i * 4] + 33; //33 is offset to chest item byte
                     patchstrings.Add(Convert.ToString(temp, 16));
                     patchstrings.Add("0001");
                     patchstrings.Add(chests[i].ToString("X2"));
-                    spoilerchests[i] = i.ToString("00") + ": " + library.items[(chests[i] * 3)];
+
+                    //spoilerchests[i] = i.ToString("00") + ": " + library.items[(chests[i] * 3)]; old method
+                    spoilerchests[library.chestdata[i * 4 + 2]] = library.chestlocnames[i] + ": " + library.items[(chests[i] * 3)];
                 }
 
                 if (rndChestDropdown.SelectedIndex == 0) {
@@ -875,7 +877,7 @@ namespace Merrow {
             if (option == 1) { return library.itemlist_standard; }
             if (option == 2) { return library.itemlist_standardwings; }
             if (option == 3) { return library.itemlist_standardgems; }
-            if (option == 4) { return library.itemlist_chaos; }
+            if (option == 4) { return library.itemlist_chaosEX; } //changed to include key and book, by request
             if (option == 5) { return library.itemlist_wings; }
             if (option == 6) { return library.itemlist_gems; }
             if (option == 7) { return library.itemlist_wingsgems; }

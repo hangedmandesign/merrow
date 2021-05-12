@@ -132,7 +132,7 @@ namespace Merrow {
             rndSpellDropdown.Items.AddRange(options.ToArray<object>());
 
             //initiate chest content list
-            for (int j = 0; j < chests.Length; j++) { chests[j] = library.chestdata[j * 2 + 1]; }
+            for (int j = 0; j < chests.Length; j++) { chests[j] = library.chestdata[j * 4 + 1]; }
 
             //initiate item drops list
             for (int k = 0; k < drops.Length; k++) { drops[k] = library.dropdata[k * 2 + 1]; }
@@ -322,7 +322,7 @@ namespace Merrow {
             //RANDOM CHESTS
 
             //reinitiate chest list, in case user has gone back to Shuffle
-            for (int j = 0; j < chests.Length; j++) { chests[j] = library.chestdata[j * 2 + 1]; }
+            for (int j = 0; j < chests.Length; j++) { chests[j] = library.chestdata[j * 4 + 1]; }
 
             int[] itemset = itemListView1.CheckedIndices.Cast<int>().ToArray();
             int setlength = itemset.Length;
