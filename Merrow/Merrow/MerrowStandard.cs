@@ -91,6 +91,7 @@ namespace Merrow {
         List<string> patchstrings = new List<string>();
         int[] newbossorder = new int[6]; //V30: changed to <6 to exclude beigis
         int[] newbosselem = { 4, 4 };
+        int lastpaletteoffset = 0;
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -307,7 +308,7 @@ namespace Merrow {
 
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
 
-            Console.WriteLine(rngseed);
+            //Console.WriteLine(rngseed);
             for (int i = 0; i < playerspells; i++) {
                 bool fiftyfifty = SysRand.NextDouble() > 0.5; ; 
                 if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfifty = true; } //"Linear" option
@@ -515,13 +516,30 @@ namespace Merrow {
 
             //TEST COLOUR SHUFFLING (Trying on text colour, cause it's simple)
 
-            texPal1 = RGBAToColor(library.baseRedTextPalette[0]); //convert base colours from hex
-            texPal2 = RGBAToColor(library.baseRedTextPalette[1]);
-            texPal3 = RGBAToColor(library.baseRedTextPalette[2]);
+            //pick random hue offset
+            bool lightdark = SysRand.NextDouble() > 0.5;
+            double hueOffset = SysRand.NextDouble() * 360;
 
-            float hueOffset = (float)SysRand.NextDouble() * 360; //pick random hue offset
-            float brightScale = (float)SysRand.NextDouble() / 3;
+            //get hue offset from last three digits of seed
+            if (rndTextPaletteDropdown.SelectedIndex == 1) {
+                hueOffset = (rngseed % 1000) % 720;
+                lightdark = hueOffset < 360;
+                hueOffset = hueOffset % 360;
+            }
 
+            //convert base colours from hex, and hue shift
+            if (lightdark) {
+                texPal1 = HueShift(RGBAToColor(library.baseRedTextPalette[0]), hueOffset);
+                texPal2 = HueShift(RGBAToColor(library.baseRedTextPalette[1]), hueOffset);
+                texPal3 = HueShift(RGBAToColor(library.baseRedTextPalette[2]), hueOffset);
+            } else {
+                texPal1 = HueShift(RGBAToColor(library.baseDarkTextPalette[0]), hueOffset);
+                texPal2 = HueShift(RGBAToColor(library.baseDarkTextPalette[1]), hueOffset);
+                texPal3 = HueShift(RGBAToColor(library.baseDarkTextPalette[2]), hueOffset);
+            }
+            
+
+            /*float brightScale = (float)SysRand.NextDouble() / 3; //old junk maybe
             float temph = texPal1.GetHue() + hueOffset; //alter palette colours according to HSV
             float temps = texPal1.GetSaturation();
             float tempb = getBrightness(texPal1);
@@ -533,7 +551,7 @@ namespace Merrow {
             temph = texPal3.GetHue() + hueOffset;
             temps = texPal3.GetSaturation();
             tempb = getBrightness(texPal3) + brightScale;
-            texPal3 = ColorFromHSL(temph, temps, tempb);
+            texPal3 = ColorFromHSL(temph, temps, tempb);*/
 
             textPaletteHex = ColorToHex(texPal1) + ColorToHex(texPal2) + ColorToHex(texPal3);
 
@@ -974,7 +992,7 @@ namespace Merrow {
         private void rndTextPaletteToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndTextPaletteToggle.Checked) {
                 rndTextPaletteDropdown.Enabled = true;
-                if (rndTextPaletteDropdown.SelectedIndex == 0) { rndColorViewToggle.Enabled = true; }
+                if (rndTextPaletteDropdown.SelectedIndex <= 1) { rndColorViewToggle.Enabled = true; }
             } else {
                 rndTextPaletteDropdown.Enabled = false;
                 rndColorViewPanel.Visible = false;
@@ -1007,7 +1025,7 @@ namespace Merrow {
         }
 
         private void rndTextPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            if (rndTextPaletteDropdown.SelectedIndex == 0) {
+            if (rndTextPaletteDropdown.SelectedIndex <= 1) {
                 rndColorViewToggle.Enabled = true;
             }
             else {
@@ -1015,6 +1033,7 @@ namespace Merrow {
                 rndColorViewToggle.Checked = false; //make it false again so as not to spoil the next value, and so the panel's invisible
             }
             UpdateCode();
+            Shuffling(true);
         }
 
         private void rndChestToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1680,7 +1699,7 @@ namespace Merrow {
 
         private void crcRepairButton_Click(object sender, EventArgs e) {
             int message = RepairCRC();
-            Console.WriteLine(message);
+            //Console.WriteLine(message);
             if (message == 0) {
                 crcErrorLabel.Visible = true;
                 crcErrorLabel.Text = "Checksum repaired.";

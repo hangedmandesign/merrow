@@ -75,6 +75,69 @@ namespace Merrow {
             return ret;
         }
 
+        public static string ColorToHex(Color col) { //Convert Color to 4-char hex string
+            double dubR = (col.R / 255d) * 31; //convert the 0-255 values to 0-31 for binary conversion
+            double dubG = (col.G / 255d) * 31;
+            double dubB = (col.B / 255d) * 31;
+
+            int intR = (int)Math.Round(dubR); //it was not doing the conversion properly so i've separated it out
+            int intG = (int)Math.Round(dubG);
+            int intB = (int)Math.Round(dubB);
+
+            int intA = 1; //Alpha is either 1 or 0
+            if (col.A == 0) { intA = 0; }
+
+            string binR = Convert.ToString(intR, 2).PadLeft(5, '0'); //convert them to separate binary strings
+            string binG = Convert.ToString(intG, 2).PadLeft(5, '0');
+            string binB = Convert.ToString(intB, 2).PadLeft(5, '0');
+
+            int binCol = Convert.ToInt32(binR + binG + binB + intA.ToString(), 2); //combine into one int
+            string ret = binCol.ToString(("X4")); //convert that int to hex
+            return ret;
+        }
+
+        public static Color HueShift(Color col, double degrees) {
+            double[] matr = new double[9];
+            double cosA = Math.Cos(DegToRad(degrees));
+            double sinA = Math.Sin(DegToRad(degrees));
+
+            matr[0] = cosA + (1.0 - cosA) / 3.0;
+            matr[1] = 1d / 3d * (1.0 - cosA) - Math.Sqrt(1d / 3d) * sinA;
+            matr[2] = 1d / 3d * (1.0 - cosA) + Math.Sqrt(1d / 3d) * sinA;
+            matr[3] = 1d / 3d * (1.0 - cosA) + Math.Sqrt(1d / 3d) * sinA;
+            matr[4] = cosA + 1d / 3d * (1.0 - cosA);
+            matr[5] = 1d / 3d * (1.0 - cosA) - Math.Sqrt(1d / 3d) * sinA;
+            matr[6] = 1d / 3d * (1.0 - cosA) - Math.Sqrt(1d / 3d) * sinA;
+            matr[7] = 1d / 3d * (1.0 - cosA) + Math.Sqrt(1d / 3d) * sinA;
+            matr[8] = cosA + 1d / 3d * (1.0 - cosA);
+
+            double rx = col.R * matr[0] + col.G * matr[1] + col.B * matr[2];
+            double gx = col.R * matr[3] + col.G * matr[4] + col.B * matr[5];
+            double bx = col.R * matr[6] + col.G * matr[7] + col.B * matr[8];
+            double ax = Math.Min(255, Math.Max(0, (int)col.A));
+
+            return Color.FromArgb(Clamp16(ax), Clamp16(rx), Clamp16(gx), Clamp16(bx));
+        }
+
+        public static int Clamp16(double input) {
+            int ret = Math.Min(255, Math.Max(0, (int)input));
+            return ret;
+        }
+
+        public static double DegToRad(double degrees) {
+            double radians = (Math.PI / 180) * degrees;
+            return (radians);
+        }
+
+        public static double RadToDeg(double radians) {
+            double degrees = (180 / Math.PI) * radians;
+            return (degrees);
+        }
+
+        //
+        //below this line is the old colour conversion method that doesn't work as intended
+        //
+
         public static Color ColorFromHSL(float h, float s, float v) { 
             if (s == 0) { int L = (int)v; return Color.FromArgb(255, L, L, L); }
 
@@ -101,31 +164,6 @@ namespace Merrow {
 
         public float getBrightness(Color c) { //more realistic brightness
             return (c.R * 0.299f + c.G * 0.587f + c.B * 0.114f) / 256f;
-        }
-
-        public static string ColorToHex(Color col) { //Convert Color to 4-char hex string
-            double dubR = (col.R / 255d) * 31; //convert the 0-255 values to 0-31 for binary conversion
-            double dubG = (col.G / 255d) * 31;
-            double dubB = (col.B / 255d) * 31;
-
-            int intR = (int)Math.Round(dubR); //it was not doing the conversion properly so i've separated it out
-            int intG = (int)Math.Round(dubG);
-            int intB = (int)Math.Round(dubB);
-
-            int intA = 1; //Alpha is either 1 or 0
-            if (col.A == 0) { intA = 0; }
-
-            string binR = Convert.ToString(intR, 2); //convert them to separate binary strings
-            if (binR.Length < 5) { for (int i = 0; i < 5 - binR.Length; i++) { binR = "0" + binR; } } //ensure it's 5 characters, conversion will cut it short
-            string binG = Convert.ToString(intG, 2);
-            if (binG.Length < 5) { for (int i = 0; i < 5 - binG.Length; i++) { binG = "0" + binG; } }
-            string binB = Convert.ToString(intB, 2);
-            if (binB.Length < 5) { for (int i = 0; i < 5 - binB.Length; i++) { binB = "0" + binB; } }
-            string binA = Convert.ToString(intA, 2);
-
-            int binCol = Convert.ToInt32(binR + binG + binB + binA, 2); //combine into one int
-            string ret = binCol.ToString(("X4")); //convert that int to hex
-            return ret;
         }
     }
 }

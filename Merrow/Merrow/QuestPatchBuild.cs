@@ -176,7 +176,7 @@ namespace Merrow {
                 // white: F83E318DBDEFF735
 
                 int temp = rndTextPaletteDropdown.SelectedIndex;
-                if (temp == 1) { temp = SysRand.Next(2, 6); }
+                if (temp == 2) { temp = SysRand.Next(3, 7); }
 
                 patchstrings.Add("D3E240");
                 patchstrings.Add("0008");
@@ -187,21 +187,27 @@ namespace Merrow {
                     patchstrings.Add(patchcontent);
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random." + Environment.NewLine);
                 }
-                if (temp == 2) {
+                if (temp == 1) {
+                    patchcontent = "F83E";
+                    patchcontent += textPaletteHex;
+                    patchstrings.Add(patchcontent);
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to custom (" + lastpaletteoffset.ToString().PadLeft(3, '0') + ")." + Environment.NewLine);
+                }
+                if (temp == 3) {
                     patchstrings.Add("F83E9C1BBA0DD009");
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to red." + Environment.NewLine);
                 }
-                if (temp == 3) {
+                if (temp == 4) {
                     patchstrings.Add("F83E9C1B629D19AB");
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to blue." + Environment.NewLine);
                 }
-                if (temp == 4) {
+                if (temp == 5) {
                     patchstrings.Add("F83E318DBDEFF735");
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to white." + Environment.NewLine);
                 }
-                if (temp == 5) {
+                if (temp == 6) {
                     patchstrings.Add("F83E9C1B6AD5318D");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to black [default]." + Environment.NewLine);
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to black (default)." + Environment.NewLine);
                 }
             }
 
