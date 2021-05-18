@@ -36,6 +36,7 @@ namespace Merrow {
 
                 !rndStartingStatsToggle.Checked &&
                 !rndMPRegainToggle.Checked &&
+                !rndHitMPToggle.Checked &&
 
                 !rndFastMonasteryToggle.Checked &&
                 !rndFastMammonToggle.Checked &&
@@ -751,13 +752,87 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Crystal Valley return warp enabled." + Environment.NewLine);
             }
 
+            //Staff Hit MP Regain
+            if (rndHitMPToggle.Checked) {
+                patchstrings.Add("0050DB");
+                patchstrings.Add("0001");
+                patchstrings.Add("0" + rndHitMPTrackBar.Value.ToString());
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Staff hit MP regain set to " + rndHitMPValue.Text + "x." + Environment.NewLine);
+            }
+
             //FINAL ASSEMBLY/OUTPUT
+
+            //Randomizer logo
+            patchstrings.Add("DAC040");
+            patchstrings.Add("393C"); //main menu logo address/length
+            patchstrings.Add(library.randologo);
+            patchstrings.Add("DCE070");
+            patchstrings.Add("393C"); //animation logo address/length
+            patchstrings.Add(library.randologo);
+
+            //Initialize patch authoring by counting number of items to write
+            int patchparts = patchstrings.Count();
+
+            //Patching mode: PATCH Z64 FILE
+            //rather than use patchstrings as IPS instructions, use the same values to overwrite directly
+            if (expModePatchZ64.Checked && rndFileSelected) {
+
+                //advance by 3 (address, length, and data) writing as you go
+                for (int i = 0; i < patchparts; i += 3) { 
+                    int targetAddr = Convert.ToInt32(patchstrings[i], 16);
+                    byte[] targetData = StringToByteArray(patchstrings[i + 2]);
+                    int targetLength = targetData.Length;
+
+                    for (int j = 0; j < targetLength; j++) { 
+                        rndFileBytes[targetAddr + j] = targetData[j];
+                    }
+                }
+
+                //write updated file bytearray to new file
+                string thisFile = filePath + fileName + ".z64";
+                File.WriteAllBytes(thisFile, rndFileBytes);
+                var crctext = fix_crc(thisFile); //repair checksum
+                filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
+                System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+                rndErrorLabel.Text = "Z64 file creation complete. CRC repaired.";
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Z64 file patched. Checksum repaired." + Environment.NewLine);
+
+            }
+
+            //Patching mode: CREATE IPS PATCH
+            if (expModePatchIPS.Checked) {
+
+                //assemble patch
+                patchbuild += headerHex;
+                for (int ps = 0; ps < patchparts; ps++) {
+                    patchbuild += patchstrings[ps];
+                }
+                patchbuild += footerHex;
+
+                //write patch to file
+                patcharray = StringToByteArray(patchbuild);
+                File.WriteAllBytes(filePath + fileName + ".ips", patcharray);
+                filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
+                System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
+                rndErrorLabel.Text = "IPS Patch creation complete.";
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "IPS patch generated." + Environment.NewLine);
+            }
 
             //Verbose spoiler log is all down at the bottom to allow checks without spoilers.
             if (verboselog) {
 
                 //move it down a bit
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + Environment.NewLine + Environment.NewLine + "----------EXTENDED SPOILER LOG BELOW----------" + Environment.NewLine + Environment.NewLine + Environment.NewLine);
+                if (rndSpellToggle.Checked ||
+                    rndChestToggle.Checked ||
+                    rndDropsToggle.Checked ||
+                    rndGiftersToggle.Checked ||
+                    rndWingsmithsToggle.Checked ||
+                    rndMonsterStatsToggle.Checked ||
+                    rndMonsterScaleToggle.Checked ||
+                    rndBossOrderToggle.Checked) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + Environment.NewLine + Environment.NewLine + "----------EXTENDED SPOILER LOG BELOW----------" + Environment.NewLine + Environment.NewLine + Environment.NewLine);
+                }
 
                 //spell spoilers
                 if (rndSpellToggle.Checked) {
@@ -795,64 +870,11 @@ namespace Merrow {
                     foreach (string line in spoilerscales) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 
-                //boss order spoilers
-                if (rndBossOrderToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED BOSS DROPS:" + Environment.NewLine);
-                    foreach (string line in spoilerbossdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-                }
-            }
-
-            //Randomizer logo
-            patchstrings.Add("DAC040");
-            patchstrings.Add("393C"); //main menu logo address/length
-            patchstrings.Add(library.randologo);
-            patchstrings.Add("DCE070");
-            patchstrings.Add("393C"); //animation logo address/length
-            patchstrings.Add(library.randologo);
-
-            //Initialize patch authoring by counting number of items to write
-            int patchparts = patchstrings.Count();
-
-            //Patching mode: PATCH Z64 FILE
-            //rather than use patchstrings as IPS instructions, use the same values to overwrite directly
-            if (expModePatchZ64.Checked && rndFileSelected) {
-
-                //advance by 3 (address, length, and data) writing as you go
-                for (int i = 0; i < patchparts; i += 3) { 
-                    int targetAddr = Convert.ToInt32(patchstrings[i], 16);
-                    byte[] targetData = StringToByteArray(patchstrings[i + 2]);
-                    int targetLength = targetData.Length;
-
-                    for (int j = 0; j < targetLength; j++) { 
-                        rndFileBytes[targetAddr + j] = targetData[j];
-                    }
-                }
-
-                //write updated file bytearray to new file
-                string thisFile = filePath + fileName + ".z64";
-                File.WriteAllBytes(thisFile, rndFileBytes);
-                fix_crc(thisFile); //repair checksum
-                filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
-                System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
-                rndErrorLabel.Text = "Z64 file creation complete. CRC repaired.";
-            }
-
-            //Patching mode: CREATE IPS PATCH
-            if (expModePatchIPS.Checked) {
-
-                //assemble patch
-                patchbuild += headerHex;
-                for (int ps = 0; ps < patchparts; ps++) {
-                    patchbuild += patchstrings[ps];
-                }
-                patchbuild += footerHex;
-
-                //write patch to file
-                patcharray = StringToByteArray(patchbuild);
-                File.WriteAllBytes(filePath + fileName + ".ips", patcharray);
-                filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
-                System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
-                rndErrorLabel.Text = "IPS Patch creation complete.";
+                //boss order spoilers - removed because it was mostly for debug
+                //if (rndBossOrderToggle.Checked) {
+                //    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED BOSS DROPS:" + Environment.NewLine);
+                //    foreach (string line in spoilerbossdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                //}
             }
 
             //Unlock locked UI functionality at the end:

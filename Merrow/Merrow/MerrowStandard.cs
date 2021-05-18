@@ -56,7 +56,7 @@ namespace Merrow {
         Color texPal2 = Color.Black;
         Color texPal3 = Color.Black;
         bool lockItemUpdates = false;
-        string rndErrorString = "WARNING: Current patch options will cause checksum errors." + Environment.NewLine + "Use the CRC Repair Tool to fix your patched rom.";
+        string rndErrorString = "WARNING: Current patch options will cause checksum errors." + Environment.NewLine + "Use the CRC REPAIR TOOL below to fix your patched rom.";
         double riskvalue = 1.0;
         bool updatingcode = false;
 
@@ -1457,6 +1457,11 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndHitMPTrackBar_Scroll(object sender, EventArgs e) {
+            rndHitMPValue.Text = rndHitMPTrackBar.Value.ToString() + "x";
+            UpdateCode();
+        }
+
         private void rndDriftToggle_CheckedChanged(object sender, EventArgs e) {
             expUpdateWarning();
             UpdateCode();
@@ -1473,6 +1478,21 @@ namespace Merrow {
 
         private void rndBossElementToggle_CheckedChanged(object sender, EventArgs e) {
             UpdateRisk();
+            UpdateCode();
+        }
+
+
+        private void rndHitMPToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndHitMPToggle.Checked) {
+                rndHitMPLabel.ForeColor = SystemColors.ControlText;
+                rndHitMPValue.ForeColor = SystemColors.ControlText;
+            }
+            else {
+                rndHitMPLabel.ForeColor = SystemColors.ControlDark;
+                rndHitMPValue.ForeColor = SystemColors.ControlDark;
+            }
+            rndHitMPTrackBar.Enabled = rndHitMPToggle.Checked;
+            expUpdateWarning();
             UpdateCode();
         }
 
@@ -1589,7 +1609,8 @@ namespace Merrow {
                 rndStartingStatsToggle.Checked ||
                 rndElement99Toggle.Checked ||
                 rndMPRegainToggle.Checked ||
-                rndDriftToggle.Checked) 
+                rndDriftToggle.Checked || 
+                rndHitMPToggle.Checked) 
                 { rndErrorLabel.Text = rndErrorString; }
             }
         }
