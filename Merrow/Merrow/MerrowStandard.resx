@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="rndAccuracyToggle.ToolTip" xml:space="preserve">
     <value>Normalizes spell accuracy values to 100. 
 All spells will pass the initial accuracy check, but offensive spells can still miss 
@@ -135,6 +138,32 @@ Save location is the "Patches" subfolder in the same folder as the Merrow execut
 Z64 Export will not overwrite your original Z64 file, it will instead export a Z64 copy into the save location. 
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
+  </data>
+  <data name="rndElement99Toggle.ToolTip" xml:space="preserve">
+    <value>Element level maximum is increased from 50 to 99.
+No new magic will be acquired past Level 50, but 
+spell and melee power will continue to increase.
+[WARNING: If you raise your elements to exactly
+50-50-50-50, you will no longer be able to gain xp
+or pick up world spirits, due to a code restriction.
+Until it can be removed, avoid 50-50-50-50.]</value>
+  </data>
+  <data name="rndSoulToggle.ToolTip" xml:space="preserve">
+    <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
+Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.
+[NOTE: Every time the Soul Search effect occurs, to  you or an enemy, Brian will gain an additional MP EXP, 
+due to the way the spell effect is coded. This will cause you to gain MP quicker.]
+[WARNING: This seems to have odd effects on boss AI, which is why it's been set aside as a TESTING option.]</value>
+  </data>
+  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
+    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
+SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
+&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
+  </data>
+  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
+    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
+Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
+Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
     <value>● Added Staff Hit MP Regain Rate, allowing you to change how much MP is gained on hit.
@@ -205,7 +234,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAD4
-        JAAAAk1TRnQBSQFMAgEBHwEAAaABAQGgAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JAAAAk1TRnQBSQFMAgEBHwEAAagBAQGoAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -395,31 +424,6 @@ WINGS: Wingsmith items are randomized to be any wing.
 GEMS: Wingsmith items are randomized to be any Elemental Gem.
 WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
 CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
-  </data>
-  <data name="rndElement99Toggle.ToolTip" xml:space="preserve">
-    <value>Element level maximum is increased from 50 to 99.
-No new magic will be acquired past Level 50, but 
-spell and melee power will continue to increase.
-[WARNING: If you raise your elements to exactly
-50-50-50-50, you will no longer be able to gain xp
-or pick up world spirits, due to a code restriction.
-Until it can be removed, avoid 50-50-50-50.]</value>
-  </data>
-  <data name="rndSoulToggle.ToolTip" xml:space="preserve">
-    <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
-Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.
-[NOTE: Every time the Soul Search effect occurs, to  you or an enemy, Brian will gain an additional MP EXP, 
-due to the way the spell effect is coded. This will cause you to gain MP quicker.]</value>
-  </data>
-  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
-    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
-SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
-&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
-  </data>
-  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
-    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
-Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
-Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
   </data>
   <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
     <value>Randomize the order of all bosses other than Mammon.
