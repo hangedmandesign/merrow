@@ -718,8 +718,8 @@
             this.creditsLinkLabel.Size = new System.Drawing.Size(280, 98);
             this.creditsLinkLabel.TabIndex = 7;
             this.creditsLinkLabel.Text = "Developed by: \r\nHangedman (Jonah Davidson)\r\n\r\nTesting and Input: \r\nBingchang, Cou" +
-    "ntdown, Drunk Kami, \r\n Irenepunmaster, Jeville, Kao, Midboss,\r\nMwobee, Schoolied" +
-    "ee, Usedpizza, xIceBlue\r\n";
+    "ntdown, Drunk Kami, FeralDemon,\r\nIrenepunmaster, Jeville, Kao, Midboss, Mwobee, " +
+    "\r\nSchooliedee, Usedpizza, xIceBlue\r\n";
             this.creditsLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.creditsLinkLabel.UseCompatibleTextRendering = true;
             // 
