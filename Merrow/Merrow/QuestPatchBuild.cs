@@ -20,6 +20,7 @@ namespace Merrow {
                 !rndSoulToggle.Checked &&
                 !rndAccuracyToggle.Checked &&
                 !rndLevelToggle.Checked &&
+                !rndLevel2Toggle.Checked &&
 
                 !rndChestToggle.Checked &&
                 !rndDropsToggle.Checked &&
@@ -41,6 +42,7 @@ namespace Merrow {
                 !rndFastMonasteryToggle.Checked &&
                 !rndFastMammonToggle.Checked &&
                 !rndCrystalReturnToggle.Checked &&
+                !rndUnlockDoorsToggle.Checked &&
 
                 !rndTextPaletteToggle.Checked &&
                 !rndZoomToggle.Checked &&
@@ -473,18 +475,19 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss order shuffled." + Environment.NewLine);
             }
 
-            //Randomize Dark boss elements
+            //Randomize Guilty's element
             if (rndBossElementToggle.Checked) {
-                //Guilty: 14186798/D8792E, Mammon: 14186910/D8799E
+                //Guilty: 14186798/D8792E
                 patchstrings.Add("D8792C");
                 patchstrings.Add("0004");
                 patchstrings.Add("000" + newbosselem[0].ToString() + "000" + newbosselem[0].ToString());
 
-                patchstrings.Add("D8799C");
-                patchstrings.Add("0004");
-                patchstrings.Add("000" + newbosselem[1].ToString() + "000" + newbosselem[1].ToString());
+                //Mammon: 14186910/D8799E ---- Has been disabled, as it causes his AI to always use his projectiles
+                //patchstrings.Add("D8799C");
+                //patchstrings.Add("0004");
+                //patchstrings.Add("000" + newbosselem[1].ToString() + "000" + newbosselem[1].ToString());
 
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Randomized Guilty and Mammon's elements." + Environment.NewLine);
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Randomized Guilty's element." + Environment.NewLine);
             }
 
             //Invalidity
@@ -759,6 +762,34 @@ namespace Merrow {
                 patchstrings.Add("0" + rndHitMPTrackBar.Value.ToString());
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Staff hit MP regain set to " + rndHitMPValue.Text + "x." + Environment.NewLine);
+            }
+
+            //Unlock All Progression Locks
+            if (rndUnlockDoorsToggle.Checked) {
+                for (int i = 0; i < 18; i++) {
+                    patchstrings.Add(library.unlockedDoorData[i * 2]);
+                    if (i != 8) {
+                        patchstrings.Add("0004");
+                        patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
+                    }
+                    else if (i == 8) {
+                        patchstrings.Add("0010");
+                        patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
+                    }
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "All progression locks (gems/book/key) unlocked." + Environment.NewLine);
+            }
+
+            //Level 2 Base Spells
+            if (rndLevel2Toggle.Checked) {
+                for (int i = 0; i < 60; i += 15) {
+                    patchstrings.Add(library.spells[(i * 4) + 1]);
+                    patchstrings.Add("0002");
+                    patchstrings.Add("0002");
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Base spells unlocked at level 2." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT

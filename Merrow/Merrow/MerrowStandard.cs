@@ -99,6 +99,8 @@ namespace Merrow {
             //required Winforms initialization, do not edit or remove
             InitializeComponent(); 
 
+
+
             //initiate file-opening dialogs
             if (!Directory.Exists(filePath)) { Directory.CreateDirectory(filePath); }
             binOpenFileDialog = new OpenFileDialog() {
@@ -180,7 +182,9 @@ namespace Merrow {
             PopulateReference();
 
             //initial randomization
+            SysRand = new Random(); //reinitializing because otherwise seed always produces same value, possibly due to order error.
             rngseed = SysRand.Next(100000000, 1000000000); //default seed set to a random 9-digit number
+            Console.WriteLine(rngseed);
             expSeedTextBox.Text = rngseed.ToString();
             loadfinished = true; //loadfinished being false prevents some UI elements from taking incorrect action during the initial setup
             Shuffling(true);
@@ -308,7 +312,7 @@ namespace Merrow {
 
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
 
-            //Console.WriteLine(rngseed);
+            Console.WriteLine(rngseed);
             for (int i = 0; i < playerspells; i++) {
                 bool fiftyfifty = SysRand.NextDouble() > 0.5; ; 
                 if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfifty = true; } //"Linear" option
@@ -583,8 +587,8 @@ namespace Merrow {
                 newbosselem[0] = SysRand.Next(0, 4); //roll Guilty element
                 newmonsterstats[437] = newbosselem[0]; //assign into array for spoiler log
 
-                newbosselem[1] = SysRand.Next(0, 4); //roll Mammon element
-                newmonsterstats[449] = newbosselem[1]; //assign into array for spoiler log
+                //newbosselem[1] = SysRand.Next(0, 4); //roll Mammon element
+                //newmonsterstats[449] = newbosselem[1]; //assign into array for spoiler log
             }
 
             //As of V30, I'm testing a new setup where I'm halving the effect of variance. Right now it's wayyy too wide, even with low values, due to existing region variances.
@@ -712,17 +716,20 @@ namespace Merrow {
 
         //update risk value
         public void UpdateRisk() {
-            float variance = extremity + 1.1f;
-            if (difficultyscale > 1.0) {
+            float variance = extremity + 1.1f; //slight scale up on randomness, cause it can easily be more punishing
+            if (difficultyscale >= 1.0) { //scaling matters more than variance, above 1.0
                 riskvalue = Math.Round((difficultyscale * difficultyscale * difficultyscale) * (variance * variance) * 10);
             }
-            if (difficultyscale <= 1.0) {
+            if (difficultyscale < 1.0) {
                 riskvalue = Math.Round((difficultyscale * difficultyscale) * (variance * variance) * 10);
             }
-            if (rndBossOrderToggle.Checked) { riskvalue *= 1.2; }
-            if (rndBossElementToggle.Checked) { riskvalue *= 0.9; }
-            if (rndInvalidityToggle.Checked) { riskvalue *= 0.9; }
-            if (!rndMonsterExpToggle.Checked) { riskvalue *= 1.2; }
+            if (rndBossOrderToggle.Checked) { riskvalue *= 1.2; } //late solvaring WILL murder you
+            if (rndBossElementToggle.Checked) { riskvalue *= 0.9; } //makes Guilty easier
+            if (rndInvalidityToggle.Checked) { riskvalue *= 0.9; } //makes every boss easier
+            if (!rndMonsterExpToggle.Checked) { //makes higher difficulties easier and lower ones harder
+                if (difficultyscale >= 1.0) { riskvalue *= 0.9; }
+                if (difficultyscale < 1.0) { riskvalue *= 1.1; }
+            } 
 
             if (!rndMonsterScaleToggle.Checked &&
                 !rndMonsterStatsToggle.Checked &&
@@ -756,25 +763,29 @@ namespace Merrow {
                 rndRiskLabel.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
                 rndRiskLabelText.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
 
-                if (riskvalue >= 2 && riskvalue <= 7) {
+                if (riskvalue >= 2 && riskvalue < 8) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (BREEZE)";
                     rndRiskLabelText.Text = "Smooth and easy";
                 }
-                if (riskvalue >= 8 && riskvalue <= 13) {
+                if (riskvalue >= 8 && riskvalue < 14) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (MODERATE)";
                     rndRiskLabelText.Text = "Roughly vanilla";
                 }
-                if (riskvalue >= 14 && riskvalue <= 25) {
+                if (riskvalue >= 14 && riskvalue < 25) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (GALE)";
                     rndRiskLabelText.Text = "Difficult without grinding";
                 }
-                if (riskvalue > 25 && riskvalue < 40) {
+                if (riskvalue >= 25 && riskvalue < 41) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (STORM)";
                     rndRiskLabelText.Text = "Extremely challenging and grindy";
                 }
-                if (riskvalue >= 40) {
+                if (riskvalue >= 41 && riskvalue < 80) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (HURRICANE)";
-                    rndRiskLabelText.Text = "Probably impossible";
+                    rndRiskLabelText.Text = "Possibly impossible";
+                }
+                if (riskvalue >= 80) {
+                    rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (SUPERCELL)";
+                    rndRiskLabelText.Text = "Mammon approaches";
                 }
 
                 rndRiskLabel.Visible = true;
@@ -785,7 +796,7 @@ namespace Merrow {
         //populate Quest reference
         public void PopulateReference() {
             //spell reference
-            for (int i = 2; i < 6; i++) {
+            for (int i = 2; i < 6; i++) { //set the integer columns
                 if (i != 3) { spellsDataGridView.Columns[i].ValueType = typeof(int); }
             }
 
@@ -892,7 +903,9 @@ namespace Merrow {
 
                 }
             }
-            monsterDataGridView.Rows[63].Cells[8].Value += "*"; //adding third attack notes to Judgment
+
+            //adding third attack notes to Judgment
+            monsterDataGridView.Rows[63].Cells[8].Value += "*"; 
             monsterDataGridView.Rows[63].Cells[8].ToolTipText = "JUDGMENT has a third attack: FIRE PILLAR";
             monsterDataGridView.Rows[63].Cells[9].Value += "*";
             monsterDataGridView.Rows[63].Cells[9].ToolTipText = "JUDGMENT has a third attack: FIRE PILLAR";
@@ -948,8 +961,6 @@ namespace Merrow {
                 }
             }
         }
-
-
 
         //WINFORMS UI INTERACTIONS-------------------------------------------------------------------
         //These declarations should not be manually edited without care, as they're partially auto-generated by the Winforms Designer.
@@ -1481,7 +1492,6 @@ namespace Merrow {
             UpdateCode();
         }
 
-
         private void rndHitMPToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndHitMPToggle.Checked) {
                 rndHitMPLabel.ForeColor = SystemColors.ControlText;
@@ -1493,6 +1503,14 @@ namespace Merrow {
             }
             rndHitMPTrackBar.Enabled = rndHitMPToggle.Checked;
             expUpdateWarning();
+            UpdateCode();
+        }
+
+        private void rndUnlockDoorsToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndLevel2Toggle_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
         }
 
