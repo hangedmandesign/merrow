@@ -781,11 +781,11 @@ namespace Merrow {
             if (rndUnlockDoorsToggle.Checked) {
                 for (int i = 0; i < 18; i++) {
                     patchstrings.Add(library.unlockedDoorData[i * 2]);
-                    if (i != 8) {
+                    if (i != 7) { //changed to 7 from 8 let's see what breaks, cause this should never have worked - 21-07-10
                         patchstrings.Add("0004");
                         patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
                     }
-                    else if (i == 8) {
+                    else if (i == 7) {
                         patchstrings.Add("0010");
                         patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
                     }
@@ -808,14 +808,21 @@ namespace Merrow {
             //LOST KEYS
             if (rndLostKeysToggle.Checked) {
                 //items and stuff already redistributed, just have to unlock Colleen at the end here to guarantee it's applied correctly
-                patchstrings.Add("0010"); //Epona Teleporter A
+                patchstrings.Add(library.unlockedDoorData[7 * 2]); //Epona Teleporter A
+                patchstrings.Add("0010"); 
+                patchstrings.Add(library.unlockedDoorData[7 * 2 + 1]);
+
+                patchstrings.Add(library.unlockedDoorData[8 * 2]); //Epona Teleporter B
+                patchstrings.Add("0004");
                 patchstrings.Add(library.unlockedDoorData[8 * 2 + 1]);
-                patchstrings.Add("0004"); //Epona Teleporter B
+
+                patchstrings.Add(library.unlockedDoorData[9 * 2]); //Colleen's Back Door
+                patchstrings.Add("0004");
                 patchstrings.Add(library.unlockedDoorData[9 * 2 + 1]);
-                patchstrings.Add("0004"); //Colleen's Back Door
+
+                patchstrings.Add(library.unlockedDoorData[10 * 2]); //Crystal to Larapool
+                patchstrings.Add("0004");
                 patchstrings.Add(library.unlockedDoorData[10 * 2 + 1]);
-                patchstrings.Add("0004"); //Crystal to Larapool
-                patchstrings.Add(library.unlockedDoorData[11 * 2 + 1]);
 
                 for (int i = 0; i < 7; i++) {
                     spoilerbossdrops[i] = (library.monsternames[(i + 67) * 2] + " carries " + library.items[lostkeysbossitemlist[i] * 3]);
@@ -844,7 +851,7 @@ namespace Merrow {
                     int targetAddr = Convert.ToInt32(patchstrings[i], 16);
                     byte[] targetData = StringToByteArray(patchstrings[i + 2]);
                     int targetLength = targetData.Length;
-
+                    Console.WriteLine(patchstrings[i]);
                     for (int j = 0; j < targetLength; j++) { 
                         rndFileBytes[targetAddr + j] = targetData[j];
                     }

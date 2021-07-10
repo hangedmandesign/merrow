@@ -1188,24 +1188,24 @@ namespace Merrow {
 
         //unlocked doors. 8th indice is length 16 [0x10] to account for rerouting Epona's back door to Colleen
         public string[] unlockedDoorData = {
-            "7BF888","03010000", //Connor-DF
-            "484CA8","04010000", //DC Treasury
-            "251438","03010000", //WC-Windward
-            "822F98","03010000", //Windward-WC
-            "206EE8","02000000", //Larapool Well
-            "485220","04010000", //DC Library Secret
-            "485338","01010000", //DC Treasury Secret
-            "65F618","01010000000000050005001900010001", //Epona-Skye Ship (redirect to Colleen)
-            "65F63C","01010000", //Epona-Colleen
-            "607608","02000000", //Colleen-Colleen Back
-            "65F524","01010000", //Crystal-Larapool
-            "25159C","02000000", //WC Boat-EL
-            "65F1B8","04010000", //BC-GF
-            "7EF7A8","04010000", //GF-BC
-            "343598","04010000", //DD-CH
-            "6C1FFC","04010000", //CH-DD
-            "3C7820","01010000", //BC-MW
-            "84EED4","00010000"  //MW-Mammon
+            "7BF888","03010000", //Connor-DF 0
+            "484CA8","04010000", //DC Treasury 1
+            "251438","03010000", //WC-Windward 2
+            "822F98","03010000", //Windward-WC 3
+            "206EE8","02000000", //Larapool Well 4
+            "485220","04010000", //DC Library Secret 5
+            "485338","01010000", //DC Treasury Secret 6
+            "65F618","01010000000000050005001900010001", //Epona-Skye Ship (redirect to Colleen) 7
+            "65F63C","01010000", //Epona-Colleen 8
+            "607608","02000000", //Colleen-Colleen Back 9
+            "65F524","01010000", //Crystal-Larapool 10
+            "25159C","02000000", //WC Boat-EL 11
+            "65F1B8","04010000", //BC-GF 12
+            "7EF7A8","04010000", //GF-BC 13
+            "343598","04010000", //DD-CH 14
+            "6C1FFC","04010000", //CH-DD 15
+            "3C7820","01010000", //BC-MW 16
+            "84EED4","00010000"  //MW-Mammon 17
         };
 
         //14652 bytes/pixels = 393C
