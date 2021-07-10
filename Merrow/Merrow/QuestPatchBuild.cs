@@ -88,6 +88,11 @@ namespace Merrow {
 
             //RANDOMIZATION FEATURES
 
+            //Lost Keys spoiler (actual patch content is added last)
+            if (rndLostKeysToggle.Checked) {
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "LOST KEYS mode enabled." + Environment.NewLine);
+            }
+
             //Spell Shuffle
             if (rndSpellToggle.Checked) { 
                 for (int q = 0; q < playerspells; q++) {
@@ -241,7 +246,7 @@ namespace Merrow {
             //Item Drop shuffle
             if (rndDropsToggle.Checked) {
                 //add drop addresses, and new byte
-                for (int i = 0; i < drops.Length; i++) {
+                for (int i = 0; i < 67; i++) { //only change item drops for non-bosses, so don't go to end of array
                     int temp = library.dropdata[i * 2]; //don't need to offset because drop list is pre-offset
                     patchstrings.Add(Convert.ToString(temp, 16));
                     patchstrings.Add("0001");
@@ -277,8 +282,12 @@ namespace Merrow {
                     spoilergifts[i] = library.granternames[i] + ": " + library.items[gifts[i] * 3];
                 }
 
-                if (rndShuffleShannonToggle.Checked) { //if shannons are forced vanilla, add this note about them being vanilla
+                if (rndShuffleShannonToggle.Checked && !rndLostKeysToggle.Checked) { //if shannons are forced vanilla, add this note about them being vanilla
                     spoilergifts[8] = "Shannon (Brannoch Castle): ELETALE BOOK (unrandomized)";
+                    spoilergifts[9] = "Shannon (Mammon's World): DARK GAOL KEY (unrandomized)";
+                }
+
+                if (rndShuffleShannonToggle.Checked && rndLostKeysToggle.Checked) { //only overwrites book shannon
                     spoilergifts[9] = "Shannon (Mammon's World): DARK GAOL KEY (unrandomized)";
                 }
 
@@ -441,6 +450,10 @@ namespace Merrow {
             if (rndBossOrderToggle.Checked) { 
                 //this data could all be extracted from the library in code but you know what, this is easier
                 int[] bossitemslist = { 20, 21, 22, 255, 23, 255 };
+                if (rndLostKeysToggle.Checked) {
+                    for (int i = 0; i < 6; i++) { bossitemslist[i] = lostkeysbossitemlist[i]; }
+                }
+
                 string[] bossitemnames = { "EARTH ORB", "WIND JADE", "WATER JEWEL", "NOTHING", "FIRE RUBY", "NOTHING" };
                 int[] bossaddresses = { 14186532, 14186588, 14186644, 14186700, 14186756, 14186812 };
                 int[] backassign = new int[6];
@@ -792,6 +805,23 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Base spells unlocked at level 2." + Environment.NewLine);
             }
 
+            //LOST KEYS
+            if (rndLostKeysToggle.Checked) {
+                //items and stuff already redistributed, just have to unlock Colleen at the end here to guarantee it's applied correctly
+                patchstrings.Add("0010"); //Epona Teleporter A
+                patchstrings.Add(library.unlockedDoorData[8 * 2 + 1]);
+                patchstrings.Add("0004"); //Epona Teleporter B
+                patchstrings.Add(library.unlockedDoorData[9 * 2 + 1]);
+                patchstrings.Add("0004"); //Colleen's Back Door
+                patchstrings.Add(library.unlockedDoorData[10 * 2 + 1]);
+                patchstrings.Add("0004"); //Crystal to Larapool
+                patchstrings.Add(library.unlockedDoorData[11 * 2 + 1]);
+
+                for (int i = 0; i < 7; i++) {
+                    spoilerbossdrops[i] = (library.monsternames[(i + 67) * 2] + " carries " + library.items[lostkeysbossitemlist[i] * 3]);
+                }
+            }
+
             //FINAL ASSEMBLY/OUTPUT
 
             //Randomizer logo
@@ -901,11 +931,11 @@ namespace Merrow {
                     foreach (string line in spoilerscales) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 
-                //boss order spoilers - removed because it was mostly for debug
-                //if (rndBossOrderToggle.Checked) {
-                //    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED BOSS DROPS:" + Environment.NewLine);
-                //    foreach (string line in spoilerbossdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-                //}
+                //boss order/item spoilers
+                if (rndBossOrderToggle.Checked || rndLostKeysToggle.Checked) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED BOSS DROPS:" + Environment.NewLine);
+                    foreach (string line in spoilerbossdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                }
             }
 
             //Unlock locked UI functionality at the end:

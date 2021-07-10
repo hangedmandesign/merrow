@@ -367,6 +367,24 @@ namespace Merrow {
         public int[] itemlist_gems = { 20, 21, 22, 23 };
         public int[] itemlist_wingsgems = { 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
 
+        //item 'areas' for Lost Keys.
+        //item lists include the array IDs of all the listed elements
+        //earth orb:    1 boss, 15 chests, 3 gifters, 2 wingsmiths -     21 total
+        public int area_earth_count = 21;
+        public int[] area_earth = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 81, 82, 83, 84, 0, 1, 2, 0, 1 };
+        //wind jade:    1 boss, 15 chests, 2 gifters, 2 wingsmiths -     20 total
+        public int area_wind_count = 20;
+        public int[] area_wind = { 1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4, 2, 3 };
+        //water jewel:  above + 1 boss, 7 chests -	    		         28 total 
+        public int area_water_count = 28;
+        public int[] area_water = { 2, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4, 2, 3, 2, 15, 47, 48, 49, 50, 51, 52 };
+        //fire ruby:    2 bosses, 33 chests, 2 gifters, 1 wingsmith	-    38 total
+        public int area_fire_count = 38;
+        public int[] area_fire = { 3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7, 4 };
+        //eletale book: 2 bosses, 18 chests, 2 gifters, 1 wingsmith	-    23 total
+        public int area_book_count = 23;
+        public int[] area_book = { 5, 6, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8, 5 };
+
         //name list for spoiler log
         public string[] monsternames = {
             "WERE HARE","ADC360",
@@ -436,14 +454,14 @@ namespace Merrow {
             "PALE RIDER","CC4534",
             "PIN HEAD","CC4540",
             "SPRIGGAN","CC454C",
-            "SOLVARING","D87A54",
-            "ZELSE","D87A60",
-            "NEPTY","D87A68",
-            "SHILF","D87A70",
-            "FARGO","D87A78",
-            "GUILTY","D87A80",
-            "BEIGIS","D87A88",
-            "MAMMON","D87A90"
+            "SOLVARING","D87A54", //67
+            "ZELSE","D87A60", //68
+            "NEPTY","D87A68", //69
+            "SHILF","D87A70", //70
+            "FARGO","D87A78", //71
+            "GUILTY","D87A80", //72
+            "BEIGIS","D87A88", //73
+            "MAMMON","D87A90" //74
         };
 
         public string[] bosslocdata = { //boss location: map/submap addr, map/submap data (len 4b), other addr, other data (len 12b)

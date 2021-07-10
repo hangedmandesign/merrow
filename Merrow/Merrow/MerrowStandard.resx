@@ -139,78 +139,6 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
-  <data name="rndElement99Toggle.ToolTip" xml:space="preserve">
-    <value>Element level maximum is increased from 50 to 99.
-No new magic will be acquired past Level 50, but 
-spell and melee power will continue to increase.
-[WARNING: If you raise your elements to exactly
-50-50-50-50, you will no longer be able to gain xp
-or pick up world spirits, due to a code restriction.
-Until it can be removed, avoid 50-50-50-50.]</value>
-  </data>
-  <data name="rndSoulToggle.ToolTip" xml:space="preserve">
-    <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
-Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.
-[NOTE: Every time the Soul Search effect occurs, to  you or an enemy, Brian will gain an additional MP EXP, 
-due to the way the spell effect is coded. This will cause you to gain MP quicker.]</value>
-  </data>
-  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
-    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
-SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
-&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
-  </data>
-  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
-    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
-Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
-Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
-  </data>
-  <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
-    <value>Randomize the order of all bosses other than Mammon.
-Boss stats will maintain their stat:BST ratios, but BST will be scaled to the level of
-the boss they're replacing, and they will drop the appropriate progression items.</value>
-  </data>
-  <data name="rndMonsterExpToggle.ToolTip" xml:space="preserve">
-    <value>Uses an approximate formula based on enemy Base Stat Total (BST)
-to recalculate experience gained on victory. Useful for making more 
-significantly scaled/randomized runs theoretically possible.
-
-Requires either randomized or scaled stats to be enabled.</value>
-  </data>
-  <data name="rndMonsterScaleToggle.ToolTip" xml:space="preserve">
-    <value>Scales enemy stats by simple multiplication.
-Has a more severe effect than variance.
-
-NOTE: The 'Enemy stat scaling' feature is applied AFTER the effects of 
-'Randomize monster stats'. Setting both to higher values may cause 
-extreme results.
-</value>
-  </data>
-  <data name="rndMonsterStatsToggle.ToolTip" xml:space="preserve">
-    <value>Randomizes enemy stats.
-All monsters in each region will receive new stats, randomly chosen
-from a range from lowest to highest local vanilla values for that stat.
-Increasing the Variance modifier will increase the width of that range,
-beyond the vanilla lowest-highest bounds.
-Bosses are included in stat randomization, but their Variance scaling
-is halved to make up for their generally larger numbers skewing output.
-
-Example: At Variance 1.0, all Holy Plain enemies will get a new random 
-HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
-
-NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
-and Variance. Setting both values higher may have extreme results.</value>
-  </data>
-  <data name="newLabel.Text" xml:space="preserve">
-    <value>● Added 'Base spells unlocked at Level 2', which does exactly what it says: spells in each element cannot be used at all until you add at least one spirit to that element.
-
-● Added 'Unlock all progression locks', which unlocks all doors/warps/entrances that would require a gem, book, or key.
-
-● Renamed QUALITY-OF-LIFE to PROGRESSION, since almost all the actual QoL stuff was already redistributed into other sections. Might change again later.
-
-● Had to remove Element Randomization from Mammon: it was having a weird affect on his AI.
-
-● Fixed a mysterious bug that was causing the random seed to always default to the same initial value.</value>
-  </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
 Merrow is offered without warranty and is experimental software. 
@@ -269,7 +197,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAD4
-        JAAAAk1TRnQBSQFMAgEBHwEAAdABAQHQAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JAAAAk1TRnQBSQFMAgEBHwEAAeABAQHgAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -459,6 +387,67 @@ WINGS: Wingsmith items are randomized to be any wing.
 GEMS: Wingsmith items are randomized to be any Elemental Gem.
 WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
 CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
+  </data>
+  <data name="rndElement99Toggle.ToolTip" xml:space="preserve">
+    <value>Element level maximum is increased from 50 to 99.
+No new magic will be acquired past Level 50, but 
+spell and melee power will continue to increase.
+[WARNING: If you raise your elements to exactly
+50-50-50-50, you will no longer be able to gain xp
+or pick up world spirits, due to a code restriction.
+Until it can be removed, avoid 50-50-50-50.]</value>
+  </data>
+  <data name="rndSoulToggle.ToolTip" xml:space="preserve">
+    <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
+Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.
+[NOTE: Every time the Soul Search effect occurs, to  you or an enemy, Brian will gain an additional MP EXP, 
+due to the way the spell effect is coded. This will cause you to gain MP quicker.]</value>
+  </data>
+  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
+    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
+SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
+&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
+  </data>
+  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
+    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
+Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
+Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
+  </data>
+  <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
+    <value>Randomize the order of all bosses other than Mammon.
+Boss stats will maintain their stat:BST ratios, but BST will be scaled to the level of
+the boss they're replacing, and they will drop the appropriate progression items.</value>
+  </data>
+  <data name="rndMonsterExpToggle.ToolTip" xml:space="preserve">
+    <value>Uses an approximate formula based on enemy Base Stat Total (BST)
+to recalculate experience gained on victory. Useful for making more 
+significantly scaled/randomized runs theoretically possible.
+
+Requires either randomized or scaled stats to be enabled.</value>
+  </data>
+  <data name="rndMonsterScaleToggle.ToolTip" xml:space="preserve">
+    <value>Scales enemy stats by simple multiplication.
+Has a more severe effect than variance.
+
+NOTE: The 'Enemy stat scaling' feature is applied AFTER the effects of 
+'Randomize monster stats'. Setting both to higher values may cause 
+extreme results.
+</value>
+  </data>
+  <data name="rndMonsterStatsToggle.ToolTip" xml:space="preserve">
+    <value>Randomizes enemy stats.
+All monsters in each region will receive new stats, randomly chosen
+from a range from lowest to highest local vanilla values for that stat.
+Increasing the Variance modifier will increase the width of that range,
+beyond the vanilla lowest-highest bounds.
+Bosses are included in stat randomization, but their Variance scaling
+is halved to make up for their generally larger numbers skewing output.
+
+Example: At Variance 1.0, all Holy Plain enemies will get a new random 
+HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
+
+NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
+and Variance. Setting both values higher may have extreme results.</value>
   </data>
   <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
     <value>Changes the text colour palette.
@@ -653,6 +642,9 @@ Each entry should follow this format: (address),(length),...
 The binary file will be read starting at [address], for [length] bytes.
 After entry, ensure you select below what format each value type is in.</value>
   </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>63</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

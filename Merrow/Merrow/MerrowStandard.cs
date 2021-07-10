@@ -78,7 +78,7 @@ namespace Merrow {
         string[] spoilerspells = new string[60];
         string[] spoilerchests = new string[88];
         string[] spoilerdrops = new string[67];
-        string[] spoilerbossdrops = new string[6];
+        string[] spoilerbossdrops = new string[7];
         string[] spoilerscales = new string[75];
         string[] spoilergifts = new string[10];
         string[] spoilerwings = new string[6];
@@ -92,6 +92,8 @@ namespace Merrow {
         int[] newbossorder = new int[6]; //V30: changed to <6 to exclude beigis
         int[] newbosselem = { 4, 4 };
         int lastpaletteoffset = 0;
+        int[] lostkeysbossitemlist = { 255, 255, 255, 255, 255, 255, 255 };
+        int[] lostkeysdrops = new int[67];
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -370,6 +372,9 @@ namespace Merrow {
 
             //RANDOM DROPS
 
+            if (!rndLostKeysToggle.Checked) { drops = new int[67]; }
+            if (rndLostKeysToggle.Checked) { drops = new int[74]; } //include all bosses but Mammon
+
             //reinitiate item drops list
             for (int l = 0; l < drops.Length; l++) { drops[l] = library.dropdata[l * 2 + 1]; }
 
@@ -414,11 +419,22 @@ namespace Merrow {
                 drops[d] = temp;
             }
 
+            //after drop shuffling, fill out the new boss item array that'll get overridden
+            if (rndLostKeysToggle.Checked) {
+                for (int i = 0; i < 7; i++) { 
+                    lostkeysbossitemlist[i] = drops[67 + i];
+                }
+                for (int i = 0; i < 67; i++) {
+                    lostkeysdrops[i] = drops[i];
+                }
+            }
+
             //RANDOM GIFTS
 
             //option to exclude final shannons, forcing them to be vanilla. Either way, the game will prevent softlocks.
             if (!rndShuffleShannonToggle.Checked) { gifts = new int[10]; }
-            if (rndShuffleShannonToggle.Checked) { gifts = new int[8]; } //8-indice array will just never overwrite the last two items, so they'll be vanilla.
+            if (rndShuffleShannonToggle.Checked && !rndLostKeysToggle.Checked) { gifts = new int[8]; } //8-indice array will just never overwrite the last two items, so they'll be vanilla.
+            if (rndShuffleShannonToggle.Checked && rndLostKeysToggle.Checked) { gifts = new int[9]; } //9-indice array to leave only the key vanilla.
 
             //initiate item gifts list with vanilla items
             for (int l = 0; l < gifts.Length; l++) { gifts[l] = library.itemgranters[l * 2 + 1]; }
@@ -682,6 +698,92 @@ namespace Merrow {
                             newmonsterstats[(currentmonster * 6) + 4] = (int)Math.Ceiling(bstcalc);
                         }
                     }
+                }
+            }
+
+            //RULESET OVERRIDE: Lost Keys
+            if (rndLostKeysToggle.Checked) {
+                //pick locations for boss items and wings, they cannot overlap
+                int[] earthval = new int[3];
+                int[] windval = new int[3];
+                int waterval;
+                int[] fireval = new int[2];
+                int[] bookval = new int[2];
+
+                earthval[0] = SysRand.Next(21);
+                earthval[1] = SysRand.Next(21);
+                while (earthval[1] == earthval[0]) { earthval[1] = SysRand.Next(21); }
+                earthval[2] = SysRand.Next(21);
+                while (earthval[2] == earthval[0] || earthval[2] == earthval[1]) { earthval[2] = SysRand.Next(21); }
+
+                windval[0] = SysRand.Next(20);
+                windval[1] = SysRand.Next(20);
+                while (windval[1] == windval[0]) { windval[1] = SysRand.Next(20); }
+                windval[2] = SysRand.Next(20);
+                while (windval[2] == windval[0] || windval[2] == windval[1]) { windval[2] = SysRand.Next(20); }
+
+                waterval = SysRand.Next(28); //water first 20 overlaps with wind
+                while (windval[2] == waterval || windval[1] == waterval || windval[0] == waterval) { waterval = SysRand.Next(28); }
+
+                fireval[0] = SysRand.Next(38);
+                fireval[1] = SysRand.Next(38);
+                while (fireval[1] == fireval[0]) { fireval[1] = SysRand.Next(38); }
+
+                bookval[0] = SysRand.Next(23);
+                bookval[1] = SysRand.Next(23);
+                while (bookval[1] == bookval[0]) { bookval[1] = SysRand.Next(23); }
+
+                //Book Shannon has already been overwritten. Wingsmiths set to DEFAULT.
+                //default boss items already randomized with DROPS. 
+                //Just need to distribute individual boss items and wings according to values.
+                int[] earthitemIDs = { 20, 14, 15 };
+                int[] winditemIDs = { 21, 16, 17 };
+                int wateritemIDs = 22;
+                int[] fireitemIDs = { 23, 18 };
+                int[] bookitemIDs = { 24, 19 };
+
+                //earth orb:    1 boss, 15 chests, 3 gifters, 2 wingsmiths -     0,1-15,16-18,19-20
+                //wind jade:    1 boss, 15 chests, 2 gifters, 2 wingsmiths -     0,1-15,16-17,18-19
+                //water jewel:  above + 1 boss, 7 chests -	    		         0,1-15,16-17,18-19,20,21-27
+                //fire ruby:    2 bosses, 33 chests, 2 gifters, 1 wingsmith	-    0-1,2-34,35-36,37
+                //eletale book: 2 bosses, 18 chests, 2 gifters, 1 wingsmith	-    0-1,2-19,20-21,22
+
+                for (int i = 0; i < 3; i++) { //earth gem and wings
+                    if (earthval[i] == 0) { lostkeysbossitemlist[0] = earthitemIDs[i]; } //solvaring
+                    if (earthval[i] >= 1 && earthval[i] <= 15) { chests[library.area_earth[earthval[i]]] = earthitemIDs[i]; } //chests
+                    if (earthval[i] >= 16 && earthval[i] <= 18) { gifts[library.area_earth[earthval[i]]] = earthitemIDs[i]; } //gifts
+                    if (earthval[i] >= 19 && earthval[i] <= 20) { wings[library.area_earth[earthval[i]]] = earthitemIDs[i]; } //wingsmiths
+                }
+
+                for (int i = 0; i < 3; i++) { //wind gem and wings
+                    if (windval[i] == 0) { lostkeysbossitemlist[1] = winditemIDs[i]; } //zelse
+                    if (windval[i] >= 1 && windval[i] <= 15) { chests[library.area_wind[windval[i]]] = winditemIDs[i]; } //chests
+                    if (windval[i] >= 16 && windval[i] <= 17) { gifts[library.area_wind[windval[i]]] = winditemIDs[i]; } //gifts
+                    if (windval[i] >= 18 && windval[i] <= 19) { wings[library.area_wind[windval[i]]] = winditemIDs[i]; } //wingsmiths
+                }
+
+                //water gem
+                if (waterval == 0) { lostkeysbossitemlist[1] = wateritemIDs; } //zelse
+                if (waterval >= 1 && waterval <= 15) { chests[library.area_water[waterval]] = wateritemIDs; } //chests
+                if (waterval >= 16 && waterval <= 17) { gifts[library.area_water[waterval]] = wateritemIDs; } //gifts
+                if (waterval >= 18 && waterval <= 19) { wings[library.area_water[waterval]] = wateritemIDs; } //wingsmiths
+                if (waterval == 20) { lostkeysbossitemlist[2] = wateritemIDs; } //nepty
+                if (waterval >= 21 && waterval <= 27) { chests[library.area_water[waterval]] = wateritemIDs; } //water-only chests
+
+                for (int i = 0; i < 2; i++) { //fire gem and wings
+                    if (fireval[i] == 0) { lostkeysbossitemlist[3] = fireitemIDs[i]; } //shilf
+                    if (fireval[i] == 1) { lostkeysbossitemlist[4] = fireitemIDs[i]; } //fargo
+                    if (fireval[i] >= 2 && fireval[i] <= 34) { chests[library.area_fire[fireval[i]]] = fireitemIDs[i]; } //chests
+                    if (fireval[i] >= 35 && fireval[i] <= 36) { gifts[library.area_fire[fireval[i]]] = fireitemIDs[i]; } //gifts
+                    if (fireval[i] == 37) { wings[library.area_fire[fireval[i]]] = fireitemIDs[i]; } //wingsmiths
+                }
+
+                for (int i = 0; i < 2; i++) { //book and wings
+                    if (bookval[i] == 0) { lostkeysbossitemlist[5] = bookitemIDs[i]; } //guilty
+                    if (bookval[i] == 1) { lostkeysbossitemlist[6] = bookitemIDs[i]; } //beigis
+                    if (bookval[i] >= 2 && bookval[i] <= 19) { chests[library.area_book[bookval[i]]] = bookitemIDs[i]; } //chests
+                    if (bookval[i] >= 20 && bookval[i] <= 21) { gifts[library.area_book[bookval[i]]] = bookitemIDs[i]; } //gifts
+                    if (bookval[i] == 22) { wings[library.area_book[bookval[i]]] = bookitemIDs[i]; } //wingsmiths
                 }
             }
 
@@ -1091,7 +1193,7 @@ namespace Merrow {
         private void rndGiftersToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndGiftersToggle.Checked) {
                 rndGiftersDropdown.Enabled = true;
-                rndShuffleShannonToggle.Enabled = true;
+                if(!rndLostKeysToggle.Checked) { rndShuffleShannonToggle.Enabled = true; }
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 2;
             }
@@ -1511,6 +1613,45 @@ namespace Merrow {
         }
 
         private void rndLevel2Toggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndLostKeysToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndLostKeysToggle.Checked) {
+                //random items must be on for this to work so whatever just do it
+                rndChestToggle.Checked = true;
+                rndChestToggle.Enabled = false;
+                rndGiftersToggle.Checked = true;
+                rndGiftersToggle.Enabled = false;
+                rndWingsmithsToggle.Checked = true;
+                rndWingsmithsToggle.Enabled = false;
+
+                //disable all boss items in all item lists. they can be re-added after if so desired, but having only one is the whole point
+                int currItemTab = itemListTabs.SelectedIndex;
+                rndChestDropdown.SelectedIndex = 1; //just forcing these to STANDARD for simplicity's sake.
+                //for (int i = 14; i < 26; i++) { itemListView1.Items[i].Checked = false; } //don't really need these now
+                rndDropsDropdown.SelectedIndex = 1;
+                //for (int i = 14; i < 26; i++) { itemListView2.Items[i].Checked = false; }
+                rndGiftersDropdown.SelectedIndex = 1;
+                //for (int i = 14; i < 26; i++) { itemListView3.Items[i].Checked = false; }
+                rndWingsmithsDropdown.SelectedIndex = 1; //just set wingsmiths to STANDARD by default.
+                //changing values changes table, so reset back to last one
+                itemListTabs.SelectedIndex = currItemTab;
+
+                //enable crystal valley postern
+                rndCrystalReturnToggle.Checked = true;
+
+                //disable shuffling of final shannons, for simplicity, and to ensure key remains in place
+                rndShuffleShannonToggle.Checked = true;
+                rndShuffleShannonToggle.Enabled = false;
+            }
+            if (!rndLostKeysToggle.Checked) {
+                rndShuffleShannonToggle.Enabled = true;
+                rndShuffleShannonToggle.Checked = false;
+                rndChestToggle.Enabled = true;
+                rndGiftersToggle.Enabled = true;
+                rndWingsmithsToggle.Enabled = true;
+            }
             UpdateCode();
         }
 
