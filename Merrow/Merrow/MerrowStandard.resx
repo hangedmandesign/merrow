@@ -139,6 +139,88 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
+  <data name="rndShuffleShannonToggle.ToolTip" xml:space="preserve">
+    <value>Shuffle/randomization will exclude the final two Shannons entirely, 
+so the Eletale Book and the Dark Gaol Key will be in their original locations.
+If this option is *not* enabled, softlock protection will still prevent either
+item from being carried by either Shannon; they will always be found earlier.</value>
+  </data>
+  <data name="rndChestToggle.ToolTip" xml:space="preserve">
+    <value>Change the contents of all chests.
+[WARNING - Including gems or wings can cause sequence breaks.]
+
+SHUFFLED: All default chest contents are shuffled among all chests.
+STANDARD: Chests are randomized to contain any standard item.
+STANDARD&amp;WINGS: Chests are randomized to contain any standard item or wing. 
+STANDARD&amp;GEMS: Chests are randomized to contain any standard item or Elemental Gem.
+CHAOS: Chests are randomized to contain any standard item, wing, or Elemental Gem.
+WINGS: Chests are randomized to contain any wing.
+GEMS: Chests are randomized to contain any Elemental Gem.
+WINGS&amp;GEMS: Chests are randomized to contain any wing or Elemental Gem.
+CUSTOM: Chests are randomized as selected below.</value>
+  </data>
+  <data name="rndDropsToggle.ToolTip" xml:space="preserve">
+    <value>Change the items dropped by non-Boss enemies. 
+All Random options exclude blanks.
+[WARNING - Including gems or wings can cause sequence breaks.]
+
+SHUFFLED: All default item drops are shuffled among all enemies, including blanks.
+STANDARD: Drops are randomized to contain any standard item.
+STANDARD&amp;WINGS: Drops are randomized to contain any standard item or wing.
+STANDARD&amp;GEMS: Drops are randomized to contain any standard item or Elemental Gem.
+CHAOS: Drops are randomized to contain any standard item, wing, or Elemental Gem.
+WINGS: Drops are randomized to contain any wing.
+GEMS: Drops are randomized to contain any Elemental Gem.
+WINGS&amp;GEMS: Drops are randomized to contain any wing or Elemental Gem.
+CUSTOM: Drops are randomized as selected below.</value>
+  </data>
+  <data name="rndGiftersToggle.ToolTip" xml:space="preserve">
+    <value>Shuffle/randomize the items granted by item-gifting NPCs. 
+Shannons and their endgame items (Eletale Book and Dark Gaol Key) are included by default, 
+but softlock protection will guarantee that they will be granted by earlier gifters.
+Optionally, use the toggle below to exclude Shannons: they will carry their items as default.
+[WARNING - Including gems or wings can cause sequence breaks.]
+
+SHUFFLED: All default gift items are shuffled among all gift NPCs.
+STANDARD: Gifts are randomized to be any standard item.
+STANDARD&amp;WINGS: Gifts are randomized to be any standard item or wing. 
+STANDARD&amp;GEMS: Gifts are randomized to be any standard item or Elemental Gem.
+CHAOS: Gifts are randomized to be any standard item, wing, or Elemental Gem.
+WINGS: Gifts are randomized to be any wing.
+GEMS: Gifts are randomized to be any Elemental Gem.
+WINGS&amp;GEMS: Gifts are randomized to be any wing or Elemental Gem.
+CUSTOM: Gifts are randomized as set in the below menu.</value>
+  </data>
+  <data name="rndWingsmithsToggle.ToolTip" xml:space="preserve">
+    <value>Change the items granted by Wingsmith NPCs.
+[WARNING - Any of these options can cause sequence breaks.]
+
+SHUFFLED: All wings are shuffled among all wingsmith NPCs.
+STANDARD: Wingsmith items are randomized to be any standard item.
+STANDARD&amp;WINGS: Wingsmith items are randomized to be any standard item or wing. 
+STANDARD&amp;GEMS: Wingsmith items are randomized to be any standard item or Elemental Gem.
+CHAOS: Wingsmith items are randomized to be any standard item, wing, or Elemental Gem.
+WINGS: Wingsmith items are randomized to be any wing.
+GEMS: Wingsmith items are randomized to be any Elemental Gem.
+WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
+CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
+  </data>
+  <data name="newLabel.Text" xml:space="preserve">
+    <value>● Test version 3 of LOST KEYS. Updates and Lost Keys mode switch added.
+
+PROGRESSIVE: Each gem/book and wing is available in its 'region' (up to the point where progression requires it.)
+It will either be held by a chest, gifter, or the boss. Wingsmiths not included. Wings are in Fire region (Limelin/Dindom).
+Fire Ruby is required to enter Brannoch Castle. There is a return warp to Shamwood in Brannoch (Blue house).
+Crystal valley warp enabled. Shamwood exit shortcut enabled. Some randomizations cannot be disabled.
+
+OPEN WORLD: All progression locks are unlocked, except for final Shannons.
+Each gem/book is available in a random Lost Keys region, as above. One of each wing is scattered among all locations.
+In the final version, all four gems will be required to traverse Brannoch Castle roof.
+Crystal valley warp enabled and unlocked. Return warp to Shamwood (Blue house in Brannoch).
+Shamwood exit shortcut enabled. Some randomizations cannot be disabled.
+
+</value>
+  </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
 Merrow is offered without warranty and is experimental software. 
@@ -154,41 +236,6 @@ changes from version to version.
 Error-checking isn't perfect yet, so invalid codes will
 just blank themselves, or possibly crash.</value>
   </data>
-  <data name="rndShuffleShannonToggle.ToolTip" xml:space="preserve">
-    <value>Shuffle/randomization will exclude the final two Shannons entirely, 
-so the Eletale Book and the Dark Gaol Key will be in their original locations.
-If this option is *not* enabled, softlock protection will still prevent either
-item from being carried by either Shannon; they will always be found earlier.</value>
-  </data>
-  <data name="rndChestToggle.ToolTip" xml:space="preserve">
-    <value>Change the contents of all chests.
-[WARNING - Including gems or wings can cause sequence breaks.]
-
-SHUFFLED: All default chest contents are shuffled among all chests.
-RANDOM: Chests are randomized to contain any standard item.
-RANDOM&amp;WINGS: Chests are randomized to contain any standard item or wing. 
-RANDOM&amp;GEMS: Chests are randomized to contain any standard item or Elemental Gem.
-CHAOS: Chests are randomized to contain any standard item, wing, or Elemental Gem.
-WINGS: Chests are randomized to contain any wing.
-GEMS: Chests are randomized to contain any Elemental Gem.
-WINGS&amp;GEMS: Chests are randomized to contain any wing or Elemental Gem.
-CUSTOM: Chests are randomized as selected below.</value>
-  </data>
-  <data name="rndDropsToggle.ToolTip" xml:space="preserve">
-    <value>Change the items dropped by non-Boss enemies. 
-All Random options exclude blanks.
-[WARNING - Including gems or wings can cause sequence breaks.]
-
-SHUFFLED: All default item drops are shuffled among all enemies, including blanks.
-RANDOM: Drops are randomized to contain any standard item.
-RANDOM&amp;WINGS: Drops are randomized to contain any standard item or wing.
-RANDOM&amp;GEMS: Drops are randomized to contain any standard item or Elemental Gem.
-CHAOS: Drops are randomized to contain any standard item, wing, or Elemental Gem.
-WINGS: Drops are randomized to contain any wing.
-GEMS: Drops are randomized to contain any Elemental Gem.
-WINGS&amp;GEMS: Drops are randomized to contain any wing or Elemental Gem.
-CUSTOM: Drops are randomized as selected below.</value>
-  </data>
   <metadata name="itemImageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>120, 16</value>
   </metadata>
@@ -197,7 +244,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAD4
-        JAAAAk1TRnQBSQFMAgEBHwEAAeABAQHgAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JAAAAk1TRnQBSQFMAgEBHwEAAfgBAQH4AQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAYADAAEBAQABCAYAASAYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -356,37 +403,6 @@ CUSTOM: Drops are randomized as selected below.</value>
         AQMBgAEBAYABAQHwAQ8B4AEDAYABAQGAAQEB8AEPAeABAwHAAQMBwAEBAfgBHwHgAQMBwAEDAcABAQH4
         AR8B4AEDAeABBwHgAQMB+AEfAfABBwH4AR8B8AEHAfwBPwH8AR8D/wEPAf4Bfwj/Cw==
 </value>
-  </data>
-  <data name="rndGiftersToggle.ToolTip" xml:space="preserve">
-    <value>Shuffle/randomize the items granted by item-gifting NPCs. 
-Shannons and their endgame items (Eletale Book and Dark Gaol Key) are included by default, 
-but softlock protection will guarantee that they will be granted by earlier gifters.
-Optionally, use the toggle below to exclude Shannons: they will carry their items as default.
-[WARNING - Including gems or wings can cause sequence breaks.]
-
-SHUFFLED: All default gift items are shuffled among all gift NPCs.
-STANDARD: Gifts are randomized to be any standard item.
-STANDARD&amp;WINGS: Gifts are randomized to be any standard item or wing. 
-STANDARD&amp;GEMS: Gifts are randomized to be any standard item or Elemental Gem.
-CHAOS: Gifts are randomized to be any standard item, wing, or Elemental Gem.
-WINGS: Gifts are randomized to be any wing.
-GEMS: Gifts are randomized to be any Elemental Gem.
-WINGS&amp;GEMS: Gifts are randomized to be any wing or Elemental Gem.
-CUSTOM: Gifts are randomized as set in the below menu.</value>
-  </data>
-  <data name="rndWingsmithsToggle.ToolTip" xml:space="preserve">
-    <value>Change the items granted by Wingsmith NPCs.
-[WARNING - Any of these options can cause sequence breaks.]
-
-SHUFFLED: All wings are shuffled among all wingsmith NPCs.
-STANDARD: Wingsmith items are randomized to be any standard item.
-STANDARD&amp;WINGS: Wingsmith items are randomized to be any standard item or wing. 
-STANDARD&amp;GEMS: Wingsmith items are randomized to be any standard item or Elemental Gem.
-CHAOS: Wingsmith items are randomized to be any standard item, wing, or Elemental Gem.
-WINGS: Wingsmith items are randomized to be any wing.
-GEMS: Wingsmith items are randomized to be any Elemental Gem.
-WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
-CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
   </data>
   <data name="rndElement99Toggle.ToolTip" xml:space="preserve">
     <value>Element level maximum is increased from 50 to 99.
@@ -641,6 +657,11 @@ warranty: please refer to the license readme file for more info.</value>
 Each entry should follow this format: (address),(length),...
 The binary file will be read starting at [address], for [length] bytes.
 After entry, ensure you select below what format each value type is in.</value>
+  </data>
+  <data name="rndIvoryWingsToggle.ToolTip" xml:space="preserve">
+    <value>Replaces the White Wings with Ivory Wings, which warp the player to Shamwood. 
+The Melrode Wingsmith will not grant an item, and instead Lavaar in Shamwood
+will grant the Ivory Wings upon interacting.</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>63</value>

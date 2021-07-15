@@ -226,6 +226,9 @@
             this.rndSpellNamesDropdown = new System.Windows.Forms.ComboBox();
             this.rndSpellDropdown = new System.Windows.Forms.ComboBox();
             this.rndOverrideBox = new System.Windows.Forms.GroupBox();
+            this.rndLostKeysModeLabel = new System.Windows.Forms.Label();
+            this.rndLostKeysDropdown = new System.Windows.Forms.ComboBox();
+            this.rulesetHelpLabel = new System.Windows.Forms.Label();
             this.rndLostKeysToggle = new System.Windows.Forms.CheckBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -386,7 +389,8 @@
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.helpLabel = new System.Windows.Forms.Label();
-            this.rulesetHelpLabel = new System.Windows.Forms.Label();
+            this.rndFastShamwoodToggle = new System.Windows.Forms.CheckBox();
+            this.rndIvoryWingsToggle = new System.Windows.Forms.CheckBox();
             this.tabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.newBox.SuspendLayout();
@@ -689,7 +693,7 @@
             this.newLabel.Name = "newLabel";
             this.newLabel.Size = new System.Drawing.Size(572, 196);
             this.newLabel.TabIndex = 0;
-            this.newLabel.Text = "● Test version of LOST KEYS";
+            this.newLabel.Text = resources.GetString("newLabel.Text");
             // 
             // creditsBox
             // 
@@ -1718,6 +1722,8 @@
             // 
             // rndOverrideBox
             // 
+            this.rndOverrideBox.Controls.Add(this.rndLostKeysModeLabel);
+            this.rndOverrideBox.Controls.Add(this.rndLostKeysDropdown);
             this.rndOverrideBox.Controls.Add(this.rulesetHelpLabel);
             this.rndOverrideBox.Controls.Add(this.rndLostKeysToggle);
             this.rndOverrideBox.Location = new System.Drawing.Point(3, 3);
@@ -1727,11 +1733,46 @@
             this.rndOverrideBox.TabStop = false;
             this.rndOverrideBox.Text = "RULESETS";
             // 
+            // rndLostKeysModeLabel
+            // 
+            this.rndLostKeysModeLabel.AutoSize = true;
+            this.rndLostKeysModeLabel.Location = new System.Drawing.Point(59, 46);
+            this.rndLostKeysModeLabel.Name = "rndLostKeysModeLabel";
+            this.rndLostKeysModeLabel.Size = new System.Drawing.Size(37, 13);
+            this.rndLostKeysModeLabel.TabIndex = 34;
+            this.rndLostKeysModeLabel.Text = "Mode:";
+            // 
+            // rndLostKeysDropdown
+            // 
+            this.rndLostKeysDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndLostKeysDropdown.Enabled = false;
+            this.rndLostKeysDropdown.FormattingEnabled = true;
+            this.rndLostKeysDropdown.Items.AddRange(new object[] {
+            "PROGRESSIVE",
+            "OPEN WORLD"});
+            this.rndLostKeysDropdown.Location = new System.Drawing.Point(101, 42);
+            this.rndLostKeysDropdown.MaxDropDownItems = 2;
+            this.rndLostKeysDropdown.Name = "rndLostKeysDropdown";
+            this.rndLostKeysDropdown.Size = new System.Drawing.Size(105, 21);
+            this.rndLostKeysDropdown.TabIndex = 33;
+            this.rndLostKeysDropdown.SelectedIndexChanged += new System.EventHandler(this.rndLostKeysDropdown_SelectedIndexChanged);
+            // 
+            // rulesetHelpLabel
+            // 
+            this.rulesetHelpLabel.AutoSize = true;
+            this.rulesetHelpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
+            this.rulesetHelpLabel.Location = new System.Drawing.Point(245, 11);
+            this.rulesetHelpLabel.Name = "rulesetHelpLabel";
+            this.rulesetHelpLabel.Size = new System.Drawing.Size(25, 26);
+            this.rulesetHelpLabel.TabIndex = 20;
+            this.rulesetHelpLabel.Text = "?";
+            this.rndToolTip.SetToolTip(this.rulesetHelpLabel, "A");
+            // 
             // rndLostKeysToggle
             // 
             this.rndLostKeysToggle.AutoSize = true;
             this.rndLostKeysToggle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rndLostKeysToggle.Location = new System.Drawing.Point(78, 30);
+            this.rndLostKeysToggle.Location = new System.Drawing.Point(81, 15);
             this.rndLostKeysToggle.Name = "rndLostKeysToggle";
             this.rndLostKeysToggle.Size = new System.Drawing.Size(116, 24);
             this.rndLostKeysToggle.TabIndex = 32;
@@ -2295,6 +2336,8 @@
             // 
             // quaQualityBox
             // 
+            this.quaQualityBox.Controls.Add(this.rndIvoryWingsToggle);
+            this.quaQualityBox.Controls.Add(this.rndFastShamwoodToggle);
             this.quaQualityBox.Controls.Add(this.rndUnlockDoorsToggle);
             this.quaQualityBox.Controls.Add(this.rndCrystalReturnToggle);
             this.quaQualityBox.Controls.Add(this.rndFastMammonToggle);
@@ -2312,7 +2355,7 @@
             this.rndUnlockDoorsToggle.AutoSize = true;
             this.rndUnlockDoorsToggle.Cursor = System.Windows.Forms.Cursors.Default;
             this.rndUnlockDoorsToggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndUnlockDoorsToggle.Location = new System.Drawing.Point(6, 109);
+            this.rndUnlockDoorsToggle.Location = new System.Drawing.Point(6, 169);
             this.rndUnlockDoorsToggle.Name = "rndUnlockDoorsToggle";
             this.rndUnlockDoorsToggle.Size = new System.Drawing.Size(158, 17);
             this.rndUnlockDoorsToggle.TabIndex = 15;
@@ -2327,7 +2370,7 @@
             this.rndCrystalReturnToggle.AutoSize = true;
             this.rndCrystalReturnToggle.Cursor = System.Windows.Forms.Cursors.Default;
             this.rndCrystalReturnToggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndCrystalReturnToggle.Location = new System.Drawing.Point(6, 79);
+            this.rndCrystalReturnToggle.Location = new System.Drawing.Point(6, 109);
             this.rndCrystalReturnToggle.Name = "rndCrystalReturnToggle";
             this.rndCrystalReturnToggle.Size = new System.Drawing.Size(127, 17);
             this.rndCrystalReturnToggle.TabIndex = 14;
@@ -3746,16 +3789,33 @@
             this.rndToolTip.SetToolTip(this.helpLabel, "Every function and option has a mouse-over tooltip \r\n(usually on the text label) " +
         "that explains what it does \r\nand what all related options do.");
             // 
-            // rulesetHelpLabel
+            // rndFastShamwoodToggle
             // 
-            this.rulesetHelpLabel.AutoSize = true;
-            this.rulesetHelpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
-            this.rulesetHelpLabel.Location = new System.Drawing.Point(245, 11);
-            this.rulesetHelpLabel.Name = "rulesetHelpLabel";
-            this.rulesetHelpLabel.Size = new System.Drawing.Size(25, 26);
-            this.rulesetHelpLabel.TabIndex = 20;
-            this.rulesetHelpLabel.Text = "?";
-            this.rndToolTip.SetToolTip(this.rulesetHelpLabel, "A");
+            this.rndFastShamwoodToggle.AutoSize = true;
+            this.rndFastShamwoodToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndFastShamwoodToggle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndFastShamwoodToggle.Location = new System.Drawing.Point(6, 79);
+            this.rndFastShamwoodToggle.Name = "rndFastShamwoodToggle";
+            this.rndFastShamwoodToggle.Size = new System.Drawing.Size(102, 17);
+            this.rndFastShamwoodToggle.TabIndex = 16;
+            this.rndFastShamwoodToggle.Text = "Fast Shamwood";
+            this.rndToolTip.SetToolTip(this.rndFastShamwoodToggle, "Exiting Shamwood will place you at the exit of Baragoon Tunnel.");
+            this.rndFastShamwoodToggle.UseVisualStyleBackColor = true;
+            this.rndFastShamwoodToggle.CheckedChanged += new System.EventHandler(this.rndFastShamwoodToggle_CheckedChanged);
+            // 
+            // rndIvoryWingsToggle
+            // 
+            this.rndIvoryWingsToggle.AutoSize = true;
+            this.rndIvoryWingsToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndIvoryWingsToggle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndIvoryWingsToggle.Location = new System.Drawing.Point(6, 139);
+            this.rndIvoryWingsToggle.Name = "rndIvoryWingsToggle";
+            this.rndIvoryWingsToggle.Size = new System.Drawing.Size(211, 17);
+            this.rndIvoryWingsToggle.TabIndex = 17;
+            this.rndIvoryWingsToggle.Text = "Replace White Wings with Ivory Wings";
+            this.rndToolTip.SetToolTip(this.rndIvoryWingsToggle, resources.GetString("rndIvoryWingsToggle.ToolTip"));
+            this.rndIvoryWingsToggle.UseVisualStyleBackColor = true;
+            this.rndIvoryWingsToggle.CheckedChanged += new System.EventHandler(this.rndIvoryWingsToggle_CheckedChanged);
             // 
             // MerrowStandard
             // 
@@ -4086,6 +4146,10 @@
         private System.Windows.Forms.GroupBox rndOverrideBox;
         private System.Windows.Forms.CheckBox rndLostKeysToggle;
         private System.Windows.Forms.Label rulesetHelpLabel;
+        private System.Windows.Forms.Label rndLostKeysModeLabel;
+        private System.Windows.Forms.ComboBox rndLostKeysDropdown;
+        private System.Windows.Forms.CheckBox rndIvoryWingsToggle;
+        private System.Windows.Forms.CheckBox rndFastShamwoodToggle;
     }
 }
 

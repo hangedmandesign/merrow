@@ -22,6 +22,8 @@ namespace Merrow {
                 !rndLevelToggle.Checked &&
                 !rndLevel2Toggle.Checked &&
 
+                !rndLostKeysToggle.Checked &&
+
                 !rndChestToggle.Checked &&
                 !rndDropsToggle.Checked &&
                 !rndDropLimitToggle.Checked &&
@@ -43,6 +45,8 @@ namespace Merrow {
                 !rndFastMammonToggle.Checked &&
                 !rndCrystalReturnToggle.Checked &&
                 !rndUnlockDoorsToggle.Checked &&
+                !rndIvoryWingsToggle.Checked &&
+                !rndFastShamwoodToggle.Checked &&
 
                 !rndTextPaletteToggle.Checked &&
                 !rndZoomToggle.Checked &&
@@ -89,8 +93,11 @@ namespace Merrow {
             //RANDOMIZATION FEATURES
 
             //Lost Keys spoiler (actual patch content is added last)
-            if (rndLostKeysToggle.Checked) {
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "LOST KEYS mode enabled." + Environment.NewLine);
+            if (rndLostKeysToggle.Checked && rndLostKeysDropdown.SelectedIndex == 0) {
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "LOST KEYS mode enabled: Progressive." + Environment.NewLine);
+            }
+            if (rndLostKeysToggle.Checked && rndLostKeysDropdown.SelectedIndex == 1) {
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "LOST KEYS mode enabled: Open World." + Environment.NewLine);
             }
 
             //Spell Shuffle
@@ -275,6 +282,7 @@ namespace Merrow {
                 //add gift addresses, and new byte
                 for (int i = 0; i < gifts.Length; i++) {
                     int temp = library.itemgranters[i * 2]; //don't need to offset because gift hex loc list is pre-offset
+                    
                     patchstrings.Add(Convert.ToString(temp, 16));
                     patchstrings.Add("0001");
                     patchstrings.Add(gifts[i].ToString("X2"));
@@ -763,7 +771,9 @@ namespace Merrow {
             if (rndCrystalReturnToggle.Checked) {
                 patchstrings.Add("206EB0");
                 patchstrings.Add("0024");
-                patchstrings.Add("42020000C3BC0000BFC90FF940C0000040E0000000160016000000090007001A00020003");
+                if (!rndUnlockDoorsToggle.Checked) { patchstrings.Add("42020000C3BC0000BFC90FF940C0000040E0000000160016000000090007001A00020003"); }
+                //need to test the below data to make sure it works as intended, removes water jewel requirement
+                if (rndUnlockDoorsToggle.Checked) { patchstrings.Add("42020000C3BC0000BFC90FF940C0000040E0000000060000000000090007001A00020003"); }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Crystal Valley return warp enabled." + Environment.NewLine);
             }
@@ -779,19 +789,48 @@ namespace Merrow {
 
             //Unlock All Progression Locks
             if (rndUnlockDoorsToggle.Checked) {
-                for (int i = 0; i < 18; i++) {
-                    patchstrings.Add(library.unlockedDoorData[i * 2]);
-                    if (i != 7) { //changed to 7 from 8 let's see what breaks, cause this should never have worked - 21-07-10
-                        patchstrings.Add("0004");
-                        patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
+                //any mode other than open world lost keys
+                //unlocks everything
+                if (rndLostKeysDropdown.SelectedIndex != 1) { 
+                    for (int i = 0; i < 18; i++) {
+                        patchstrings.Add(library.unlockedDoorData[i * 2]);
+                        if (i != 7) {
+                            patchstrings.Add("0004");
+                            patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
+                        }
+                        else if (i == 7) {
+                            patchstrings.Add("0010");
+                            patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
+                        }
                     }
-                    else if (i == 7) {
-                        patchstrings.Add("0010");
-                        patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
-                    }
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "All progression locks (gems/book/key) unlocked." + Environment.NewLine);
                 }
 
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "All progression locks (gems/book/key) unlocked." + Environment.NewLine);
+                //open world lost keys 
+                //does not unlock final shannons, adds shamwood shortcut and locks final castle roof
+                if (rndLostKeysDropdown.SelectedIndex == 1) {
+                    for (int i = 0; i < 16; i++) {
+                        patchstrings.Add(library.unlockedDoorData[i * 2]);
+                        if (i != 7) {
+                            patchstrings.Add("0004");
+                            patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
+                        }
+                        else if (i == 7) {
+                            patchstrings.Add("0010");
+                            patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
+                        }
+                    }
+                    patchstrings.Add(library.unlockedDoorData[19 * 2]); //Shamwood Exit to Baragoon Exit
+                    patchstrings.Add("0001");
+                    patchstrings.Add(library.unlockedDoorData[19 * 2 + 1]);
+
+                    patchstrings.Add(library.unlockedDoorData[20 * 2]); //Brannoch warp back to Shamwood (Fire Ruby)
+                    patchstrings.Add("0010");
+                    patchstrings.Add(library.unlockedDoorData[20 * 2 + 1]);
+
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "LOST KEYS OPEN WORLD: All progression locks (gems) moved to endgame." + Environment.NewLine);
+                }
+
             }
 
             //Level 2 Base Spells
@@ -805,26 +844,72 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Base spells unlocked at level 2." + Environment.NewLine);
             }
 
+            //Shamwood Exit to Baragoon Exit
+            if (rndFastShamwoodToggle.Checked) {
+                patchstrings.Add(library.unlockedDoorData[19 * 2]); 
+                patchstrings.Add("0001");
+                patchstrings.Add(library.unlockedDoorData[19 * 2 + 1]);
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Shamwood enabled." + Environment.NewLine);
+
+            }
+
+            //Ivory Wings
+            if (rndIvoryWingsToggle.Checked) {
+                //wing function override
+                for (int i = 0; i < 4; i++) {
+                    patchstrings.Add(library.ivorywings[i * 3]);
+                    patchstrings.Add(library.ivorywings[i * 3 + 1]);
+                    patchstrings.Add(library.ivorywings[i * 3 + 2]);
+                }
+
+                //Melrode Wingsmith actor type override
+                patchstrings.Add("49F90F"); 
+                patchstrings.Add("0001");
+                patchstrings.Add("01");
+
+                //Lavaar NPC type, 2nd dialogue override
+                patchstrings.Add("5EBB13");
+                patchstrings.Add("0001");
+                patchstrings.Add("02");
+                patchstrings.Add("5EBB1A"); 
+                patchstrings.Add("0002");
+                patchstrings.Add("1CA0");
+
+                //item distribution change is handled elsewhere
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "White Wings replaced with Ivory Wings (granted by Lavaar)." + Environment.NewLine);
+            }
+
             //LOST KEYS
             if (rndLostKeysToggle.Checked) {
-                //items and stuff already redistributed, just have to unlock Colleen at the end here to guarantee it's applied correctly
-                patchstrings.Add(library.unlockedDoorData[7 * 2]); //Epona Teleporter A
-                patchstrings.Add("0010"); 
-                patchstrings.Add(library.unlockedDoorData[7 * 2 + 1]);
+                if (!rndUnlockDoorsToggle.Checked) { //this is redundant if progression locks are open
+                    //items and stuff already redistributed, just have to unlock Colleen at the end here to guarantee it's applied correctly
+                    patchstrings.Add(library.unlockedDoorData[7 * 2]); //Epona Teleporter A
+                    patchstrings.Add("0010"); 
+                    patchstrings.Add(library.unlockedDoorData[7 * 2 + 1]);
 
-                patchstrings.Add(library.unlockedDoorData[8 * 2]); //Epona Teleporter B
-                patchstrings.Add("0004");
-                patchstrings.Add(library.unlockedDoorData[8 * 2 + 1]);
+                    patchstrings.Add(library.unlockedDoorData[8 * 2]); //Epona Teleporter B
+                    patchstrings.Add("0004");
+                    patchstrings.Add(library.unlockedDoorData[8 * 2 + 1]);
 
-                patchstrings.Add(library.unlockedDoorData[9 * 2]); //Colleen's Back Door
-                patchstrings.Add("0004");
-                patchstrings.Add(library.unlockedDoorData[9 * 2 + 1]);
+                    patchstrings.Add(library.unlockedDoorData[9 * 2]); //Colleen's Back Door
+                    patchstrings.Add("0004");
+                    patchstrings.Add(library.unlockedDoorData[9 * 2 + 1]);
 
-                patchstrings.Add(library.unlockedDoorData[10 * 2]); //Crystal to Larapool
-                patchstrings.Add("0004");
-                patchstrings.Add(library.unlockedDoorData[10 * 2 + 1]);
+                    patchstrings.Add(library.unlockedDoorData[10 * 2]); //Crystal to Larapool
+                    patchstrings.Add("0004");
+                    patchstrings.Add(library.unlockedDoorData[10 * 2 + 1]);
 
-                for (int i = 0; i < 7; i++) {
+                    patchstrings.Add(library.unlockedDoorData[18 * 2]); //Lock Brannoch Castle Gate with Fire Ruby
+                    patchstrings.Add("0004");
+                    patchstrings.Add(library.unlockedDoorData[18 * 2 + 1]);
+
+                    //patchstrings.Add(library.unlockedDoorData[20 * 2]); //Brannoch warp back to Shamwood (Fire Ruby)
+                    //patchstrings.Add("0010");
+                    //patchstrings.Add(library.unlockedDoorData[20 * 2 + 1]);
+                }
+
+                for (int i = 0; i < 7; i++) { //fix boss drops to contain updated list
                     spoilerbossdrops[i] = (library.monsternames[(i + 67) * 2] + " carries " + library.items[lostkeysbossitemlist[i] * 3]);
                 }
             }
@@ -852,6 +937,8 @@ namespace Merrow {
                     byte[] targetData = StringToByteArray(patchstrings[i + 2]);
                     int targetLength = targetData.Length;
                     Console.WriteLine(patchstrings[i]);
+                    Console.WriteLine(patchstrings[i + 1]);
+                    Console.WriteLine(patchstrings[i + 2]);
                     for (int j = 0; j < targetLength; j++) { 
                         rndFileBytes[targetAddr + j] = targetData[j];
                     }

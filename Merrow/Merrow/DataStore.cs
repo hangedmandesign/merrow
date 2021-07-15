@@ -329,7 +329,7 @@ namespace Merrow {
             6131115, 3,  //Item
             3978695, 24, //Shannon
             8729591, 25, //Shannon
-            4847891, 14, //Wing
+            4847891, 14, //Wing         //override this address to move the gift to Lavaar
             5043003, 15, //Wing
             5205763, 16, //Wing
             5359563, 17, //Wing
@@ -377,13 +377,22 @@ namespace Merrow {
         public int[] area_wind = { 1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4, 2, 3 };
         //water jewel:  above + 1 boss, 7 chests -	    		         28 total 
         public int area_water_count = 28;
-        public int[] area_water = { 2, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4, 2, 3, 2, 15, 47, 48, 49, 50, 51, 52 };
+        public int[] area_water = { 1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4, 2, 3, 2, 15, 47, 48, 49, 50, 51, 52 };
         //fire ruby:    2 bosses, 33 chests, 2 gifters, 1 wingsmith	-    38 total
         public int area_fire_count = 38;
         public int[] area_fire = { 3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7, 4 };
         //eletale book: 2 bosses, 18 chests, 2 gifters, 1 wingsmith	-    23 total
         public int area_book_count = 23;
         public int[] area_book = { 5, 6, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8, 5 };
+
+        //all areas combined, wingsmiths removed
+        public int[] area_open = {
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 81, 82, 83, 84, 0, 1, 2,
+            1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4,
+            2, 15, 47, 48, 49, 50, 51, 52,
+            3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7,
+            5, 6, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8
+        };
 
         //name list for spoiler log
         public string[] monsternames = {
@@ -942,7 +951,7 @@ namespace Merrow {
             "Limelin House Opposite Inn #2",
             "Limelin Red House",
             "Limelin Purple House",
-            "Dindom Dries Tent",
+            "Dindom Dries Outpost",
             "Baragoon Moor Inn #1",
             "Baragoon Moor Inn #2",
             "Baragoon Moor Inn #3",
@@ -1205,7 +1214,22 @@ namespace Merrow {
             "343598","04010000", //DD-CH 14
             "6C1FFC","04010000", //CH-DD 15
             "3C7820","01010000", //BC-MW 16
-            "84EED4","00010000"  //MW-Mammon 17
+            "84EED4","00010000", //MW-Mammon 17
+            "3C73CC","03100017", //BC outer gate locked with Fire Ruby 18
+            "36C1C7","00", //Shamwood exit redirect to Baragoon exit 19
+            "3C733C","02000000000000110000000A00000001" //Blue Brannoch house to Shamwood 20
+            //"3C733C","02100017000000110000000A00000001" //Blue Brannoch house to Shamwood, locked 2X
+            //open lost keys: earth final lock 21
+            //open lost keys: wind final lock 22
+            //open lost keys: water final lock 23
+            //open lost keys: fire final lock 24
+        };
+
+        public string[] ivorywings = {
+            "D86A60", "000C", "000A00004140000044170000", //destination
+            "D86CE3", "0005", "08150E1118", //name
+            "D86FF9", "0009", "1207000C160E0E03FF", //description (sprite is next row)
+            "D3D050", "0100", "00000000F4F400000000000000000000000000F44003F4000000F4F4F4F400000000F44001F40000F4F440070140F40000F407012DF400F4400301222DF4000000F401402DC6F40701010724E9000000F407010140F4010113452DD500000000F4450703F407011340220122EF00000000F42D22F445010307402DE9000000000000F42D22F42D01132DEF0000000000000000F42D22F40307D500000000000000000000F4EF55C6D5000000000000000000000000EF5D98EF000000000000000000000000EF980B94EFEFEFEFEF0000000000000000EFEFEF98995D0B5DEF00000000000000000000EFEFEFEFEF000000000000000000000000000000000000"
         };
 
         //14652 bytes/pixels = 393C
