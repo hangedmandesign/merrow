@@ -211,7 +211,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAQgBAgEIAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAARABAgEQAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -480,7 +480,7 @@ Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled.
 Some randomizations and options cannot be disabled.</value>
   </data>
   <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
-    <value>Randomize the order of all bosses other than Mammon.
+    <value>Randomize the order of all bosses other than Beigis and Mammon.
 Boss stats will maintain their stat:BST ratios, but BST will be scaled to the level of
 the boss they're replacing, and they will drop the appropriate progression items.</value>
   </data>
