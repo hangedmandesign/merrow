@@ -47,6 +47,8 @@ namespace Merrow {
                 !rndUnlockDoorsToggle.Checked &&
                 !rndIvoryWingsToggle.Checked &&
                 !rndFastShamwoodToggle.Checked &&
+                !rndLockedEndgameToggle.Checked &&
+                !rndBlueHouseWarpToggle.Checked &&
 
                 !rndTextPaletteToggle.Checked &&
                 !rndZoomToggle.Checked &&
@@ -903,15 +905,27 @@ namespace Merrow {
                     patchstrings.Add(library.unlockedDoorData[18 * 2]); //Lock Brannoch Castle Gate with Fire Ruby
                     patchstrings.Add("0004");
                     patchstrings.Add(library.unlockedDoorData[18 * 2 + 1]);
-
-                    //patchstrings.Add(library.unlockedDoorData[20 * 2]); //Brannoch warp back to Shamwood (Fire Ruby)
-                    //patchstrings.Add("0010");
-                    //patchstrings.Add(library.unlockedDoorData[20 * 2 + 1]);
                 }
 
                 for (int i = 0; i < 7; i++) { //fix boss drops to contain updated list
                     spoilerbossdrops[i] = (library.monsternames[(i + 67) * 2] + " carries " + library.items[lostkeysbossitemlist[i] * 3]);
                 }
+            }
+
+            if (rndBlueHouseWarpToggle.Checked) { //Brannoch warp back to Shamwood
+                patchstrings.Add(library.unlockedDoorData[20 * 2]); 
+                patchstrings.Add("0010");
+                patchstrings.Add(library.unlockedDoorData[20 * 2 + 1]);
+            }
+
+            if (rndLockedEndgameToggle.Checked) { //final staircase locks
+                for (int i = 21; i < 25; i++) {
+                    patchstrings.Add(library.unlockedDoorData[i * 2]);
+                    patchstrings.Add("0004");
+                    patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Approach to Mammon's World locked by Elemental Gems." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT

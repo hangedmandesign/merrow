@@ -1217,12 +1217,12 @@ namespace Merrow {
             "84EED4","00010000", //MW-Mammon 17
             "3C73CC","03100017", //BC outer gate locked with Fire Ruby 18
             "36C1C7","00", //Shamwood exit redirect to Baragoon exit 19
-            "3C733C","02000000000000110000000A00000001" //Blue Brannoch house to Shamwood 20
+            "3C733C","02000000000000110000000A00000001", //Blue Brannoch house to Shamwood 20
             //"3C733C","02100017000000110000000A00000001" //Blue Brannoch house to Shamwood, locked 2X
-            //open lost keys: earth final lock 21
-            //open lost keys: wind final lock 22
-            //open lost keys: water final lock 23
-            //open lost keys: fire final lock 24
+            "3C7660","01120014",//open lost keys: earth final lock 21
+            "3C76A8","01120015",//open lost keys: wind final lock 22
+            "3C7740","01120016",//open lost keys: water final lock 23
+            "3C77B0","01120017"//open lost keys: fire final lock 24
         };
 
         public string[] ivorywings = {

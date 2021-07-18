@@ -1758,6 +1758,10 @@ namespace Merrow {
                 itemListView2.Items[14].Text = "IW";
                 itemListView3.Items[14].Text = "IW";
                 itemListView4.Items[14].Text = "IW";
+                itemListView1.Items[14].ImageIndex = 31;
+                itemListView2.Items[14].ImageIndex = 31;
+                itemListView3.Items[14].ImageIndex = 31;
+                itemListView4.Items[14].ImageIndex = 31;
                 library.items[42] = "IVORY WINGS";
                 library.itemgranters[20] = 6208279;
                 library.granternames[10] = "Lavaar (Shamwood Wingsmith)";
@@ -1766,6 +1770,10 @@ namespace Merrow {
                 itemListView2.Items[14].Text = "WW";
                 itemListView3.Items[14].Text = "WW";
                 itemListView4.Items[14].Text = "WW";
+                itemListView1.Items[14].ImageIndex = 14;
+                itemListView2.Items[14].ImageIndex = 14;
+                itemListView3.Items[14].ImageIndex = 14;
+                itemListView4.Items[14].ImageIndex = 14;
                 library.items[42] = "WHITE WINGS";
                 library.itemgranters[20] = 4847891;
                 library.granternames[10] = "Ingram (Melrode Wingsmith)";
@@ -1777,6 +1785,14 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndLockedEndgameToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndBlueHouseWarpToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
         public void LostKeysHandling() {
             //Checked
             if (rndLostKeysToggle.Checked) {
@@ -1784,9 +1800,11 @@ namespace Merrow {
 
                 rndChestToggle.Checked = true; //Shared (between both types of Lost Keys)
                 rndChestToggle.Enabled = false;
+                rndWeightedChestDropdown.SelectedIndex = 1;
                 rndGiftersToggle.Checked = true;
                 rndGiftersToggle.Enabled = false;
                 rndWingsmithsToggle.Checked = false;
+                rndFastMonasteryToggle.Checked = true;
                 rndFastShamwoodToggle.Checked = true;
                 rndFastMammonToggle.Checked = true;
                 rndIvoryWingsToggle.Checked = true;
@@ -1810,11 +1828,15 @@ namespace Merrow {
                 if (rndLostKeysDropdown.SelectedIndex == 0) { //Progressive
                     rndUnlockDoorsToggle.Checked = false;
                     rndUnlockDoorsToggle.Enabled = true;
+                    rndLockedEndgameToggle.Checked = false; 
+                    rndLockedEndgameToggle.Enabled = true;
                 }
 
                 if (rndLostKeysDropdown.SelectedIndex == 1) { //Open World
                     rndUnlockDoorsToggle.Checked = true;
                     rndUnlockDoorsToggle.Enabled = false;
+                    rndLockedEndgameToggle.Checked = true;
+                    rndLockedEndgameToggle.Enabled = false;
                 }
             }
 
@@ -1824,26 +1846,23 @@ namespace Merrow {
 
                 rndChestToggle.Checked = false; //Shared
                 rndChestToggle.Enabled = true;
+                rndWeightedChestDropdown.SelectedIndex = 0;
                 rndGiftersToggle.Checked = false;
                 rndGiftersToggle.Enabled = true;
+                rndFastMonasteryToggle.Checked = false;
                 rndFastShamwoodToggle.Checked = false;
                 rndFastMammonToggle.Checked = false;
                 rndIvoryWingsToggle.Checked = false;
                 rndIvoryWingsToggle.Enabled = true;
                 rndCrystalReturnToggle.Checked = false;
 
-                rndShuffleShannonToggle.Enabled = true;
                 rndShuffleShannonToggle.Checked = false;
+                rndShuffleShannonToggle.Enabled = true;
 
-                if (rndLostKeysDropdown.SelectedIndex == 0) { //Progressive
-                    rndUnlockDoorsToggle.Checked = false;
-                    rndUnlockDoorsToggle.Enabled = true;
-                }
-
-                if (rndLostKeysDropdown.SelectedIndex == 1) { //Open World
-                    rndUnlockDoorsToggle.Checked = false;
-                    rndUnlockDoorsToggle.Enabled = true;
-                }
+                rndUnlockDoorsToggle.Checked = false;
+                rndUnlockDoorsToggle.Enabled = true;
+                rndLockedEndgameToggle.Checked = false;
+                rndLockedEndgameToggle.Enabled = true;
             }
         }
 
