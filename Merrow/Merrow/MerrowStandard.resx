@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="rndAccuracyToggle.ToolTip" xml:space="preserve">
     <value>Normalizes spell accuracy values to 100. 
 All spells will pass the initial accuracy check, but offensive spells can still miss 
@@ -137,7 +140,7 @@ However, exports will automatically overwrite any existing file with the same na
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Test version 4 of LOST KEYS. 
+    <value>● Test version 5 of LOST KEYS. Fixed spoiler log and item distribution errors.
 
 PROGRESSIVE: Each gem/book and wing is available in its 'region' (up to the point where progression requires it.)
 It will either be held by a chest, gifter, or the boss. Wingsmiths are not randomized. 
@@ -211,7 +214,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAARABAgEQAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAARgBAgEYAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -432,28 +435,12 @@ Ambiguous: Hinted spell names will randomly select whether original or modifier 
 Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
   </data>
   <data name="rulesetHelpLabel.ToolTip" xml:space="preserve">
-    <value>LOST KEYS is a special ruleset based around the Elemental Gems and Wings only appearing *once* each, 
-scattered around the world, allowing for original pathing, experimental routing, and risky choices.
-
-Enabling LOST KEYS will overwrite many MERROW randomizer settings to create a playable ruleset.
-Disabling LOST KEYS will simply disable many of the options enabled, rather than setting them back to whatever
-setting you had them set to previously. Be sure to re-check any options you want after disabling LOST KEYS.
-
-PROGRESSIVE: Search each region, and gamble on when to move on.
-Each gem/book and wing is available in its 'region' (up to the point where progression requires it.)
-It will either be held by a chest, gifter, or the boss. 
-Wingsmiths are not randomized. Black Wings are in Fire region (Limelin/Dindom), along with new 'Ivory Wings'.
-Ivory Wings replace White Wings, and teleport to Shamwood. Lavaar is considered the Ivory Wingsmith by all options.
-Fire Ruby is required to enter Brannoch Castle. Crystal valley warp enabled. Shamwood exit shortcut enabled. 
-Some randomizations and options cannot be disabled.
-
-OPEN WORLD: Search each region, and rush the endgame as soon as you feel brave enough.
-All progression locks are unlocked, except for final Shannons.
-Each gem/book is available in a random Lost Keys region, as described above. 
-All four Elemental Gems are required to traverse Brannoch Castle roof to reach Mammon's World.
-One of each wing is scattered among all locations, including Ivory Wings.
-Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled. 
-Some randomizations and options cannot be disabled.</value>
+    <value>LOST KEYS Regions:
+- Earth: Melrode Monastery to Solvaring (&amp; Yellow Wings)
+- Wind: Dondoran Treasury to Zelse (&amp; Blue/Green Wings)
+- Water: Dondoran Treasury to Nepty
+- Fire: Limelin to Brannoch (&amp; Red/Ivory/Black Wings)
+- Book: Brannoch Castle (not including Beigis)</value>
   </data>
   <data name="rndLostKeysToggle.ToolTip" xml:space="preserve">
     <value>LOST KEYS is a special ruleset based around the Elemental Gems and Wings only appearing *once* each, 

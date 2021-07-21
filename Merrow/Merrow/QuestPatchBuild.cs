@@ -489,7 +489,8 @@ namespace Merrow {
 
                     //item drops
                     int newitemaddr = library.dropdata[(newbossorder[i] + 67) * 2];
-                    spoilerbossdrops[i] = (library.monsternames[(newbossorder[i] + 67) * 2] + " carries " + bossitemnames[i]);
+                    if (!rndLostKeysToggle.Checked) { spoilerbossdrops[i] = (library.monsternames[(newbossorder[i] + 67) * 2] + " carries " + bossitemnames[i]); }
+                    if (rndLostKeysToggle.Checked) { spoilerbossdrops[i] = (library.monsternames[(newbossorder[i] + 67) * 2] + " carries " + library.items[lostkeysbossitemlist[i] * 3]); }
                     patchstrings.Add(backassign[i].ToString("X6"));
                     patchstrings.Add("0001");
                     patchstrings.Add(bossitemslist[i].ToString("X2"));
@@ -773,9 +774,9 @@ namespace Merrow {
             if (rndCrystalReturnToggle.Checked) {
                 patchstrings.Add("206EB0");
                 patchstrings.Add("0024");
-                if (!rndUnlockDoorsToggle.Checked) { patchstrings.Add("42020000C3BC0000BFC90FF940C0000040E0000000160016000000090007001A00020003"); }
+                if (!rndUnlockDoorsToggle.Checked) { patchstrings.Add("42020000C3BC0000BFC90FF940C0000040E0000001160016000000020000001A00020003"); }
                 //need to test the below data to make sure it works as intended, removes water jewel requirement
-                if (rndUnlockDoorsToggle.Checked) { patchstrings.Add("42020000C3BC0000BFC90FF940C0000040E0000000060000000000090007001A00020003"); }
+                if (rndUnlockDoorsToggle.Checked) { patchstrings.Add("42020000C3BC0000BFC90FF940C0000040E0000001060000000000020000001A00020003"); }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Crystal Valley return warp enabled." + Environment.NewLine);
             }
@@ -907,8 +908,31 @@ namespace Merrow {
                     patchstrings.Add(library.unlockedDoorData[18 * 2 + 1]);
                 }
 
-                for (int i = 0; i < 7; i++) { //fix boss drops to contain updated list
-                    spoilerbossdrops[i] = (library.monsternames[(i + 67) * 2] + " carries " + library.items[lostkeysbossitemlist[i] * 3]);
+                if (!rndBossOrderToggle.Checked) {
+                    //this data could all be extracted from the library in code but you know what, this is easier
+                    int[] bossitemslist = new int[6];
+                    for (int i = 0; i < 6; i++) { bossitemslist[i] = lostkeysbossitemlist[i]; }
+
+                    string[] bossitemnames = { "EARTH ORB", "WIND JADE", "WATER JEWEL", "NOTHING", "FIRE RUBY", "NOTHING" };
+                    int[] bossaddresses = { 14186532, 14186588, 14186644, 14186700, 14186756, 14186812 };
+                    int[] backassign = new int[6];
+
+                    //data extraction code for items, in boss order. please do not remove until we're done fighting with boss order
+                    //14186532,4,14186588,4,14186644,4,14186700,4,14186756,4,14186812,4,14186868,4,14186924,4 
+                    //D87824,D8785C,D87894,D878CC,D87904,D8793C
+
+                    //items have to be handed backwards, so we're abstracting out the boss order
+                    //item drops
+                    for (int i = 0; i < 6; i++) {
+                        int newitemaddr = 0;
+                        backassign[i] = bossaddresses[newbossorder[i]];
+                        newitemaddr = library.dropdata[(newbossorder[i] + 67) * 2];
+                        
+                        spoilerbossdrops[i] = (library.monsternames[(newbossorder[i] + 67) * 2] + " carries " + library.items[lostkeysbossitemlist[i] * 3]);
+                        patchstrings.Add(backassign[i].ToString("X6"));
+                        patchstrings.Add("0001");
+                        patchstrings.Add(lostkeysbossitemlist[i].ToString("X2"));
+                    }
                 }
             }
 
