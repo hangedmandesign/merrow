@@ -94,12 +94,18 @@ namespace Merrow {
         int lastpaletteoffset = 0;
         int[] lostkeysbossitemlist = { 255, 255, 255, 255, 255, 255, 255 };
         int[] lostkeysdrops = new int[67];
+        string colourtest = "";
 
         //INITIALIZATION----------------------------------------------------------------
 
         public MerrowStandard() {
             //required Winforms initialization, do not edit or remove
-            InitializeComponent(); 
+            InitializeComponent();
+
+            //initial randomization
+            SysRand = new Random(); //reinitializing because otherwise seed always produces same value, possibly due to order error.
+            rngseed = SysRand.Next(100000000, 1000000000); //default seed set to a random 9-digit number
+            expSeedTextBox.Text = rngseed.ToString();
 
             //initiate file-opening dialogs
             if (!Directory.Exists(filePath)) { Directory.CreateDirectory(filePath); }
@@ -182,11 +188,6 @@ namespace Merrow {
             //fill the reference from arrays
             PopulateReference();
 
-            //initial randomization
-            SysRand = new Random(); //reinitializing because otherwise seed always produces same value, possibly due to order error.
-            rngseed = SysRand.Next(100000000, 1000000000); //default seed set to a random 9-digit number
-            Console.WriteLine(rngseed);
-            expSeedTextBox.Text = rngseed.ToString();
             loadfinished = true; //loadfinished being false prevents some UI elements from taking incorrect action during the initial setup
             Shuffling(true);
         }
@@ -313,7 +314,7 @@ namespace Merrow {
 
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
 
-            Console.WriteLine(rngseed);
+            Console.WriteLine("seed:" + rngseed.ToString());
             for (int i = 0; i < playerspells; i++) {
                 bool fiftyfifty = SysRand.NextDouble() > 0.5; ; 
                 if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfifty = true; } //"Linear" option
@@ -556,7 +557,14 @@ namespace Merrow {
                 texPal2 = HueShift(RGBAToColor(library.baseDarkTextPalette[1]), hueOffset);
                 texPal3 = HueShift(RGBAToColor(library.baseDarkTextPalette[2]), hueOffset);
             }
-            
+
+            colourtest = "";
+            string[] gembytes = new string[768];
+            for (int i = 0; i < 768; i++) {
+                gembytes[i] = library.stafftexture.Substring(0 + (i * 4), 4);
+                //Console.WriteLine(gembytes[i]);
+                colourtest += ColorToHex(HueShift(RGBAToColor(gembytes[i]), hueOffset));
+            }
 
             /*float brightScale = (float)SysRand.NextDouble() / 3; //old junk maybe
             float temph = texPal1.GetHue() + hueOffset; //alter palette colours according to HSV

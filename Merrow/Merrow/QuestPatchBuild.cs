@@ -51,6 +51,7 @@ namespace Merrow {
                 !rndBlueHouseWarpToggle.Checked &&
 
                 !rndTextPaletteToggle.Checked &&
+                !rndStaffPaletteCheckbox.Checked &&
                 !rndZoomToggle.Checked &&
                 !rndMaxMessageToggle.Checked &&
                 !rndHUDLockToggle.Checked &&
@@ -226,6 +227,13 @@ namespace Merrow {
                     patchstrings.Add("F83E9C1B6AD5318D");
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to black (default)." + Environment.NewLine);
                 }
+            }
+
+            //Staff Colour palette
+            if (rndStaffPaletteCheckbox.Checked) {
+                patchstrings.Add("86EB70");
+                patchstrings.Add("0600");
+                patchstrings.Add(colourtest);
             }
 
             //Chest shuffle
@@ -879,6 +887,12 @@ namespace Merrow {
                 patchstrings.Add("0002");
                 patchstrings.Add("1CA0");
 
+                if(!rndWingsmithsToggle.Checked) {
+                    for (int i = 0; i < wings.Length; i++) {
+                        spoilerwings[i] = library.granternames[i + 10] + ": " + library.items[(14 + i) * 3]; //advance 10 to skip gifters
+                    }
+                }
+
                 //item distribution change is handled elsewhere
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "White Wings replaced with Ivory Wings (granted by Lavaar)." + Environment.NewLine);
             }
@@ -1052,7 +1066,7 @@ namespace Merrow {
                 }
 
                 //wingsmith spoilers
-                if (rndWingsmithsToggle.Checked) {
+                if (rndWingsmithsToggle.Checked || rndIvoryWingsToggle.Checked) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED WINGSMITHS:" + Environment.NewLine);
                     foreach (string line in spoilerwings) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }

@@ -53,9 +53,10 @@ namespace Merrow {
         }
 
         public static Color RGBAToColor(string hexvalue) { //Convert 4-char hex string to Color
-            string binCol = Convert.ToString(Convert.ToInt32(hexvalue, 16), 2); //convert the hex string to an int, and then to binary string
-            if (binCol.Length < 16) { for (int i = 0; i < 16 - binCol.Length; i++) { binCol = "0" + binCol; } } //ensure it's 16 characters, conversion will cut it short
-
+            string binCol = Convert.ToString(Convert.ToInt32(hexvalue, 16), 2).PadLeft(16, '0'); //convert the hex string to an int, and then to binary string
+            //if (binCol.Length < 16) { for (int i = 0; i < 16 - binCol.Length; i++) { binCol = "0" + binCol; } } //ensure it's 16 characters, conversion will cut it short
+            //binCol.PadLeft(16, '0');
+            Console.WriteLine(binCol);
             int intR = Convert.ToInt32(binCol.Substring(0, 5), 2); //convert first five bits of binary to int 0-31
             int intG = Convert.ToInt32(binCol.Substring(5, 5), 2); //convert second five bits of binary to int 0-31
             int intB = Convert.ToInt32(binCol.Substring(10, 5), 2); //convert third five bits of binary to int 0-31

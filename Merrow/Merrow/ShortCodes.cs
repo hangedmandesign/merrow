@@ -57,16 +57,16 @@ namespace Merrow {
         //UPDATING SHORTCODE---------------------------------------------------
 
         public void UpdateCode() {
-            updatingcode = true;
-            int tabpagestocheck = 3;
-            string codeString = labelVersion.Text.Substring(1);
-            string tempString;
-            string binString2;
-            var toggles = new List<CheckBox>();
-            var dropdowns = new List<ComboBox>();
-            var sliders = new List<TrackBar>();
-
             if (loadfinished) {
+                updatingcode = true;
+                int tabpagestocheck = 3;
+                string codeString = labelVersion.Text.Substring(1);
+                string tempString;
+                string binString2;
+                var toggles = new List<CheckBox>();
+                var dropdowns = new List<ComboBox>();
+                var sliders = new List<TrackBar>();
+
                 //check each page in turn, convert each page's values and add it to the code string
                 for (int i = 0; i < tabpagestocheck; i++) {
                     toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
