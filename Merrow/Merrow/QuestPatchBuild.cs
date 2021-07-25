@@ -795,7 +795,7 @@ namespace Merrow {
                 patchstrings.Add("0001");
                 patchstrings.Add("0" + rndHitMPTrackBar.Value.ToString());
 
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Staff hit MP regain set to " + rndHitMPValue.Text + "x." + Environment.NewLine);
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Staff hit MP regain set to " + rndHitMPValue.Text + "." + Environment.NewLine);
             }
 
             //Unlock All Progression Locks
@@ -831,13 +831,6 @@ namespace Merrow {
                             patchstrings.Add(library.unlockedDoorData[i * 2 + 1]);
                         }
                     }
-                    patchstrings.Add(library.unlockedDoorData[19 * 2]); //Shamwood Exit to Baragoon Exit
-                    patchstrings.Add("0001");
-                    patchstrings.Add(library.unlockedDoorData[19 * 2 + 1]);
-
-                    patchstrings.Add(library.unlockedDoorData[20 * 2]); //Brannoch warp back to Shamwood (Fire Ruby)
-                    patchstrings.Add("0010");
-                    patchstrings.Add(library.unlockedDoorData[20 * 2 + 1]);
 
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "LOST KEYS OPEN WORLD: All progression locks (gems) moved to endgame." + Environment.NewLine);
                 }
@@ -887,7 +880,12 @@ namespace Merrow {
                 patchstrings.Add("0002");
                 patchstrings.Add("1CA0");
 
-                if(!rndWingsmithsToggle.Checked) {
+                //account for not applying item replacement and spoiler 
+                if (!rndWingsmithsToggle.Checked) {
+                    patchstrings.Add("5EBB16");
+                    patchstrings.Add("0002");
+                    patchstrings.Add("000E");
+
                     for (int i = 0; i < wings.Length; i++) {
                         spoilerwings[i] = library.granternames[i + 10] + ": " + library.items[(14 + i) * 3]; //advance 10 to skip gifters
                     }
@@ -1048,9 +1046,22 @@ namespace Merrow {
                 }
 
                 //chest spoilers
+                //lost keys regions: 15,15,7,33,18: 0-14,15-29,30-36,37-69,70-87
+                int chestcount = 0;
                 if (rndChestToggle.Checked) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED CHESTS:" + Environment.NewLine);
-                    foreach (string line in spoilerchests) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                    foreach (string line in spoilerchests) {
+                        if(rndLostKeysToggle.Checked) {
+                            if (chestcount == 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "-EARTH REGION-" + Environment.NewLine); }
+                            if (chestcount == 15) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "-WIND REGION-" + Environment.NewLine); }
+                            if (chestcount == 30) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "-WATER REGION-" + Environment.NewLine); }
+                            if (chestcount == 37) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "-FIRE REGION-" + Environment.NewLine); }
+                            if (chestcount == 70) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "-BOOK REGION-" + Environment.NewLine); }
+                            chestcount++;
+                        }
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine);
+                        
+                    }
                 }
 
                 //drop spoilers

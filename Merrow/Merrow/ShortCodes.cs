@@ -91,7 +91,7 @@ namespace Merrow {
                 int test = Convert.ToInt32(tempString, 2); //convert binary string to int
                 int test2 = 0;
                 if (steps > 32) { test2 = Convert.ToInt32(binString2, 2); }
-                if (steps > 32) { codeString += ".T." + test.ToString("X") + "-" + test2.ToString("X") + "."; }//int to hex to 64b
+                if (steps > 32) { codeString += ".T." + test.ToString("X") + "-" + test2.ToString("X") + "."; }//int to hex
                 else { codeString += ".T." + test.ToString("X") + "."; }
 
                 //this string needs to be encoded piece by piece

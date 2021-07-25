@@ -14,6 +14,29 @@ namespace Merrow {
     public partial class MerrowStandard {
         //GENERAL DATA/VARIABLE TRANSLATION OPERATIONS
 
+        public void ShuffleArray(int[] arr) { //Shuffle supplied int array
+            int j = arr.Length;
+            while (j > 1) {
+                j--;
+                int k = SysRand.Next(j + 1);
+                int temp = arr[k];
+                arr[k] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        public void CountAndShuffleArray(int[] arr) { //Populate array with ascending numbers, then shuffle
+            for (int i = 0; i < arr.Length; i++) { arr[i] = i; }
+            int j = arr.Length;
+            while (j > 1) {
+                j--;
+                int k = SysRand.Next(j + 1);
+                int temp = arr[k];
+                arr[k] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
         public static string ByteArrayToString(byte[] ba) { //Convert byte array to hex string
             StringBuilder hex = new StringBuilder(ba.Length * 2);
             foreach (byte b in ba) { hex.AppendFormat("{0:x2}", b); }

@@ -378,6 +378,7 @@ namespace Merrow {
         //water jewel:  above + 1 boss, 7 chests -	    		         28 total 
         public int area_water_count = 28;
         public int[] area_water = { 1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4, 2, 3, 2, 15, 47, 48, 49, 50, 51, 52 };
+        public int[] area_water_nowings = { 1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4, 2, 15, 47, 48, 49, 50, 51, 52 };
         //fire ruby:    2 bosses, 33 chests, 2 gifters, 1 wingsmith	-    38 total
         public int area_fire_count = 38;
         public int[] area_fire = { 3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7, 4 };
@@ -402,9 +403,9 @@ namespace Merrow {
             "BIG MOUTH","ADC384",
             "BUMBERSHOOT","ADC390",
             "PARASAULT","ADC39C",
-            "ORK JR","ADC3A9",
+            "ORK JR","ADC3A8",
             "GREMLIN","ADC3B0",
-            "SKELETON","ADC3B9",
+            "SKELETON","ADC3B8",
             "GHOSTHOUND","ADC3C4",
             "MERROW","ADC3D0",
             "WOLF GOAT","ADC3D8",

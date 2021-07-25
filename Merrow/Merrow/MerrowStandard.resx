@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="rndAccuracyToggle.ToolTip" xml:space="preserve">
     <value>Normalizes spell accuracy values to 100. 
 All spells will pass the initial accuracy check, but offensive spells can still miss 
@@ -137,21 +140,11 @@ However, exports will automatically overwrite any existing file with the same na
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Test version 5 of LOST KEYS. Fixed spoiler log and item distribution errors.
+    <value>● Fixed error in Water Region item location list, that was causing Open World LOST KEYS to place the third gem in the Dondoran Castle Bedrooms.
 
-PROGRESSIVE: Each gem/book and wing is available in its 'region' (up to the point where progression requires it.)
-It will either be held by a chest, gifter, or the boss. Wingsmiths are not randomized. 
-Black Wings are in Fire region (Limelin/Dindom), along with new 'Ivory Wings'.
-Ivory Wings replace White Wings, and teleport to Shamwood. Lavaar is considered the Ivory Wingsmith by all options.
-Fire Ruby is required to enter Brannoch Castle. Crystal valley warp enabled. Shamwood exit shortcut enabled. 
-Some randomizations and options cannot be disabled.
+● Separated verbose spoiler log chests by region if LOST KEYS is enabled.
 
-OPEN WORLD: All progression locks are unlocked, except for final Shannons.
-Each gem/book is available in a random Lost Keys region, as described above. 
-All four Elemental Gems are required to traverse Brannoch Castle roof to reach Mammon's World.
-One of each wing is scattered among all locations, including Ivory Wings.
-Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled. 
-Some randomizations and options cannot be disabled.</value>
+● KNOWN ISSUE: Enabling LOST KEYS breaks shortcodes, in a way that's still unclear. Should not affect gameplay, but if you're attempting to paste a code and it's blank, that's a malformatted code.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
@@ -165,8 +158,8 @@ all the settings at once. Codes are tied to version
 numbers, because the number of Merrow options
 changes from version to version.
 
-Error-checking isn't perfect yet, so invalid codes will
-just blank themselves, or possibly crash.</value>
+Error-checking isn't perfect yet, so invalid codes 
+should just blank themselves. They may crash.</value>
   </data>
   <data name="rndShuffleShannonToggle.ToolTip" xml:space="preserve">
     <value>Shuffle/randomization will exclude the final two Shannons entirely, 
@@ -211,7 +204,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAASABAgEgAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAUABAgFAAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -449,7 +442,7 @@ setting you had them set to previously. Be sure to re-check any options you want
 
 PROGRESSIVE: Search each region, and gamble on when to move on.
 Each gem/book and wing is available in its 'region' (up to the point where progression requires it.)
-It will either be held by a chest, gifter, or the boss. 
+It will either be held by a chest, gifter, or the boss. Mouse over the '?' to the upper right to see the regions.
 Wingsmiths are not randomized. Black Wings are in Fire region (Limelin/Dindom), along with new 'Ivory Wings'.
 Ivory Wings replace White Wings, and teleport to Shamwood. Lavaar is considered the Ivory Wingsmith by all options.
 Fire Ruby is required to enter Brannoch Castle. Crystal valley warp enabled. Shamwood exit shortcut enabled. 

@@ -718,6 +718,7 @@ namespace Merrow {
                 //open world alternative: DONE
                 //maybe have random useless brannoch door send you to shamwood?
 
+                //PROGRESSIVE option
                 if (rndLostKeysDropdown.SelectedIndex == 0) { 
                     //pick locations for boss items and wings, they cannot overlap
                     int[] earthval = new int[3];
@@ -742,36 +743,26 @@ namespace Merrow {
                         fireitemIDs = new int[4] { 23, 14, 18, 19 }; //fire, ivory, red, black
                     }
 
-                    earthval[0] = SysRand.Next(19);
-                    earthval[1] = SysRand.Next(19);
-                    while (earthval[1] == earthval[0]) { earthval[1] = SysRand.Next(19); }
-                    if(!rndIvoryWingsToggle.Checked) {
-                        earthval[2] = SysRand.Next(19);
-                        while (earthval[2] == earthval[0] || earthval[2] == earthval[1]) { earthval[2] = SysRand.Next(19); }
-                    }
+                    //populate ascending arrays to be shuffled, to guarantee no overlap. don't need arrays for water or book because they're only one item.
+                    int[] earthlocs = new int[19];
+                    int[] windlocs = new int[18];
+                    int[] firelocs = new int[37];
+                    CountAndShuffleArray(earthlocs);
+                    CountAndShuffleArray(windlocs);
+                    CountAndShuffleArray(firelocs);
 
-                    windval[0] = SysRand.Next(18);
-                    windval[1] = SysRand.Next(18);
-                    while (windval[1] == windval[0]) { windval[1] = SysRand.Next(18); }
-                    windval[2] = SysRand.Next(18);
-                    while (windval[2] == windval[0] || windval[2] == windval[1]) { windval[2] = SysRand.Next(18); }
+                    //move data across. don't need to account for ivory wings manually in for loop if i check for array length
+                    for (int i = 0; i < earthval.Length; i++) { earthval[i] = earthlocs[i]; }
 
-                    waterval[0] = SysRand.Next(26); //water first 20 overlaps with wind
+                    for (int i = 0; i < windval.Length; i++) { windval[i] = windlocs[i]; }
+
+                    //since there's only one water, just roll it
+                    waterval[0] = SysRand.Next(26); //water first 20 overlaps with wind, which is accounted for below
                     while (windval[2] == waterval[0] || windval[1] == waterval[0] || windval[0] == waterval[0]) { waterval[0] = SysRand.Next(26); }
 
-                    fireval[0] = SysRand.Next(37);
-                    fireval[1] = SysRand.Next(37);
-                    while (fireval[1] == fireval[0]) { fireval[1] = SysRand.Next(37); }
-                    fireval[2] = SysRand.Next(37);
-                    while (fireval[2] == fireval[0] || fireval[2] == fireval[1]) { fireval[2] = SysRand.Next(37); }
-                    if(rndIvoryWingsToggle.Checked) {
-                        fireval[3] = SysRand.Next(37);
-                        while (fireval[3] == fireval[0] || fireval[3] == fireval[1] || fireval[3] == fireval[2]) { fireval[3] = SysRand.Next(37); }
-                    }
+                    for (int i = 0; i < fireval.Length; i++) { fireval[i] = firelocs[i]; }
 
                     bookval[0] = SysRand.Next(22);
-                    //bookval[1] = SysRand.Next(22); //moved black wings up
-                    //while (bookval[1] == bookval[0]) { bookval[1] = SysRand.Next(22); }
 
                     //distribute individual boss items and wings according to values.
 
@@ -795,10 +786,10 @@ namespace Merrow {
 
                     //water gem
                     if (waterval[0] == 0) { lostkeysbossitemlist[1] = wateritemIDs[0]; } //zelse
-                    if (waterval[0] >= 1 && waterval[0] <= 15) { chests[library.area_water[waterval[0]]] = wateritemIDs[0]; } //chests
-                    if (waterval[0] >= 16 && waterval[0] <= 17) { gifts[library.area_water[waterval[0]]] = wateritemIDs[0]; } //gifts
+                    if (waterval[0] >= 1 && waterval[0] <= 15) { chests[library.area_water_nowings[waterval[0]]] = wateritemIDs[0]; } //chests
+                    if (waterval[0] >= 16 && waterval[0] <= 17) { gifts[library.area_water_nowings[waterval[0]]] = wateritemIDs[0]; } //gifts
                     if (waterval[0] == 18) { lostkeysbossitemlist[2] = wateritemIDs[0]; } //nepty
-                    if (waterval[0] >= 19 && waterval[0] <= 25) { chests[library.area_water[waterval[0]]] = wateritemIDs[0]; } //water-only chests
+                    if (waterval[0] >= 19 && waterval[0] <= 25) { chests[library.area_water_nowings[waterval[0]]] = wateritemIDs[0]; } //water-only chests
 
                     for (int i = 0; i < fireval.Length; i++) { //fire gem and wings
                         if (fireval[i] == 0) { lostkeysbossitemlist[3] = fireitemIDs[i]; } //shilf
@@ -814,6 +805,7 @@ namespace Merrow {
                     if (bookval[0] >= 20 && bookval[0] <= 21) { gifts[library.area_book[bookval[0]]] = bookitemIDs[0]; } //gifts
                 }
 
+                //OPEN WORLD option
                 if (rndLostKeysDropdown.SelectedIndex == 1) {
                     //pick locations for boss items and wings, they cannot overlap
                     int[] possiblevals = new int[104];
@@ -883,6 +875,8 @@ namespace Merrow {
                         if (wingvals[i] >= 102 && wingvals[i] <= 103) { gifts[library.area_open[wingvals[i]]] = wingIDs[i]; } //gifts
                     }
 
+                    //2021-07-23: going to have to overhaul this stuff, because currently wings can be overwritten by gems
+
                     //put the randomly-ordered gems into their place in each region
                     for (int i = 0; i < 5; i++) {
                         if (i == 0) {
@@ -899,10 +893,10 @@ namespace Merrow {
 
                         if(i == 2) {
                             if (gemvals[i] == 0) { lostkeysbossitemlist[1] = gemIDs[i]; } //zelse
-                            if (gemvals[i] >= 1 && gemvals[i] <= 15) { chests[library.area_water[gemvals[i]]] = gemIDs[i]; } //chests
-                            if (gemvals[i] >= 16 && gemvals[i] <= 17) { gifts[library.area_water[gemvals[i]]] = gemIDs[i]; } //gifts                                                                                          
+                            if (gemvals[i] >= 1 && gemvals[i] <= 15) { chests[library.area_water_nowings[gemvals[i]]] = gemIDs[i]; } //chests
+                            if (gemvals[i] >= 16 && gemvals[i] <= 17) { gifts[library.area_water_nowings[gemvals[i]]] = gemIDs[i]; } //gifts                                                                                          
                             if (gemvals[i] == 18) { lostkeysbossitemlist[2] = gemIDs[i]; } //nepty
-                            if (gemvals[i] >= 19 && gemvals[i] <= 25) { chests[library.area_water[gemvals[i]]] = gemIDs[i]; } //water-only chests
+                            if (gemvals[i] >= 19 && gemvals[i] <= 25) { chests[library.area_water_nowings[gemvals[i]]] = gemIDs[i]; } //water-only chests
                         }
 
                         if (i == 3) { 
@@ -953,7 +947,7 @@ namespace Merrow {
 
         //update risk value
         public void UpdateRisk() {
-            float variance = extremity + 1.1f; //slight scale up on randomness, cause it can easily be more punishing
+            float variance = extremity + 1.2f; //slight scale up on randomness, cause it can easily be more punishing
             if (difficultyscale >= 1.0) { //scaling matters more than variance, above 1.0
                 riskvalue = Math.Round((difficultyscale * difficultyscale * difficultyscale) * (variance * variance) * 10);
             }
@@ -1801,6 +1795,10 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndStaffPaletteCheckbox_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
         public void LostKeysHandling() {
             //Checked
             if (rndLostKeysToggle.Checked) {
@@ -1872,6 +1870,8 @@ namespace Merrow {
                 rndLockedEndgameToggle.Checked = false;
                 rndLockedEndgameToggle.Enabled = true;
             }
+
+            UpdateCode();
         }
 
         //ITEM - Randomizer granular item controls
