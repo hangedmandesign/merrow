@@ -184,10 +184,10 @@ namespace Merrow {
             int firstcolon = -1; //-1 persists if no itemstrings
 
             //if it's too short, quit
-            if (currentCode.Length < 10) { return 0; }
+            if (currentCode.Length < 10) { return 1; }
 
             //wrong version number, quit
-            if (currentCode.Substring(0, 2) != versionNumber) { return 0; } 
+            if (currentCode.Substring(0, 2) != versionNumber) { return 2; } 
 
             //check each page in turn, convert each page's counts and add it to the lists, to check against/update
             for (int i = 0; i < tabpagestocheck; i++) {
@@ -237,8 +237,9 @@ namespace Merrow {
             else { dropdownstring = currentCode.Substring(dropdownstart, firstcolon - dropdownstart); } //already (1 +)
 
             //kick out on malformatted strings to prevent crashes
-            if (togglestart == 0 || dropdownstart == 0 || sliderstart == 0) { return 0; } 
-            if (togglestring.Length % 2 != 0 || dropdownstring.Length % 2 != 0 || sliderstring.Length % 2 != 0) { return 0; }
+            if (togglestart == 0 || dropdownstart == 0 || sliderstart == 0) { return 3; } 
+            if (dropdownstring.Length % 2 != 0) { return 5; }
+            if (sliderstring.Length % 2 != 0) { return 6; }
 
             //DECODE TOGGLES
             //64b to hex to int to binary
@@ -246,20 +247,22 @@ namespace Merrow {
             string toggletemp2 = "";
             for (int i = 0; i < togglestring.Length; i++) {
                 if (togglestring[i] == '-') {
-                    toggletemp = togglestring.Substring(0, i); //first half of string, up to hyphen
-                    toggletemp2 = togglestring.Substring(i + 1); //separate out second half of string, skip hyphen
+                    toggletemp = togglestring.Substring(0, i); //first half of string, up to hyphens
+                    toggletemp2 = togglestring.Substring(i + 1); //separate out second half of string, skip hyphens
                 }
             }
 
             //converting back to strings, PadLeft prevents the binary conversion from removing leading zeroes
             if (toggles.Count <= 32) {
                 toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2).PadLeft(toggles.Count, '0');
+                //if (togglestring.Length % 2 != 0) { return 4; }
             }
             if (toggles.Count > 32) {
                 toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2).PadLeft(32, '0');
 
                 //just add toggletemp2 to the binary string, since it's not bound by 32-char limit like the binary number
                 toggletemp += Convert.ToString(Convert.ToInt32(toggletemp2, 16), 2).PadLeft(toggles.Count - 32, '0');
+                //if (togglestring.Length % 2 != 0) { return 7; }
             }
 
             //then read binary string as bools
@@ -326,7 +329,7 @@ namespace Merrow {
 
             //DONE
             updatingcode = false;
-            return 1;
+            return 0;
         }
     }
 }

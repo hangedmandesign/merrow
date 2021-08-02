@@ -139,12 +139,36 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
+  <data name="rndStaffPaletteToggle.ToolTip" xml:space="preserve">
+    <value>Changes the colour palette of Brian's staff.
+RANDOM: Generate a palette at random by hue-shifting the original palette randomly by 0-359 degrees. 
+Has a 50-50 chance to be a light/dark palette.
+CUSTOM: Edit the hue-shift value as desired below.</value>
+  </data>
+  <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
+    <value>Changes the text colour palette.
+RANDOM: Generate a palette at random by hue-shifting the original palette randomly by 0-359 degrees. 
+Has a 50-50 chance to be a light/dark palette.
+CUSTOM: Edit the hue-shift and light/dark values below.
+SHUFFLED: Select one of the below four included colours at random.
+&lt;COLOUR&gt;: Use one of four default included colours.</value>
+  </data>
+  <data name="rndTextViewToggle.ToolTip" xml:space="preserve">
+    <value>If enabled, the text colour palette will be displayed to the right
+for reference, so you can ensure it's acceptable.
+If CUSTOM is selected, you can manually set a hue offset value from 0-359,
+and click the circle to change between light/dark palettes.</value>
+  </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Fixed error in Water Region item location list, that was causing Open World LOST KEYS to place the third gem in the Dondoran Castle Bedrooms.
+    <value>● Added hue-shift value selectors for text and staff palettes, allowing for easier custom colour selection.
 
-● Separated verbose spoiler log chests by region if LOST KEYS is enabled.
+● Added 'Randomize spell palettes', pretty preliminary but already showing good results.
 
-● KNOWN ISSUE: Enabling LOST KEYS breaks shortcodes, in a way that's still unclear. Should not affect gameplay, but if you're attempting to paste a code and it's blank, that's a malformatted code.</value>
+● Added 'Randomize music'. Works great, doesn't currently include boss battles except for Mammon.
+
+● Fixed error in Water Region item location list, that was causing Open World LOST KEYS to place the third gem in the Dondoran Castle Bedrooms.
+
+● Separated verbose spoiler log chests by region if LOST KEYS is enabled.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
@@ -204,7 +228,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAUABAgFAAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAVgBAgFYAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -497,16 +521,6 @@ and Variance. Setting both values higher may have extreme results.</value>
 The Melrode Wingsmith will not grant an item, and instead Lavaar in Shamwood
 will grant the Ivory Wings upon interacting. SHUFFLED Wingsmiths treat Lavaar
 as the granter of the Ivory Wings and shuffle accordingly.</value>
-  </data>
-  <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
-    <value>Changes the text colour palette.
-RANDOM: Generate a palette at random by hue-shifting the original palette randomly by 0-359 degrees. 
-Has a 50-50 chance to be a light/dark palette.
-CUSTOM: Generate a custom palette by hue-shifting the palette based on the last three digits of the seed.
-If the seed ends in 0-359, it will generate a light palette hue-shifted by 0-359 degrees.
-If the seed ends in 360-719, it will generate a dark palette hue-shifted by 0-359 (value minus 360) degrees.
-SHUFFLED: Select one of the below four included colours at random.
-&lt;COLOUR&gt;: Use one of four default included colours.</value>
   </data>
   <data name="crcHelpLabel.ToolTip" xml:space="preserve">
     <value>This is a CRC (N64 file checksum) Repair Tool.

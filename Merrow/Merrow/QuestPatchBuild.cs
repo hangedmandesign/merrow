@@ -51,7 +51,8 @@ namespace Merrow {
                 !rndBlueHouseWarpToggle.Checked &&
 
                 !rndTextPaletteToggle.Checked &&
-                !rndStaffPaletteCheckbox.Checked &&
+                !rndStaffPaletteToggle.Checked &&
+                !rndSpellPaletteToggle.Checked &&
                 !rndZoomToggle.Checked &&
                 !rndMaxMessageToggle.Checked &&
                 !rndHUDLockToggle.Checked &&
@@ -59,7 +60,8 @@ namespace Merrow {
                 !rndRestlessToggle.Checked &&
                 !rndVowelsToggle.Checked &&
                 !rndTextContentToggle.Checked &&
-                !rndDriftToggle.Checked
+                !rndDriftToggle.Checked &&
+                !rndMusicShuffleToggle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -104,7 +106,7 @@ namespace Merrow {
             }
 
             //Spell Shuffle
-            if (rndSpellToggle.Checked) { 
+            if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex != 24) { 
                 for (int q = 0; q < playerspells; q++) {
                     int tempq = 0;
 
@@ -184,6 +186,16 @@ namespace Merrow {
                     }
                 }
             }
+            if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex == 24) {
+                for (int i = 0; i < 9; i++) { //write 9 spells
+                    int spelladd = library.avalancheFix[i];
+                    for (int j = 0; j < 5; j++) { //write 5 times
+                        patchstrings.Add(Convert.ToString(spelladd + library.avalancheFix[(j * 2) + 9], 16));
+                        patchstrings.Add("0001");
+                        patchstrings.Add(Convert.ToString(library.avalancheFix[(j * 2) + 10], 16).PadLeft(2,'0'));
+                    }
+                }
+            }
 
             //Text Colour palette
             if (rndTextPaletteToggle.Checked) { 
@@ -203,13 +215,22 @@ namespace Merrow {
                     patchcontent = "F83E";
                     patchcontent += textPaletteHex;
                     patchstrings.Add(patchcontent);
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random." + Environment.NewLine);
+                    if (lightdarkicon) {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " light)." + Environment.NewLine);
+                    }
+                    else {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " dark)." + Environment.NewLine);
+                    }
                 }
                 if (temp == 1) {
                     patchcontent = "F83E";
                     patchcontent += textPaletteHex;
                     patchstrings.Add(patchcontent);
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to custom (" + lastpaletteoffset.ToString().PadLeft(3, '0') + ")." + Environment.NewLine);
+                    if (lightdarkicon) {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to custom (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " light)." + Environment.NewLine);
+                    } else {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to custom (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " dark)." + Environment.NewLine);
+                    }
                 }
                 if (temp == 3) {
                     patchstrings.Add("F83E9C1BBA0DD009");
@@ -230,10 +251,12 @@ namespace Merrow {
             }
 
             //Staff Colour palette
-            if (rndStaffPaletteCheckbox.Checked) {
+            if (rndStaffPaletteToggle.Checked) {
                 patchstrings.Add("86EB70");
                 patchstrings.Add("0600");
-                patchstrings.Add(colourtest);
+                patchstrings.Add(staffPaletteHex);
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Staff palette set to custom (" + laststaffpaletteoffset.ToString().PadLeft(3, '0') + ")." + Environment.NewLine);
             }
 
             //Chest shuffle
@@ -948,13 +971,17 @@ namespace Merrow {
                 }
             }
 
-            if (rndBlueHouseWarpToggle.Checked) { //Brannoch warp back to Shamwood
+            //Brannoch warp back to Shamwood
+            if (rndBlueHouseWarpToggle.Checked) { 
                 patchstrings.Add(library.unlockedDoorData[20 * 2]); 
                 patchstrings.Add("0010");
                 patchstrings.Add(library.unlockedDoorData[20 * 2 + 1]);
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Brannoch return warp enabled." + Environment.NewLine);
             }
 
-            if (rndLockedEndgameToggle.Checked) { //final staircase locks
+            //Final staircase locks with Gems
+            if (rndLockedEndgameToggle.Checked) { 
                 for (int i = 21; i < 25; i++) {
                     patchstrings.Add(library.unlockedDoorData[i * 2]);
                     patchstrings.Add("0004");
@@ -962,6 +989,26 @@ namespace Merrow {
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Approach to Mammon's World locked by Elemental Gems." + Environment.NewLine);
+            }
+
+            //Random spell palette
+            if (rndSpellPaletteToggle.Checked) {
+                for (int i = 0; i < rndspellcolours.Length; i++) {
+                    patchstrings.Add(library.allcolors[i * 2]);
+                    patchstrings.Add("0002");
+                    patchstrings.Add(library.allcolors[i * 2 + 1].Substring(0,2) + rndspellcolours[i].ToString("X2"));
+                }
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell palettes randomized." + Environment.NewLine);
+            }
+
+            //Random BGM
+            if (rndMusicShuffleToggle.Checked) {
+                for (int i = 0; i < rndbgms.Length; i++) {
+                    patchstrings.Add(library.bgmdata[i * 2]);
+                    patchstrings.Add("0001");
+                    patchstrings.Add(rndbgms[i].ToString("X2"));
+                }
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Background music randomized." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT
@@ -1148,8 +1195,11 @@ namespace Merrow {
             //write bools as binary string
             for (int i = 0; i < listID.Items.Count; i++) {
                 ListViewItem listChestItem = listID.Items[i];
-                if (listChestItem.Checked) { hexencode += "1"; }
-                if (!listChestItem.Checked) { hexencode += "0"; }
+                Console.WriteLine(listID.Name + " " + i.ToString());
+                if (listChestItem != null) {
+                    if (!listChestItem.Checked) { hexencode += "0"; }
+                    if (listChestItem.Checked) { hexencode += "1"; }
+                } else { hexencode += "0"; }
             }
 
             int bintohex = Convert.ToInt32(hexencode, 2); //binary string to int

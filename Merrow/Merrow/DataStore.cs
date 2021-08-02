@@ -75,6 +75,23 @@ namespace Merrow {
             "Ultimate Wind","D4CA0C","13945356","002F000500030300020000080064006400000001000000010001000041A00000000100000014000600000000000000010000000000000000000000000000000000000000"
         };
 
+        public int[] avalancheFix = {
+            13941548,//0
+            13941956,
+            13942160,
+            13943112,
+            13944064,
+            13944404,
+            13944472,
+            13944744,
+            13944812,//8
+            19,1,//9+
+            25,1,
+            33,10,
+            39,7,
+            43,1
+        };
+
         //prefix, suffix, new name location, pointer location, our new override pointer content
         public string[] shuffleNames = { 
             "SPARK","SPARKS","D4ECD0","D4B81C","800C3910",
@@ -260,6 +277,144 @@ namespace Merrow {
         public int[] brianSpells = { 2, 6, 7, 11, 24, 29, 33, 37, 39, 41 };
 
         public string[] elementCapLocations = { "0202FF", "02033F", "02037F", "0203C7" };
+
+        //spell colours: 22+22+19+16=79
+        //only includes the spell elements, pre-offset, that have colour values.
+        //need to find out if some have two colours (ex. buffs), or just more complex colours.
+        public string[] firecolors = { //22 colours
+            "D4D34A","0008",
+            "D4D392","0008",
+            "D4D3DA","0007",
+            "D4D422","0006",
+            "D4D45A","000A","D4D48A","0002",
+            "D4D4B2","0008",
+            "D4D4EA","0007","D4D4FA","2825","D4D51A","0007",
+            "D4D532","0007",
+            "D4D57A","0002",
+            "D4D5D2","0006",
+            "D4D61A","0007",
+            "D4D652","0009","D4D662","3C06",
+            "D4D69A","0007","D4D6AA","0107",
+            "D4D6E2","0007","D4D6F2","3207",
+            "D4D72A","000A","D4D75A","0002"
+        };
+        public string[] earthcolors = { //22 colours
+            "D4D772","0007","D4D792","0007",
+            "D4D7BA","0007","D4D7DA","0007",
+            "D4D832","0007",
+            "D4D84A","0007","D4D85A","040D",
+            "D4D8C2","0007",
+            "D4D8DA","0007","D4D8FA","0007",
+            "D4D922","0007",
+            "D4D99A","0007",
+            "D4D9B2","0007","D4D9D2","0007",
+            "D4D9FA","000D",
+            "D4DA72","0007",
+            "D4DA9A","0207",
+            "D4DAD2","000C","D4DAE2","5A02",
+            "D4DB1A","0007","D4DB2A","040D",
+            "D4DB92","0007"
+        };
+        public string[] watercolors = { //19 colours
+            "D4DBAA","0007","D4DBBA","3219",
+            "D4DBF2","0007","D4DC02","3219",
+            "D4DC3A","0004","D4DC4A","0424",
+            //SS1
+            "D4DCCA","0007","D4DCDA","3219",
+            "D4DD12","0011","D4DD42","0016",
+            "D4DD5A","0016",
+            "D4DDA2","0007",
+            "D4DDEA","001B",
+            "D4DE32","0007",
+            "D4DE7A","0004","D4DE8A","0424",
+            //SS2
+            "D4DF1A","0207",
+            "D4DF52","0007",
+            "D4DFCA","0017"
+        };
+        public string[] windcolors = { //16 colours
+            "D4DFF2","0018",
+            "D4E03A","0018",
+            "D4E0A2","001F",
+            "D4E0EA","0013",
+            "D4E132","0007",
+            "D4E15A","0018",
+            "D4E1A2","0018",
+            "D4E20A","001F",
+            "D4E222","0027",
+            "D4E29A","0013",
+            "D4E2B2","0007","D4E2C2","0407",
+            "D4E32A","0007",
+            "D4E372","001A",
+            "D4E3BA","0007",
+            "D4E402","0028"
+        };
+
+        public string[] allcolors = {
+            "D4D34A","0008",
+            "D4D392","0008",
+            "D4D3DA","0007",
+            "D4D422","0006",
+            "D4D45A","000A","D4D48A","0002",
+            "D4D4B2","0008",
+            "D4D4EA","0007","D4D4FA","2825","D4D51A","0007",
+            "D4D532","0007",
+            "D4D57A","0002",
+            "D4D5D2","0006",
+            "D4D61A","0007",
+            "D4D652","0009","D4D662","3C06",
+            "D4D69A","0007","D4D6AA","0107",
+            "D4D6E2","0007","D4D6F2","3207",
+            "D4D72A","000A","D4D75A","0002",
+
+            "D4D772","0007","D4D792","0007",
+            "D4D7BA","0007","D4D7DA","0007",
+            "D4D832","0007",
+            "D4D84A","0007","D4D85A","040D",
+            "D4D8C2","0007",
+            "D4D8DA","0007","D4D8FA","0007",
+            "D4D922","0007",
+            "D4D99A","0007",
+            "D4D9B2","0007","D4D9D2","0007",
+            "D4D9FA","000D",
+            "D4DA72","0007",
+            "D4DA9A","0207",
+            "D4DAD2","000C","D4DAE2","5A02",
+            "D4DB1A","0007","D4DB2A","040D",
+            "D4DB92","0007",
+
+            "D4DBAA","0007","D4DBBA","3219",
+            "D4DBF2","0007","D4DC02","3219",
+            "D4DC3A","0004","D4DC4A","0424",
+            //SS1
+            "D4DCCA","0007","D4DCDA","3219",
+            "D4DD12","0011","D4DD42","0016",
+            "D4DD5A","0016",
+            "D4DDA2","0007",
+            "D4DDEA","001B",
+            "D4DE32","0007",
+            "D4DE7A","0004","D4DE8A","0424",
+            //SS2
+            "D4DF1A","0207",
+            "D4DF52","0007",
+            "D4DFCA","0017",
+
+            "D4DFF2","0018",
+            "D4E03A","0018",
+            "D4E0A2","001F",
+            "D4E0EA","0013",
+            "D4E132","0007",
+            "D4E15A","0018",
+            "D4E1A2","0018",
+            "D4E20A","001F",
+            "D4E222","0027",
+            "D4E29A","0013",
+            "D4E2B2","0007","D4E2C2","0407",
+            "D4E32A","0007",
+            "D4E372","001A",
+            "D4E3BA","0007",
+            "D4E402","0028"
+        };
 
         //Replacement magnifier icon for Soul Search
         public string[] magnifier = {
@@ -1241,6 +1396,83 @@ namespace Merrow {
 
         //86EB70, 16x48 0x0600 (1536 bytes)
         public string stafftexture = "DCD5E559EDE1E665F669EDDFD517CC97BBD3A30BB3CFC457DD5DE59DDD9FEE23E559E5E3EE67F6ABEE21DD1BD4D5C415A34DB38FC495CD1BE5A1E623EE25EEABEE21EEADF6A9E59FE55BD4D7CC55B3D1AB8DBC13CCD9DD5FEE23EE25EEEDEDE1F6EDF6A9E5DFDD1BD4D7CC95BC13AB4FB3CFCC55D55DDDE1EE67F6ABF6A7DD59EDE1DDDFDD19D4D7CC95C413B3D1AB0BBC13CCD7DD5FEE67F6EDEEABED9BDD97DD5BDD19D4D7C455BC11B38FAB4DAB4DC495DD1DDDE1F6EDFF31EE21DD59E559DD19D4D7C455BC11B38FAB0BA30BBC11D4D9DD9DF6A9F731EE23E599DD59DCD7D4D7CC55BC53B38FAB09A30BB3CFCC55D51BE621F6A9F667DD99E559D4D9C453C453C453B38DA30BA30BB38DCC13D517DCD7E5DFEE23F6A9E5E1DD19BC53B38FBBCFB3CFAB0BAB8DB38FBBD1D4D5E55BE59DEDE1EE65E5DFE55BCC55B3D1B3D1AB4BAB0BAB4FBC51C3D1CC53DD17DD5BEDE1E5DFED9FE5DFDD19BC13B391BC13A30BAB4DB38DCC53CC93D495DD59E55DE5DDE59FE5DFE55BBC13AB4DBC13CC55AB4DB3CFC3CFCC93DD17DD17E55BE5E1EE23E59DE559C4559A89AB8FCC95D4D7AB4DC411DCD3DCD5DD19E55BE5E1EE65E559E519CCD7A2C99289B3D1D4D7DD5BC3CFD491E4D7DD17DD9DEDE3EE67E559D4D5DCD9C4559289AB4BBC15E55BD517D44FDD17E559E55DE5E1F6EBE55BD4D5D4D9BC1392499B0BC455E59BE55DDD59E597ED99EE1DFEA5F6E9FEA5FEE9FEEBFF2DFFB1FF71F661ED55E597E597E597ED99EDDBF663F6A3F663E5DDED9BEDD9ED9BEE1BF6A9FF71F661ED97E597E597EDDBF661EE21F6A5EDDBDD13E4D5D491D491E515E597F6A5FF71EE1DED95E557F61DFEEBEE61EDDDDCD5CC0FD451BC0DCC0FCC0FE553ED99F6A7F661ED97E597F663FF2DEE1FE515BB8DA30982058A059247B38DD491E555F61DF6A7EDD9E557F663F661E557BB8D7A076989598969C971C98247A2C9D491EDD9FEE9E59BED97F661EDDDD4D38A07698969C9A2C9BB8D824D6A0B7A07BB8BE515FF2DF65FED97F663EDD9D49182076189A289E513E5DBDCD57A4D69C9AB09DCD3FFB7FF2DEDD9F661E557D49179C75989C3CDE515E5DBF621BBCD61CBAB0BDCD3FFB7FF73F61BF661E555D45171C761C9B34D8287DC91EDDBC3CF69CBA30BCC4FFFB5FF2FEE1DEE1FED97D4937A0579C761895989DCD3E599C3CD69CBA30BCC4FFF71F665E599EDDBF663ED99A30B7A056183A30BED99E599BB8F69C9A30BD44FFF71E5DDDD17ED99EE1FFF6FE5199BD1AB4FCD59FEA5E5197A8D6987BB8BDCD5FF71E559D493ED99ED99F6A5FF71F667E61FF6EBF665B3CD59498205CBCDEE21FEE9DD19CC93DCD3E597ED97F663FF2DF6EDEE67C41161C97185B309E557FEEBE5DFDCD7C451CBCDD48FE515EDDBEE1DDD19AB8B820959459247DCD3F663F6A5DD19CC95AB4DBB49C3CBD451DD13CC0DA2C97A4961859207CC4FED99F6A9EE23D4D7BBCFA30BAAC7A307AAC7AAC792877A0971C7A287D491ED57F6A5EE63E55DC451A30BAB0BAB099A879AC9820772077A07C3CFD44FE599EDDFEE1DED9DD493A30DA309AB4DA3099247720969C78A07B38DD491E557F621EDDDEDDBDD15BB8F9A89A34BBBD1928972078A09B34BBB8BD451E515EE1FF61FED99DD17C4539A899A89B3CFCC5392898209CC0DD491DCD3DCD5E557F61DE599E515C411A30B8A47A30BC413D4D7B38DCBCDD491D451DCD3E515E557E557DCD5CC51A2C982079A89B3CFD497D517C3CDDC4FDCD5D491DD15E515E515D493C3CFAB0B92478247B38FCC95D51BDD57D491E515DCD5DD15E513DCD5D493BB8D9A897A0581C59ACBCC53D55BDD5BDD17E515E559DCD5DD55DCD5DC93C411A30B81C58A49AB8BC413DD19DDE1E59DDD1BED99DD15DCD5DCD5D493BC0FAB0B92499AC9BC13CC95D519EE23E623DD5BDCD7E599DCD5DD13DC93C3D1AB4B9ACB9A89BC53DD1BDDE1F667EEA5EE21E599DD19DD15D493D491C411B34D9AC9AB0DBC11DD9FE623F6A9F6ABF6A5E59DE559E599D451C411BB8DAB4B9ACBAB0BC455DD9FEE65F6A9FEEBF6EBF6A7EDDFDD57ED9BBBCFB30B9ACB9A89A30BBC13E59DEEA7F6A9FEE9F6A7F6A5E5DFE559E599E559AB0D9AC99289AB0BBC13D51BE5DFEDE1EE65EEA5F663EDDFDD99E59BE557DD17";
+
+        //bgm data. random bgm needs to be a hex value between 00 and 2a (42) and cannot be 1e (30)
+        public string[] bgmdata = {
+            "054704","21",
+            "05470A","21",
+            "054710","21",
+            "054716","FF",
+            "05471C","FF",
+            "054722","FF",
+            "054728","FF",
+            "05472E","FF",
+            "054734","02",
+            "05473A","19",
+            "054740","15",
+            "054746","15",
+            "05474C","22",
+            "054752","15",
+            "054758","25",
+            "05475E","15",
+            "054764","24",
+            "05476A","16",
+            "054770","05",
+            "054776","27",
+            "05477C","1A",
+            "054782","21",
+            "054788","21",
+            "05478E","21",
+            "054794","21",
+            "05479A","07",
+            "0547A0","07",
+            "0547A6","07",
+            "0547AC","07",
+            "0547B2","07",
+            "0547B8","07",
+            "0547BE","07",
+            "0547C4","07",
+            "0547CA","07",
+            "0547D0","21",
+            "0547D6","21",
+            "0547DC","0F",
+            "0547E2","03",
+            "0547E8","07",
+            "0547EE","07",
+            "0547F4","07",
+            "0547FA","07",
+            "054800","07",
+            "054806","07",
+            "05480C","08",
+            "054812","07",
+            "054818","27",
+            "05481E","05",
+            "054824","06",
+            "05482A","09",
+            "054830","0B",
+            "054836","0B",
+            "05483C","FF",
+            "054842","23",
+            "054848","18",
+            "05484E","0C",
+            "054854","0C",
+            "05485A","0C",
+            "054860","0C",
+            "054866","26",
+            "05486C","17",
+            "054872","0A",
+            "054878","01",
+            "05487E","12",
+            "054884","1F",
+            "05488A","0C",
+            "054890","18",
+            "054896","18",
+            "05489C","21",
+            "0548A2","0E",
+            "003237","14", //Credits
+            "01D4A7","0D", //Battle
+            "01D62B","29"  //Mammon
+        };
 
         public string[] spelldatatable = { //60
             "Fire Ball Lv1","Fire","1","240","100","1",
