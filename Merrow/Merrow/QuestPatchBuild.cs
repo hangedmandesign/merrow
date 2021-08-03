@@ -1033,9 +1033,9 @@ namespace Merrow {
                     int targetAddr = Convert.ToInt32(patchstrings[i], 16);
                     byte[] targetData = StringToByteArray(patchstrings[i + 2]);
                     int targetLength = targetData.Length;
-                    Console.WriteLine(patchstrings[i]);
-                    Console.WriteLine(patchstrings[i + 1]);
-                    Console.WriteLine(patchstrings[i + 2]);
+                    //Console.WriteLine(patchstrings[i]);
+                    //Console.WriteLine(patchstrings[i + 1]);
+                    //Console.WriteLine(patchstrings[i + 2]);
                     for (int j = 0; j < targetLength; j++) { 
                         rndFileBytes[targetAddr + j] = targetData[j];
                     }
@@ -1195,7 +1195,7 @@ namespace Merrow {
             //write bools as binary string
             for (int i = 0; i < listID.Items.Count; i++) {
                 ListViewItem listChestItem = listID.Items[i];
-                Console.WriteLine(listID.Name + " " + i.ToString());
+                //Console.WriteLine(listID.Name + " " + i.ToString());
                 if (listChestItem != null) {
                     if (!listChestItem.Checked) { hexencode += "0"; }
                     if (listChestItem.Checked) { hexencode += "1"; }

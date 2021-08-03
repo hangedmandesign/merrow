@@ -490,12 +490,14 @@ namespace Merrow {
                 rndSpellDropdown.Enabled = true;
                 rndSpellNamesToggle.Enabled = true;
                 rndEarlyHealingToggle.Enabled = true;
+                rndExtraHealingToggle.Enabled = true;
                 if (rndSpellNamesToggle.Checked) { rndSpellNamesDropdown.Enabled = true; }
             } else {
                 rndSpellDropdown.Enabled = false;
                 rndSpellNamesToggle.Enabled = false;
                 rndSpellNamesDropdown.Enabled = false;
                 rndEarlyHealingToggle.Enabled = false;
+                rndExtraHealingToggle.Enabled = false;
             }
             UpdateCode();
         }
@@ -973,6 +975,7 @@ namespace Merrow {
 
         private void rndEarlyHealingToggle_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
+            Shuffling(true);
         }
 
         private void rndBossElementToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1130,6 +1133,23 @@ namespace Merrow {
             Shuffling(true);
         }
 
+        private void rndExtraHealingToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndExtraHealingToggle.Checked) { //replace the spell's data and the randomized names
+                library.spells[135] = library.ss1healing[0];
+                library.shuffleNames[161] = "MEND";
+                library.shuffleNames[165] = "HEALING";
+                library.shuffleNames[166] = "HEAL";
+            }
+            else {  //return the data to normal
+                library.spells[135] = library.ss1healing[1];
+                library.shuffleNames[161] = "HEALING";
+                library.shuffleNames[165] = "SCAN";
+                library.shuffleNames[166] = "VISION";
+            }
+            UpdateCode();
+            Shuffling(true);
+        }
+
         public void LostKeysHandling() {
             //Checked
             if (rndLostKeysToggle.Checked) {
@@ -1146,6 +1166,7 @@ namespace Merrow {
                 rndFastMammonToggle.Checked = true;
                 rndIvoryWingsToggle.Checked = true;
                 rndIvoryWingsToggle.Enabled = false;
+                rndEarlyHealingToggle.Checked = true;
 
                 //disable all boss items in all item lists. they can be re-added after if so desired, but having only one is the whole point
                 int currItemTab = itemListTabs.SelectedIndex;
@@ -1192,6 +1213,7 @@ namespace Merrow {
                 rndIvoryWingsToggle.Checked = false;
                 rndIvoryWingsToggle.Enabled = true;
                 rndCrystalReturnToggle.Checked = false;
+                rndEarlyHealingToggle.Checked = false;
 
                 rndShuffleShannonToggle.Checked = false;
                 rndShuffleShannonToggle.Enabled = true;
@@ -1343,6 +1365,12 @@ namespace Merrow {
                 }
             }
             if (writingPatch) { rndErrorLabel.Text = "Patch/File currently writing."; }
+        }
+
+        private void expSeedRerollButton_Click(object sender, EventArgs e) {
+            SysRand = new Random(); //reinitializing because otherwise seed always produces same value, possibly due to order error.
+            rngseed = SysRand.Next(100000000, 1000000000); //default seed set to a random 9-digit number
+            expSeedTextBox.Text = rngseed.ToString();
         }
 
         //ADV - Generic patch generator

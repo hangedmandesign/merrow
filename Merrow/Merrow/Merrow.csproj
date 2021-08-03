@@ -158,6 +158,7 @@
     <None Include="Resources\items\WhiteWings_Sprite.png" />
     <None Include="Resources\items\WindJade_Sprite.png" />
     <None Include="Resources\items\YellowWings_Sprites.png" />
+    <None Include="Resources\items\Rotate_Sprite.png" />
     <Content Include="Resources\merrowbar.png" />
   </ItemGroup>
   <ItemGroup />

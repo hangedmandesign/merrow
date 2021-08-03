@@ -273,6 +273,16 @@ namespace Merrow.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Rotate_Sprite {
+            get {
+                object obj = ResourceManager.GetObject("Rotate_Sprite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SilentFlute_Sprite {
             get {
                 object obj = ResourceManager.GetObject("SilentFlute_Sprite", resourceCulture);

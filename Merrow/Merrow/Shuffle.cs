@@ -53,17 +53,44 @@ namespace Merrow {
             if (crashpro) {
                 bool step = false;
 
+                //pick where healing spells will go
+                int[] healelements = new int[4];
+                CountAndShuffleArray(healelements);
+
+                //first, reset both H1 and SS1 to default crashlock lists
+                for (int i = 0; i < playerspells; i++) {
+                    library.crashlock[(i * playerspells) + 32] = library.noearlyhealing[i];
+                    library.crashlock[(i * playerspells) + 33] = library.noearlyhealing[i];
+                }
+
                 //early healing 
                 if (rndSpellToggle.Checked && rndEarlyHealingToggle.Checked) {
+                    Console.WriteLine(healelements[0]);
                     for (int i = 0; i < playerspells; i++) {
                         library.crashlock[(i * playerspells) + 32] = library.earlyhealingmodifier[i];
+                        //if extra healing is on, make sure it's limited to early healing too
+                        if (rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 33] = library.earlyhealingmodifier[i]; }
                     }
                 }
 
-                //no early healing, fix the array in case it's been changed
-                if (!rndEarlyHealingToggle.Checked) {
-                    for (int i = 0; i < playerspells; i++) {
-                        library.crashlock[(i * playerspells) + 32] = library.noearlyhealing[i];
+                //now lock them into healelement[0 and 1], by blanking the other three elements if they're incorrect
+                //if Early/Extra are disabled, this has no negative effects, it just puts H1 somewhere anyway
+                for (int i = 0; i < playerspells; i++) {
+                    if (i < 15) { //fire
+                        if (healelements[0] != 0) { library.crashlock[(i * playerspells) + 32] = 32; }
+                        if (healelements[1] != 0 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 33] = 33; }
+                    }
+                    if (i >= 15 && i < 30) { //earth
+                        if (healelements[0] != 1) { library.crashlock[(i * playerspells) + 32] = 32; }
+                        if (healelements[1] != 1 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 33] = 33; }
+                    }
+                    if (i >= 30 && i < 45) { //water
+                        if (healelements[0] != 2) { library.crashlock[(i * playerspells) + 32] = 32; }
+                        if (healelements[1] != 2 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 33] = 33; }
+                    }
+                    if (i >= 45) { //wind
+                        if (healelements[0] != 3) { library.crashlock[(i * playerspells) + 32] = 32; }
+                        if (healelements[1] != 3 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 33] = 33; }
                     }
                 }
 
