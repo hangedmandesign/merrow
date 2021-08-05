@@ -19,8 +19,9 @@ Merrow contains no copyrighted game data or files.
 Latest build and details available at https://hangedman.itch.io/merrow.
 
 # Repo Overview
-The project is a C# Visual Studio WPF application. When compiled, it will create **Merrow.exe**, the standalone application. That entire application is contained in the "Merrow" folder, which contains the Merrow project solution and the Merrow project code:
+The project is a C# Visual Studio Winforms application. When compiled, it will create **Merrow.exe**, the standalone application. That entire application is contained in the "Merrow" folder, which contains the Merrow project solution and the Merrow project code:
 * *MerrowStandard.cs*, which contains the randomization and winforms application code, further detailed below in the **Code Structure** section.
+* * *Shuffle.cs*, which contains the Quest data randomization-related functions, detailed below in the **Code Structure** section.
 * *QuestPatchBuild.cs*, which contains the Quest randomizer patch builder and related functions, detailed below in the **Code Structure** section.
 * *HackFunctions.cs*, which contains the generic patch generator and binary file reader functionality, further detailed below in the **Code Structure** section.
 * *VarFunctions.cs*, which contains various variable translation functions for easy converting of bytes/hex/strings/colors.
@@ -43,9 +44,11 @@ This is a short overview of the code structure, contained in the class *MerrowSt
   - Prefix "bin" are winforms objects in the *Binary File Reader* tab
   - Prefix "crc" are winforms objects in the *CRC Repair Tool* tab
 * *MerrowStandard*: initialization functions.
-* *Shuffling*: Updating of seed, creation of new Random() and shuffling of all randomized elements performed in a row, to guarantee seed consistency.
 * General functions not created by Winforms, including *RepairCRC*, which calls the fix_crc dll connection.
 * UI interactions, for modifying the interface on interaction and for calling other functions. Roughly ordered by tab. These should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout. None should be left empty.
+
+# Shuffle.cs Code Structure
+* *Shuffling*: Updating of seed, creation of new Random() and shuffling of all randomized elements performed in a row, to guarantee seed consistency.
 
 # QuestPatchBuild.cs Code Structure
 * UI-object list building functions.
