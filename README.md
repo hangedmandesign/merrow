@@ -19,14 +19,15 @@ Merrow contains no copyrighted game data or files.
 Latest build and details available at https://hangedman.itch.io/merrow.
 
 # Repo Overview
-The project is a C# Visual Studio Winforms application. When compiled, it will create **Merrow.exe**, the standalone application. That entire application is contained in the "Merrow" folder, which contains the Merrow project solution and the Merrow project code:
+The project is a C# Visual Studio Winforms application. When compiled, it will create **Merrow.exe**, the standalone application. That entire application is contained in the "Merrow" folder, which contains the Merrow project solution and the Merrow project code. The following are all partial classes in the MerrowStandard namespace: 
 * *MerrowStandard.cs*, which contains the randomization and winforms application code, further detailed below in the **Code Structure** section.
-* * *Shuffle.cs*, which contains the Quest data randomization-related functions, detailed below in the **Code Structure** section.
+* *Shuffle.cs*, which contains the Quest data randomization-related functions, detailed below in the **Code Structure** section.
 * *QuestPatchBuild.cs*, which contains the Quest randomizer patch builder and related functions, detailed below in the **Code Structure** section.
+* *ShortCodes.cs*, which contains the shortcode-generation and shortcode-reading functions, and associated data.
 * *HackFunctions.cs*, which contains the generic patch generator and binary file reader functionality, further detailed below in the **Code Structure** section.
-* *VarFunctions.cs*, which contains various variable translation functions for easy converting of bytes/hex/strings/colors.
+* *VarFunctions.cs*, which contains various variable translation functions for easy array modification and converting of bytes/hex/strings/colors.
 
-The above are all partial classes in the MerrowStandard namespace. The following are kept deliberately separate:
+The following classes are kept deliberately separate:
 * *DataStore.cs*, which contains arrays and tables of reference data used for randomizer calculation and generation.
 * *crc64.dll*, a DLL implementation of some old community code for repairing N64 CRCs, modified to work standalone from a filename rather than requiring a bitstream.
 
@@ -36,7 +37,7 @@ The other folder on the root level "crc64" is a C++ Visual Studio DLL project, w
 
 # MerrowStandard.cs Code Structure
 This is a short overview of the code structure, contained in the class *MerrowStandard:Form*. Comments in the code explain each section in more detail.
-* Variable declarations. New winforms objects should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout. Large arrays should be stored in DataStore.cs, not here.
+* Variable declarations. New winforms objects should ideally only be created through the Winforms Toolbox interface in the Designer, so that variable names will auto-update throughout. Large arrays should be stored in DataStore.cs, not here.
   - "library" is the imported DataStore.cs
   - "fix_crc" is the connected crc64.dll
   - Prefixes "rnd","exp" are winforms objects in the *Quest 64 Randomizer* tab
@@ -52,7 +53,7 @@ This is a short overview of the code structure, contained in the class *MerrowSt
 
 # QuestPatchBuild.cs Code Structure
 * UI-object list building functions.
-* *BuildPatch*: Assemble Quest 64 randomizer content into *patchcontent* hexadecimal string, convert to bytestream and export as IPS, export spoiler log. This section should not contain any randomization.
+* *BuildPatch*: Assemble Quest 64 randomizer content into *patchcontent* hexadecimal string, convert to bytestream and either directly patch Z64 or export as IPS, and export spoiler log. This section should not contain any randomization.
 * A few minor data handling functions for item randomization purposes.
 
 # HackFunctions.cs Code Structure
