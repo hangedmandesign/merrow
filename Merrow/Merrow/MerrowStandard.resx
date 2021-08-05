@@ -142,44 +142,18 @@ It will also create a 'filename + Spoiler.txt' file in the same directory that l
   <data name="newLabel.Text" xml:space="preserve">
     <value>● Added 'Add extra Healing Lv1', which causes Soul Search Lv1 to function as another Healing Lv1 equivalent. It will never be in the same element as Healing Lv1, and also respects 'Guaranteed early healing' rules.
 
+● Added 'Set cloak palette'. Does what it says.
+
 ● Added a 'reroll seed' button.
 
-● LOST KEYS now enables "Guaranteed early healing" by default so folks can't forget. You're probably going to need it, especially if bosses are shuffled.</value>
+● LOST KEYS now enables "Guaranteed early healing" by default so folks can't forget. You're probably going to need it, especially if bosses are shuffled.
+
+● KNOWN ISSUE: Open World LOST KEYS seems to be misplacing gems in regions, and currently gems can overlap wings. This will be overhauled before v40.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
 Merrow is offered without warranty and is experimental software. 
 Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
-  </data>
-  <data name="rndExtraHealingToggle.ToolTip" xml:space="preserve">
-    <value>Replaces Soul Search Lv1 with another copy of Healing Lv1.
-This spell will always be in a different element than the default Healing Lv1.
-Unless 'Hinted spell names' is enabled, the name will not be changed.</value>
-  </data>
-  <data name="rndElement99Toggle.ToolTip" xml:space="preserve">
-    <value>Element level maximum is increased from 50 to 99.
-No new magic will be acquired past Level 50, but 
-spell and melee power will continue to increase.
-[WARNING: If you raise your elements to exactly
-50-50-50-50, you will no longer be able to gain xp
-or pick up world spirits, due to a code restriction.
-Until it can be removed, avoid 50-50-50-50.]</value>
-  </data>
-  <data name="rndSoulToggle.ToolTip" xml:space="preserve">
-    <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
-Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.
-[NOTE: Every time the Soul Search effect occurs, to  you or an enemy, Brian will gain an additional MP EXP, 
-due to the way the spell effect is coded. This will cause you to gain MP quicker.]</value>
-  </data>
-  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
-    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
-SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
-&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
-  </data>
-  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
-    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
-Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
-Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
   </data>
   <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
     <value>A shortcode that contains the currently-enabled
@@ -234,7 +208,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAXABAgFwAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAYABAgGAAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -428,6 +402,36 @@ WINGS: Wingsmith items are randomized to be any wing.
 GEMS: Wingsmith items are randomized to be any Elemental Gem.
 WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
 CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
+  </data>
+  <data name="rndExtraHealingToggle.ToolTip" xml:space="preserve">
+    <value>Replaces Soul Search Lv1 with another copy of Healing Lv1.
+This spell will always be in a different element than the default Healing Lv1.
+Unless 'Hinted spell names' is enabled, the name will not be changed.</value>
+  </data>
+  <data name="rndElement99Toggle.ToolTip" xml:space="preserve">
+    <value>Element level maximum is increased from 50 to 99.
+No new magic will be acquired past Level 50, but 
+spell and melee power will continue to increase.
+[WARNING: If you raise your elements to exactly
+50-50-50-50, you will no longer be able to gain xp
+or pick up world spirits, due to a code restriction.
+Until it can be removed, avoid 50-50-50-50.]</value>
+  </data>
+  <data name="rndSoulToggle.ToolTip" xml:space="preserve">
+    <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
+Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.
+[NOTE: Every time the Soul Search effect occurs, to  you or an enemy, Brian will gain an additional MP EXP, 
+due to the way the spell effect is coded. This will cause you to gain MP quicker.]</value>
+  </data>
+  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
+    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
+SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
+&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
+  </data>
+  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
+    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
+Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
+Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
   </data>
   <data name="rulesetHelpLabel.ToolTip" xml:space="preserve">
     <value>LOST KEYS Regions:
@@ -705,6 +709,12 @@ warranty: please refer to the license readme file for more info.</value>
 Each entry should follow this format: (address),(length),...
 The binary file will be read starting at [address], for [length] bytes.
 After entry, ensure you select below what format each value type is in.</value>
+  </data>
+  <data name="rndCloakPaletteToggle.ToolTip" xml:space="preserve">
+    <value>Changes the colour palette of Brian's cloak.
+RANDOM: Generate a palette at random by hue-shifting the original palette randomly by 0-359 degrees. 
+Has a 50-50 chance to be a light/dark palette.
+CUSTOM: Edit the hue-shift value as desired below.</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>63</value>

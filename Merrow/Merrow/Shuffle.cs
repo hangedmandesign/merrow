@@ -16,6 +16,7 @@ namespace Merrow {
 
         public void Shuffling(bool crashpro) {
             int k = 0;
+            //loadfinished = false;
 
             //REINITIATE RANDOM WITH SEED
             SysRand = new System.Random(rngseed);
@@ -94,7 +95,48 @@ namespace Merrow {
                     }
                 }
 
-                //spell distribution
+                //distribute powerful spells
+                int[] powerelements = new int[4];
+                CountAndShuffleArray(powerelements);
+
+                //first, reset all four to default crashlock lists
+                for (int i = 0; i < playerspells; i++) {
+                    library.crashlock[(i * playerspells) + 23] = library.defaultavalanche[i];
+                    library.crashlock[(i * playerspells) + 27] = library.defaultmagicbarrier[i];
+                    library.crashlock[(i * playerspells) + 34] = library.defaultwaterpillar3[i];
+                    library.crashlock[(i * playerspells) + 51] = library.defaultlargecutter[i];
+                }
+
+                if (rndSpellToggle.Checked && rndDistributeSpellsToggle.Checked) {
+                    for (int i = 0; i < playerspells; i++) {
+                        if (i < 15) { //fire
+                            if (powerelements[0] != 0) { library.crashlock[(i * playerspells) + 23] = 23; }
+                            if (powerelements[1] != 0) { library.crashlock[(i * playerspells) + 27] = 27; }
+                            if (powerelements[2] != 0) { library.crashlock[(i * playerspells) + 34] = 34; }
+                            if (powerelements[3] != 0) { library.crashlock[(i * playerspells) + 51] = 51; }
+                        }
+                        if (i >= 15 && i < 30) { //earth
+                            if (powerelements[0] != 1) { library.crashlock[(i * playerspells) + 23] = 23; }
+                            if (powerelements[1] != 1) { library.crashlock[(i * playerspells) + 27] = 27; }
+                            if (powerelements[2] != 1) { library.crashlock[(i * playerspells) + 34] = 34; }
+                            if (powerelements[3] != 1) { library.crashlock[(i * playerspells) + 51] = 51; }
+                        }
+                        if (i >= 30 && i < 45) { //water
+                            if (powerelements[0] != 2) { library.crashlock[(i * playerspells) + 23] = 23; }
+                            if (powerelements[1] != 2) { library.crashlock[(i * playerspells) + 27] = 27; }
+                            if (powerelements[2] != 2) { library.crashlock[(i * playerspells) + 34] = 34; }
+                            if (powerelements[3] != 2) { library.crashlock[(i * playerspells) + 51] = 51; }
+                        }
+                        if (i >= 45) { //wind
+                            if (powerelements[0] != 3) { library.crashlock[(i * playerspells) + 23] = 23; }
+                            if (powerelements[1] != 3) { library.crashlock[(i * playerspells) + 27] = 27; }
+                            if (powerelements[2] != 3) { library.crashlock[(i * playerspells) + 34] = 34; }
+                            if (powerelements[3] != 3) { library.crashlock[(i * playerspells) + 51] = 51; }
+                        }
+                    }
+                }
+
+                //random spell distribution after all rules are set
                 while (reorg.Count > 0) {
                     for (int i = 0; i < playerspells; i++) { //spell number
                         step = false;
@@ -159,9 +201,11 @@ namespace Merrow {
                 }
             }
 
+
+
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
 
-            Console.WriteLine("seed:" + rngseed.ToString());
+            //Console.WriteLine("seed:" + rngseed.ToString());
             for (int i = 0; i < playerspells; i++) {
                 bool fiftyfifty = SysRand.NextDouble() > 0.5; ;
                 if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfifty = true; } //"Linear" option
@@ -474,6 +518,24 @@ namespace Merrow {
             }
 
             laststaffpaletteoffset = (int)Math.Round(hueOffset);
+
+            //CLOAK COLOUR SHUFFLING
+            string randcolor = String.Format("#{0:X6}", SysRand.Next(0x1000000)); // = random "#A197B9"
+
+            //pick random color. don't re-randomize if CUSTOM is selected.
+            if (rndCloakPaletteDropdown.SelectedIndex == 0) {
+                rndCloakViewTextbox.Text = randcolor;
+                rndColourPanelC.BackColor = System.Drawing.ColorTranslator.FromHtml(randcolor);
+            }
+
+            //if CUSTOM is selected, ignore the random generation and override the palette view
+            if (rndCloakPaletteDropdown.SelectedIndex == 1) {
+                randcolor = "#" + rndCloakViewTextbox.Text.PadRight(6,'8');
+                rndCloakViewTextbox.Text = rndCloakViewTextbox.Text.PadRight(6, '8');
+                rndColourPanelC.BackColor = System.Drawing.ColorTranslator.FromHtml(randcolor);
+            }
+
+            lastcloakpalettecolor = System.Drawing.ColorTranslator.FromHtml(randcolor);
 
             //SPELL PALETTE RANDOMIZATION
 
@@ -836,7 +898,8 @@ namespace Merrow {
                 while (rndbgms[i] == 30) { rndbgms[i] = SysRand.Next(43); }
             }
 
-        }
 
+            //loadfinished = true;
+        }
     }
 }

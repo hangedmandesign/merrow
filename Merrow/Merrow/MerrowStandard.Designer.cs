@@ -174,8 +174,10 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.creditsLinkLabel = new System.Windows.Forms.LinkLabel();
             this.termsLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.logoBox = new System.Windows.Forms.PictureBox();
             this.RandomizerTab = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.expSeedRerollButton = new System.Windows.Forms.Button();
             this.rndPresetLabel = new System.Windows.Forms.Label();
             this.rndPresetApplyButton = new System.Windows.Forms.Button();
             this.rndPresetDropdown = new System.Windows.Forms.ComboBox();
@@ -216,6 +218,7 @@
             this.rndWingsmithsToggle = new System.Windows.Forms.CheckBox();
             this.rndGiftersDropdown = new System.Windows.Forms.ComboBox();
             this.rndSpellBox = new System.Windows.Forms.GroupBox();
+            this.rndExtraHealingToggle = new System.Windows.Forms.CheckBox();
             this.rndLevel2Toggle = new System.Windows.Forms.CheckBox();
             this.rndEarlyHealingToggle = new System.Windows.Forms.CheckBox();
             this.rndElement99Toggle = new System.Windows.Forms.CheckBox();
@@ -402,13 +405,18 @@
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.helpLabel = new System.Windows.Forms.Label();
-            this.rndExtraHealingToggle = new System.Windows.Forms.CheckBox();
-            this.logoBox = new System.Windows.Forms.PictureBox();
-            this.expSeedRerollButton = new System.Windows.Forms.Button();
+            this.rndCloakViewPanel = new System.Windows.Forms.Panel();
+            this.rndCloakViewTextbox = new System.Windows.Forms.TextBox();
+            this.rndColourPanelC = new System.Windows.Forms.Panel();
+            this.rndCloakPaletteDropdown = new System.Windows.Forms.ComboBox();
+            this.rndCloakViewToggle = new System.Windows.Forms.CheckBox();
+            this.rndCloakPaletteToggle = new System.Windows.Forms.CheckBox();
+            this.rndDistributeSpellsToggle = new System.Windows.Forms.CheckBox();
             this.tabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.newBox.SuspendLayout();
             this.creditsBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
             this.RandomizerTab.SuspendLayout();
             this.panel1.SuspendLayout();
             this.rndTabsControl.SuspendLayout();
@@ -465,7 +473,7 @@
             this.ReaderTab.SuspendLayout();
             this.binLengthGroup.SuspendLayout();
             this.binAddrGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
+            this.rndCloakViewPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // rndMaxMessageToggle
@@ -514,7 +522,7 @@
             this.rndAccuracyDropdown.Items.AddRange(new object[] {
             "Status spells",
             "All spells"});
-            this.rndAccuracyDropdown.Location = new System.Drawing.Point(131, 196);
+            this.rndAccuracyDropdown.Location = new System.Drawing.Point(131, 226);
             this.rndAccuracyDropdown.Name = "rndAccuracyDropdown";
             this.rndAccuracyDropdown.Size = new System.Drawing.Size(140, 21);
             this.rndAccuracyDropdown.TabIndex = 9;
@@ -523,7 +531,7 @@
             // rndAccuracyToggle
             // 
             this.rndAccuracyToggle.AutoSize = true;
-            this.rndAccuracyToggle.Location = new System.Drawing.Point(6, 199);
+            this.rndAccuracyToggle.Location = new System.Drawing.Point(6, 229);
             this.rndAccuracyToggle.Name = "rndAccuracyToggle";
             this.rndAccuracyToggle.Size = new System.Drawing.Size(117, 17);
             this.rndAccuracyToggle.TabIndex = 8;
@@ -767,6 +775,17 @@
             this.termsLinkLabel.VisitedLinkColor = System.Drawing.Color.MediumBlue;
             this.termsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.terms__LinkClicked);
             // 
+            // logoBox
+            // 
+            this.logoBox.Image = global::Merrow.Properties.Resources.merrowbar;
+            this.logoBox.InitialImage = global::Merrow.Properties.Resources.merrowbar;
+            this.logoBox.Location = new System.Drawing.Point(82, 14);
+            this.logoBox.Name = "logoBox";
+            this.logoBox.Size = new System.Drawing.Size(365, 128);
+            this.logoBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.logoBox.TabIndex = 6;
+            this.logoBox.TabStop = false;
+            // 
             // RandomizerTab
             // 
             this.RandomizerTab.BackColor = System.Drawing.Color.Transparent;
@@ -793,6 +812,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(590, 35);
             this.panel1.TabIndex = 13;
+            // 
+            // expSeedRerollButton
+            // 
+            this.expSeedRerollButton.Font = new System.Drawing.Font("Webdings", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.expSeedRerollButton.Image = global::Merrow.Properties.Resources.Rotate_Sprite;
+            this.expSeedRerollButton.Location = new System.Drawing.Point(112, 10);
+            this.expSeedRerollButton.Name = "expSeedRerollButton";
+            this.expSeedRerollButton.Size = new System.Drawing.Size(22, 22);
+            this.expSeedRerollButton.TabIndex = 26;
+            this.expSeedRerollButton.UseVisualStyleBackColor = true;
+            this.expSeedRerollButton.Click += new System.EventHandler(this.expSeedRerollButton_Click);
             // 
             // rndPresetLabel
             // 
@@ -1595,6 +1625,7 @@
             // 
             // rndSpellBox
             // 
+            this.rndSpellBox.Controls.Add(this.rndDistributeSpellsToggle);
             this.rndSpellBox.Controls.Add(this.rndExtraHealingToggle);
             this.rndSpellBox.Controls.Add(this.rndLevel2Toggle);
             this.rndSpellBox.Controls.Add(this.rndEarlyHealingToggle);
@@ -1614,11 +1645,25 @@
             this.rndSpellBox.TabStop = false;
             this.rndSpellBox.Text = "SPELLS";
             // 
+            // rndExtraHealingToggle
+            // 
+            this.rndExtraHealingToggle.AutoSize = true;
+            this.rndExtraHealingToggle.Enabled = false;
+            this.rndExtraHealingToggle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndExtraHealingToggle.Location = new System.Drawing.Point(26, 109);
+            this.rndExtraHealingToggle.Name = "rndExtraHealingToggle";
+            this.rndExtraHealingToggle.Size = new System.Drawing.Size(131, 17);
+            this.rndExtraHealingToggle.TabIndex = 25;
+            this.rndExtraHealingToggle.Text = "Add extra Healing Lv1";
+            this.rndToolTip.SetToolTip(this.rndExtraHealingToggle, resources.GetString("rndExtraHealingToggle.ToolTip"));
+            this.rndExtraHealingToggle.UseVisualStyleBackColor = true;
+            this.rndExtraHealingToggle.CheckedChanged += new System.EventHandler(this.rndExtraHealingToggle_CheckedChanged);
+            // 
             // rndLevel2Toggle
             // 
             this.rndLevel2Toggle.AutoSize = true;
             this.rndLevel2Toggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndLevel2Toggle.Location = new System.Drawing.Point(6, 229);
+            this.rndLevel2Toggle.Location = new System.Drawing.Point(6, 259);
             this.rndLevel2Toggle.Name = "rndLevel2Toggle";
             this.rndLevel2Toggle.Size = new System.Drawing.Size(164, 17);
             this.rndLevel2Toggle.TabIndex = 24;
@@ -1648,7 +1693,7 @@
             // 
             this.rndElement99Toggle.AutoSize = true;
             this.rndElement99Toggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndElement99Toggle.Location = new System.Drawing.Point(6, 139);
+            this.rndElement99Toggle.Location = new System.Drawing.Point(6, 169);
             this.rndElement99Toggle.Name = "rndElement99Toggle";
             this.rndElement99Toggle.Size = new System.Drawing.Size(166, 17);
             this.rndElement99Toggle.TabIndex = 13;
@@ -1660,7 +1705,7 @@
             // rndSoulToggle
             // 
             this.rndSoulToggle.AutoSize = true;
-            this.rndSoulToggle.Location = new System.Drawing.Point(6, 169);
+            this.rndSoulToggle.Location = new System.Drawing.Point(6, 199);
             this.rndSoulToggle.Name = "rndSoulToggle";
             this.rndSoulToggle.Size = new System.Drawing.Size(179, 17);
             this.rndSoulToggle.TabIndex = 22;
@@ -2476,6 +2521,10 @@
             // 
             // rndColoursBox
             // 
+            this.rndColoursBox.Controls.Add(this.rndCloakViewPanel);
+            this.rndColoursBox.Controls.Add(this.rndCloakPaletteDropdown);
+            this.rndColoursBox.Controls.Add(this.rndCloakViewToggle);
+            this.rndColoursBox.Controls.Add(this.rndCloakPaletteToggle);
             this.rndColoursBox.Controls.Add(this.rndStaffViewPanel);
             this.rndColoursBox.Controls.Add(this.rndStaffPaletteDropdown);
             this.rndColoursBox.Controls.Add(this.rndStaffViewToggle);
@@ -2554,7 +2603,7 @@
             // rndSpellPaletteToggle
             // 
             this.rndSpellPaletteToggle.AutoSize = true;
-            this.rndSpellPaletteToggle.Location = new System.Drawing.Point(6, 140);
+            this.rndSpellPaletteToggle.Location = new System.Drawing.Point(6, 199);
             this.rndSpellPaletteToggle.Name = "rndSpellPaletteToggle";
             this.rndSpellPaletteToggle.Size = new System.Drawing.Size(143, 17);
             this.rndSpellPaletteToggle.TabIndex = 23;
@@ -3002,10 +3051,10 @@
             // 
             this.refTabControl.Controls.Add(this.refSpellTab);
             this.refTabControl.Controls.Add(this.refMonstersTab);
-            this.refTabControl.Controls.Add(this.refHintedTab);
             this.refTabControl.Controls.Add(this.refHPTab);
             this.refTabControl.Controls.Add(this.refAGITab);
             this.refTabControl.Controls.Add(this.refCMBTab);
+            this.refTabControl.Controls.Add(this.refHintedTab);
             this.refTabControl.Location = new System.Drawing.Point(3, 3);
             this.refTabControl.Name = "refTabControl";
             this.refTabControl.SelectedIndex = 0;
@@ -3981,41 +4030,90 @@
             this.rndToolTip.SetToolTip(this.helpLabel, "Every function and option has a mouse-over tooltip \r\n(usually on the text label) " +
         "that explains what it does \r\nand what all related options do.");
             // 
-            // rndExtraHealingToggle
+            // rndCloakViewPanel
             // 
-            this.rndExtraHealingToggle.AutoSize = true;
-            this.rndExtraHealingToggle.Enabled = false;
-            this.rndExtraHealingToggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndExtraHealingToggle.Location = new System.Drawing.Point(26, 109);
-            this.rndExtraHealingToggle.Name = "rndExtraHealingToggle";
-            this.rndExtraHealingToggle.Size = new System.Drawing.Size(131, 17);
-            this.rndExtraHealingToggle.TabIndex = 25;
-            this.rndExtraHealingToggle.Text = "Add extra Healing Lv1";
-            this.rndToolTip.SetToolTip(this.rndExtraHealingToggle, resources.GetString("rndExtraHealingToggle.ToolTip"));
-            this.rndExtraHealingToggle.UseVisualStyleBackColor = true;
-            this.rndExtraHealingToggle.CheckedChanged += new System.EventHandler(this.rndExtraHealingToggle_CheckedChanged);
+            this.rndCloakViewPanel.Controls.Add(this.rndCloakViewTextbox);
+            this.rndCloakViewPanel.Controls.Add(this.rndColourPanelC);
+            this.rndCloakViewPanel.Location = new System.Drawing.Point(160, 166);
+            this.rndCloakViewPanel.Name = "rndCloakViewPanel";
+            this.rndCloakViewPanel.Size = new System.Drawing.Size(113, 21);
+            this.rndCloakViewPanel.TabIndex = 27;
+            this.rndCloakViewPanel.Visible = false;
             // 
-            // logoBox
+            // rndCloakViewTextbox
             // 
-            this.logoBox.Image = global::Merrow.Properties.Resources.merrowbar;
-            this.logoBox.InitialImage = global::Merrow.Properties.Resources.merrowbar;
-            this.logoBox.Location = new System.Drawing.Point(82, 14);
-            this.logoBox.Name = "logoBox";
-            this.logoBox.Size = new System.Drawing.Size(365, 128);
-            this.logoBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.logoBox.TabIndex = 6;
-            this.logoBox.TabStop = false;
+            this.rndCloakViewTextbox.Location = new System.Drawing.Point(0, 1);
+            this.rndCloakViewTextbox.MaxLength = 6;
+            this.rndCloakViewTextbox.Name = "rndCloakViewTextbox";
+            this.rndCloakViewTextbox.Size = new System.Drawing.Size(53, 20);
+            this.rndCloakViewTextbox.TabIndex = 28;
+            this.rndCloakViewTextbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rndCloakViewTextbox.TextChanged += new System.EventHandler(this.rndCloakViewTextbox_TextChanged);
             // 
-            // expSeedRerollButton
+            // rndColourPanelC
             // 
-            this.expSeedRerollButton.Font = new System.Drawing.Font("Webdings", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.expSeedRerollButton.Image = global::Merrow.Properties.Resources.Rotate_Sprite;
-            this.expSeedRerollButton.Location = new System.Drawing.Point(112, 10);
-            this.expSeedRerollButton.Name = "expSeedRerollButton";
-            this.expSeedRerollButton.Size = new System.Drawing.Size(22, 22);
-            this.expSeedRerollButton.TabIndex = 26;
-            this.expSeedRerollButton.UseVisualStyleBackColor = true;
-            this.expSeedRerollButton.Click += new System.EventHandler(this.expSeedRerollButton_Click);
+            this.rndColourPanelC.BackColor = System.Drawing.Color.Red;
+            this.rndColourPanelC.ForeColor = System.Drawing.Color.Transparent;
+            this.rndColourPanelC.Location = new System.Drawing.Point(59, 0);
+            this.rndColourPanelC.Name = "rndColourPanelC";
+            this.rndColourPanelC.Size = new System.Drawing.Size(53, 21);
+            this.rndColourPanelC.TabIndex = 20;
+            // 
+            // rndCloakPaletteDropdown
+            // 
+            this.rndCloakPaletteDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rndCloakPaletteDropdown.Enabled = false;
+            this.rndCloakPaletteDropdown.FormattingEnabled = true;
+            this.rndCloakPaletteDropdown.Items.AddRange(new object[] {
+            "RANDOM",
+            "CUSTOM"});
+            this.rndCloakPaletteDropdown.Location = new System.Drawing.Point(160, 137);
+            this.rndCloakPaletteDropdown.Name = "rndCloakPaletteDropdown";
+            this.rndCloakPaletteDropdown.Size = new System.Drawing.Size(112, 21);
+            this.rndCloakPaletteDropdown.TabIndex = 30;
+            this.rndCloakPaletteDropdown.SelectedIndexChanged += new System.EventHandler(this.rndCloakPaletteDropdown_SelectedIndexChanged);
+            // 
+            // rndCloakViewToggle
+            // 
+            this.rndCloakViewToggle.AutoSize = true;
+            this.rndCloakViewToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndCloakViewToggle.Enabled = false;
+            this.rndCloakViewToggle.Location = new System.Drawing.Point(26, 169);
+            this.rndCloakViewToggle.Name = "rndCloakViewToggle";
+            this.rndCloakViewToggle.Size = new System.Drawing.Size(108, 17);
+            this.rndCloakViewToggle.TabIndex = 29;
+            this.rndCloakViewToggle.Text = "View/set colours:";
+            this.rndToolTip.SetToolTip(this.rndCloakViewToggle, "If enabled, the staff colour palette will be displayed to the right\r\nfor referenc" +
+        "e, so you can ensure it\'s acceptable.\r\nIf CUSTOM is selected, you can manually s" +
+        "et a hue offset value from 0-359.");
+            this.rndCloakViewToggle.UseVisualStyleBackColor = true;
+            this.rndCloakViewToggle.CheckedChanged += new System.EventHandler(this.rndCloakViewToggle_CheckedChanged);
+            // 
+            // rndCloakPaletteToggle
+            // 
+            this.rndCloakPaletteToggle.AutoSize = true;
+            this.rndCloakPaletteToggle.Location = new System.Drawing.Point(6, 139);
+            this.rndCloakPaletteToggle.Name = "rndCloakPaletteToggle";
+            this.rndCloakPaletteToggle.Size = new System.Drawing.Size(106, 17);
+            this.rndCloakPaletteToggle.TabIndex = 28;
+            this.rndCloakPaletteToggle.Text = "Set cloak palette";
+            this.rndToolTip.SetToolTip(this.rndCloakPaletteToggle, resources.GetString("rndCloakPaletteToggle.ToolTip"));
+            this.rndCloakPaletteToggle.UseVisualStyleBackColor = true;
+            this.rndCloakPaletteToggle.CheckedChanged += new System.EventHandler(this.rndCloakPaletteToggle_CheckedChanged);
+            // 
+            // rndDistributeSpellsToggle
+            // 
+            this.rndDistributeSpellsToggle.AutoSize = true;
+            this.rndDistributeSpellsToggle.Enabled = false;
+            this.rndDistributeSpellsToggle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndDistributeSpellsToggle.Location = new System.Drawing.Point(26, 139);
+            this.rndDistributeSpellsToggle.Name = "rndDistributeSpellsToggle";
+            this.rndDistributeSpellsToggle.Size = new System.Drawing.Size(142, 17);
+            this.rndDistributeSpellsToggle.TabIndex = 26;
+            this.rndDistributeSpellsToggle.Text = "Distribute powerful spells";
+            this.rndToolTip.SetToolTip(this.rndDistributeSpellsToggle, "Tooltip");
+            this.rndDistributeSpellsToggle.UseVisualStyleBackColor = true;
+            this.rndDistributeSpellsToggle.CheckedChanged += new System.EventHandler(this.rndDistributeSpellsToggle_CheckedChanged);
             // 
             // MerrowStandard
             // 
@@ -4036,6 +4134,7 @@
             this.CreditsTab.PerformLayout();
             this.newBox.ResumeLayout(false);
             this.creditsBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).EndInit();
             this.RandomizerTab.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -4108,7 +4207,8 @@
             this.ReaderTab.PerformLayout();
             this.binLengthGroup.ResumeLayout(false);
             this.binAddrGroup.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).EndInit();
+            this.rndCloakViewPanel.ResumeLayout(false);
+            this.rndCloakViewPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -4369,6 +4469,13 @@
         private System.Windows.Forms.Label rndTextLightDark;
         private System.Windows.Forms.CheckBox rndExtraHealingToggle;
         private System.Windows.Forms.Button expSeedRerollButton;
+        private System.Windows.Forms.Panel rndCloakViewPanel;
+        private System.Windows.Forms.TextBox rndCloakViewTextbox;
+        private System.Windows.Forms.Panel rndColourPanelC;
+        private System.Windows.Forms.ComboBox rndCloakPaletteDropdown;
+        private System.Windows.Forms.CheckBox rndCloakViewToggle;
+        private System.Windows.Forms.CheckBox rndCloakPaletteToggle;
+        private System.Windows.Forms.CheckBox rndDistributeSpellsToggle;
     }
 }
 

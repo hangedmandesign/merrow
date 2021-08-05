@@ -101,6 +101,7 @@ namespace Merrow {
         bool lightdark;
         double hueOffset;
         bool lightdarkicon = true;
+        Color lastcloakpalettecolor;
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -194,6 +195,7 @@ namespace Merrow {
             rndPresetDropdown.SelectedIndex = 0;
             rndLostKeysDropdown.SelectedIndex = 0;
             rndStaffPaletteDropdown.SelectedIndex = 0;
+            rndCloakPaletteDropdown.SelectedIndex = 0;
             expFakeZ64Button.Size = new System.Drawing.Size(110, 78);
 
             //fill the reference from arrays
@@ -491,6 +493,7 @@ namespace Merrow {
                 rndSpellNamesToggle.Enabled = true;
                 rndEarlyHealingToggle.Enabled = true;
                 rndExtraHealingToggle.Enabled = true;
+                rndDistributeSpellsToggle.Enabled = true;
                 if (rndSpellNamesToggle.Checked) { rndSpellNamesDropdown.Enabled = true; }
             } else {
                 rndSpellDropdown.Enabled = false;
@@ -498,6 +501,7 @@ namespace Merrow {
                 rndSpellNamesDropdown.Enabled = false;
                 rndEarlyHealingToggle.Enabled = false;
                 rndExtraHealingToggle.Enabled = false;
+                rndDistributeSpellsToggle.Enabled = false;
             }
             UpdateCode();
         }
@@ -1120,6 +1124,45 @@ namespace Merrow {
             }
         }
 
+        private void rndCloakPaletteToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndCloakPaletteToggle.Checked) {
+                rndCloakPaletteDropdown.Enabled = true;
+                rndCloakViewToggle.Enabled = true;
+            }
+            else {
+                rndCloakPaletteDropdown.Enabled = false;
+                rndCloakViewPanel.Visible = false;
+                rndCloakViewToggle.Enabled = false;
+                rndCloakViewToggle.Checked = false; //hide again to avoid spoilers if things change
+            }
+            UpdateCode();
+        }
+
+        private void rndCloakPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            if (rndCloakPaletteDropdown.SelectedIndex == 0) { rndCloakViewToggle.Checked = false; }
+            if (rndCloakPaletteDropdown.SelectedIndex == 1) { rndCloakViewToggle.Checked = true; }
+            UpdateCode();
+            Shuffling(true);
+        }
+
+        private void rndCloakViewToggle_CheckedChanged(object sender, EventArgs e) {
+            rndCloakViewPanel.Visible = rndCloakViewToggle.Checked;
+            UpdateCode();
+        }
+
+        private void rndCloakViewTextbox_TextChanged(object sender, EventArgs e) {
+            var textboxSender = (TextBox)sender; //restricts to hexadecimal characters only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F]", "");
+            textboxSender.SelectionStart = cursorPosition;
+            //if (rndCloakViewTextbox.Text.Length < 6) { rndCloakViewTextbox.Text = rndCloakViewTextbox.Text.PadLeft(6, 'F'); }
+            if (rndCloakViewTextbox.Text != "" && rndCloakViewTextbox.Text != null && loadfinished) {
+                Color currval = System.Drawing.ColorTranslator.FromHtml("#" + rndCloakViewTextbox.Text);
+                rndColourPanelC.BackColor = currval;
+                lastcloakpalettecolor = currval;
+                //Shuffling(true);
+            }
+        }
 
         private void rndTextLightDark_Click(object sender, EventArgs e) {
             if (lightdarkicon) { //light to dark ◌●
@@ -1473,6 +1516,10 @@ namespace Merrow {
                 crcErrorLabel.Visible = true;
                 crcErrorLabel.Text = "ERROR: File not selected or available.";
             }
+        }
+
+        private void rndDistributeSpellsToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
         }
     }
 }

@@ -53,6 +53,7 @@ namespace Merrow {
                 !rndTextPaletteToggle.Checked &&
                 !rndStaffPaletteToggle.Checked &&
                 !rndSpellPaletteToggle.Checked &&
+                !rndCloakPaletteToggle.Checked &&
                 !rndZoomToggle.Checked &&
                 !rndMaxMessageToggle.Checked &&
                 !rndHUDLockToggle.Checked &&
@@ -83,6 +84,16 @@ namespace Merrow {
 
             //reshuffle here so I don't have to shuffle after every option is changed in the UI, only certain ones
             Shuffling(true);
+
+            File.WriteAllText(filePath + fileName + "_crashlock.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
+            for (int i = 0; i < 60; i++) {
+                string crashline = "";
+                for (int j = 0; j < 60; j++) {
+                    crashline += (string)library.crashlock[i * 60 + j].ToString().PadLeft(2,'0') + " ";
+                }
+                File.AppendAllText(filePath + fileName + "_crashlock.txt", i.ToString().PadLeft(2,'0') + crashline + Environment.NewLine);
+            }
+
 
             //start spoiler log and initialize empty patch content strings
             File.WriteAllText(filePath + fileName + "_spoiler.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
@@ -999,6 +1010,16 @@ namespace Merrow {
                     patchstrings.Add(library.allcolors[i * 2 + 1].Substring(0,2) + rndspellcolours[i].ToString("X2"));
                 }
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell palettes randomized." + Environment.NewLine);
+            }
+
+            //Random cloak palette
+            if (rndCloakPaletteToggle.Checked) {
+                for (int i = 0; i < library.cloaklocations.Length; i++) {
+                    patchstrings.Add(library.cloaklocations[i]);
+                    patchstrings.Add("0004");
+                    patchstrings.Add(rndCloakViewTextbox.Text + "FF");
+                }
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Cloak colour randomized." + Environment.NewLine);
             }
 
             //Random BGM
