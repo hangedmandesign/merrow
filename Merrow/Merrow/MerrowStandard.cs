@@ -102,6 +102,7 @@ namespace Merrow {
         double hueOffset;
         bool lightdarkicon = true;
         Color lastcloakpalettecolor;
+        bool crashlockoutput = false;
 
         //INITIALIZATION----------------------------------------------------------------
 

@@ -26,6 +26,9 @@ namespace Merrow {
             //That's also why this doesn't check for checkboxes: checkbox state & dropdown visible state, or not tied to rerolling the RNG so this removes having to know what state every object is in.
 
             //SPELL SHUFFLING
+            //'shuffles' is an array that will contain spells as indices, and modifiers as values. 
+            //we start by filling it with -1 to denote unedited spells
+            for (int i = 0; i < playerspells; i++) { shuffles[i] = -1; }
 
             //first, clear and fill the 'reorg' list in order, then shuffle it
             reorg.Clear();
@@ -52,30 +55,33 @@ namespace Merrow {
 
             //crash protection enabled
             if (crashpro) {
+                //before we can shuffle spells, we apply any rules/changes to the spell distribution
+                //the crashlock array (which restricts spell combos to avoid crashes) is also used to restrict spells by element
                 bool step = false;
 
-                //pick where healing spells will go
+                //EARLY/EXTRA HEALING
+                //pick which element healing spell(s) will be added to
                 int[] healelements = new int[4];
                 CountAndShuffleArray(healelements);
 
-                //first, reset both H1 and SS1 to default crashlock lists
+                //first, reset both H1 and SS1 to default crashlock lists. 
+                //cleans up array, and also allows the export of patches without these options that will undo them
                 for (int i = 0; i < playerspells; i++) {
                     library.crashlock[(i * playerspells) + 32] = library.noearlyhealing[i];
                     library.crashlock[(i * playerspells) + 33] = library.noearlyhealing[i];
                 }
 
-                //early healing 
+                //early healing: overwrite crashlock to give H1 only early slots
                 if (rndSpellToggle.Checked && rndEarlyHealingToggle.Checked) {
-                    Console.WriteLine(healelements[0]);
                     for (int i = 0; i < playerspells; i++) {
                         library.crashlock[(i * playerspells) + 32] = library.earlyhealingmodifier[i];
-                        //if extra healing is on, make sure it's limited to early healing too
+                        //if extra healing is on, make sure SS1 is limited to early healing too
                         if (rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 33] = library.earlyhealingmodifier[i]; }
                     }
                 }
 
-                //now lock them into healelement[0 and 1], by blanking the other three elements if they're incorrect
-                //if Early/Extra are disabled, this has no negative effects, it just puts H1 somewhere anyway
+                //now lock H1/SS1 into healelement[0 and 1], by locking them out of the other three elements
+                //if Early/Extra are disabled, this has no negative effects, it just puts H1 into one element as it would anyway
                 for (int i = 0; i < playerspells; i++) {
                     if (i < 15) { //fire
                         if (healelements[0] != 0) { library.crashlock[(i * playerspells) + 32] = 32; }
@@ -95,11 +101,12 @@ namespace Merrow {
                     }
                 }
 
-                //distribute powerful spells
+                //DISTRIBUTE POWERFUL SPELLS
+                //pick which elements each powerful spell will be locked into
                 int[] powerelements = new int[4];
                 CountAndShuffleArray(powerelements);
 
-                //first, reset all four to default crashlock lists
+                //first, reset all four powerful spells (AVA,MBR,WP3,LC) to default crashlock lists
                 for (int i = 0; i < playerspells; i++) {
                     library.crashlock[(i * playerspells) + 23] = library.defaultavalanche[i];
                     library.crashlock[(i * playerspells) + 27] = library.defaultmagicbarrier[i];
@@ -107,6 +114,7 @@ namespace Merrow {
                     library.crashlock[(i * playerspells) + 51] = library.defaultlargecutter[i];
                 }
 
+                //element lockout functions the same as healing does above
                 if (rndSpellToggle.Checked && rndDistributeSpellsToggle.Checked) {
                     for (int i = 0; i < playerspells; i++) {
                         if (i < 15) { //fire
@@ -136,12 +144,15 @@ namespace Merrow {
                     }
                 }
 
+                //SPELL SHUFFLE
+                //the actual random spell distribution happens after all above restrictive rules are set
+
                 //random spell distribution after all rules are set
                 while (reorg.Count > 0) {
-                    for (int i = 0; i < playerspells; i++) { //spell number
+                    for (int i = playerspells - 1; i > -1; i--) { //spell number. inverted order to tend to put powerful spells at the end, rather than the start
                         step = false;
 
-                        for (int j = 0; j < reorg.Count; j++) { //across crashlock array
+                        for (int j = 0; j < reorg.Count; j++) { //modifier number.
                             if (!step && library.crashlock[(i * playerspells) + reorg[j]] == -1 && shuffles[i] == -1) {
                                 shuffles[i] = reorg[j];
                                 reorg.RemoveAt(j);
@@ -171,6 +182,67 @@ namespace Merrow {
                     }
                 }
 
+                /*
+                //below is my alternate random method that should work but doesn't. 
+                //i'm at a loss as to why not, cause the default method should be far less likely to work than this one. but for now i'll shelve it.
+                int[] priorityspells = new int[] { 3, 9, 12, 45, 46, 50, 51, 40, 26 };
+                int[] spellorder = new int[playerspells];
+                CountAndShuffleArray(spellorder);
+                for (int i = 0; i < priorityspells.Length; i++) {
+                    for (int j = 0; j < spellorder.Length; j++) {
+                        if (spellorder[j] == priorityspells[i]) {
+                            int temp = spellorder[i];
+                            spellorder[i] = priorityspells[i];
+                            spellorder[j] = spellorder[i];
+                        }
+                    }
+                }
+
+                int slotsleft = 60;
+                bool[] assignedmods = new bool[playerspells];
+                for (int i = 0; i < playerspells; i++) { assignedmods[i] = false; }
+                List<int> openslots = new List<int>();
+
+                while (slotsleft > 0) {
+                    //i:spell number. reverse order because wind and water are more restrictive
+                    //j:modifier number. collects the available slots in a list, shuffles it and puts the spell in the first slot
+                    for (int i = 0; i < playerspells; i++) {
+
+                        openslots.Clear();
+                        for (int j = 0; j < playerspells; j++) { 
+                            if (library.crashlock[(spellorder[i] * playerspells) + j] == -1) { openslots.Add(j); } 
+                        }
+
+                        //if the list isn't empty, we've got places to put the spell. tick up the open slots until you find a place for it and let the loop continue
+                        //if the list is empty, we've got a spell we can't place. break out of the for loop so we can reset
+                        if (openslots.Count > 0) {
+                            ShuffleList(openslots);
+                            for (int m = 0; m < openslots.Count; m++) {
+                                if (!assignedmods[openslots[m]]) {
+                                    shuffles[spellorder[i]] = openslots[m];
+                                    assignedmods[openslots[m]] = true;
+                                    slotsleft--;
+                                    break;
+                                }
+                            } 
+                        } else { break; }
+
+                        Console.WriteLine(i.ToString() + ":" + spellorder[i].ToString() + "/" + shuffles[spellorder[i]].ToString() + " " + slotsleft.ToString());
+                    }
+
+                    //if there are unassigned spells or we broke early, then this will reset shuffles[] and do the above nested loops again.
+                    //this is kind of a brute force method of solving it, but it's proven to work consistently.
+                    if (slotsleft > 0) { 
+                        for (int i = 0; i < playerspells; i++) {
+                            shuffles[i] = -1;
+                            assignedmods[i] = false;
+                        }
+                        slotsleft = 60;
+                    }
+
+                }
+                */
+
                 //using world-only spell items in battle (or vice versa?) can cause issues up to softlocks.
                 //spell items should have updated rules based on what they are modified to.
                 //silent flute - silence 2 - id58
@@ -179,8 +251,6 @@ namespace Merrow {
                 //giant's shoes - wind walk - id57
                 //silver amulet - spirit armor 1 - id17
                 //golden amulet - spirit armor 2 - id22
-
-                //i need to check the modifier spells, since their default rules are being transplanted
 
                 //item softlock protection
                 for (int i = 0; i < 6; i++) {
@@ -200,8 +270,6 @@ namespace Merrow {
                     }
                 }
             }
-
-
 
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
 

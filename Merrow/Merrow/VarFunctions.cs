@@ -25,6 +25,17 @@ namespace Merrow {
             }
         }
 
+        public void ShuffleList(List<int> lis) { //Shuffle supplied int list
+            int j = lis.Count;
+            while (j > 1) {
+                j--;
+                int k = SysRand.Next(j + 1);
+                int temp = lis[k];
+                lis[k] = lis[j];
+                lis[j] = temp;
+            }
+        }
+
         public void CountAndShuffleArray(int[] arr) { //Populate array with ascending numbers, then shuffle
             for (int i = 0; i < arr.Length; i++) { arr[i] = i; }
             int j = arr.Length;
@@ -77,9 +88,7 @@ namespace Merrow {
 
         public static Color RGBAToColor(string hexvalue) { //Convert 4-char hex string to Color
             string binCol = Convert.ToString(Convert.ToInt32(hexvalue, 16), 2).PadLeft(16, '0'); //convert the hex string to an int, and then to binary string
-            //if (binCol.Length < 16) { for (int i = 0; i < 16 - binCol.Length; i++) { binCol = "0" + binCol; } } //ensure it's 16 characters, conversion will cut it short
-            //binCol.PadLeft(16, '0');
-            //Console.WriteLine(binCol);
+
             int intR = Convert.ToInt32(binCol.Substring(0, 5), 2); //convert first five bits of binary to int 0-31
             int intG = Convert.ToInt32(binCol.Substring(5, 5), 2); //convert second five bits of binary to int 0-31
             int intB = Convert.ToInt32(binCol.Substring(10, 5), 2); //convert third five bits of binary to int 0-31
@@ -93,7 +102,7 @@ namespace Merrow {
             intG = (int)Math.Round(dubG);
             intB = (int)Math.Round(dubB);
 
-            intA = intA * 255; //either 255 or 0
+            intA = intA * 255; //alpha must be either 255 or 0
 
             Color ret = Color.FromArgb(intA, intR, intG, intB); //return the color value so it can be used for TransformHSV
             return ret;
@@ -120,7 +129,7 @@ namespace Merrow {
             return ret;
         }
 
-        public static Color HueShift(Color col, double degrees) {
+        public static Color HueShift(Color col, double degrees) { //circular hue-shift of supplied colour by supplied degrees
             double[] matr = new double[9];
             double cosA = Math.Cos(DegToRad(degrees));
             double sinA = Math.Sin(DegToRad(degrees));
@@ -143,7 +152,7 @@ namespace Merrow {
             return Color.FromArgb(Clamp16(ax), Clamp16(rx), Clamp16(gx), Clamp16(bx));
         }
 
-        public static int Clamp16(double input) {
+        public static int Clamp16(double input) { //clamps double between 0-255
             int ret = Math.Min(255, Math.Max(0, (int)input));
             return ret;
         }
@@ -156,38 +165,6 @@ namespace Merrow {
         public static double RadToDeg(double radians) {
             double degrees = (180 / Math.PI) * radians;
             return (degrees);
-        }
-
-        //
-        //below this line is the old colour conversion method that doesn't work as intended
-        //
-
-        public static Color ColorFromHSL(float h, float s, float v) { 
-            if (s == 0) { int L = (int)v; return Color.FromArgb(255, L, L, L); }
-
-            double min, max, hx;
-            hx = h / 360d;
-
-            max = v < 0.5d ? v * (1 + s) : (v + s) - (v * s);
-            min = (v * 2d) - max;
-
-            Color c = Color.FromArgb(255, (int)(255 * RGBChannelFromHue(min, max, hx + 1 / 3d)),
-                                          (int)(255 * RGBChannelFromHue(min, max, hx)),
-                                          (int)(255 * RGBChannelFromHue(min, max, hx - 1 / 3d)));
-            return c;
-        }
-
-        public static double RGBChannelFromHue(double m1, double m2, double h) {
-            h = (h + 1d) % 1d;
-            if (h < 0) h += 1;
-            if (h * 6 < 1) return m1 + (m2 - m1) * 6 * h;
-            else if (h * 2 < 1) return m2;
-            else if (h * 3 < 2) return m1 + (m2 - m1) * 6 * (2d / 3d - h);
-            else return m1;
-        }
-
-        public float getBrightness(Color c) { //more realistic brightness
-            return (c.R * 0.299f + c.G * 0.587f + c.B * 0.114f) / 256f;
         }
     }
 }

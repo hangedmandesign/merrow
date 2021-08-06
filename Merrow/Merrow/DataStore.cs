@@ -99,9 +99,6 @@ namespace Merrow {
             43,1
         };
 
-        //23, 27, 34, 51
-
-
         //prefix, suffix, new name location, pointer location, our new override pointer content
         public string[] shuffleNames = { 
             "SPARK","SPARKS","D4ECD0","D4B81C","800C3910",
@@ -192,7 +189,7 @@ namespace Merrow {
         public int[] crashset1 = { 3, 9, 12, 45, 46, 50, 51 }; //HA1, HA2, MBL, WC1, WC2, WC3, LC
         public int[] safeset1 = { 0, 1, 3, 5, 9, 12, 18, 28, 35, 42, 44, 45, 46, 50, 51, 53, 55 };
 
-        public int[] crashset2 = { 26 }; //AVA
+        public int[] crashset2 = { 23 }; //AVA
         //public int[] UNsafeset2 = { 3, 5, 6, 9, 12, 23, 37, 38, 39, 46, 50 };
         public int[] safeset2 = { 0, 1, 2, 4, 7, 8, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 40, 41, 42, 43, 44, 45, 47, 48, 49, 51, 52, 53, 54, 55, 56, 57, 58, 59 };
 
@@ -210,10 +207,10 @@ namespace Merrow {
         public int[] safeset5 = { 0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59 };
 
         //here's a better way to do it, maybe.
-        //create an array that's just the unsafe modifiers for each spell. that's all.
+        //below is an array that's just the unsafe modifiers for each spell. 
         //then just step through reorg one by one until you find out where each spell is safe, and drop it there.
 
-        //later i can procedurally generate this table from the old crash sets. but right now, it just has to work.
+        //later i can procedurally generate this table from the old crash sets. but right now, it just has to work, and this works.
         public int[] crashlock = {
             -1,-1,-1,-1,-1,-1,6,-1,-1,-1,-1,-1,-1,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,37,38,39,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
             -1,-1,-1,-1,-1,-1,6,-1,-1,-1,-1,-1,-1,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,37,38,39,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
@@ -294,6 +291,9 @@ namespace Merrow {
         public int[] defaultwaterpillar3 = { -1, -1, -1, 34, -1, -1, -1, -1, -1, 34, -1, -1, 34, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 34, 34, -1, -1, -1, 34, 34, -1, -1, -1, -1, -1, -1, -1, -1 };
         public int[] defaultlargecutter = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 
+        //extra healing name replacement if hinted names isn't enabled: "MENDING LV1"
+        public string[] mendingdata = { "D4EEC8","000C","4D454E44494E47204C563100" };
+        
         //spell categories
         public int[] statusspells = { 6, 17, 19, 22, 24, 25, 29, 43, 44, 47, 48, 49, 52, 54, 56, 57, 58 };
         public int[] offenseSpells = { 0, 1, 3, 4, 5, 8, 9, 10, 12, 13, 14, 15, 16, 18, 20, 21, 23, 26, 28, 30, 31, 34, 35, 36, 42, 45, 46, 50, 51, 53, 55, 59 };

@@ -85,15 +85,16 @@ namespace Merrow {
             //reshuffle here so I don't have to shuffle after every option is changed in the UI, only certain ones
             Shuffling(true);
 
-            File.WriteAllText(filePath + fileName + "_crashlock.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
-            for (int i = 0; i < 60; i++) {
-                string crashline = "";
-                for (int j = 0; j < 60; j++) {
-                    crashline += (string)library.crashlock[i * 60 + j].ToString().PadLeft(2,'0') + " ";
+            if (crashlockoutput) { 
+                File.WriteAllText(filePath + fileName + "_crashlock.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
+                for (int i = 0; i < 60; i++) {
+                    string crashline = "";
+                    for (int j = 0; j < 60; j++) {
+                        crashline += (string)library.crashlock[i * 60 + j].ToString().PadLeft(2,'0') + " ";
+                    }
+                    File.AppendAllText(filePath + fileName + "_crashlock.txt", i.ToString().PadLeft(2,'0') + crashline + Environment.NewLine);
                 }
-                File.AppendAllText(filePath + fileName + "_crashlock.txt", i.ToString().PadLeft(2,'0') + crashline + Environment.NewLine);
             }
-
 
             //start spoiler log and initialize empty patch content strings
             File.WriteAllText(filePath + fileName + "_spoiler.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
@@ -148,6 +149,14 @@ namespace Merrow {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Early Healing enabled." + Environment.NewLine);
                 }
 
+                //Extra Healing
+                if (rndExtraHealingToggle.Checked) {
+                    if (!rndSpellNamesToggle.Checked) { //if you don't have hinted names, add Mending name over SS1
+                        for (int i = 0; i < 3; i++) { patchstrings.Add(library.mendingdata[i]); }
+                    }
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Extra Healing enabled." + Environment.NewLine);
+                }
+
                 //Hinted Spell Names
                 if (rndSpellNamesToggle.Checked && rndSpellDropdown.SelectedIndex == 0) {
                     //boss spells
@@ -197,6 +206,8 @@ namespace Merrow {
                     }
                 }
             }
+
+            //special avalanche fix testing
             if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex == 24) {
                 for (int i = 0; i < 9; i++) { //write 9 spells
                     int spelladd = library.avalancheFix[i];
@@ -472,7 +483,11 @@ namespace Merrow {
                         spoilerscales[i] += newmonsterstats[(i * 6) + 2].ToString() + " ";
                         spoilerscales[i] += newmonsterstats[(i * 6) + 3].ToString() + " ";
                         spoilerscales[i] += newmonsterstats[(i * 6) + 4].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 5].ToString();
+                        if (newmonsterstats[(i * 6) + 5] == 0) { spoilerscales[i] += "FIRE"; }
+                        if (newmonsterstats[(i * 6) + 5] == 1) { spoilerscales[i] += "EARTH"; }
+                        if (newmonsterstats[(i * 6) + 5] == 2) { spoilerscales[i] += "WATER"; }
+                        if (newmonsterstats[(i * 6) + 5] == 3) { spoilerscales[i] += "WIND"; }
+                        if (newmonsterstats[(i * 6) + 5] == 4) { spoilerscales[i] += "DARK"; }
                     }
                     if (i >= 67 && i < 73) { //V30: changed to < 73 to exclude Beigis for now
                         int falsei = i;
@@ -484,7 +499,11 @@ namespace Merrow {
                         spoilerscales[i] += newmonsterstats[(i * 6) + 2].ToString() + " ";
                         spoilerscales[i] += newmonsterstats[(i * 6) + 3].ToString() + " ";
                         spoilerscales[i] += newmonsterstats[(i * 6) + 4].ToString() + " ";
-                        spoilerscales[i] += newmonsterstats[(i * 6) + 5].ToString();
+                        if (newmonsterstats[(i * 6) + 5] == 0) { spoilerscales[i] += "FIRE"; }
+                        if (newmonsterstats[(i * 6) + 5] == 1) { spoilerscales[i] += "EARTH"; }
+                        if (newmonsterstats[(i * 6) + 5] == 2) { spoilerscales[i] += "WATER"; }
+                        if (newmonsterstats[(i * 6) + 5] == 3) { spoilerscales[i] += "WIND"; }
+                        if (newmonsterstats[(i * 6) + 5] == 4) { spoilerscales[i] += "DARK"; }
                     }
                 }
 
@@ -1108,9 +1127,14 @@ namespace Merrow {
                 }
 
                 //spell spoilers
+                int spellscount = 0;
                 if (rndSpellToggle.Checked) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED SPELLS:" + Environment.NewLine);
-                    foreach (string line in spoilerspells) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                    foreach (string line in spoilerspells) {
+                        if (spellscount % 15 == 0 && spellscount != 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine); }
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine);
+                        spellscount++;
+                    }
                 }
 
                 //chest spoilers
