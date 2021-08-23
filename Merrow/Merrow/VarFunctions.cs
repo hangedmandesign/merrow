@@ -14,6 +14,67 @@ namespace Merrow {
     public partial class MerrowStandard {
         //GENERAL DATA/VARIABLE TRANSLATION OPERATIONS
 
+        public object[] TranslateString(string str) {
+            List<int> asciivals = new List<int>();
+            string masterstring = "";
+            int lastrow = -1;
+            int bytelength = 0;
+            bool OKchar = false;
+            object[] returnvals = new object[2];
+
+            for (int i = 0; i < str.Length; i++) { asciivals.Add(str[i]); Console.WriteLine(str[i] + " " + asciivals[i]); }
+
+            foreach(int val in asciivals) {
+                OKchar = false;
+                if (val >= 48 && val <= 57) { //numerals = ascii - 48 (48-57) row 80
+                    if (lastrow != 80) { lastrow = 80; masterstring += "80"; bytelength++; }
+                    masterstring += (val - 48).ToString("X2");
+                    bytelength++;
+                    OKchar = true;
+                }
+                else if (val >= 65 && val <= 90) { //uppercase = ascii - 65 (65-90) row 81
+                    if (lastrow != 81) { lastrow = 81; masterstring += "81"; bytelength++; }
+                    masterstring += (val - 65).ToString("X2");
+                    bytelength++;
+                    OKchar = true;
+                }
+                else if (val >= 97 && val <= 122) { //lowercase = ascii - 97 (97-122) row 82
+                    if (lastrow != 82) { lastrow = 82; masterstring += "82"; bytelength++; }
+                    masterstring += (val - 97).ToString("X2");
+                    bytelength++;
+                    OKchar = true;
+                } else { //punctuation = special check list: ASCII/ROW/HEX in DEC
+                    for (int i = 0; i < 14; i++) {
+                        if (val == library.punctuationvals[i * 3]) { //punctuation
+                            if (lastrow != library.punctuationvals[i * 3 + 1]) {
+                                lastrow = library.punctuationvals[i * 3 + 1];
+                                masterstring += library.punctuationvals[i * 3 + 1].ToString();
+                                bytelength++;
+                            }
+                            masterstring += library.punctuationvals[i * 3 + 2].ToString("X2");
+                            bytelength++;
+                            OKchar = true;
+                        }
+                        if (OKchar) { break; }
+                    }
+                    for (int i = 0; i < 4; i++) {
+                        if (val == library.specialvals[i * 2]) { //punctuation
+                            masterstring += library.specialvals[i * 2 + 1].ToString("X2");
+                            bytelength++;
+                            OKchar = true;
+                        }
+                        if (OKchar) { break; }
+                    }
+                }
+            }
+
+            if (!OKchar) { return null; } //invalid char, get out
+
+            returnvals[0] = masterstring; //don't need to add A0C0, addresses are past it already
+            returnvals[1] = bytelength;
+            return returnvals; //don't forget about A0C0
+        }
+
         public void ShuffleArray(int[] arr) { //Shuffle supplied int array
             int j = arr.Length;
             while (j > 1) {

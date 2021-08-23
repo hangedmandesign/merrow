@@ -21,6 +21,7 @@ namespace Merrow {
                 !rndAccuracyToggle.Checked &&
                 !rndLevelToggle.Checked &&
                 !rndLevel2Toggle.Checked &&
+                !rndSpellRebalanceToggle.Checked &&
 
                 !rndLostKeysToggle.Checked &&
 
@@ -49,6 +50,7 @@ namespace Merrow {
                 !rndFastShamwoodToggle.Checked &&
                 !rndLockedEndgameToggle.Checked &&
                 !rndBlueHouseWarpToggle.Checked &&
+                !rndShannonHintsToggle.Checked &&
 
                 !rndTextPaletteToggle.Checked &&
                 !rndStaffPaletteToggle.Checked &&
@@ -115,6 +117,39 @@ namespace Merrow {
             }
             if (rndLostKeysToggle.Checked && rndLostKeysDropdown.SelectedIndex == 1) {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "LOST KEYS mode enabled: Open World." + Environment.NewLine);
+            }
+
+            //Spell Damage Rebalance
+            int rebalanced = 0;
+            if (rndSpellRebalanceToggle.Checked) { //rebalance
+                for (int i = 0; i < 18; i++) {
+                    string spelldmghex = library.damageRebalance[i * 3 + 2].ToString("X4");
+                    string oldspell = library.spells[library.damageRebalance[i * 3] * 4 + 3];
+                    string newspell = oldspell.Substring(0, 24) + spelldmghex + oldspell.Substring(28);
+                    library.spells[library.damageRebalance[i * 3] * 4 + 3] = newspell;
+                }
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spells rebalanced." + Environment.NewLine);
+                rebalanced = 2;
+            }
+            else {
+                for (int i = 0; i < 18; i++) { //back to default
+                    string spelldmghex = library.damageRebalance[i * 3 + 1].ToString("X4");
+                    string oldspell = library.spells[library.damageRebalance[i * 3] * 4 + 3];
+                    string newspell = oldspell.Substring(0, 24) + spelldmghex + oldspell.Substring(28);
+                    library.spells[library.damageRebalance[i * 3] * 4 + 3] = newspell;
+                }
+                //File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spells reset to default." + Environment.NewLine);
+                rebalanced = 1;
+            }
+            if (rebalanced != 0 && !rndSpellToggle.Checked) { //special writing of damage values direct
+                for (int i = 0; i < 18; i++) {
+                    string spelldmgaddr = (Convert.ToInt32(library.spells[library.damageRebalance[i * 3] * 4 + 2]) + 12).ToString("X6");
+                    string spelldmghex = library.damageRebalance[i * 3 + rebalanced].ToString("X4");
+                    //Console.WriteLine(spelldmgaddr + " " + spelldmghex);
+                    patchstrings.Add(spelldmgaddr); //address advanced by 24
+                    patchstrings.Add("0002");
+                    patchstrings.Add(spelldmghex);
+                }
             }
 
             //Spell Shuffle
@@ -204,6 +239,29 @@ namespace Merrow {
                     if (itemspellfix[i] == 2) { //anytime
                         patchstrings.Add("0003");
                     }
+                }
+
+                //Updated Spell Descriptions
+                if (rndSpellItemsToggle.Checked) {
+                    for (int i = 0; i < 6; i++) {
+                        object[] hintdata = new object[2];
+                        string hintstring = "OOPS%";
+
+                        //string is written
+                        hintstring = library.newSpellItemDesc[shuffles[library.spellItemIDs[i]]];
+
+                        hintdata = TranslateString(hintstring);
+
+                        int hintlen = (int)hintdata[1];
+                        Console.WriteLine(hintdata[0]);
+                        Console.WriteLine(hintdata[1]);
+
+                        //string is encoded to patch
+                        patchstrings.Add(library.spellItemDescAddr[i]);
+                        patchstrings.Add(hintlen.ToString("X4"));
+                        patchstrings.Add((string)hintdata[0]);
+                    }
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell item descriptions updated." + Environment.NewLine);
                 }
             }
 
@@ -406,7 +464,7 @@ namespace Merrow {
             if (rndTextContentToggle.Checked) {
                 int temp = 0;
                 //add single text addresses, and new byte
-                for (int i = 0; i < 72; i++) {
+                for (int i = 0; i < 70; i++) {
                     temp = library.singletextdata[i * 3] + 8; //text byte at offset 8
                     patchstrings.Add(Convert.ToString(temp, 16));
                     patchstrings.Add("0002");
@@ -414,16 +472,16 @@ namespace Merrow {
                 }
 
                 //add double text addresses, and new byte
-                for (int i = 0; i < 68; i++) {
+                for (int i = 0; i < 65; i++) {
                     temp = library.doubletextdata[i * 4] + 8; //first text at offset 8
                     patchstrings.Add(Convert.ToString(temp, 16));
                     patchstrings.Add("0002");
-                    patchstrings.Add(texts[i + 72].ToString("X4"));
+                    patchstrings.Add(texts[i + 70].ToString("X4"));
 
                     temp = library.doubletextdata[i * 4] + 10; //second text at offset 10
                     patchstrings.Add(Convert.ToString(temp, 16));
                     patchstrings.Add("0002");
-                    patchstrings.Add(texts[i + 72 + 68].ToString("X4"));
+                    patchstrings.Add(texts[i + 70 + 65].ToString("X4"));
                 }
 
                 //add inn text addresses, and new byte
@@ -1049,6 +1107,37 @@ namespace Merrow {
                     patchstrings.Add(rndbgms[i].ToString("X2"));
                 }
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Background music randomized." + Environment.NewLine);
+            }
+
+            //Shannon Hints
+            if (rndShannonHintsToggle.Checked) {
+                for (int i = 0; i < 5; i++) {
+                    object[] hintdata = new object[2];
+                    string hintstring = "This is a hint.#Did it break?$If so, RIP%";
+                    string localgem = library.gemnames[lostkeysbossitemlist[i] - 20];
+
+                    //string is written
+                    if (hints[i] == 1) { hintstring = "The " + localgem + " currently#rests in someone's hands.$Hopefully they do not make#use of it before you can#retrieve it.%"; }
+                    if (hints[i] == 2) { hintstring = "The " + localgem + " resides#somewhere forgotten.$We must ensure it remains#locked away.%"; }
+
+                    hintdata = TranslateString(hintstring);
+
+                    int hintlen = (int)hintdata[1];
+                    //Console.WriteLine(hintdata[0]);
+                    //Console.WriteLine(hintdata[1]);
+
+                    //string is encoded to patch
+                    patchstrings.Add(library.shannonhints[i]);
+                    patchstrings.Add(hintlen.ToString("X4"));
+                    patchstrings.Add((string)hintdata[0]);
+
+                    //account for boss item shuffle - remove secondary dialogue from Shannons
+                    //by doing this, I don't really need to worry about item order
+                    patchstrings.Add(library.shannonrules[i]);
+                    patchstrings.Add("0001");
+                    patchstrings.Add("01");
+                }
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shannon Hints enabled." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT

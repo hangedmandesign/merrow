@@ -20,6 +20,11 @@ namespace Merrow {
         private OpenFileDialog crcOpenFileDialog;
         private OpenFileDialog rndOpenFileDialog;
 
+        List<CheckBox> toggles = new List<CheckBox>();
+        List<ComboBox> dropdowns = new List<ComboBox>();
+        List<TrackBar> sliders = new List<TrackBar>();
+        int tabpagestocheck = 3;
+
         //crc dll import
         [DllImport("crc64.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int fix_crc(string crcPath);
@@ -59,6 +64,7 @@ namespace Merrow {
         string rndErrorString = "WARNING: Current patch options will cause checksum errors." + Environment.NewLine + "Use the CRC REPAIR TOOL below to fix your patched rom.";
         double riskvalue = 1.0;
         bool updatingcode = false;
+        bool shufflingnow = false;
 
         //collection arrays and lists
         byte[] patcharray;
@@ -103,6 +109,7 @@ namespace Merrow {
         bool lightdarkicon = true;
         Color lastcloakpalettecolor;
         bool crashlockoutput = false;
+        int[] hints = new int[5];
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -154,8 +161,8 @@ namespace Merrow {
             for (int k = 0; k < drops.Length; k++) { drops[k] = library.dropdata[k * 2 + 1]; }
 
             //initiate text lists
-            int lenS = library.singletextdata.Length / 3; //72
-            int lenD = library.doubletextdata.Length / 4; //68
+            int lenS = library.singletextdata.Length / 3; //70
+            int lenD = library.doubletextdata.Length / 4; //65
             for (int m = 0; m < lenS; m++) { texts[m] = library.singletextdata[m * 3 + 2]; } //add single texts
             for (int m = 0; m < lenD; m++) { texts[lenS + m] = library.doubletextdata[m * 4 + 2]; } //add double texts
             for (int m = 0; m < lenD; m++) { texts[lenS + lenD + m] = library.doubletextdata[m * 4 + 3]; } //i know this could be tidier but getting it right was annoying
@@ -201,6 +208,12 @@ namespace Merrow {
 
             //fill the reference from arrays
             PopulateReference();
+
+            for (int i = 0; i < tabpagestocheck; i++) {
+                toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
+                dropdowns.AddRange(GetAllDropdowns(rndTabsControl.TabPages[i]));
+                sliders.AddRange(GetAllSliders(rndTabsControl.TabPages[i]));
+            }
 
             loadfinished = true; //loadfinished being false prevents some UI elements from taking incorrect action during the initial setup
             UpdateCode();
@@ -495,6 +508,7 @@ namespace Merrow {
                 rndEarlyHealingToggle.Enabled = true;
                 rndExtraHealingToggle.Enabled = true;
                 rndDistributeSpellsToggle.Enabled = true;
+                rndSpellItemsToggle.Enabled = true;
                 if (rndSpellNamesToggle.Checked) { rndSpellNamesDropdown.Enabled = true; }
             } else {
                 rndSpellDropdown.Enabled = false;
@@ -503,6 +517,7 @@ namespace Merrow {
                 rndEarlyHealingToggle.Enabled = false;
                 rndExtraHealingToggle.Enabled = false;
                 rndDistributeSpellsToggle.Enabled = false;
+                rndSpellItemsToggle.Enabled = false;
             }
             UpdateCode();
         }
@@ -521,11 +536,7 @@ namespace Merrow {
         }
 
         private void rndTextContentToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndTextContentToggle.Checked) {
-                rndTextContentDropdown.Enabled = true;
-            } else {
-                rndTextContentDropdown.Enabled = false;
-            }
+            rndTextContentDropdown.Enabled = rndTextContentToggle.Checked;
             UpdateCode();
         }
 
@@ -789,26 +800,18 @@ namespace Merrow {
         }
 
         private void rndStartingStatsToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndStartingStatsToggle.Checked) {
-                rndStartHPLabel.ForeColor = SystemColors.ControlText;
-                rndStartMPLabel.ForeColor = SystemColors.ControlText;
-                rndStartAgiLabel.ForeColor = SystemColors.ControlText;
-                rndStartDefLabel.ForeColor = SystemColors.ControlText;
-                rndStartHPValue.ForeColor = SystemColors.ControlText;
-                rndStartMPValue.ForeColor = SystemColors.ControlText;
-                rndStartAgiValue.ForeColor = SystemColors.ControlText;
-                rndStartDefValue.ForeColor = SystemColors.ControlText;
-            }
-            else {
-                rndStartHPLabel.ForeColor = SystemColors.ControlDark;
-                rndStartMPLabel.ForeColor = SystemColors.ControlDark;
-                rndStartAgiLabel.ForeColor = SystemColors.ControlDark;
-                rndStartDefLabel.ForeColor = SystemColors.ControlDark;
-                rndStartHPValue.ForeColor = SystemColors.ControlDark;
-                rndStartMPValue.ForeColor = SystemColors.ControlDark;
-                rndStartAgiValue.ForeColor = SystemColors.ControlDark;
-                rndStartDefValue.ForeColor = SystemColors.ControlDark;
-            }
+            Color currentcol = SystemColors.ControlText;
+            if (!rndStartingStatsToggle.Checked) { currentcol = SystemColors.ControlDark; }
+
+            rndStartHPLabel.ForeColor = currentcol;
+            rndStartMPLabel.ForeColor = currentcol;
+            rndStartAgiLabel.ForeColor = currentcol;
+            rndStartDefLabel.ForeColor = currentcol;
+            rndStartHPValue.ForeColor = currentcol;
+            rndStartMPValue.ForeColor = currentcol;
+            rndStartAgiValue.ForeColor = currentcol;
+            rndStartDefValue.ForeColor = currentcol;
+
             rndHPTrackBar.Enabled = rndStartingStatsToggle.Checked;
             rndMPTrackBar.Enabled = rndStartingStatsToggle.Checked;
             rndAgiTrackBar.Enabled = rndStartingStatsToggle.Checked;
@@ -1194,6 +1197,22 @@ namespace Merrow {
             Shuffling(true);
         }
 
+        private void rndDistributeSpellsToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndShannonHintsToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndSpellRebalanceToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndSpellItemsToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
         public void LostKeysHandling() {
             //Checked
             if (rndLostKeysToggle.Checked) {
@@ -1211,6 +1230,7 @@ namespace Merrow {
                 rndIvoryWingsToggle.Checked = true;
                 rndIvoryWingsToggle.Enabled = false;
                 rndEarlyHealingToggle.Checked = true;
+                rndShannonHintsToggle.Enabled = true;
 
                 //disable all boss items in all item lists. they can be re-added after if so desired, but having only one is the whole point
                 int currItemTab = itemListTabs.SelectedIndex;
@@ -1258,6 +1278,7 @@ namespace Merrow {
                 rndIvoryWingsToggle.Enabled = true;
                 rndCrystalReturnToggle.Checked = false;
                 rndEarlyHealingToggle.Checked = false;
+                rndShannonHintsToggle.Enabled = false;
 
                 rndShuffleShannonToggle.Checked = false;
                 rndShuffleShannonToggle.Enabled = true;
@@ -1517,10 +1538,6 @@ namespace Merrow {
                 crcErrorLabel.Visible = true;
                 crcErrorLabel.Text = "ERROR: File not selected or available.";
             }
-        }
-
-        private void rndDistributeSpellsToggle_CheckedChanged(object sender, EventArgs e) {
-            UpdateCode();
         }
     }
 }

@@ -176,13 +176,35 @@ namespace Merrow {
 
         public string[] invalidityLocations = {
             "D4CAE9", //Zel_Cat
-            "D4CBB0", //Npt_Turn
+            "D4CBB3", //Npt_Turn
             "D4CC3D", //Far_Bom
             "D4CC81", //Sil_Laser
             "D4CCC5", //Sil_Cat
             "D4CD09", //Gil_Punch
             "D4CD91", //Ges_Cat
-            "D4CE10" //On_Light
+            "D4CE19" //On_Light
+        };
+
+        //24th character in spell strings is damage value start
+        public int[] damageRebalance = {
+            0,240,280,
+            1,190,220,
+            3,50,100,
+            5,168,190,
+            9,50,60,
+            14,330,290,
+            15,290,310,
+            16,310,300,
+            20,320,290,
+            23,460,350,
+            28,280,260,
+            30,365,350,
+            31,374,340,
+            34,382,330,
+            51,420,400,
+            53,180,220,
+            55,250,300,
+            59,100,250
         };
 
         //crash prevention spell sets and safe/unsafe lists
@@ -256,7 +278,7 @@ namespace Merrow {
             -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
             -1,-1,-1,-1,-1,-1,6,-1,-1,-1,-1,-1,-1,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,23,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,37,38,39,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,50,-1,-1,-1,-1,-1,-1,-1,-1,-1,
             -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-            -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+            -1,-1,-1,-1,-1,-1,6,-1,-1,-1,-1,-1,-1,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,37,38,39,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
             -1,-1,-1,-1,-1,-1,6,-1,-1,-1,-1,-1,-1,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,37,38,39,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
             -1,-1,-1,-1,-1,-1,6,-1,-1,-1,-1,-1,-1,13,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,37,38,39,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 
@@ -449,6 +471,35 @@ namespace Merrow {
             "abcdefghijklmnopqrstuvwxyz'###"  //82
         };
 
+        //take ascii string, convert to array of ascii values, convert values to game hex, parse with table changes
+        //numerals = ascii - 48 (48-57) row 80
+        //uppercase = ascii - 65 (65-90) row 81
+        //lowercase = ascii - 97 (97-122) row 82
+        //punctuation = special check list. ASCII/ROW/HEX in DEC
+        public int[] punctuationvals = {
+            33,80,10,  //!
+            63,80,11,  //?
+            40,80,12,  //(
+            41,80,13,  //)
+            91,80,14,  //[
+            93,80,15,  //]
+            46,80,16,  //.
+            44,80,17,  //,
+            58,80,18,  //:
+            45,80,21,  //-
+            126,80,24, //~
+            38,81,26,  //&
+            39,82,26,  //apo
+            34,82,27,  //quote
+        };
+
+        public int[] specialvals = {
+            32,127, //space = space 7F
+            35,224, //# = line break E0
+            36,240, //$ = page break F0
+            37,255  //% = text end FF
+        };
+
         //Replacement magnifier icon for Soul Search
         public string[] magnifier = {
             "00000000000000000000000000000000",
@@ -581,6 +632,83 @@ namespace Merrow {
             2, 15, 47, 48, 49, 50, 51, 52,
             3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7,
             5, 6, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8
+        };
+
+        //spell item spell IDs
+        public int[] spellItemIDs = { 58,52,38,57,17,22 };
+
+        //spell item desc locations
+        public string[] spellItemDescAddr = {
+            "D86E92", //item 8 - spell ?
+            "D86ECA", //item 9 - spell ?
+            "D86F06", //item 10 - spell ?
+            "D86F32", //item 11 - spell ?
+            "D86F6A", //item 12 - spell ?
+            "D86FA2"  //item 13 - spell ?
+        };
+
+        //spell item descriptions
+        public string[] newSpellItemDesc = {
+            "CASTS A SINGLE BURST#OF SPARKING FLAMES%",
+            "CASTS DUAL BURSTS#OF BURNING EMBERS%",
+            "EMPOWERING AURA.#MINOR ATTACK#INCREASE%",
+            "SLING HOMING BOLTS#TO CHASE YOUR FOES%",
+            "RELEASES A WAVE#OF SEARING MIST%",
+            "CASTS TRIPLE ORBS#OF FLAMING DEATH%",
+            "COMPRESSION BANE.#HALVES ENEMY ATTACK%",
+            "EMPOWERING AURA.#MAJOR ATTACK#INCREASE%",
+            "EVOKES A PILLAR#OF ERUPTING LAVA%",
+            "SLING HUNTING SHAFTS#TO CHASE YOUR FOES%",
+            "CONCENTRATES SOLAR#LIGHT INTO A BOMB%",
+            "HUNGERING AURA.#YOUR STAFF #DRAWS BLOOD%",
+            "RAISES MOLTEN ROCKS#THAT COUNTER MAGIC%",
+            "REDUCES YOUR FOES#TO EMPTY ASHES%",
+            "SUPERHEATS THE AIR#TO BOIL YOUR FOES%",
+            "RAISES A SMALL ROCK#TO TOSS AT FOES%",
+            "RAISES A LARGE STONE#TO THROW AT FOES%",
+            "PROTECTIVE AURA.#MINOR DEFENSE#INCREASE%",
+            "ROLLS A BOULDER#ACROSS YOUR FOES%",
+            "WEAKENING BANE.#MINOR DEFENSE#DECREASE%",
+            "RAISES A BOULDER#TO HEAVE AT FOES%",
+            "RAISE LODESTONES UP#TO CRUSH YOUR FOES%",
+            "PROTECTIVE AURA.#MAJOR DEFENSE#INCREASE%",
+            "SUMMONS A CASCADE OF#STONES AROUND YOU%",
+            "INVERSION AURA.#DRAW POWER FROM PAIN%",
+            "WEAKENING BANE.#MAJOR DEFENSE#DECREASE%",
+            "STRIKES ALL ENEMIES#WITH RAINING ROCKS%",
+            "ABJURATION WARD.#DISPERSES FOES'#MAGIC%",
+            "CRASHES A BOULDER#THROUGH YOUR FOES%",
+            "WEAKENING BANE.#WIDE DEFENSE#DECREASE%",
+            "DRAWS A SMALL PILLAR#OF WATER UPWARD%",
+            "DRAWS A LARGE PILLAR#OF CRUSHING WATER%",
+            "REJUVENATING AURA.#HEALS MINOR WOUNDS%",
+            "DIVINATION BANE.#READ YOUR FOE'S SOUL%",
+            "DRAWS A MIGHTY SPIRE#OF DROWNING WATER%",
+            "SUPERCOOLS THE AIR#TO CRYSTALLIZE FOES%",
+            "CASTS A FROZEN BLADE#OF RAZOR-SHARP ICE%",
+            "SUMMONS A DOORWAY TO#BE FREE OF THE DARK%",
+            "VANISH FROM ENEMIES#INTO RADIATING LIGHT%",
+            "SUMMONS A PORTAL TO#RETURN YOU TO SAFETY%",
+            "REJUVENATING AURA.#HEALS MAJOR WOUNDS%",
+            "DIVINATION BANE.#READ ENEMIES' SOULS%",
+            "RAISES A MARCHING#WALL OF MIGHTY WATER%",
+            "DRAINS POWER ESSENCE#FROM YOUR FOES%",
+            "ABJURATION AURA.#CURES MAGICAL BANES%",
+            "CONJURES A CUTTING#FORCE OF WIND%",
+            "CONJURES A SLICING#ROIL OF WINDS%",
+            "IMPRISONING BANE.#LOCK A FOE IN PLACE%",
+            "HASTENING AURA.#MINOR SPEED INCREASE%",
+            "QUIETUDE BANE.#MUTE A FOE'S MAGIC%",
+            "CONJURES A RAGING#STORM OF BLADES%",
+            "CONJURES A CLEAVING#BLADE OF PURE FORCE%",
+            "IMPRISONING BANE.#BIND FOES TO EARTH%",
+            "IMPLODES THE AIR%TO IMPACT AND SLOW%",
+            "HASTENING AURA.#MAJOR SPEED INCREASE%",
+            "UNLEASHES A CYCLONE#OF SPINNING PRESSURE%",
+            "TEMPORAL BANE.#SLOW FOES' MOVEMENTS%",
+            "TEMPORAL AURA.#WALK AMONG GIANTS%",
+            "QUIETUDE BANE.#SILENCE ALL VOICES%",
+            "SHRED ALL ENEMIES#WITH A THOUSAND CUTS%"
         };
 
         //name list for spoiler log
@@ -1200,6 +1328,32 @@ namespace Merrow {
             "Windward Forest Cabin"
         };
 
+        //shannon hint text locations
+        public string[] shannonhints = {
+            "D30730", //Shannon in Dondoran
+            "D309C0", //Shannon in Larapool
+            "D30BC8", //Shannon in Normoon
+            "D30D80", //Shannon in Limelin
+            "D30F20" //Shannon in Brannoch
+        };
+
+        //shannon text rule locations (set to 01 to prevent hints from being overwritten by items)
+        public string[] shannonrules = {
+            "4CF153", //Shannon in Dondoran
+            "4E64D3", //Shannon in Larapool
+            "51C693", //Shannon in Normoon
+            "59F5C3", //Shannon in Limelin
+            "5D8B3F" //Shannon in Brannoch
+        };
+
+        public string[] gemnames = {
+            "Earth Orb",
+            "Wind Jade",
+            "Water Jewel",
+            "Fire Ruby",
+            "Eletale Book"
+        };
+
         //72 entries, offset is +8 from addr (single/double total is 208 values)
         public int[] singletextdata = { 
             1269360,1,4864,
@@ -1247,7 +1401,7 @@ namespace Merrow {
             5700556,1,33616,
             5700600,1,33800,
             5700732,1,34640,
-            5895616,1,1952,
+            //5895616,1,1952, //Shannon in Limelin
             5895660,1,27424,
             5895704,1,27896,
             5895748,1,28064,
@@ -1259,7 +1413,7 @@ namespace Merrow {
             5896100,1,30864,
             5896188,1,31392,
             6130448,1,2136,
-            6130492,1,2368,
+            //6130492,1,2368, //Shannon in Brannoch
             6130580,1,35024,
             6130668,1,35400,
             6130712,1,35696,
@@ -1312,7 +1466,7 @@ namespace Merrow {
             4757864,5,17264,17472,
             4757952,5,17728,18176,
             4847664,5,0,224,
-            5042512,5,336,648,
+            //5042512,5,336,648, //Shannon in Dondoran
             5042600,5,7536,7840,
             5042644,5,8040,8176,
             5042688,5,11144,11296,
@@ -1322,13 +1476,13 @@ namespace Merrow {
             5042908,5,13248,13472,
             5042952,5,13576,13888,
             5043084,5,14496,14648,
-            5137616,5,992,1344,
+            //5137616,5,992,1344, //Shannon in Larapool
             5137704,5,20496,21096,
             5137748,5,21640,22144,
             5137792,5,22288,22408,
             5205844,5,42304,42536,
             5205888,5,42624,42840,
-            5359248,5,1512,1808,
+            //5359248,5,1512,1808, //Shannon in Normoon
             5359292,5,23360,23824,
             5359336,5,23992,24208,
             5359380,5,24480,24696,
@@ -1431,7 +1585,7 @@ namespace Merrow {
         public string stafftexture = "DCD5E559EDE1E665F669EDDFD517CC97BBD3A30BB3CFC457DD5DE59DDD9FEE23E559E5E3EE67F6ABEE21DD1BD4D5C415A34DB38FC495CD1BE5A1E623EE25EEABEE21EEADF6A9E59FE55BD4D7CC55B3D1AB8DBC13CCD9DD5FEE23EE25EEEDEDE1F6EDF6A9E5DFDD1BD4D7CC95BC13AB4FB3CFCC55D55DDDE1EE67F6ABF6A7DD59EDE1DDDFDD19D4D7CC95C413B3D1AB0BBC13CCD7DD5FEE67F6EDEEABED9BDD97DD5BDD19D4D7C455BC11B38FAB4DAB4DC495DD1DDDE1F6EDFF31EE21DD59E559DD19D4D7C455BC11B38FAB0BA30BBC11D4D9DD9DF6A9F731EE23E599DD59DCD7D4D7CC55BC53B38FAB09A30BB3CFCC55D51BE621F6A9F667DD99E559D4D9C453C453C453B38DA30BA30BB38DCC13D517DCD7E5DFEE23F6A9E5E1DD19BC53B38FBBCFB3CFAB0BAB8DB38FBBD1D4D5E55BE59DEDE1EE65E5DFE55BCC55B3D1B3D1AB4BAB0BAB4FBC51C3D1CC53DD17DD5BEDE1E5DFED9FE5DFDD19BC13B391BC13A30BAB4DB38DCC53CC93D495DD59E55DE5DDE59FE5DFE55BBC13AB4DBC13CC55AB4DB3CFC3CFCC93DD17DD17E55BE5E1EE23E59DE559C4559A89AB8FCC95D4D7AB4DC411DCD3DCD5DD19E55BE5E1EE65E559E519CCD7A2C99289B3D1D4D7DD5BC3CFD491E4D7DD17DD9DEDE3EE67E559D4D5DCD9C4559289AB4BBC15E55BD517D44FDD17E559E55DE5E1F6EBE55BD4D5D4D9BC1392499B0BC455E59BE55DDD59E597ED99EE1DFEA5F6E9FEA5FEE9FEEBFF2DFFB1FF71F661ED55E597E597E597ED99EDDBF663F6A3F663E5DDED9BEDD9ED9BEE1BF6A9FF71F661ED97E597E597EDDBF661EE21F6A5EDDBDD13E4D5D491D491E515E597F6A5FF71EE1DED95E557F61DFEEBEE61EDDDDCD5CC0FD451BC0DCC0FCC0FE553ED99F6A7F661ED97E597F663FF2DEE1FE515BB8DA30982058A059247B38DD491E555F61DF6A7EDD9E557F663F661E557BB8D7A076989598969C971C98247A2C9D491EDD9FEE9E59BED97F661EDDDD4D38A07698969C9A2C9BB8D824D6A0B7A07BB8BE515FF2DF65FED97F663EDD9D49182076189A289E513E5DBDCD57A4D69C9AB09DCD3FFB7FF2DEDD9F661E557D49179C75989C3CDE515E5DBF621BBCD61CBAB0BDCD3FFB7FF73F61BF661E555D45171C761C9B34D8287DC91EDDBC3CF69CBA30BCC4FFFB5FF2FEE1DEE1FED97D4937A0579C761895989DCD3E599C3CD69CBA30BCC4FFF71F665E599EDDBF663ED99A30B7A056183A30BED99E599BB8F69C9A30BD44FFF71E5DDDD17ED99EE1FFF6FE5199BD1AB4FCD59FEA5E5197A8D6987BB8BDCD5FF71E559D493ED99ED99F6A5FF71F667E61FF6EBF665B3CD59498205CBCDEE21FEE9DD19CC93DCD3E597ED97F663FF2DF6EDEE67C41161C97185B309E557FEEBE5DFDCD7C451CBCDD48FE515EDDBEE1DDD19AB8B820959459247DCD3F663F6A5DD19CC95AB4DBB49C3CBD451DD13CC0DA2C97A4961859207CC4FED99F6A9EE23D4D7BBCFA30BAAC7A307AAC7AAC792877A0971C7A287D491ED57F6A5EE63E55DC451A30BAB0BAB099A879AC9820772077A07C3CFD44FE599EDDFEE1DED9DD493A30DA309AB4DA3099247720969C78A07B38DD491E557F621EDDDEDDBDD15BB8F9A89A34BBBD1928972078A09B34BBB8BD451E515EE1FF61FED99DD17C4539A899A89B3CFCC5392898209CC0DD491DCD3DCD5E557F61DE599E515C411A30B8A47A30BC413D4D7B38DCBCDD491D451DCD3E515E557E557DCD5CC51A2C982079A89B3CFD497D517C3CDDC4FDCD5D491DD15E515E515D493C3CFAB0B92478247B38FCC95D51BDD57D491E515DCD5DD15E513DCD5D493BB8D9A897A0581C59ACBCC53D55BDD5BDD17E515E559DCD5DD55DCD5DC93C411A30B81C58A49AB8BC413DD19DDE1E59DDD1BED99DD15DCD5DCD5D493BC0FAB0B92499AC9BC13CC95D519EE23E623DD5BDCD7E599DCD5DD13DC93C3D1AB4B9ACB9A89BC53DD1BDDE1F667EEA5EE21E599DD19DD15D493D491C411B34D9AC9AB0DBC11DD9FE623F6A9F6ABF6A5E59DE559E599D451C411BB8DAB4B9ACBAB0BC455DD9FEE65F6A9FEEBF6EBF6A7EDDFDD57ED9BBBCFB30B9ACB9A89A30BBC13E59DEEA7F6A9FEE9F6A7F6A5E5DFE559E599E559AB0D9AC99289AB0BBC13D51BE5DFEDE1EE65EEA5F663EDDFDD99E59BE557DD17";
 
         public string[] cloaklocations = {
-            "87130C","8713DC","87148C","87153C","8715EC","87169C","87174C"
+            "8713DC","87148C","87153C","8715EC","87169C","87174C"
         };
 
         //bgm data. random bgm needs to be a hex value between 00 and 2a (42) and cannot be 1e (30)

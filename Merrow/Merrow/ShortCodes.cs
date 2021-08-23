@@ -59,20 +59,20 @@ namespace Merrow {
         public void UpdateCode() {
             if (loadfinished) {
                 updatingcode = true;
-                int tabpagestocheck = 3;
+                //int tabpagestocheck = 3;
                 string codeString = labelVersion.Text.Substring(1);
                 string tempString;
                 string binString2;
-                var toggles = new List<CheckBox>();
-                var dropdowns = new List<ComboBox>();
-                var sliders = new List<TrackBar>();
+                //var toggles = new List<CheckBox>();
+                //var dropdowns = new List<ComboBox>();
+                //var sliders = new List<TrackBar>();
 
-                //check each page in turn, convert each page's values and add it to the code string
-                for (int i = 0; i < tabpagestocheck; i++) {
-                    toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
-                    dropdowns.AddRange(GetAllDropdowns(rndTabsControl.TabPages[i]));
-                    sliders.AddRange(GetAllSliders(rndTabsControl.TabPages[i]));
-                }
+                ////check each page in turn, convert each page's values and add it to the code string
+                //for (int i = 0; i < tabpagestocheck; i++) {
+                //    toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
+                //    dropdowns.AddRange(GetAllDropdowns(rndTabsControl.TabPages[i]));
+                //    sliders.AddRange(GetAllSliders(rndTabsControl.TabPages[i]));
+                //}
 
                 int steps = 0;
                 tempString = "";
@@ -138,7 +138,7 @@ namespace Merrow {
                         if (!bighex) { tempString += dropdown.SelectedIndex.ToString("X1"); }
                     }
                 }
-                codeString += HexToBase64(tempString) + itemString + ".";
+                codeString += tempString + itemString + ".";//HexToBase64(tempString) + itemString + ".";
 
                 tempString = "";
                 if (sliders.Count > 0) {
@@ -146,7 +146,7 @@ namespace Merrow {
                         tempString += slider.Value.ToString("X3"); //convert values to hex
                     }
                     if (tempString.Length % 2 != 0) { tempString = "0" + tempString; } //ensure it's an even number of characters
-                    codeString += "S." + HexToBase64(tempString);
+                    codeString += "S." + tempString;//HexToBase64(tempString);
                 }
                 else {
                     codeString += "SZ";
@@ -162,12 +162,12 @@ namespace Merrow {
         public int ApplyCode() {
             updatingcode = true;
             string currentCode = rndShortcodeText.Text;
-            int tabpagestocheck = 3;
+            //int tabpagestocheck = 3;
             string versionNumber = labelVersion.Text.Substring(1); //current version to check against
             string tempString;
-            var toggles = new List<CheckBox>();
-            var dropdowns = new List<ComboBox>();
-            var sliders = new List<TrackBar>();
+            //var toggles = new List<CheckBox>();
+            //var dropdowns = new List<ComboBox>();
+            //var sliders = new List<TrackBar>();
 
             //all of the following could be an array but for the purposes of building this, i'm brute-forcing it.
             string togglestring = "";
@@ -190,11 +190,11 @@ namespace Merrow {
             if (currentCode.Substring(0, 2) != versionNumber) { return 2; } 
 
             //check each page in turn, convert each page's counts and add it to the lists, to check against/update
-            for (int i = 0; i < tabpagestocheck; i++) {
-                toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
-                dropdowns.AddRange(GetAllDropdowns(rndTabsControl.TabPages[i]));
-                sliders.AddRange(GetAllSliders(rndTabsControl.TabPages[i]));
-            }
+            //for (int i = 0; i < tabpagestocheck; i++) {
+            //    toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
+            //    dropdowns.AddRange(GetAllDropdowns(rndTabsControl.TabPages[i]));
+            //    sliders.AddRange(GetAllSliders(rndTabsControl.TabPages[i]));
+            //}
 
             //search string for starting and ending points
             for (int i = 0; i < currentCode.Length - 3; i++) { //only go near end of the string to prevent overflow
@@ -238,7 +238,7 @@ namespace Merrow {
 
             //kick out on malformatted strings to prevent crashes
             if (togglestart == 0 || dropdownstart == 0 || sliderstart == 0) { return 3; } 
-            if (dropdownstring.Length % 2 != 0) { return 5; }
+            //if (dropdownstring.Length % 2 != 0) { return 5; }
             if (sliderstring.Length % 2 != 0) { return 6; }
 
             //DECODE TOGGLES
@@ -277,9 +277,11 @@ namespace Merrow {
             //bighex: the dropdown has more than 16 entries and thus needs 2-char hex and not 1-char hex.
             //and then override the item lists after if needed
 
-            string dropdowntemp = Base64ToHex(dropdownstring);
+            string dropdowntemp = dropdownstring;//Base64ToHex(dropdownstring);
             x = 0;
+            
             foreach (var dropdown in dropdowns) {
+                Console.WriteLine(dropdown.Name);
                 bool bighex = false;
                 int currentvalue = 0;
                 if (dropdown.Items.Count > 16) { bighex = true; }
@@ -318,7 +320,7 @@ namespace Merrow {
             //DECODE SLIDERS
 
             if (sliderstart != -1) { //only if sliders exist
-                string slidertemp = Base64ToHex(sliderstring);
+                string slidertemp = sliderstring;// Base64ToHex(sliderstring);
                 if (slidertemp.Length % 3 != 0) { slidertemp = slidertemp.Substring(1); } //remove the optional leading zero
                 x = 0;
                 foreach (var slider in sliders) {
