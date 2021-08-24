@@ -108,6 +108,7 @@ namespace Merrow {
             patchbuild = "";
             patchcontent = "";
             patchstrings.Clear();
+            spoilerextra.Clear();
 
             //RANDOMIZATION FEATURES
 
@@ -253,8 +254,8 @@ namespace Merrow {
                         hintdata = TranslateString(hintstring);
 
                         int hintlen = (int)hintdata[1];
-                        Console.WriteLine(hintdata[0]);
-                        Console.WriteLine(hintdata[1]);
+                        //Console.WriteLine(hintdata[0]);
+                        //Console.WriteLine(hintdata[1]);
 
                         //string is encoded to patch
                         patchstrings.Add(library.spellItemDescAddr[i]);
@@ -1114,7 +1115,7 @@ namespace Merrow {
                 for (int i = 0; i < 5; i++) {
                     object[] hintdata = new object[2];
                     string hintstring = "This is a hint.#Did it break?$If so, RIP%";
-                    string localgem = library.gemnames[lostkeysbossitemlist[i] - 20];
+                    string localgem = library.gemnames[gemIDs[i] - 20];
 
                     //string is written
                     if (hints[i] == 1) { hintstring = "The " + localgem + " currently#rests in someone's hands.$Hopefully they do not make#use of it before you can#retrieve it.%"; }
@@ -1129,13 +1130,15 @@ namespace Merrow {
                     //string is encoded to patch
                     patchstrings.Add(library.shannonhints[i]);
                     patchstrings.Add(hintlen.ToString("X4"));
-                    patchstrings.Add((string)hintdata[0]);
+                    patchstrings.Add((string)hintdata[0]); 
 
                     //account for boss item shuffle - remove secondary dialogue from Shannons
                     //by doing this, I don't really need to worry about item order
                     patchstrings.Add(library.shannonrules[i]);
                     patchstrings.Add("0001");
                     patchstrings.Add("01");
+
+                    spoilerextra.Add(hintstring);
                 }
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shannon Hints enabled." + Environment.NewLine);
             }
@@ -1273,6 +1276,12 @@ namespace Merrow {
                 if (rndBossOrderToggle.Checked || rndLostKeysToggle.Checked) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED BOSS DROPS:" + Environment.NewLine);
                     foreach (string line in spoilerbossdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                }
+
+                //extra/debug spoilers
+                if (spoilerextra.Count > 0) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "DEBUG OUTPUT:" + Environment.NewLine);
+                    foreach (string line in spoilerextra) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
             }
 

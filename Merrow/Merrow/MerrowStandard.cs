@@ -88,6 +88,7 @@ namespace Merrow {
         string[] spoilerscales = new string[75];
         string[] spoilergifts = new string[10];
         string[] spoilerwings = new string[6];
+        List<string> spoilerextra = new List<string>();
         int[] newmonsterstats = new int[450];
         float difficultyscale = 1.0f;
         float extremity = 0;
@@ -99,7 +100,8 @@ namespace Merrow {
         int[] newbosselem = { 4, 4 };
         int lasttextpaletteoffset = 0;
         int laststaffpaletteoffset = 0;
-        int[] lostkeysbossitemlist = { 255, 255, 255, 255, 255, 255, 255 };
+        int[] lostkeysbossitemlist = { 255, 255, 255, 255, 255, 255 };
+        int[] gemIDs = { 20, 21, 22, 23, 24 };
         int[] lostkeysdrops = new int[67];
         string staffPaletteHex = "";
         int[] rndspellcolours = new int[79];

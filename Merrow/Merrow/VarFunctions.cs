@@ -22,7 +22,7 @@ namespace Merrow {
             bool OKchar = false;
             object[] returnvals = new object[2];
 
-            for (int i = 0; i < str.Length; i++) { asciivals.Add(str[i]); Console.WriteLine(str[i] + " " + asciivals[i]); }
+            for (int i = 0; i < str.Length; i++) { asciivals.Add(str[i]); /*Console.WriteLine(str[i] + " " + asciivals[i]);*/ }
 
             foreach(int val in asciivals) {
                 OKchar = false;

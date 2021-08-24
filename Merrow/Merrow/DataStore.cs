@@ -176,7 +176,7 @@ namespace Merrow {
 
         public string[] invalidityLocations = {
             "D4CAE9", //Zel_Cat
-            "D4CBB3", //Npt_Turn
+            "D4CBB5", //Npt_Turn
             "D4CC3D", //Far_Bom
             "D4CC81", //Sil_Laser
             "D4CCC5", //Sil_Cat
@@ -622,16 +622,19 @@ namespace Merrow {
         public int area_fire_count = 38;
         public int[] area_fire = { 3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7, 4 };
         //eletale book: 2 bosses, 18 chests, 2 gifters, 1 wingsmith	-    23 total
-        public int area_book_count = 23;
+        public int area_book_count = 23; 
         public int[] area_book = { 5, 6, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8, 5 };
+        public int[] area_book_nobeigis = { 5, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8, 5 };
 
-        //all areas combined, wingsmiths removed
+        //2021-08-32: created a no-beigis area list, and removed from the open list below, because not being included in boss shuffle means he never gets handed special items, just the regularly randomized assignments
+
+        //all areas combined, wingsmiths and removed
         public int[] area_open = {
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 81, 82, 83, 84, 0, 1, 2,
             1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4,
             2, 15, 47, 48, 49, 50, 51, 52,
             3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7,
-            5, 6, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8
+            5, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8
         };
 
         //spell item spell IDs

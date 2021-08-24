@@ -281,7 +281,7 @@ namespace Merrow {
             x = 0;
             
             foreach (var dropdown in dropdowns) {
-                Console.WriteLine(dropdown.Name);
+                //Console.WriteLine(dropdown.Name);
                 bool bighex = false;
                 int currentvalue = 0;
                 if (dropdown.Items.Count > 16) { bighex = true; }
