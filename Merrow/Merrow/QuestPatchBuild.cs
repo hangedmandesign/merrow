@@ -607,6 +607,11 @@ namespace Merrow {
                     patchstrings.Add("000C");
                     patchstrings.Add(library.bosslocdata[(i * 4) + 3]);
 
+                    //boss reward hp values
+                    patchstrings.Add(library.rewardhpdata[newbossorder[i] * 2]);
+                    patchstrings.Add("0001");
+                    patchstrings.Add(library.rewardhpdata[(i * 2) + 1]);
+
                     //item drops
                     int newitemaddr = library.dropdata[(newbossorder[i] + 67) * 2];
                     if (!rndLostKeysToggle.Checked) { spoilerbossdrops[i] = (library.monsternames[(newbossorder[i] + 67) * 2] + " carries " + bossitemnames[i]); }
@@ -1141,6 +1146,15 @@ namespace Merrow {
                     spoilerextra.Add(hintstring);
                 }
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shannon Hints enabled." + Environment.NewLine);
+            }
+
+            //Better Dew Drop
+            if (rndBetterDewDrop.Checked) {
+                patchstrings.Add("D86B01");
+                patchstrings.Add("0001");
+                patchstrings.Add("14");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Dew Drop made useful." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT

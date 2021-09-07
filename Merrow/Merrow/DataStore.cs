@@ -804,6 +804,16 @@ namespace Merrow {
             "D87448","0022000A","D87454","C1A00000C3AF0000BE4CCCCD"
         };
 
+        public string[] rewardhpdata = { //single byte where hp value is assigned. going to leave out beigis and focus on shuffled bosses.
+            "04CEC1","0A", //Solvaring 10
+            "04CEC3","0A", //Zelse 10
+            "04CEC5","0F", //Nepty 15
+            "04CEC7","14", //Shilf 20
+            "04CEC9","14", //Fargo 20
+            "04CECB","19", //Guilty 25
+            "04CECD","19"  //Beigis 25
+        };
+
         //foreach monster ID set, give it randomized new stats within the default difficulty range
         //and then scale those by difficulty modifier specified by the patch creator
 
@@ -1591,7 +1601,7 @@ namespace Merrow {
             "8713DC","87148C","87153C","8715EC","87169C","87174C"
         };
 
-        //bgm data. random bgm needs to be a hex value between 00 and 2a (42) and cannot be 1e (30)
+        //bgm data. random bgm needs to be a hex value between 00 and 2a (42) and cannot be 1b-1e,2a-2b (27-30,42-43)
         public string[] bgmdata = {
             "054704","21",
             "05470A","21",

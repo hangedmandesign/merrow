@@ -888,12 +888,11 @@ namespace Merrow {
             }
 
             //RANDOM BGM
-            //random bgm needs to be a hex value between 00 and 2a (42) and cannot be 1e (30)
+            //random bgm needs to be a hex value between 00 and 2a (42) and cannot be 1b-1e,2a-2b (27-30,42-43)
             for (int i = 0; i < rndbgms.Length; i++) {
-                rndbgms[i] = SysRand.Next(43);
-                while (rndbgms[i] == 30) { rndbgms[i] = SysRand.Next(43); }
+                rndbgms[i] = SysRand.Next(38); //0-37. 0-26 is first 26 tracks, 27-37 is last 11 tracks 
+                if (rndbgms[i] >= 27) { rndbgms[i] = rndbgms[i] + 4; } //add 4 because last 11 are numbered 31-41 in data
             }
-
 
             shufflingnow = false;
         }

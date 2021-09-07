@@ -979,6 +979,7 @@ namespace Merrow {
         }
 
         private void rndBossOrderToggle_CheckedChanged(object sender, EventArgs e) {
+            expUpdateWarning();
             UpdateRisk();
             UpdateCode();
         }
@@ -1215,6 +1216,11 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndBetterDewDrop_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        //LOST KEYS OVERRIDE
         public void LostKeysHandling() {
             //Checked
             if (rndLostKeysToggle.Checked) {
@@ -1409,6 +1415,7 @@ namespace Merrow {
                 rndMPRegainToggle.Checked ||
                 rndDriftToggle.Checked || 
                 rndMusicShuffleToggle.Checked ||
+                rndBossOrderToggle.Checked ||
                 rndHitMPToggle.Checked) 
                 { rndErrorLabel.Text = rndErrorString; }
             }
