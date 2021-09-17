@@ -842,25 +842,17 @@ namespace Merrow {
 
             //MP regain rate
             if (rndMPRegainToggle.Checked) {
-                //the trackbars are restricted to x3 in either direction because of FF limit
-                //also doesn't bother writing if the value's default. Value 7 = OFF.
-                if (rndMPRegainTrackBar.Value != 0 && rndMPRegainTrackBar.Value != 10) {
-
-                    int newspeed = 65; //65 is the default number of steps per MP tick
-                    double newrate = 1.0;
-
-                    if (rndMPRegainTrackBar.Value < 10) {
-                        newrate = 11 - rndMPRegainTrackBar.Value;
-                        newspeed = Convert.ToInt32(65 * newrate); //increasing value slows it down
-                    }
-                    if (rndMPRegainTrackBar.Value > 10) {
-                        newrate = rndMPRegainTrackBar.Value - 9;
-                        newspeed = Convert.ToInt32(65 / newrate); //decreasing value speeds it up
-                    }
+                //the trackbar is restricted to x2 and x3 in either direction. 
+                //also doesn't bother writing if the value's 10 = default. Value 7 = OFF.
+                if (rndMPRegainTrackBar.Value != 7 && rndMPRegainTrackBar.Value != 10) {
+                    //the old method multiplied the speed value, but the effect of that was logarithmic, not multiplicative.
+                    //instead, I've selected hex values that map closely to the number of seconds spent running, which was the intent all along.
+                    //for reference, I got these values by testing MP gained while running a set distance.
+                    string[] speeds = new string[5] { "28", "31", "41", "51", "58" }; //40, 49, 65, 81, 88
 
                     patchstrings.Add("071B39");
                     patchstrings.Add("0001");
-                    patchstrings.Add(newspeed.ToString("X2"));
+                    patchstrings.Add(speeds[rndMPRegainTrackBar.Value-8]);
                 }
 
                 //if OFF, instead of changing rate, just disable it entirely elsewhere
