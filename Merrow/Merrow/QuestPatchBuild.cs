@@ -44,6 +44,8 @@ namespace Merrow {
 
                 !rndFastMonasteryToggle.Checked &&
                 !rndFastMammonToggle.Checked &&
+                !rndFastBlueToggle.Checked &&
+                !rndFastShamwoodToggle.Checked &&
                 !rndCrystalReturnToggle.Checked &&
                 !rndUnlockDoorsToggle.Checked &&
                 !rndIvoryWingsToggle.Checked &&
@@ -758,6 +760,19 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Monastery enabled." + Environment.NewLine);
             }
 
+            //Fast Blue Cave
+            if (rndFastBlueToggle.Checked) {
+                patchstrings.Add("65F1E3");
+                patchstrings.Add("0009");
+                patchstrings.Add("180018001A00000005"); // write first door target ID
+
+                patchstrings.Add("65F273");
+                patchstrings.Add("0009");
+                patchstrings.Add("180018001A00000007"); // write second door target ID
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Blue Cave enabled." + Environment.NewLine);
+            }
+
             //Vowel Shuffle
             if (rndVowelsToggle.Checked) { 
                 for (int i = 0; i < voweled.Length; i++) {
@@ -1006,7 +1021,7 @@ namespace Merrow {
 
             //LOST KEYS
             if (rndLostKeysToggle.Checked) {
-                if (!rndUnlockDoorsToggle.Checked) { //this is redundant if progression locks are open
+                if (!rndUnlockDoorsToggle.Checked) { //this is redundant if progression locks are open, only happens in Progressive
                     //items and stuff already redistributed, just have to unlock Colleen at the end here to guarantee it's applied correctly
                     patchstrings.Add(library.unlockedDoorData[7 * 2]); //Epona Teleporter A
                     patchstrings.Add("0010"); 
@@ -1027,6 +1042,10 @@ namespace Merrow {
                     patchstrings.Add(library.unlockedDoorData[18 * 2]); //Lock Brannoch Castle Gate with Fire Ruby
                     patchstrings.Add("0004");
                     patchstrings.Add(library.unlockedDoorData[18 * 2 + 1]);
+
+                    patchstrings.Add("0E72F0"); //Add fire symbol to Brannoch Castle Gate
+                    patchstrings.Add("1000");
+                    patchstrings.Add(library.firegate);
                 }
 
                 if (!rndBossOrderToggle.Checked) {

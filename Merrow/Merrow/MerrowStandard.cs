@@ -892,6 +892,10 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndFastBlueToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
         private void rndRestlessToggle_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
         }
@@ -1017,12 +1021,10 @@ namespace Merrow {
 
         private void rndLostKeysToggle_CheckedChanged(object sender, EventArgs e) {
             if (loadfinished) { LostKeysHandling(); }
-            UpdateCode();
         }
 
         private void rndLostKeysDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             if (loadfinished) { LostKeysHandling(); }
-            UpdateCode();
         }
 
         private void rndIvoryWingsToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1297,6 +1299,7 @@ namespace Merrow {
                 rndLockedEndgameToggle.Enabled = true;
             }
 
+            expUpdateWarning();
             UpdateCode();
         }
 
@@ -1405,6 +1408,7 @@ namespace Merrow {
 
             if (expModePatchZ64.Checked) { rndErrorLabel.Text = "No file loaded."; }
             if (expModePatchIPS.Checked) {
+                //If any of the things that violate the checksum are enabled, display a warning when exporting IPS patches
                 if (rndZoomToggle.Checked ||
                 rndMaxMessageToggle.Checked ||
                 rndDropLimitToggle.Checked ||
@@ -1418,6 +1422,9 @@ namespace Merrow {
                 rndBossOrderToggle.Checked ||
                 rndHitMPToggle.Checked) 
                 { rndErrorLabel.Text = rndErrorString; }
+
+                //This is separate just because both have to be true
+                if (rndLostKeysToggle.Checked && rndLostKeysDropdown.SelectedIndex == 0) { rndErrorLabel.Text = rndErrorString; }
             }
         }
 
