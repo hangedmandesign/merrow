@@ -104,6 +104,8 @@ namespace Merrow {
         int[] gemIDs = { 20, 21, 22, 23, 24 };
         int[] lostkeysdrops = new int[67];
         string staffPaletteHex = "";
+        string brianPaletteHex1 = "";
+        string brianPaletteHex2 = "";
         int[] rndspellcolours = new int[79];
         int[] rndbgms = new int[73];
         bool lightdark;
@@ -1219,6 +1221,14 @@ namespace Merrow {
         }
 
         private void rndBetterDewDrop_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndRevealSpiritsToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndBrianClothesToggle_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
         }
 

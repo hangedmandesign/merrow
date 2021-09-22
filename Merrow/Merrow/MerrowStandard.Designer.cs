@@ -277,6 +277,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.rndProgressionBox = new System.Windows.Forms.GroupBox();
+            this.rndFastBlueToggle = new System.Windows.Forms.CheckBox();
             this.rndShannonHintsToggle = new System.Windows.Forms.CheckBox();
             this.rndBlueHouseWarpToggle = new System.Windows.Forms.CheckBox();
             this.rndLockedEndgameToggle = new System.Windows.Forms.CheckBox();
@@ -417,7 +418,8 @@
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.helpLabel = new System.Windows.Forms.Label();
-            this.rndFastBlueToggle = new System.Windows.Forms.CheckBox();
+            this.rndRevealSpiritsToggle = new System.Windows.Forms.CheckBox();
+            this.rndBrianClothesToggle = new System.Windows.Forms.CheckBox();
             this.tabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.newBox.SuspendLayout();
@@ -2457,13 +2459,14 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.87526F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.12474F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.40956F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 36.59044F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(567, 481);
             this.tableLayoutPanel1.TabIndex = 14;
             // 
             // rndProgressionBox
             // 
+            this.rndProgressionBox.Controls.Add(this.rndRevealSpiritsToggle);
             this.rndProgressionBox.Controls.Add(this.rndFastBlueToggle);
             this.rndProgressionBox.Controls.Add(this.rndShannonHintsToggle);
             this.rndProgressionBox.Controls.Add(this.rndBlueHouseWarpToggle);
@@ -2476,10 +2479,24 @@
             this.rndProgressionBox.Controls.Add(this.rndFastMonasteryToggle);
             this.rndProgressionBox.Location = new System.Drawing.Point(3, 3);
             this.rndProgressionBox.Name = "rndProgressionBox";
-            this.rndProgressionBox.Size = new System.Drawing.Size(277, 281);
+            this.rndProgressionBox.Size = new System.Drawing.Size(277, 299);
             this.rndProgressionBox.TabIndex = 0;
             this.rndProgressionBox.TabStop = false;
             this.rndProgressionBox.Text = "PROGRESSION";
+            // 
+            // rndFastBlueToggle
+            // 
+            this.rndFastBlueToggle.AutoSize = true;
+            this.rndFastBlueToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndFastBlueToggle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndFastBlueToggle.Location = new System.Drawing.Point(6, 43);
+            this.rndFastBlueToggle.Name = "rndFastBlueToggle";
+            this.rndFastBlueToggle.Size = new System.Drawing.Size(98, 17);
+            this.rndFastBlueToggle.TabIndex = 21;
+            this.rndFastBlueToggle.Text = "Fast Blue Cave";
+            this.rndToolTip.SetToolTip(this.rndFastBlueToggle, "Skips the two encounter-less bridges over the Crystal Valley.");
+            this.rndFastBlueToggle.UseVisualStyleBackColor = true;
+            this.rndFastBlueToggle.CheckedChanged += new System.EventHandler(this.rndFastBlueToggle_CheckedChanged);
             // 
             // rndShannonHintsToggle
             // 
@@ -2487,7 +2504,7 @@
             this.rndShannonHintsToggle.Cursor = System.Windows.Forms.Cursors.Default;
             this.rndShannonHintsToggle.Enabled = false;
             this.rndShannonHintsToggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndShannonHintsToggle.Location = new System.Drawing.Point(6, 235);
+            this.rndShannonHintsToggle.Location = new System.Drawing.Point(6, 163);
             this.rndShannonHintsToggle.Name = "rndShannonHintsToggle";
             this.rndShannonHintsToggle.Size = new System.Drawing.Size(186, 17);
             this.rndShannonHintsToggle.TabIndex = 20;
@@ -2503,7 +2520,7 @@
             this.rndBlueHouseWarpToggle.AutoSize = true;
             this.rndBlueHouseWarpToggle.Cursor = System.Windows.Forms.Cursors.Default;
             this.rndBlueHouseWarpToggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndBlueHouseWarpToggle.Location = new System.Drawing.Point(6, 211);
+            this.rndBlueHouseWarpToggle.Location = new System.Drawing.Point(6, 235);
             this.rndBlueHouseWarpToggle.Name = "rndBlueHouseWarpToggle";
             this.rndBlueHouseWarpToggle.Size = new System.Drawing.Size(224, 17);
             this.rndBlueHouseWarpToggle.TabIndex = 19;
@@ -2518,7 +2535,7 @@
             this.rndLockedEndgameToggle.AutoSize = true;
             this.rndLockedEndgameToggle.Cursor = System.Windows.Forms.Cursors.Default;
             this.rndLockedEndgameToggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndLockedEndgameToggle.Location = new System.Drawing.Point(6, 187);
+            this.rndLockedEndgameToggle.Location = new System.Drawing.Point(6, 211);
             this.rndLockedEndgameToggle.Name = "rndLockedEndgameToggle";
             this.rndLockedEndgameToggle.Size = new System.Drawing.Size(186, 17);
             this.rndLockedEndgameToggle.TabIndex = 18;
@@ -2561,11 +2578,11 @@
             this.rndUnlockDoorsToggle.AutoSize = true;
             this.rndUnlockDoorsToggle.Cursor = System.Windows.Forms.Cursors.Default;
             this.rndUnlockDoorsToggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndUnlockDoorsToggle.Location = new System.Drawing.Point(6, 163);
+            this.rndUnlockDoorsToggle.Location = new System.Drawing.Point(6, 259);
             this.rndUnlockDoorsToggle.Name = "rndUnlockDoorsToggle";
-            this.rndUnlockDoorsToggle.Size = new System.Drawing.Size(158, 17);
+            this.rndUnlockDoorsToggle.Size = new System.Drawing.Size(167, 17);
             this.rndUnlockDoorsToggle.TabIndex = 15;
-            this.rndUnlockDoorsToggle.Text = "Unlock all progression locks";
+            this.rndUnlockDoorsToggle.Text = "Unlock ALL progression locks";
             this.rndToolTip.SetToolTip(this.rndUnlockDoorsToggle, "Unlocks all progression-related locks. \r\nGems, Book, and Key are no longer requir" +
         "ed to progress.");
             this.rndUnlockDoorsToggle.UseVisualStyleBackColor = true;
@@ -2615,6 +2632,7 @@
             // 
             // rndColoursBox
             // 
+            this.rndColoursBox.Controls.Add(this.rndBrianClothesToggle);
             this.rndColoursBox.Controls.Add(this.rndCloakViewPanel);
             this.rndColoursBox.Controls.Add(this.rndCloakPaletteDropdown);
             this.rndColoursBox.Controls.Add(this.rndCloakViewToggle);
@@ -2630,7 +2648,7 @@
             this.rndColoursBox.Controls.Add(this.rndTextViewToggle);
             this.rndColoursBox.Location = new System.Drawing.Point(286, 3);
             this.rndColoursBox.Name = "rndColoursBox";
-            this.rndColoursBox.Size = new System.Drawing.Size(278, 281);
+            this.rndColoursBox.Size = new System.Drawing.Size(278, 299);
             this.rndColoursBox.TabIndex = 27;
             this.rndColoursBox.TabStop = false;
             this.rndColoursBox.Text = "COLOURS";
@@ -2902,9 +2920,9 @@
             this.rndFunBox.Controls.Add(this.rndVowelsToggle);
             this.rndFunBox.Controls.Add(this.rndTextContentDropdown);
             this.rndFunBox.Controls.Add(this.rndRestlessToggle);
-            this.rndFunBox.Location = new System.Drawing.Point(286, 290);
+            this.rndFunBox.Location = new System.Drawing.Point(286, 308);
             this.rndFunBox.Name = "rndFunBox";
-            this.rndFunBox.Size = new System.Drawing.Size(277, 188);
+            this.rndFunBox.Size = new System.Drawing.Size(277, 170);
             this.rndFunBox.TabIndex = 12;
             this.rndFunBox.TabStop = false;
             this.rndFunBox.Text = "FUN";
@@ -2981,9 +2999,9 @@
             this.rndGraphicsBox.Controls.Add(this.rndMaxMessageToggle);
             this.rndGraphicsBox.Controls.Add(this.rndZoomDropdown);
             this.rndGraphicsBox.Controls.Add(this.rndZoomToggle);
-            this.rndGraphicsBox.Location = new System.Drawing.Point(3, 290);
+            this.rndGraphicsBox.Location = new System.Drawing.Point(3, 308);
             this.rndGraphicsBox.Name = "rndGraphicsBox";
-            this.rndGraphicsBox.Size = new System.Drawing.Size(276, 188);
+            this.rndGraphicsBox.Size = new System.Drawing.Size(276, 170);
             this.rndGraphicsBox.TabIndex = 28;
             this.rndGraphicsBox.TabStop = false;
             this.rndGraphicsBox.Text = "GRAPHICS";
@@ -4195,19 +4213,32 @@
             this.rndToolTip.SetToolTip(this.helpLabel, "Every function and option has a mouse-over tooltip \r\n(usually on the text label) " +
         "that explains what it does \r\nand what all related options do.");
             // 
-            // rndFastBlueToggle
+            // rndRevealSpiritsToggle
             // 
-            this.rndFastBlueToggle.AutoSize = true;
-            this.rndFastBlueToggle.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rndFastBlueToggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndFastBlueToggle.Location = new System.Drawing.Point(6, 43);
-            this.rndFastBlueToggle.Name = "rndFastBlueToggle";
-            this.rndFastBlueToggle.Size = new System.Drawing.Size(98, 17);
-            this.rndFastBlueToggle.TabIndex = 21;
-            this.rndFastBlueToggle.Text = "Fast Blue Cave";
-            this.rndToolTip.SetToolTip(this.rndFastBlueToggle, "Skips the two encounter-less bridges over the Crystal Valley.");
-            this.rndFastBlueToggle.UseVisualStyleBackColor = true;
-            this.rndFastBlueToggle.CheckedChanged += new System.EventHandler(this.rndFastBlueToggle_CheckedChanged);
+            this.rndRevealSpiritsToggle.AutoSize = true;
+            this.rndRevealSpiritsToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndRevealSpiritsToggle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndRevealSpiritsToggle.Location = new System.Drawing.Point(6, 187);
+            this.rndRevealSpiritsToggle.Name = "rndRevealSpiritsToggle";
+            this.rndRevealSpiritsToggle.Size = new System.Drawing.Size(124, 17);
+            this.rndRevealSpiritsToggle.TabIndex = 22;
+            this.rndRevealSpiritsToggle.Text = "Reveal hidden spirits";
+            this.rndToolTip.SetToolTip(this.rndRevealSpiritsToggle, "Moves the two spirits that are placed inside objects:\r\n- Return ship from Limelin" +
+        " to Dondoran\r\n- Limelin Castle Library");
+            this.rndRevealSpiritsToggle.UseVisualStyleBackColor = true;
+            this.rndRevealSpiritsToggle.CheckedChanged += new System.EventHandler(this.rndRevealSpiritsToggle_CheckedChanged);
+            // 
+            // rndBrianClothesToggle
+            // 
+            this.rndBrianClothesToggle.AutoSize = true;
+            this.rndBrianClothesToggle.Location = new System.Drawing.Point(6, 187);
+            this.rndBrianClothesToggle.Name = "rndBrianClothesToggle";
+            this.rndBrianClothesToggle.Size = new System.Drawing.Size(179, 17);
+            this.rndBrianClothesToggle.TabIndex = 31;
+            this.rndBrianClothesToggle.Text = "Randomize Brian\'s outfit palettes";
+            this.rndToolTip.SetToolTip(this.rndBrianClothesToggle, "Changes the colour palette of Brian\'s outfit.\r\n");
+            this.rndBrianClothesToggle.UseVisualStyleBackColor = true;
+            this.rndBrianClothesToggle.CheckedChanged += new System.EventHandler(this.rndBrianClothesToggle_CheckedChanged);
             // 
             // MerrowStandard
             // 
@@ -4576,6 +4607,8 @@
         private System.Windows.Forms.Panel rndItemCoverPanel;
         private System.Windows.Forms.Panel rndItemCoverPanel2;
         private System.Windows.Forms.CheckBox rndFastBlueToggle;
+        private System.Windows.Forms.CheckBox rndRevealSpiritsToggle;
+        private System.Windows.Forms.CheckBox rndBrianClothesToggle;
     }
 }
 

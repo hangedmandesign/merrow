@@ -139,14 +139,10 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
-  <data name="rndIvoryWingsToggle.ToolTip" xml:space="preserve">
-    <value>Replaces the White Wings with Ivory Wings, which warp the player to Shamwood. 
-The Melrode Wingsmith will not grant an item, and instead Lavaar in Shamwood
-will grant the Ivory Wings upon interacting. SHUFFLED Wingsmiths treat Lavaar
-as the granter of the Ivory Wings and shuffle accordingly.</value>
-  </data>
   <data name="newLabel.Text" xml:space="preserve">
     <value>● Added 'Make Dew Drop useful', which causes Dew Drops to also heal 20HP. The randomizer added more context to most items, but the Dew Drop was still pretty useless after the start.
+● Added 'Reveal hidden spirits', which moves the two spirits concealed inside objects out into the open.
+● Added 'Randomize Brian's outfit palettes', which randomly hue-shifts the two blocks that determine the colours of a lot of Brian's clothes. Some elements use a different palette method (like the cloak did) so we can't randomize them yet.
 ● Added a Fire Ruby texture for Brannoch Castle Gate when LOST KEYS:Progressive is enabled, as a reminder that it's required to progress. This alters the checksum, so enabling LK:P now displays warnings when exporting IPS patches.
 
 FIXED ERRORS: 
@@ -213,7 +209,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAARABAwEQAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAARgBAwEYAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -516,6 +512,12 @@ HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
 
 NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
 and Variance. Setting both values higher may have extreme results.</value>
+  </data>
+  <data name="rndIvoryWingsToggle.ToolTip" xml:space="preserve">
+    <value>Replaces the White Wings with Ivory Wings, which warp the player to Shamwood. 
+The Melrode Wingsmith will not grant an item, and instead Lavaar in Shamwood
+will grant the Ivory Wings upon interacting. SHUFFLED Wingsmiths treat Lavaar
+as the granter of the Ivory Wings and shuffle accordingly.</value>
   </data>
   <data name="rndCloakPaletteToggle.ToolTip" xml:space="preserve">
     <value>Changes the colour palette of Brian's cloak.

@@ -53,6 +53,7 @@ namespace Merrow {
                 !rndLockedEndgameToggle.Checked &&
                 !rndBlueHouseWarpToggle.Checked &&
                 !rndShannonHintsToggle.Checked &&
+                !rndRevealSpiritsToggle.Checked &&
 
                 !rndTextPaletteToggle.Checked &&
                 !rndStaffPaletteToggle.Checked &&
@@ -61,6 +62,7 @@ namespace Merrow {
                 !rndZoomToggle.Checked &&
                 !rndMaxMessageToggle.Checked &&
                 !rndHUDLockToggle.Checked &&
+                !rndBrianClothesToggle.Checked &&
 
                 !rndRestlessToggle.Checked &&
                 !rndVowelsToggle.Checked &&
@@ -1166,6 +1168,32 @@ namespace Merrow {
                 patchstrings.Add("14");
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Dew Drop made useful." + Environment.NewLine);
+            }
+
+            //Reveal hidden spirits
+            if (rndRevealSpiritsToggle.Checked) {
+                patchstrings.Add("609970");
+                patchstrings.Add("0006");
+                patchstrings.Add("A20800003208");
+
+                patchstrings.Add("56FAE0");
+                patchstrings.Add("0006");
+                patchstrings.Add("C210000041E8");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Hidden spirits moved to clearer locations." + Environment.NewLine);
+            }
+
+            //Brian Colour palette
+            if (rndBrianClothesToggle.Checked) {
+                patchstrings.Add("86D5F0");
+                patchstrings.Add("0980");
+                patchstrings.Add(brianPaletteHex1);
+
+                patchstrings.Add("86DFF0");
+                patchstrings.Add("0A60");
+                patchstrings.Add(brianPaletteHex2);
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Brian palette set to random." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT

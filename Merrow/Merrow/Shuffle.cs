@@ -552,6 +552,27 @@ namespace Merrow {
                 rndspellcolours[i] = SysRand.Next(17) + 1;
             }
 
+            //BRIAN COLOUR SHUFFLING
+            if(rndBrianClothesToggle.Checked) {
+                hueOffset = SysRand.NextDouble() * 360;
+
+                brianPaletteHex1 = "";
+                string[] brian1bytes = new string[1216];
+                for (int i = 0; i < brian1bytes.Length; i++) {
+                    brian1bytes[i] = library.briantexture1.Substring(0 + (i * 4), 4);
+                    brianPaletteHex1 += ColorToHex(HueShift(RGBAToColor(brian1bytes[i]), hueOffset));
+                }
+
+                hueOffset = SysRand.NextDouble() * 360;
+
+                brianPaletteHex2 = "";
+                string[] brian2bytes = new string[1328];
+                for (int i = 0; i < brian1bytes.Length; i++) {
+                    brian2bytes[i] = library.briantexture2.Substring(0 + (i * 4), 4);
+                    brianPaletteHex2 += ColorToHex(HueShift(RGBAToColor(brian2bytes[i]), hueOffset));
+                }
+            }
+
             //MONSTER STAT AND BOSS ORDER RANDOMIZATION
 
             //initiate monster stats again, in case this is happening for the nth time
