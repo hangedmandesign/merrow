@@ -31,6 +31,7 @@ namespace Merrow {
                 !rndGiftersToggle.Checked &&
                 !rndWingsmithsToggle.Checked &&
                 !rndWingUnlockToggle.Checked &&
+                !rndBetterDewDrop.Checked &&
 
                 !rndMonsterStatsToggle.Checked &&
                 !rndMonsterScaleToggle.Checked &&
@@ -1163,9 +1164,18 @@ namespace Merrow {
 
             //Better Dew Drop
             if (rndBetterDewDrop.Checked) {
-                patchstrings.Add("D86B01");
+                patchstrings.Add("D86B01"); //function patch
                 patchstrings.Add("0001");
                 patchstrings.Add("14");
+
+                object[] hintdata = new object[2]; //description translation
+                string hintstring = library.newitemdesc[0];
+                hintdata = TranslateString(hintstring);
+                int hintlen = (int)hintdata[1];
+
+                patchstrings.Add("D86E56"); //description patch
+                patchstrings.Add(hintlen.ToString("X4"));
+                patchstrings.Add((string)hintdata[0]);
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Dew Drop made useful." + Environment.NewLine);
             }

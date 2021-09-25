@@ -665,7 +665,7 @@ namespace Merrow {
             "CONCENTRATES SOLAR#LIGHT INTO A BOMB%",
             "HUNGERING AURA.#YOUR STAFF #DRAWS BLOOD%",
             "RAISES MOLTEN ROCKS#THAT COUNTER MAGIC%",
-            "REDUCES YOUR FOES#TO EMPTY ASHES%",
+            "REDUCES AN ENEMY#TO EMPTY ASHES%",
             "SUPERHEATS THE AIR#TO BOIL YOUR FOES%",
             "RAISES A SMALL ROCK#TO TOSS AT FOES%",
             "RAISES A LARGE STONE#TO THROW AT FOES%",
@@ -712,6 +712,10 @@ namespace Merrow {
             "TEMPORAL AURA.#WALK AMONG GIANTS%",
             "QUIETUDE BANE.#SILENCE ALL VOICES%",
             "SHRED ALL ENEMIES#WITH A THOUSAND CUTS%"
+        };
+
+        public string[] newitemdesc = {
+            "MP 10 AND HP 20#RECOVERY%"
         };
 
         //name list for spoiler log
