@@ -236,8 +236,9 @@ namespace Merrow {
                     patchstrings.Add(library.items[25 + (i * 3)]); //fetching item addresses starting from silent flute address
                     patchstrings.Add("0002");
 
-                    if (itemspellfix[i] == 0) { //can be used in battle only
-                        patchstrings.Add("000A");
+                    if (itemspellfix[i] == 0) { //can be used in battle only 
+                        //v42: changed 000A (battle only but not bosses) to 0002
+                        patchstrings.Add("0002");
                     }
                     if (itemspellfix[i] == 1) { //out of battle
                         patchstrings.Add("0001");

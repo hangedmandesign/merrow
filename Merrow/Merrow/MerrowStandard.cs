@@ -1021,14 +1021,6 @@ namespace Merrow {
             UpdateCode();
         }
 
-        private void rndLostKeysToggle_CheckedChanged(object sender, EventArgs e) {
-            if (loadfinished) { LostKeysHandling(); }
-        }
-
-        private void rndLostKeysDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            if (loadfinished) { LostKeysHandling(); }
-        }
-
         private void rndIvoryWingsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndIvoryWingsToggle.Checked) {
                 itemListView1.Items[14].Text = "IW";
@@ -1232,6 +1224,62 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndLostKeysToggle_CheckedChanged(object sender, EventArgs e) {
+            if (loadfinished) { LostKeysHandling(); }
+        }
+
+        private void rndLostKeysDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            if (loadfinished) { LostKeysHandling(); }
+        }
+
+        private void rndFrenchVanillaToggle_CheckedChanged(object sender, EventArgs e) {
+            if (loadfinished) { VanillaHandling(); }
+        }
+
+        //FRENCH VANILLA OVERRIDE
+        public void VanillaHandling() {
+            if (rndFrenchVanillaToggle.Checked) {
+                rndAccuracyToggle.Checked = true;
+                rndAccuracyDropdown.SelectedIndex = 1;
+                rndSpellRebalanceToggle.Checked = true;
+                rndDropLimitToggle.Checked = true;
+                rndWingUnlockToggle.Checked = true;
+                rndBetterDewDrop.Checked = true;
+                rndInvalidityToggle.Checked = true;
+                rndStartingStatsToggle.Checked = true;
+                rndDefTrackBar.Value = 5;
+                rndHitMPToggle.Checked = true;
+                rndHitMPTrackBar.Value = 2;
+                rndHitMPValue.Text = "2x";
+                rndFastShamwoodToggle.Checked = true;
+                rndRevealSpiritsToggle.Checked = true;
+                rndHUDLockToggle.Checked = true;
+                rndMaxMessageToggle.Checked = true;
+            }
+
+            if (!rndFrenchVanillaToggle.Checked) {
+                rndAccuracyToggle.Checked = false;
+                rndAccuracyDropdown.SelectedIndex = 0;
+                rndSpellRebalanceToggle.Checked = false;
+                rndDropLimitToggle.Checked = false;
+                rndWingUnlockToggle.Checked = false;
+                rndBetterDewDrop.Checked = false;
+                rndInvalidityToggle.Checked = false;
+                rndStartingStatsToggle.Checked = false;
+                rndDefTrackBar.Value = 4;
+                rndHitMPToggle.Checked = false;
+                rndHitMPTrackBar.Value = 1;
+                rndHitMPValue.Text = "1x";
+                if (!rndLostKeysToggle.Checked) { rndFastShamwoodToggle.Checked = false; } //only disable if the other isn't using it
+                rndRevealSpiritsToggle.Checked = false;
+                rndHUDLockToggle.Checked = false;
+                rndMaxMessageToggle.Checked = false;                
+            }
+
+            expUpdateWarning();
+            UpdateCode();
+        }
+
         //LOST KEYS OVERRIDE
         public void LostKeysHandling() {
             //Checked
@@ -1240,7 +1288,12 @@ namespace Merrow {
 
                 rndChestToggle.Checked = true; //Shared (between both types of Lost Keys)
                 rndChestToggle.Enabled = false;
+                rndWeightedChestToggle.Checked = true;
+                rndWeightedChestDropdown.Enabled = false;
                 rndWeightedChestDropdown.SelectedIndex = 1;
+                rndWeightedDropsToggle.Checked = true;
+                rndWeightedDropsDropdown.Enabled = false;
+                rndWeightedDropsDropdown.SelectedIndex = 1;
                 rndGiftersToggle.Checked = true;
                 rndGiftersToggle.Enabled = false;
                 rndWingsmithsToggle.Checked = false;
@@ -1251,6 +1304,7 @@ namespace Merrow {
                 rndIvoryWingsToggle.Enabled = false;
                 rndEarlyHealingToggle.Checked = true;
                 rndShannonHintsToggle.Enabled = true;
+                rndShannonHintsToggle.Checked = true;
 
                 //disable all boss items in all item lists. they can be re-added after if so desired, but having only one is the whole point
                 int currItemTab = itemListTabs.SelectedIndex;
@@ -1288,17 +1342,23 @@ namespace Merrow {
 
                 rndChestToggle.Checked = false; //Shared
                 rndChestToggle.Enabled = true;
+                rndWeightedChestToggle.Checked = false;
+                rndWeightedChestDropdown.Enabled = true;
                 rndWeightedChestDropdown.SelectedIndex = 0;
+                rndWeightedDropsToggle.Checked = false;
+                rndWeightedDropsDropdown.Enabled = true;
+                rndWeightedDropsDropdown.SelectedIndex = 0;
                 rndGiftersToggle.Checked = false;
                 rndGiftersToggle.Enabled = true;
                 rndFastMonasteryToggle.Checked = false;
-                rndFastShamwoodToggle.Checked = false;
+                if (!rndFrenchVanillaToggle.Checked) { rndFastShamwoodToggle.Checked = false; } //only disable if the other isn't using it
                 rndFastMammonToggle.Checked = false;
                 rndIvoryWingsToggle.Checked = false;
                 rndIvoryWingsToggle.Enabled = true;
                 rndCrystalReturnToggle.Checked = false;
                 rndEarlyHealingToggle.Checked = false;
                 rndShannonHintsToggle.Enabled = false;
+                rndShannonHintsToggle.Checked = false;
 
                 rndShuffleShannonToggle.Checked = false;
                 rndShuffleShannonToggle.Enabled = true;
