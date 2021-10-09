@@ -248,8 +248,33 @@ namespace Merrow {
                     }
                 }
 
-                //Updated Spell Descriptions
+                //Updated Spell Item Names/Descriptions
                 if (rndSpellItemsToggle.Checked) {
+                    //name
+                    for (int i = 0; i < 6; i++) {
+                        object[] hintdata = new object[2];
+                        string hintstring = "OOPS%";
+
+                        int currelement = 0; //fire
+                        if (newitemspells[i] > 15) { currelement = 1; } //earth
+                        if (newitemspells[i] > 30) { currelement = 2; } //water
+                        if (newitemspells[i] > 45) { currelement = 3; } //wind
+
+                        //string is written
+                        hintstring = library.newSpellItemName[(i * 4) + currelement];
+
+                        hintdata = TranslateString(hintstring);
+
+                        int hintlen = (int)hintdata[1];
+                        //Console.WriteLine(hintdata[0]);
+                        //Console.WriteLine(hintdata[1]);
+
+                        //string is encoded to patch
+                        patchstrings.Add(library.spellItemNameAddr[i]);
+                        patchstrings.Add(hintlen.ToString("X4"));
+                        patchstrings.Add((string)hintdata[0]);
+                    }
+                    //desc
                     for (int i = 0; i < 6; i++) {
                         object[] hintdata = new object[2];
                         string hintstring = "OOPS%";
@@ -268,7 +293,7 @@ namespace Merrow {
                         patchstrings.Add(hintlen.ToString("X4"));
                         patchstrings.Add((string)hintdata[0]);
                     }
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell item descriptions updated." + Environment.NewLine);
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell item names/descriptions updated." + Environment.NewLine);
                 }
             }
 

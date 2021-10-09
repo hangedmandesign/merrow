@@ -640,6 +640,16 @@ namespace Merrow {
         //spell item spell IDs
         public int[] spellItemIDs = { 58,52,38,57,17,22 };
 
+        //spell item name locations
+        public string[] spellItemNameAddr = {
+            "D86C76", //item 8 - spell ?
+            "D86C86", //item 9 - spell ?
+            "D86C9A", //item 10 - spell ?
+            "D86CA6", //item 11 - spell ?
+            "D86CBA", //item 12 - spell ?
+            "D86CCE"  //item 13 - spell ?
+        };
+
         //spell item desc locations
         public string[] spellItemDescAddr = {
             "D86E92", //item 8 - spell ?
@@ -648,6 +658,16 @@ namespace Merrow {
             "D86F32", //item 11 - spell ?
             "D86F6A", //item 12 - spell ?
             "D86FA2"  //item 13 - spell ?
+        };
+
+        //spell item names
+        public string[] newSpellItemName = {
+            "WARPED FLUTE%","ROUGH FLUTE%","RUSTED FLUTE%","SILENT FLUTE%",
+            "AEVAL'S BELL%","MACHA'S BELL%","BRIGID'S BELL%","CELINE'S BELL%",
+            "EFFIGY%","FIGURINE%","REPLICA%","MANIKIN%",
+            "BALOR SABATONS%","DAGDA'S BOOTS%","MANANN WRAPS%","LUGH GREAVES%",
+            "NEMAIN AMULET%","ERNMAS AMULET%","BADB AMULET%","AINE AMULET%",
+            "ELATHA CRYSTAL%","CULANN CRYSTAL%","DIAN CRYSTAL%","LUCHTA CRYSTAL%"
         };
 
         //spell item descriptions
@@ -679,7 +699,7 @@ namespace Merrow {
             "INVERSION AURA.#DRAW POWER FROM PAIN%",
             "WEAKENING BANE.#MAJOR DEFENSE#DECREASE%",
             "STRIKES ALL ENEMIES#WITH RAINING ROCKS%",
-            "ABJURATION WARD.#DISPERSES FOES'#MAGIC%",
+            "ABJURATION WARD.#DISPERSES DARK#MAGIC%",
             "CRASHES A BOULDER#THROUGH YOUR FOES%",
             "WEAKENING BANE.#WIDE DEFENSE#DECREASE%",
             "DRAWS A SMALL PILLAR#OF WATER UPWARD%",
@@ -688,7 +708,7 @@ namespace Merrow {
             "DIVINATION BANE.#READ YOUR FOE'S SOUL%",
             "DRAWS A MIGHTY SPIRE#OF DROWNING WATER%",
             "SUPERCOOLS THE AIR#TO CRYSTALLIZE FOES%",
-            "CASTS FROZEN BLADES#OF RAZOR-SHARP ICE%",
+            "CASTS ICY BLADES#OF RAZOR-SHARP FROST%",
             "SUMMONS A DOORWAY TO#BE FREE OF THE DARK%",
             "VANISH FROM ENEMIES#INTO RADIATING LIGHT%",
             "SUMMONS A PORTAL TO#RETURN YOU TO SAFETY%",
@@ -705,7 +725,7 @@ namespace Merrow {
             "CONJURES A RAGING#STORM OF BLADES%",
             "CONJURES A CLEAVING#BLADE OF PURE FORCE%",
             "IMPRISONING BANE.#BIND FOES TO EARTH%",
-            "IMPLODES THE AIR%TO IMPACT AND SLOW%",
+            "IMPLODES THE AIR#TO IMPACT AND SLOW%",
             "HASTENING AURA.#MAJOR SPEED INCREASE%",
             "UNLEASHES A CYCLONE#OF SPINNING PRESSURE%",
             "TEMPORAL BANE.#SLOW FOES' MOVEMENTS%",
