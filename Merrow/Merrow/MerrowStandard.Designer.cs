@@ -419,6 +419,7 @@
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.rndToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.helpLabel = new System.Windows.Forms.Label();
+            this.rndGifterTextToggle = new System.Windows.Forms.CheckBox();
             this.tabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.newBox.SuspendLayout();
@@ -938,6 +939,7 @@
             // 
             // rndItemsBox
             // 
+            this.rndItemsBox.Controls.Add(this.rndGifterTextToggle);
             this.rndItemsBox.Controls.Add(this.rndWingUnlockDropdown);
             this.rndItemsBox.Controls.Add(this.rndWingUnlockToggle);
             this.rndItemsBox.Controls.Add(this.rndBetterDewDrop);
@@ -975,7 +977,7 @@
             "Houses & Dungeons",
             "Isle of Skye",
             "Anywhere"});
-            this.rndWingUnlockDropdown.Location = new System.Drawing.Point(124, 372);
+            this.rndWingUnlockDropdown.Location = new System.Drawing.Point(124, 396);
             this.rndWingUnlockDropdown.Name = "rndWingUnlockDropdown";
             this.rndWingUnlockDropdown.Size = new System.Drawing.Size(140, 21);
             this.rndWingUnlockDropdown.TabIndex = 12;
@@ -984,7 +986,7 @@
             // rndWingUnlockToggle
             // 
             this.rndWingUnlockToggle.AutoSize = true;
-            this.rndWingUnlockToggle.Location = new System.Drawing.Point(6, 375);
+            this.rndWingUnlockToggle.Location = new System.Drawing.Point(6, 399);
             this.rndWingUnlockToggle.Name = "rndWingUnlockToggle";
             this.rndWingUnlockToggle.Size = new System.Drawing.Size(108, 17);
             this.rndWingUnlockToggle.TabIndex = 11;
@@ -998,7 +1000,7 @@
             // rndBetterDewDrop
             // 
             this.rndBetterDewDrop.AutoSize = true;
-            this.rndBetterDewDrop.Location = new System.Drawing.Point(6, 399);
+            this.rndBetterDewDrop.Location = new System.Drawing.Point(6, 423);
             this.rndBetterDewDrop.Name = "rndBetterDewDrop";
             this.rndBetterDewDrop.Size = new System.Drawing.Size(135, 17);
             this.rndBetterDewDrop.TabIndex = 37;
@@ -1153,7 +1155,7 @@
             this.itemListTabs.Controls.Add(this.DropsTab);
             this.itemListTabs.Controls.Add(this.GiftersTab);
             this.itemListTabs.Controls.Add(this.WingsmithsTab);
-            this.itemListTabs.Location = new System.Drawing.Point(6, 212);
+            this.itemListTabs.Location = new System.Drawing.Point(6, 236);
             this.itemListTabs.Name = "itemListTabs";
             this.itemListTabs.SelectedIndex = 0;
             this.itemListTabs.Size = new System.Drawing.Size(262, 165);
@@ -1595,7 +1597,7 @@
             "GEMS",
             "WINGS + GEMS",
             "CUSTOM"});
-            this.rndWingsmithsDropdown.Location = new System.Drawing.Point(88, 184);
+            this.rndWingsmithsDropdown.Location = new System.Drawing.Point(88, 208);
             this.rndWingsmithsDropdown.Name = "rndWingsmithsDropdown";
             this.rndWingsmithsDropdown.Size = new System.Drawing.Size(180, 21);
             this.rndWingsmithsDropdown.TabIndex = 13;
@@ -1615,7 +1617,7 @@
             // 
             // rndWingsmithsToggle
             // 
-            this.rndWingsmithsToggle.Location = new System.Drawing.Point(6, 187);
+            this.rndWingsmithsToggle.Location = new System.Drawing.Point(6, 211);
             this.rndWingsmithsToggle.Name = "rndWingsmithsToggle";
             this.rndWingsmithsToggle.Size = new System.Drawing.Size(85, 17);
             this.rndWingsmithsToggle.TabIndex = 12;
@@ -2470,7 +2472,7 @@
             this.rndProgressionBox.Controls.Add(this.rndFastMonasteryToggle);
             this.rndProgressionBox.Location = new System.Drawing.Point(3, 3);
             this.rndProgressionBox.Name = "rndProgressionBox";
-            this.rndProgressionBox.Size = new System.Drawing.Size(277, 305);
+            this.rndProgressionBox.Size = new System.Drawing.Size(277, 304);
             this.rndProgressionBox.TabIndex = 0;
             this.rndProgressionBox.TabStop = false;
             this.rndProgressionBox.Text = "PROGRESSION";
@@ -2654,7 +2656,7 @@
             this.rndColoursBox.Controls.Add(this.rndTextViewToggle);
             this.rndColoursBox.Location = new System.Drawing.Point(286, 3);
             this.rndColoursBox.Name = "rndColoursBox";
-            this.rndColoursBox.Size = new System.Drawing.Size(278, 305);
+            this.rndColoursBox.Size = new System.Drawing.Size(278, 304);
             this.rndColoursBox.TabIndex = 27;
             this.rndColoursBox.TabStop = false;
             this.rndColoursBox.Text = "COLOURS";
@@ -2938,7 +2940,7 @@
             this.rndFunBox.Controls.Add(this.rndVowelsToggle);
             this.rndFunBox.Controls.Add(this.rndTextContentDropdown);
             this.rndFunBox.Controls.Add(this.rndRestlessToggle);
-            this.rndFunBox.Location = new System.Drawing.Point(286, 314);
+            this.rndFunBox.Location = new System.Drawing.Point(286, 313);
             this.rndFunBox.Name = "rndFunBox";
             this.rndFunBox.Size = new System.Drawing.Size(277, 164);
             this.rndFunBox.TabIndex = 12;
@@ -3017,7 +3019,7 @@
             this.rndGraphicsBox.Controls.Add(this.rndMaxMessageToggle);
             this.rndGraphicsBox.Controls.Add(this.rndZoomDropdown);
             this.rndGraphicsBox.Controls.Add(this.rndZoomToggle);
-            this.rndGraphicsBox.Location = new System.Drawing.Point(3, 314);
+            this.rndGraphicsBox.Location = new System.Drawing.Point(3, 313);
             this.rndGraphicsBox.Name = "rndGraphicsBox";
             this.rndGraphicsBox.Size = new System.Drawing.Size(276, 164);
             this.rndGraphicsBox.TabIndex = 28;
@@ -4231,6 +4233,23 @@
             this.rndToolTip.SetToolTip(this.helpLabel, "Every function and option has a mouse-over tooltip \r\n(usually on the text label) " +
         "that explains what it does \r\nand what all related options do.");
             // 
+            // rndGifterTextToggle
+            // 
+            this.rndGifterTextToggle.AutoSize = true;
+            this.rndGifterTextToggle.Checked = true;
+            this.rndGifterTextToggle.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.rndGifterTextToggle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rndGifterTextToggle.Enabled = false;
+            this.rndGifterTextToggle.Location = new System.Drawing.Point(26, 187);
+            this.rndGifterTextToggle.Name = "rndGifterTextToggle";
+            this.rndGifterTextToggle.Size = new System.Drawing.Size(201, 17);
+            this.rndGifterTextToggle.TabIndex = 40;
+            this.rndGifterTextToggle.Text = "Update items in Gifter/Wingsmith text";
+            this.rndToolTip.SetToolTip(this.rndGifterTextToggle, "Replaces Gifters\' and Wingsmiths\' text with shorter \r\nsingle-page strings that co" +
+        "ntain the name of the \r\nnew item they carry. Does not apply to Shannons.");
+            this.rndGifterTextToggle.UseVisualStyleBackColor = true;
+            this.rndGifterTextToggle.CheckedChanged += new System.EventHandler(this.rndGifterTextToggle_CheckedChanged);
+            // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4599,6 +4618,7 @@
         private System.Windows.Forms.CheckBox rndRevealSpiritsToggle;
         private System.Windows.Forms.CheckBox rndBrianClothesToggle;
         private System.Windows.Forms.CheckBox rndFrenchVanillaToggle;
+        private System.Windows.Forms.CheckBox rndGifterTextToggle;
     }
 }
 

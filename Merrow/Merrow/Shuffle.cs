@@ -343,51 +343,54 @@ namespace Merrow {
             //initiate item gifts list with vanilla items
             for (int l = 0; l < gifts.Length; l++) { gifts[l] = library.itemgranters[l * 2 + 1]; }
 
-            itemset = itemListView3.CheckedIndices.Cast<int>().ToArray();
-            setlength = itemset.Length;
+            //added toggle so that base gifter list is unshuffled if not enabled
+            if (rndGiftersToggle.Checked) { 
+                itemset = itemListView3.CheckedIndices.Cast<int>().ToArray();
+                setlength = itemset.Length;
 
-            //randomized gifts happen first so they can be shuffled after
-            if (rndGiftersDropdown.SelectedIndex >= 1 && setlength > 0) {
-                int c = gifts.Length;
+                //randomized gifts happen first so they can be shuffled after
+                if (rndGiftersDropdown.SelectedIndex >= 1 && setlength > 0) {
+                    int c = gifts.Length;
 
-                while (c > 0) { //fill the array with items
-                    c--;
-                    k = itemset[SysRand.Next(setlength)];
-                    gifts[c] = k;
+                    while (c > 0) { //fill the array with items
+                        c--;
+                        k = itemset[SysRand.Next(setlength)];
+                        gifts[c] = k;
+                    }
+
+                    if (!rndShuffleShannonToggle.Checked) { //ensure there's at least one book and key in the array
+                        gifts[8] = 24;
+                        gifts[9] = 25;
+                    }
                 }
 
-                if (!rndShuffleShannonToggle.Checked) { //ensure there's at least one book and key in the array
-                    gifts[8] = 24;
-                    gifts[9] = 25;
+                //gift shuffling, happens for both random/shuffle options
+                d = gifts.Length;
+                while (d > 1) {
+                    d--;
+                    k = SysRand.Next(d + 1);
+                    int temp = gifts[k];
+                    gifts[k] = gifts[d];
+                    gifts[d] = temp;
                 }
-            }
 
-            //gift shuffling, happens for both random/shuffle options
-            d = gifts.Length;
-            while (d > 1) {
-                d--;
-                k = SysRand.Next(d + 1);
-                int temp = gifts[k];
-                gifts[k] = gifts[d];
-                gifts[d] = temp;
-            }
-
-            //if final shannons are not forced vanilla, guarantee key/book are never on them to avoid softlocks
-            if (!rndShuffleShannonToggle.Checked) {
-                int newloc1 = 0;
-                int newloc2 = 0;
-                if (gifts[8] == 24 || gifts[8] == 25) { //if the first shannon item is book or key
-                    newloc1 = SysRand.Next(8); //pick a gifter slot from 0-7 to rotate it into
-                    int temp = gifts[8];
-                    gifts[8] = gifts[newloc1];
-                    gifts[newloc1] = temp;
-                }
-                if (gifts[9] == 24 || gifts[9] == 25) { //if the second shannon item is book or key
-                    newloc2 = SysRand.Next(8);
-                    while (newloc2 == newloc1) { newloc2 = SysRand.Next(8); } //guarantee it's in a different slot than the first
-                    int temp = gifts[9];
-                    gifts[9] = gifts[newloc2];
-                    gifts[newloc2] = temp;
+                //if final shannons are not forced vanilla, guarantee key/book are never on them to avoid softlocks
+                if (!rndShuffleShannonToggle.Checked) {
+                    int newloc1 = 0;
+                    int newloc2 = 0;
+                    if (gifts[8] == 24 || gifts[8] == 25) { //if the first shannon item is book or key
+                        newloc1 = SysRand.Next(8); //pick a gifter slot from 0-7 to rotate it into
+                        int temp = gifts[8];
+                        gifts[8] = gifts[newloc1];
+                        gifts[newloc1] = temp;
+                    }
+                    if (gifts[9] == 24 || gifts[9] == 25) { //if the second shannon item is book or key
+                        newloc2 = SysRand.Next(8);
+                        while (newloc2 == newloc1) { newloc2 = SysRand.Next(8); } //guarantee it's in a different slot than the first
+                        int temp = gifts[9];
+                        gifts[9] = gifts[newloc2];
+                        gifts[newloc2] = temp;
+                    }
                 }
             }
 
@@ -396,24 +399,27 @@ namespace Merrow {
             //initiate wingsmiths list
             for (int l = 0; l < wings.Length; l++) { wings[l] = library.itemgranters[20 + (l * 2 + 1)]; } //20 ahead to get to wingsmiths
 
-            itemset = itemListView4.CheckedIndices.Cast<int>().ToArray();
-            setlength = itemset.Length;
+            //added the check for the toggle so that the default wing list goes unshuffled
+            if (rndWingsmithsToggle.Checked) { 
+                itemset = itemListView4.CheckedIndices.Cast<int>().ToArray();
+                setlength = itemset.Length;
 
-            if (rndWingsmithsDropdown.SelectedIndex >= 1 && setlength > 0) {
-                for (int c = 0; c < wings.Length; c++) {
-                    k = itemset[SysRand.Next(setlength)];
-                    wings[c] = k;
+                if (rndWingsmithsDropdown.SelectedIndex >= 1 && setlength > 0) {
+                    for (int c = 0; c < wings.Length; c++) {
+                        k = itemset[SysRand.Next(setlength)];
+                        wings[c] = k;
+                    }
                 }
-            }
 
-            //wing shuffling, happens for both random/shuffle options
-            d = wings.Length;
-            while (d > 1) {
-                d--;
-                k = SysRand.Next(d + 1);
-                int temp = wings[k];
-                wings[k] = wings[d];
-                wings[d] = temp;
+                //wing shuffling, happens for both random/shuffle options
+                d = wings.Length;
+                while (d > 1) {
+                    d--;
+                    k = SysRand.Next(d + 1);
+                    int temp = wings[k];
+                    wings[k] = wings[d];
+                    wings[d] = temp;
+                }
             }
 
             //TEXT SHUFFLING (May be based on dropdown value more later, text shortening, whatever)

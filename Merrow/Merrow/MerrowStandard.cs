@@ -609,12 +609,13 @@ namespace Merrow {
         private void rndGiftersToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndGiftersToggle.Checked) {
                 rndGiftersDropdown.Enabled = true;
+                rndGifterTextToggle.Enabled = true;
                 if(!rndLostKeysToggle.Checked) { rndShuffleShannonToggle.Enabled = true; }
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 2;
-            }
-            else {
+            } else {
                 rndGiftersDropdown.Enabled = false;
+                if (!rndWingsmithsToggle.Checked) { rndGifterTextToggle.Enabled = false; }
                 rndShuffleShannonToggle.Enabled = false;
                 if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
                     itemListTabs.Visible = false;
@@ -626,11 +627,13 @@ namespace Merrow {
         private void rndWingsmithsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndWingsmithsToggle.Checked) {
                 rndWingsmithsDropdown.Enabled = true;
+                rndGifterTextToggle.Enabled = true;
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 3;
             }
             else {
                 rndWingsmithsDropdown.Enabled = false;
+                if (!rndGiftersToggle.Checked) { rndGifterTextToggle.Enabled = false; }
                 if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
                     itemListTabs.Visible = false;
                 }
@@ -1033,7 +1036,7 @@ namespace Merrow {
                 itemListView4.Items[14].ImageIndex = 31;
                 library.items[42] = "IVORY WINGS";
                 library.itemgranters[20] = 6208279;
-                library.granternames[10] = "Lavaar (Shamwood Wingsmith)";
+                library.gifternames[10] = "Lavaar (Shamwood Wingsmith)";
             } else {
                 itemListView1.Items[14].Text = "WW";
                 itemListView2.Items[14].Text = "WW";
@@ -1045,7 +1048,7 @@ namespace Merrow {
                 itemListView4.Items[14].ImageIndex = 14;
                 library.items[42] = "WHITE WINGS";
                 library.itemgranters[20] = 4847891;
-                library.granternames[10] = "Ingram (Melrode Wingsmith)";
+                library.gifternames[10] = "Ingram (Melrode Wingsmith)";
             }
             UpdateCode();
         }
@@ -1221,6 +1224,10 @@ namespace Merrow {
         }
 
         private void rndBrianClothesToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
+        private void rndGifterTextToggle_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
         }
 

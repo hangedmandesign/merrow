@@ -576,23 +576,84 @@ namespace Merrow {
             6130543, 19  //Wing
         };
 
-        public string[] granternames = {
-            "Pat (Monastery Kitchen)",
-            "Mable (Dondoran Bar)",
-            "Maggie (Dondoran Bar)",
-            "Galita (Larapool Inn)",
-            "Hector (Normoon House)",
-            "Rhett (Limelin Tavern)",
-            "Morris (Brannoch House)",
-            "Bronze (Greenoch Shop)",
-            "Shannon (Brannoch Castle)",
-            "Shannon (Mammon's World)",
-            "Ingram (Melrode Wingsmith)",
-            "Thom (Dondoran Wingsmith)",
-            "Jiryo (Larapool Wingsmith)",
-            "Anette (Normoon Wingsmith)",
-            "Ring (Limelin Wingsmith)",
-            "Tom (Brannoch Wingsmith)"
+        public string[] gifternames = {
+            "Pat (Monastery Kitchen)", //0
+            "Mable (Dondoran Bar)", //1
+            "Maggie (Dondoran Bar)", //2
+            "Galita (Larapool Inn)", //3
+            "Hector (Normoon House)", //4
+            "Rhett (Limelin Tavern)", //5
+            "Morris (Brannoch House)", //6
+            "Bronze (Greenoch Shop)", //7
+            "Shannon (Brannoch Castle)", //8
+            "Shannon (Mammon's World)", //9
+            "Ingram (Melrode Wingsmith)", //10
+            "Thom (Dondoran Wingsmith)", //11
+            "Jiryo (Larapool Wingsmith)", //12
+            "Anette (Normoon Wingsmith)", //13
+            "Ring (Limelin Wingsmith)", //14
+            "Tom (Brannoch Wingsmith)" //15
+        };
+
+        //updated text strings for gifters 0-7/10-15. First string is starting point, A0C0 + second string + item name + third string is content.
+        public string[] newgiftertext = {
+            "d32920","Welcome to the kitchen.#Please take this#fine ",",#I made it myself.%",           //00:Pat A
+            "d329b0","If the ","#is gone, come back#for more. I'll have#it ready.%",                    //00:Pat B
+            "d33710","Oh, what a handsome lad.#Show us some magic and#I'll give you some#",".%",        //01: Mable A
+            "d337a8","Ah, I'd treat you to#some ",",#but you have some.#Next time, perhaps.%",          //01: Mable B
+            "d33fa8","Welcome to our tavern!#You must be hungry.#Please help yourself#to ",".%",        //02: Maggie A
+            "d34048","There is always some more#"," for#you. Come again#if you run out.%",              //02: Maggie B
+            "d35ff8","We are very short on#supplies, but I#can give you some#",".%",                    //03: Galita A
+            "d360b0","My garden is rich in#",". If#you run out, I'll#get some more.%",                  //03: Galita B
+            "d36708","I'd like to give you#some ",".#It's Normoon's specialty.%",                       //04: Hector A
+            "d367b0","If you eat all your#",", don't worry.#I'll give you more.%",                      //04: Hector B
+            "d37cb0","I'm a travelling merchant.#Here, I'll give you some ",". I've too many.%",        //05: Rhett A
+            "d37d50","Hello again, laddie. If#you should run out of#",", tell me.%",                    //05: Rhett B
+            "d39498","Here, I'll give you this#",". We#have no need of it.%",                           //06: Morris A
+            "d39530","If you run out of your#",", come by.#You mustn't be in#a hurry to die.%",         //06: Morris B
+            "d3b990","There's little left after#the fire, but I saved#some ",".#Please take one.%",     //07: Bronze A
+            "d3ba70","If you have no#"," left,#I've got a few more.%",                                  //07: Bronze B
+            "d33c98","You're the Melrode#magician apprentice!#Take ",",#they may help you.%",           //11: Thom A
+            "d33d88","Ah, it seems that you#already have some#",". Come#back if you run out.%",         //11: Thom B
+            "d35e60","You're a wee lad to be#traveling about. I'll give#you ",".%",                     //12: Jiryo A
+            "d35f18","Hey! I would give you#",", but you#already have some.%",                          //12: Jiryo B
+            "d36f08","I'm just a hag, but#I am the keeper of the#",".%",                                //13: Annette A
+            "d36fd8","If you lose all your#",", I'll give#you some more.%",                             //13: Annette B
+            "d37ee0","Why don't you keep#these ","?#In case your enemies#prove too strong.%",           //14: Ring A
+            "d37fc8","So, you've come back for#my ",".#Use yours carefully.%",                          //14: Ring B
+            "d38d98","I haven't had a customer#in ages. I'll give you#some ",".%",                      //15: Tom A
+            "d38e58","If you lose all your#",", swing by.#I'll give you more.%",                        //15: Tom B
+
+            "d32190","Ready to travel, are you?#We've no more White Wings,#but seek the Ivory Wings.%", //10: Ingram A
+            "d32280","Ready to travel, are you?#We've no more White Wings,#but seek the Ivory Wings.%"  //10: Ingram B
+        };
+
+        public string[] itemcapitalcase = {
+            "Spirit Light",
+            "Fresh Bread",
+            "Honey Bread",
+            "Healing Potion",
+            "Dragon Potion",
+            "Dew Drop",
+            "Mint Leaves",
+            "Heroes Drink",
+            "Silent Flute",
+            "Celine's Bell",
+            "Replica",
+            "Giant's Shoes",
+            "Silver Amulet",
+            "Golden Amulet",
+            "White Wings",
+            "Yellow Wings",
+            "Blue Wings",
+            "Green Wings",
+            "Red Wings",
+            "Black Wings",
+            "Earth Orb",
+            "Wind Jade",
+            "Water Jewel",
+            "Fire Ruby",
+            "Eletale Book"
         };
 
         //item lists for the item randomization options.

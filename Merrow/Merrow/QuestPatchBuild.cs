@@ -432,7 +432,7 @@ namespace Merrow {
                     patchstrings.Add("0001");
                     patchstrings.Add(gifts[i].ToString("X2"));
 
-                    spoilergifts[i] = library.granternames[i] + ": " + library.items[gifts[i] * 3];
+                    spoilergifts[i] = library.gifternames[i] + ": " + library.items[gifts[i] * 3];
                 }
 
                 if (rndShuffleShannonToggle.Checked && !rndLostKeysToggle.Checked) { //if shannons are forced vanilla, add this note about them being vanilla
@@ -472,7 +472,7 @@ namespace Merrow {
                     patchstrings.Add("0001");
                     patchstrings.Add(wings[i].ToString("X2"));
 
-                    spoilerwings[i] = library.granternames[i + 10] + ": " + library.items[wings[i] * 3]; //advance 10 to skip gifters
+                    spoilerwings[i] = library.gifternames[i + 10] + ": " + library.items[wings[i] * 3]; //advance 10 to skip gifters
                 }
 
                 if (rndWingsmithsDropdown.SelectedIndex == 0) {
@@ -480,6 +480,42 @@ namespace Merrow {
                 }
                 else {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Wingsmiths randomized (" + library.randomtype[rndWingsmithsDropdown.SelectedIndex] + ")." + Environment.NewLine);
+                }
+            }
+
+            //Updated Gifter/Wingsmith text
+            if (rndGiftersToggle.Checked || rndWingsmithsToggle.Checked) { //only has an effect if one or both are enabled
+                if (rndGifterTextToggle.Checked) {
+                    if (rndIvoryWingsToggle.Checked) { library.itemcapitalcase[14] = "Ivory Wings"; }
+                    int[] gifternum = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 10, 10 };
+                    for (int i = 0; i < 28; i++) {
+                        object[] hintdata = new object[2];
+                        string hintstring = "OOPS%";
+
+                        //gifters
+                        if (i <= 15) { 
+                            hintstring = library.newgiftertext[(i * 3) + 1] + library.itemcapitalcase[gifts[gifternum[i]]] + library.newgiftertext[(i * 3) + 2];
+                        }
+                        //regular wingsmiths
+                        if (i >= 16 && i <= 25) {
+                            hintstring = library.newgiftertext[(i * 3) + 1] + library.itemcapitalcase[wings[gifternum[i] - 10]] + library.newgiftertext[(i * 3) + 2];
+                        }
+                        //Melrode wingsmith A/B
+                        if (i == 26) { hintstring = library.newgiftertext[79]; }
+                        if (i == 27) { hintstring = library.newgiftertext[81]; }
+
+                        hintdata = TranslateString(hintstring);
+                        int hintlen = (int)hintdata[1] + 2; //add 2 for A0C0
+
+                        //string is encoded to patch
+                        if (i < 26) { patchstrings.Add(library.newgiftertext[i * 3]); }
+                        if (i == 26) { patchstrings.Add(library.newgiftertext[78]); }
+                        if (i == 27) { patchstrings.Add(library.newgiftertext[80]); }
+                        patchstrings.Add(hintlen.ToString("X4"));
+                        patchstrings.Add("A0C0" + (string)hintdata[0]);
+                    }
+
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Gifter/Wingsmith text updated." + Environment.NewLine);
                 }
             }
 
@@ -1040,7 +1076,7 @@ namespace Merrow {
                     patchstrings.Add("000E");
 
                     for (int i = 0; i < wings.Length; i++) {
-                        spoilerwings[i] = library.granternames[i + 10] + ": " + library.items[(14 + i) * 3]; //advance 10 to skip gifters
+                        spoilerwings[i] = library.gifternames[i + 10] + ": " + library.items[(14 + i) * 3]; //advance 10 to skip gifters
                     }
                 }
 
