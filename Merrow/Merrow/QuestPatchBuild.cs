@@ -1197,10 +1197,23 @@ namespace Merrow {
                     object[] hintdata = new object[2];
                     string hintstring = "This is a hint.#Did it break?$If so, RIP%";
                     string localgem = library.gemnames[gemIDs[i] - 20];
+                    int coinflip = SysRand.Next(2);
+                    string hintword = "";
+
+                    if (i == 0) { hintword = library.earthhints[(hints[0] * 2) + coinflip]; }
+                    if (i == 1) { hintword = library.windhints[(hints[1] * 2) + coinflip]; }
+                    if (i == 2) { hintword = library.waterhints[(hints[2] * 2) + coinflip]; }
+                    if (i == 3) { hintword = library.firehints[(hints[3] * 2) + coinflip]; }
+                    if (i == 4) { hintword = library.bookhints[(hints[4] * 2) + coinflip]; }
+
+                    //123456789012345678901234567
+                    //good of all Celtland.
+
+                    coinflip = SysRand.Next(2);
 
                     //string is written
-                    if (hints[i] == 1) { hintstring = "The " + localgem + " currently#rests in someone's hands.$Hopefully they do not make#use of it before you can#retrieve it.%"; }
-                    if (hints[i] == 2) { hintstring = "The " + localgem + " resides#somewhere forgotten.$We must ensure it remains#locked away.%"; }
+                    if (coinflip == 0) { hintstring = "The " + localgem + " currently#rests somewhere " + hintword + ".#You must find it before any#darker purposes befall it.%"; }
+                    if (coinflip == 1) { hintstring = "The " + localgem + " resides#in a " + hintword + " place.#We must retrieve it for the#good of all Celtland.%"; }
 
                     hintdata = TranslateString(hintstring);
 

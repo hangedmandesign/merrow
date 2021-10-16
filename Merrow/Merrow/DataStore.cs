@@ -597,42 +597,44 @@ namespace Merrow {
 
         //updated text strings for gifters 0-7/10-15. First string is starting point, A0C0 + second string + item name + third string is content.
         public string[] newgiftertext = {
+            //--------123456789012345678901234567
+            //--------but seek the Ivory Wings in
             "d32920","Welcome to the kitchen.#Please take this#fine ",",#I made it myself.%",           //00:Pat A
-            "d329b0","If the ","#is gone, come back#for more. I'll have#it ready.%",                    //00:Pat B
+            "d329b0","If the ","#runs out, do come back#for more. I'll have#it ready.%",                //00:Pat B
             "d33710","Oh, what a handsome lad.#Show us some magic and#I'll give you some#",".%",        //01: Mable A
-            "d337a8","Ah, I'd treat you to#some ",",#but you have some.#Next time, perhaps.%",          //01: Mable B
+            "d337a8","Ah, I'd treat you to#some ",",#but you already have some.#Next time, perhaps.%",  //01: Mable B
             "d33fa8","Welcome to our tavern!#You must be hungry.#Please help yourself#to ",".%",        //02: Maggie A
-            "d34048","There is always some more#"," for#you. Come again#if you run out.%",              //02: Maggie B
-            "d35ff8","We are very short on#supplies, but I#can give you some#",".%",                    //03: Galita A
-            "d360b0","My garden is rich in#",". If#you run out, I'll#get some more.%",                  //03: Galita B
+            "d34048","There is always some more#"," for you.#Come again if you run out.%",              //02: Maggie B
+            "d35ff8","We are short on supplies,#but I can give you some#",".%",                         //03: Galita A
+            "d360b0","My garden is rich in#",", so if#you run out, I'll get more.%",                    //03: Galita B
             "d36708","I'd like to give you#some ",".#It's Normoon's specialty.%",                       //04: Hector A
             "d367b0","If you eat all your#",", don't worry.#I'll give you more.%",                      //04: Hector B
-            "d37cb0","I'm a travelling merchant.#Here, I'll give you some ",". I've too many.%",        //05: Rhett A
-            "d37d50","Hello again, laddie. If#you should run out of#",", tell me.%",                    //05: Rhett B
-            "d39498","Here, I'll give you this#",". We#have no need of it.%",                           //06: Morris A
-            "d39530","If you run out of your#",", come by.#You mustn't be in#a hurry to die.%",         //06: Morris B
-            "d3b990","There's little left after#the fire, but I saved#some ",".#Please take one.%",     //07: Bronze A
-            "d3ba70","If you have no#"," left,#I've got a few more.%",                                  //07: Bronze B
-            "d33c98","You're the Melrode#magician apprentice!#Take ",",#they may help you.%",           //11: Thom A
-            "d33d88","Ah, it seems that you#already have some#",". Come#back if you run out.%",         //11: Thom B
-            "d35e60","You're a wee lad to be#traveling about. I'll give#you ",".%",                     //12: Jiryo A
+            "d37cb0","I'm a travelling merchant.#Here, I'll give you some#",", I've many.%",            //05: Rhett A
+            "d37d50","Hello again, laddie.#If you should run out of#",", tell me.%",                    //05: Rhett B
+            "d39498","Here, I'll give you this#",". We've#no need of it anymore.%",                     //06: Morris A
+            "d39530","If you run out of your#",", come by.#A young one mustn't be in#a hurry to die.%", //06: Morris B
+            "d3b990","There's little left after#the fire, but I did save a#few ",".#Please take one.%", //07: Bronze A
+            "d3ba70","If you've no ","#left, I've got a few more.%",                                    //07: Bronze B
+            "d33c98","You're the Melrode#magician apprentice!#Take some ",",#they may help you.%",      //11: Thom A
+            "d33d88","Ah, it seems that you've#already got ",".#Come back if you run out.%",            //11: Thom B
+            "d35e60","You're a wee lad to be#traveling about. I'll give#you some ",".%",                //12: Jiryo A
             "d35f18","Hey! I would give you#",", but you#already have some.%",                          //12: Jiryo B
-            "d36f08","I'm just a hag, but#I am the keeper of the#",".%",                                //13: Annette A
+            "d36f08","I'm just a hag, but I'm the#keeper of ",".%",                                    //13: Annette A
             "d36fd8","If you lose all your#",", I'll give#you some more.%",                             //13: Annette B
-            "d37ee0","Why don't you keep#these ","?#In case your enemies#prove too strong.%",           //14: Ring A
-            "d37fc8","So, you've come back for#my ",".#Use yours carefully.%",                          //14: Ring B
-            "d38d98","I haven't had a customer#in ages. I'll give you#some ",".%",                      //15: Tom A
+            "d37ee0","Why don't you keep these#","? In case your#enemies prove too strong.%",           //14: Ring A
+            "d37fc8","So, you've come back for#my ",", have you?#Use yours carefully.%",                //14: Ring B
+            "d38d98","I haven't had a customer#in ages! I'll give you some#",".%",                      //15: Tom A
             "d38e58","If you lose all your#",", swing by.#I'll give you more.%",                        //15: Tom B
 
-            "d32190","Ready to travel, are you?#We've no more White Wings,#but seek the Ivory Wings.%", //10: Ingram A
-            "d32280","Ready to travel, are you?#We've no more White Wings,#but seek the Ivory Wings.%"  //10: Ingram B
+            "d32190","Ready to travel, are you?#We've no more White Wings,#but seek the Ivory Wings in#a place beyond time.%", //10: Ingram A
+            "d32280","Ready to travel, are you?#We've no more White Wings,#but seek the Ivory Wings in#a place beyond time.%"  //10: Ingram B
         };
 
         public string[] itemcapitalcase = {
             "Spirit Light",
             "Fresh Bread",
             "Honey Bread",
-            "Healing Potion",
+            "Health Potion",
             "Dragon Potion",
             "Dew Drop",
             "Mint Leaves",
@@ -653,7 +655,8 @@ namespace Merrow {
             "Wind Jade",
             "Water Jewel",
             "Fire Ruby",
-            "Eletale Book"
+            "Eletale Book",
+            "Dark Gaol Key"
         };
 
         //item lists for the item randomization options.
@@ -726,9 +729,9 @@ namespace Merrow {
             "WARPED FLUTE%","ROUGH FLUTE%","RUSTED FLUTE%","SILENT FLUTE%",
             "AEVAL'S BELL%","MACHA'S BELL%","BRIGID'S BELL%","CELINE'S BELL%",
             "EFFIGY%","FIGURINE%","REPLICA%","MANIKIN%",
-            "BALOR SABATONS%","DAGDA'S BOOTS%","MANANN WRAPS%","LUGH GREAVES%",
+            "BALOR SABATON%","DAGDA'S BOOTS%","MANANN WRAPS%","LUGH GREAVES%",
             "NEMAIN AMULET%","ERNMAS AMULET%","BADB AMULET%","AINE AMULET%",
-            "ELATHA CRYSTAL%","CULANN CRYSTAL%","DIAN CRYSTAL%","LUCHTA CRYSTAL%"
+            "ELATHA STONE%","CULANN STONE%","DIAN STONE%","LUCHTA STONE%"
         };
 
         //spell item descriptions
@@ -1450,6 +1453,142 @@ namespace Merrow {
             "Water Jewel",
             "Fire Ruby",
             "Eletale Book"
+        };
+
+        public string[] earthhints = {
+            "vile","dark",//0
+            "hidden","warm",//1
+            "hidden","bright",//2
+            "hidden","warm",//3
+            "hidden","warm",//4
+            "hidden","gilded",//5
+            "hidden","gilded",//6
+            "hidden","gilded",//7
+            "hidden","gilded",//8
+            "hidden","gilded",//9
+            "hidden","gilded",//10
+            "hidden","warm",//11
+            "hidden","dark",//12
+            "hidden","dark",//13
+            "hidden","dark",//14
+            "hidden","lost",//15
+            "bright","warm",//16
+            "bright","warm",//17
+            "bright","warm"//18
+        };
+
+        public string[] windhints = {
+            "vile","windy",//0
+            "hidden","gilded",//1
+            "hidden","gilded",//2
+            "hidden","gilded",//3
+            "hidden","warm",//4
+            "hidden","warm",//5
+            "hidden","warm",//6
+            "hidden","warm",//7
+            "hidden","windy",//8
+            "hidden","windy",//9
+            "hidden","windy",//10
+            "hidden","windy",//11
+            "hidden","windy",//12
+            "hidden","warm",//13
+            "hidden","lost",//14
+            "hidden","lost",//15
+            "bright","warm",//16
+            "bright","warm"//17
+        };
+
+        public string[] waterhints = {
+            "vile","windy",//0
+            "hidden","gilded",//1
+            "hidden","gilded",//2
+            "hidden","gilded",//3
+            "hidden","warm",//4
+            "hidden","warm",//5
+            "hidden","warm",//6
+            "hidden","warm",//7
+            "hidden","windy",//8
+            "hidden","windy",//9
+            "hidden","windy",//10
+            "hidden","windy",//11
+            "hidden","windy",//12
+            "hidden","warm",//13
+            "hidden","lost",//14
+            "hidden","lost",//15
+            "bright","warm",//16
+            "bright","warm",//17
+            "vile","damp",//18
+            "hidden","damp",//19
+            "hidden","warm",//20
+            "hidden","damp",//21
+            "hidden","damp",//22
+            "hidden","damp",//23
+            "hidden","damp",//24
+            "hidden","damp"//25
+        };
+
+        public string[] firehints = {
+            "vile","lost",//0
+            "vile","burning",//1
+            "hidden","lost",//2
+            "hidden","gilded",//3
+            "hidden","gilded",//4
+            "hidden","gilded",//5
+            "hidden","warm",//6
+            "hidden","gilded",//7
+            "hidden","gilded",//8
+            "hidden","gilded",//9
+            "hidden","warm",//10
+            "hidden","warm",//11
+            "hidden","warm",//12
+            "hidden","warm",//13
+            "hidden","lost",//14
+            "hidden","lost",//15
+            "hidden","lost",//16
+            "hidden","lost",//17
+            "hidden","lost",//18
+            "hidden","lost",//19
+            "hidden","lost",//20
+            "hidden","lost",//21
+            "hidden","lost",//22
+            "hidden","lost",//23
+            "hidden","dark",//24
+            "hidden","dark",//25
+            "hidden","dark",//26
+            "hidden","dark",//27
+            "hidden","dark",//28
+            "hidden","dark",//29
+            "hidden","dark",//30
+            "hidden","burning",//31
+            "hidden","burning",//32
+            "hidden","burning",//33
+            "hidden","burning",//34
+            "bright","warm",//35
+            "bright","lost"//36
+        };
+
+        public string[] bookhints = {
+            "vile","dark",//0
+            "hidden","warm",//1
+            "hidden","warm",//2
+            "hidden","warm",//3
+            "hidden","warm",//4
+            "hidden","warm",//5
+            "hidden","warm",//6
+            "hidden","burning",//7
+            "hidden","hateful",//8
+            "hidden","hateful",//9
+            "hidden","hateful",//10
+            "hidden","hateful",//11
+            "hidden","hateful",//12
+            "hidden","hateful",//13
+            "hidden","bright",//14
+            "hidden","bright",//15
+            "hidden","bright",//16
+            "hidden","bright",//17
+            "hidden","bright",//18
+            "dark","warm",//19
+            "forlorn","windy"//20
         };
 
         //72 entries, offset is +8 from addr (single/double total is 208 values)

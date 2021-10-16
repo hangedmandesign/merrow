@@ -140,9 +140,13 @@ However, exports will automatically overwrite any existing file with the same na
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Added 'Update items in Gifter/Wingsmith text', which gives them shorter strings that list the correct item.
-● Added FRENCH VANILLA ruleset option, a set of suggested Quality-of-Life options. Compatible with Lost Keys.
+    <value>● Added FRENCH VANILLA ruleset option, a set of suggested Quality-of-Life options. Compatible with LOST KEYS.
+● Added 'Update items in Gifter/Wingsmith text', which gives them shorter strings that list the correct item.
+● Shannon Hints are improved, and every item location gets two possible adjectives: (item carrier) or (area description). NOTE: There may be an edge case where the hint breaks if the Eletale Book is on Shannon. Needs more testing.
 ● Changed 'Update spell item descriptions' to 'Update spell items': shuffled spell items will now have new names based on their new spell's element.
+
+NEW GUIDE: 
+Now included with Merrow is a PDF guide to LOST KEYS, that hopefully explains the ruleset more easily (and also talks about other randomizer features!) We welcome any feedback on the guide, it'll also receive updates as time goes on.
 
 FIXED ERRORS: 
 ● Reassigned spell items can now be used on bosses.
@@ -152,6 +156,14 @@ FIXED ERRORS:
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
 Merrow is offered without warranty and is experimental software. 
 Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
+  </data>
+  <data name="linkLabel1.Text" xml:space="preserve">
+    <value>Data Exploration, Testing and Feedback:
+Andypanther, Bingchang, BurrItsCold, Countdown, 
+DrunkKami, FeralDemon, FireEmbliem,
+Irenepunmaster, Jeville, Kao, Kirkq, Landmine36, 
+Mallos31, Midboss, Mwobee, Raphix, Schooliedee, 
+Supmarf, Usedpizza, xIceBlue</value>
   </data>
   <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
     <value>A shortcode that contains the currently-enabled
@@ -206,7 +218,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAUABAwFAAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAVABAwFQAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
