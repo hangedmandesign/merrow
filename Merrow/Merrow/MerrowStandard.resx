@@ -139,42 +139,6 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
-  <data name="newLabel.Text" xml:space="preserve">
-    <value>● Added FRENCH VANILLA ruleset option, a set of suggested Quality-of-Life options. Compatible with LOST KEYS.
-● Added 'Update items in Gifter/Wingsmith text', which gives them shorter strings that list the correct item.
-● Shannon Hints are improved, and every item location gets two possible adjectives: (item carrier) or (area description). NOTE: There may be an edge case where the hint breaks if the Eletale Book is on Shannon. Needs more testing.
-● Changed 'Update spell item descriptions' to 'Update spell items': shuffled spell items will now have new names based on their new spell's element.
-
-NEW GUIDE: 
-Now included with Merrow is a PDF guide to LOST KEYS, that hopefully explains the ruleset more easily (and also talks about other randomizer features!) We welcome any feedback on the guide, it'll also receive updates as time goes on.
-
-FIXED ERRORS: 
-● Reassigned spell items can now be used on bosses.
-● Fixed a couple of new spell item descriptions that could run slightly over the length limit due to punctuation.</value>
-  </data>
-  <data name="termsLinkLabel.Text" xml:space="preserve">
-    <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
-Merrow is offered without warranty and is experimental software. 
-Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
-  </data>
-  <data name="linkLabel1.Text" xml:space="preserve">
-    <value>Data Exploration, Testing and Feedback:
-Andypanther, Bingchang, BurrItsCold, Countdown, 
-DrunkKami, FeralDemon, FireEmbliem,
-Irenepunmaster, Jeville, Kao, Kirkq, Landmine36, 
-Mallos31, Midboss, Mwobee, Raphix, Schooliedee, 
-Supmarf, Usedpizza, xIceBlue</value>
-  </data>
-  <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
-    <value>A shortcode that contains the currently-enabled
-randomizer settings. Editing this code will change
-all the settings at once. Codes are tied to version
-numbers, because the number of Merrow options
-changes from version to version.
-
-Error-checking isn't perfect yet, so invalid codes 
-should just blank themselves. They may crash.</value>
-  </data>
   <data name="rndShuffleShannonToggle.ToolTip" xml:space="preserve">
     <value>Shuffle/randomization will exclude the final two Shannons entirely, 
 so the Eletale Book and the Dark Gaol Key will be in their original locations.
@@ -210,6 +174,67 @@ GEMS: Drops are randomized to contain any Elemental Gem.
 WINGS&amp;GEMS: Drops are randomized to contain any wing or Elemental Gem.
 CUSTOM: Drops are randomized as selected below.</value>
   </data>
+  <data name="rndGiftersToggle.ToolTip" xml:space="preserve">
+    <value>Shuffle/randomize the items granted by item-gifting NPCs. 
+Shannons and their endgame items (Eletale Book and Dark Gaol Key) are included by default, 
+but softlock protection will guarantee that they will be granted by earlier gifters.
+Optionally, use the toggle below to exclude Shannons: they will carry their items as default.
+[WARNING - Including gems or wings can cause sequence breaks.]
+
+SHUFFLED: All default gift items are shuffled among all gift NPCs.
+STANDARD: Gifts are randomized to be any standard item.
+STANDARD&amp;WINGS: Gifts are randomized to be any standard item or wing. 
+STANDARD&amp;GEMS: Gifts are randomized to be any standard item or Elemental Gem.
+CHAOS: Gifts are randomized to be any standard item, wing, or Elemental Gem.
+WINGS: Gifts are randomized to be any wing.
+GEMS: Gifts are randomized to be any Elemental Gem.
+WINGS&amp;GEMS: Gifts are randomized to be any wing or Elemental Gem.
+CUSTOM: Gifts are randomized as set in the below menu.</value>
+  </data>
+  <data name="rndWingsmithsToggle.ToolTip" xml:space="preserve">
+    <value>Change the items granted by Wingsmith NPCs.
+[WARNING - Any of these options can cause sequence breaks.]
+
+SHUFFLED: All wings are shuffled among all wingsmith NPCs.
+STANDARD: Wingsmith items are randomized to be any standard item.
+STANDARD&amp;WINGS: Wingsmith items are randomized to be any standard item or wing. 
+STANDARD&amp;GEMS: Wingsmith items are randomized to be any standard item or Elemental Gem.
+CHAOS: Wingsmith items are randomized to be any standard item, wing, or Elemental Gem.
+WINGS: Wingsmith items are randomized to be any wing.
+GEMS: Wingsmith items are randomized to be any Elemental Gem.
+WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
+CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
+  </data>
+  <data name="newLabel.Text" xml:space="preserve">
+    <value>● Added 'Spell combination fixes', a first attempt at a system to add special patches if certain spell combos get picked. This will hopefully allow us to add specific crash fixes down the line, but right now it's just size fixes (as many spells had tiny animations when modified by healing/buff spells.)
+
+● Added 'Minor text improvements', which adds LOST-KEYS-specific explanations (if LK is enabled) to the Abbott and Shannon in Melrode, and also tweaks a couple poorly-written UI text strings.
+
+● Fixed 'Make Dew Drop useful' causing the new Dew Drop description to overrun the Mint Leaves' description. Not quite satisfied with the temporary solution '10 MP &amp; 20 HP', but rearranging all item text to make room isn't a priority now.</value>
+  </data>
+  <data name="linkLabel1.Text" xml:space="preserve">
+    <value>Data Exploration, Testing and Feedback:
+Andypanther, Bingchang, BurrItsCold, Countdown, 
+DrunkKami, FeralDemon, FireEmbliem,
+Irenepunmaster, Jeville, Kao, Kirkq, Landmine36, 
+Mallos31, Midboss, Mwobee, Raphix, Schooliedee, 
+Supmarf, Usedpizza, xIceBlue</value>
+  </data>
+  <data name="termsLinkLabel.Text" xml:space="preserve">
+    <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
+Merrow is offered without warranty and is experimental software. 
+Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
+  </data>
+  <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
+    <value>A shortcode that contains the currently-enabled
+randomizer settings. Editing this code will change
+all the settings at once. Codes are tied to version
+numbers, because the number of Merrow options
+changes from version to version.
+
+Error-checking isn't perfect yet, so invalid codes 
+should just blank themselves. They may crash.</value>
+  </data>
   <metadata name="itemImageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>120, 16</value>
   </metadata>
@@ -218,7 +243,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAVABAwFQAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAXABAwFwAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -382,36 +407,10 @@ CUSTOM: Drops are randomized as selected below.</value>
         AQMBwAEBAfgBHwHgAQMB4AEHAeABAwH4AR8B8AEHAfgBHwHwAQcB/AE/AfwBHwP/AQ8B/gF/CP8L
 </value>
   </data>
-  <data name="rndGiftersToggle.ToolTip" xml:space="preserve">
-    <value>Shuffle/randomize the items granted by item-gifting NPCs. 
-Shannons and their endgame items (Eletale Book and Dark Gaol Key) are included by default, 
-but softlock protection will guarantee that they will be granted by earlier gifters.
-Optionally, use the toggle below to exclude Shannons: they will carry their items as default.
-[WARNING - Including gems or wings can cause sequence breaks.]
-
-SHUFFLED: All default gift items are shuffled among all gift NPCs.
-STANDARD: Gifts are randomized to be any standard item.
-STANDARD&amp;WINGS: Gifts are randomized to be any standard item or wing. 
-STANDARD&amp;GEMS: Gifts are randomized to be any standard item or Elemental Gem.
-CHAOS: Gifts are randomized to be any standard item, wing, or Elemental Gem.
-WINGS: Gifts are randomized to be any wing.
-GEMS: Gifts are randomized to be any Elemental Gem.
-WINGS&amp;GEMS: Gifts are randomized to be any wing or Elemental Gem.
-CUSTOM: Gifts are randomized as set in the below menu.</value>
-  </data>
-  <data name="rndWingsmithsToggle.ToolTip" xml:space="preserve">
-    <value>Change the items granted by Wingsmith NPCs.
-[WARNING - Any of these options can cause sequence breaks.]
-
-SHUFFLED: All wings are shuffled among all wingsmith NPCs.
-STANDARD: Wingsmith items are randomized to be any standard item.
-STANDARD&amp;WINGS: Wingsmith items are randomized to be any standard item or wing. 
-STANDARD&amp;GEMS: Wingsmith items are randomized to be any standard item or Elemental Gem.
-CHAOS: Wingsmith items are randomized to be any standard item, wing, or Elemental Gem.
-WINGS: Wingsmith items are randomized to be any wing.
-GEMS: Wingsmith items are randomized to be any Elemental Gem.
-WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
-CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
+  <data name="rndSpellOverridesToggle.ToolTip" xml:space="preserve">
+    <value>Adds special override data to certain shuffled spell combinations.
+If available, fixes will be added that allow volatile combos to work, 
+and that improve visuals on combos with visual/scaling issues.</value>
   </data>
   <data name="rndSpellRebalanceToggle.ToolTip" xml:space="preserve">
     <value>Adjusts damage values for most spells.

@@ -114,6 +114,8 @@ namespace Merrow {
         Color lastcloakpalettecolor;
         bool crashlockoutput = false;
         int[] hints = new int[5];
+        int unlockcount = 0;
+        int fixcount = 0;
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -513,6 +515,7 @@ namespace Merrow {
                 rndExtraHealingToggle.Enabled = true;
                 rndDistributeSpellsToggle.Enabled = true;
                 rndSpellItemsToggle.Enabled = true;
+                rndSpellOverridesToggle.Enabled = true;
                 if (rndSpellNamesToggle.Checked) { rndSpellNamesDropdown.Enabled = true; }
             } else {
                 rndSpellDropdown.Enabled = false;
@@ -522,6 +525,7 @@ namespace Merrow {
                 rndExtraHealingToggle.Enabled = false;
                 rndDistributeSpellsToggle.Enabled = false;
                 rndSpellItemsToggle.Enabled = false;
+                rndSpellOverridesToggle.Enabled = false;
             }
             UpdateCode();
         }
@@ -725,6 +729,7 @@ namespace Merrow {
         }
 
         private void rndLevelToggle_CheckedChanged(object sender, EventArgs e) {
+            rndSpellDropdown.Visible = true;
             UpdateCode();
         }
 
@@ -1243,6 +1248,15 @@ namespace Merrow {
             if (loadfinished) { VanillaHandling(); }
         }
 
+        private void rndTextImprovementsToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+            expUpdateWarning();
+        }
+
+        private void rndSpellOverridesToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
         //FRENCH VANILLA OVERRIDE
         public void VanillaHandling() {
             if (rndFrenchVanillaToggle.Checked) {
@@ -1262,6 +1276,7 @@ namespace Merrow {
                 rndRevealSpiritsToggle.Checked = true;
                 rndHUDLockToggle.Checked = true;
                 rndMaxMessageToggle.Checked = true;
+                rndTextImprovementsToggle.Checked = true;
             }
 
             if (!rndFrenchVanillaToggle.Checked) {
@@ -1277,10 +1292,14 @@ namespace Merrow {
                 rndHitMPToggle.Checked = false;
                 rndHitMPTrackBar.Value = 1;
                 rndHitMPValue.Text = "1x";
-                if (!rndLostKeysToggle.Checked) { rndFastShamwoodToggle.Checked = false; } //only disable if the other isn't using it
                 rndRevealSpiritsToggle.Checked = false;
                 rndHUDLockToggle.Checked = false;
-                rndMaxMessageToggle.Checked = false;                
+                rndMaxMessageToggle.Checked = false;
+
+                if (!rndLostKeysToggle.Checked) { //only disable if the other isn't using it
+                    rndFastShamwoodToggle.Checked = false;
+                    rndTextImprovementsToggle.Checked = false;
+                } 
             }
 
             expUpdateWarning();
@@ -1312,6 +1331,8 @@ namespace Merrow {
                 rndEarlyHealingToggle.Checked = true;
                 rndShannonHintsToggle.Enabled = true;
                 rndShannonHintsToggle.Checked = true;
+                rndTextImprovementsToggle.Checked = true;
+                rndTextImprovementsToggle.Enabled = false;
 
                 //disable all boss items in all item lists. they can be re-added after if so desired, but having only one is the whole point
                 int currItemTab = itemListTabs.SelectedIndex;
@@ -1358,7 +1379,7 @@ namespace Merrow {
                 rndGiftersToggle.Checked = false;
                 rndGiftersToggle.Enabled = true;
                 rndFastMonasteryToggle.Checked = false;
-                if (!rndFrenchVanillaToggle.Checked) { rndFastShamwoodToggle.Checked = false; } //only disable if the other isn't using it
+                
                 rndFastMammonToggle.Checked = false;
                 rndIvoryWingsToggle.Checked = false;
                 rndIvoryWingsToggle.Enabled = true;
@@ -1374,6 +1395,13 @@ namespace Merrow {
                 rndUnlockDoorsToggle.Enabled = true;
                 rndLockedEndgameToggle.Checked = false;
                 rndLockedEndgameToggle.Enabled = true;
+
+                rndTextImprovementsToggle.Enabled = true;
+
+                if (!rndFrenchVanillaToggle.Checked) { //only disable if the other isn't using it
+                    rndFastShamwoodToggle.Checked = false;
+                    rndTextImprovementsToggle.Checked = false;
+                } 
             }
 
             expUpdateWarning();
@@ -1497,6 +1525,7 @@ namespace Merrow {
                 rndDriftToggle.Checked || 
                 rndMusicShuffleToggle.Checked ||
                 rndBossOrderToggle.Checked ||
+                rndTextImprovementsToggle.Checked ||
                 rndHitMPToggle.Checked) 
                 { rndErrorLabel.Text = rndErrorString; }
 

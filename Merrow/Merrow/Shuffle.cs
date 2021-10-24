@@ -19,6 +19,7 @@ namespace Merrow {
 
             int k = 0;
             shufflingnow = true;
+            unlockcount = 0;
 
             //REINITIATE RANDOM WITH SEED
             SysRand = new System.Random(rngseed);
@@ -48,10 +49,11 @@ namespace Merrow {
                 shuffles[i] = -1;
             }
 
-            //crash protection disabled - dumps reorg directly into shuffles array
+            //crash protection disabled - uses specified spell for all spells
+            //don't need to unlock crashlocked spells because i'm not even using it anyway
             if (!crashpro) {
                 for (int i = 0; i < playerspells; i++) {
-                    shuffles[i] = reorg[i];
+                    shuffles[i] = rndSpellDropdown.SelectedIndex - 1;
                 }
             }
 
@@ -61,17 +63,37 @@ namespace Merrow {
                 //the crashlock array (which restricts spell combos to avoid crashes) is also used to restrict spells by element
                 bool step = false;
 
+                //first, reset H1/SS1 and AVA/MBR/WP3/LC to default crashlock lists, in case they've changed before.
+                for (int i = 0; i < playerspells; i++) {
+                    library.crashlock[(i * playerspells) + 32] = library.noearlyhealing[i];
+                    library.crashlock[(i * playerspells) + 33] = library.noearlyhealing[i];
+
+                    library.crashlock[(i * playerspells) + 23] = library.defaultavalanche[i];
+                    library.crashlock[(i * playerspells) + 27] = library.defaultmagicbarrier[i];
+                    library.crashlock[(i * playerspells) + 34] = library.defaultwaterpillar3[i];
+                    library.crashlock[(i * playerspells) + 51] = library.defaultlargecutter[i];
+                }
+
+                //Spell Combination Fixes: Unlocking fixed crashlocked spells
+                //This half of this function has to happen BEFORE spells are shuffled, using the default crashlock array.
+                //The other half (applying the fixes themselves) has to happen in QuestPatchBuild.cs, after everything
+                if (rndSpellToggle.Checked && rndSpellOverridesToggle.Checked) {
+                    for (int i = 0; i < library.crashlock.Length; i++) {
+                        //check the entire spellfixes array against the crashlock array, looking for fix cases
+                        //a fix case is determined when a non-negative number exists in both slots (crash and fix)
+                        if (library.crashlock[i] >= 0 && library.spellfixes[i] >= 0) {
+                            //that spell's crashlock value is then set to -1, to show that it's safe to be shuffled
+                            library.crashlock[i] = -1;
+                            Console.WriteLine("Crashlock unlocked: Spell " + ((i - (i % 15)) / 15).ToString() + " Mod " + (i % 15).ToString());
+                            unlockcount++;
+                        }
+                    }
+                }
+
                 //EARLY/EXTRA HEALING
                 //pick which element healing spell(s) will be added to
                 int[] healelements = new int[4];
                 CountAndShuffleArray(healelements);
-
-                //first, reset both H1 and SS1 to default crashlock lists. 
-                //cleans up array, and also allows the export of patches without these options that will undo them
-                for (int i = 0; i < playerspells; i++) {
-                    library.crashlock[(i * playerspells) + 32] = library.noearlyhealing[i];
-                    library.crashlock[(i * playerspells) + 33] = library.noearlyhealing[i];
-                }
 
                 //early healing: overwrite crashlock to give H1 only early slots
                 if (rndSpellToggle.Checked && rndEarlyHealingToggle.Checked) {
@@ -107,14 +129,6 @@ namespace Merrow {
                 //pick which elements each powerful spell will be locked into
                 int[] powerelements = new int[4];
                 CountAndShuffleArray(powerelements);
-
-                //first, reset all four powerful spells (AVA,MBR,WP3,LC) to default crashlock lists
-                for (int i = 0; i < playerspells; i++) {
-                    library.crashlock[(i * playerspells) + 23] = library.defaultavalanche[i];
-                    library.crashlock[(i * playerspells) + 27] = library.defaultmagicbarrier[i];
-                    library.crashlock[(i * playerspells) + 34] = library.defaultwaterpillar3[i];
-                    library.crashlock[(i * playerspells) + 51] = library.defaultlargecutter[i];
-                }
 
                 //element lockout functions the same as healing does above
                 if (rndSpellToggle.Checked && rndDistributeSpellsToggle.Checked) {

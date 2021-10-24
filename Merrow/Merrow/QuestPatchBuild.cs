@@ -64,6 +64,7 @@ namespace Merrow {
                 !rndMaxMessageToggle.Checked &&
                 !rndHUDLockToggle.Checked &&
                 !rndBrianClothesToggle.Checked &&
+                !rndTextImprovementsToggle.Checked &&
 
                 !rndRestlessToggle.Checked &&
                 !rndVowelsToggle.Checked &&
@@ -91,6 +92,9 @@ namespace Merrow {
 
             //reshuffle here so I don't have to shuffle after every option is changed in the UI, only certain ones
             Shuffling(true);
+
+            //debug option with no crash protection
+            if (rndSpellDropdown.SelectedIndex > 0) { Shuffling(false); }
 
             if (crashlockoutput) { 
                 File.WriteAllText(filePath + fileName + "_crashlock.txt", "MERROW " + labelVersion.Text + " building patch..." + Environment.NewLine);
@@ -273,6 +277,9 @@ namespace Merrow {
                         patchstrings.Add(library.spellItemNameAddr[i]);
                         patchstrings.Add(hintlen.ToString("X4"));
                         patchstrings.Add((string)hintdata[0]);
+
+                        //update capitalcase item list for hints and gifters
+                        library.itemcapitalcase[i + 8] = library.newSpellItemCapCase[(i * 4) + currelement];
                     }
                     //desc
                     for (int i = 0; i < 6; i++) {
@@ -307,6 +314,37 @@ namespace Merrow {
                         patchstrings.Add(Convert.ToString(library.avalancheFix[(j * 2) + 10], 16).PadLeft(2,'0'));
                     }
                 }
+            }
+
+            //Spell Combination Fixes: Fix writing
+            //This half of this function has to happen AFTER spells are shuffled and edited in other ways.
+            //The other half (unlocking locked spells thanks to fixes) has to happen in Shuffle.cs, before shuffling
+            if (rndSpellToggle.Checked && rndSpellOverridesToggle.Checked) {
+                fixcount = 0;
+                //check each spell combination in turn
+                for (int i = 0; i < playerspells; i++) {
+                    int spellfixnum = library.spellfixes[(i * playerspells) + shuffles[i]];
+                    string[] fixstrings = new string[2];
+
+                    //check spellfix array index at [base X/modifier Y] for a positive number, which indicate a fix exists
+                    if (spellfixnum >= 0) {
+                        //grab fix addr/code from fix data array
+                        fixstrings[0] = library.spellfixdata[spellfixnum * 2];
+                        fixstrings[1] = library.spellfixdata[(spellfixnum * 2) + 1];
+                        int fixlen = fixstrings[1].Length / 2;
+
+                        //TODO: Write code for handling address-agnostic "Z" spell fixes, esp for crash repair.
+
+                        patchstrings.Add(fixstrings[0]);
+                        patchstrings.Add(fixlen.ToString("X4"));
+                        patchstrings.Add(fixstrings[1]);
+
+                        fixcount++;
+                    }
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", unlockcount.ToString() + " crash repair fixes applied." + Environment.NewLine);
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", fixcount.ToString() + " spell combination fixes applied." + Environment.NewLine);
             }
 
             //Text Colour palette
@@ -1279,6 +1317,38 @@ namespace Merrow {
                 patchstrings.Add(brianPaletteHex2);
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Brian palette set to random." + Environment.NewLine);
+            }
+
+            //Text improvements
+            if (rndTextImprovementsToggle.Checked) {
+                object[] hintdata = new object[2]; //save text translation
+                string hintstring = library.newsavetext;
+                hintdata = TranslateString(hintstring);
+                int hintlen = (int)hintdata[1] + 2;
+
+                patchstrings.Add("06B268"); //save text patch
+                patchstrings.Add(hintlen.ToString("X4"));
+                patchstrings.Add("A0C0" + (string)hintdata[0]);
+
+                if (rndLostKeysToggle.Checked) {
+                    hintdata = new object[2]; //LK Abbott Intro translation
+                    hintstring = library.newAbbottIntroLK;
+                    hintdata = TranslateString(hintstring);
+                    hintlen = (int)hintdata[1] + 2;
+                    patchstrings.Add("055428"); //LK Abbott Intro patch
+                    patchstrings.Add(hintlen.ToString("X4"));
+                    patchstrings.Add("A0C0" + (string)hintdata[0]);
+
+                    hintdata = new object[2]; //LK Shannon Melrode translation
+                    hintstring = library.newMelrodeShannonLK;
+                    hintdata = TranslateString(hintstring);
+                    hintlen = (int)hintdata[1] + 2;
+                    patchstrings.Add("D305E0"); //LK Shannon Melrode patch
+                    patchstrings.Add(hintlen.ToString("X4"));
+                    patchstrings.Add("A0C0" + (string)hintdata[0]);
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text improvements added." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT
