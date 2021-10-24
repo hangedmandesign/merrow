@@ -162,6 +162,11 @@ namespace Merrow {
                 }
             }
 
+            //fix for skelebat group in Blue Cave that can cause crashes due to lag
+            patchstrings.Add("667260");
+            patchstrings.Add("000C");
+            patchstrings.Add("000000060000000100000001");
+
             //Spell Shuffle
             if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex != 24) { 
                 for (int q = 0; q < playerspells; q++) {
@@ -229,11 +234,6 @@ namespace Merrow {
 
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shuffled spells use hinted names." + Environment.NewLine);
                 }
-
-                //fix for skelebat group in Blue Cave that can cause crashes due to lag
-                patchstrings.Add("667260"); 
-                patchstrings.Add("000C");
-                patchstrings.Add("000000060000000100000001");
 
                 //spell item softlock protection
                 for (int i = 0; i < 6; i++) {
