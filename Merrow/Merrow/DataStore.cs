@@ -83,15 +83,15 @@ namespace Merrow {
         };
 
         public int[] avalancheFix = {
-            13941548,//0
-            13941956,
-            13942160,
-            13943112,
-            13944064,
-            13944404,
-            13944472,
-            13944744,
-            13944812,//8
+            13941548,//0 HA1
+            13941956,//HA2
+            13942160,//MB
+            13943112,//RS
+            13944064,//H2
+            13944404,//WC1
+            13944472,//WC2
+            13944744,//WC3
+            13944812,//8 LC
             19,1,//9+
             25,1,
             33,10,
@@ -904,8 +904,13 @@ namespace Merrow {
             "SHRED ALL ENEMIES#WITH A THOUSAND CUTS%"
         };
 
-        public string[] newitemdesc = {
-            "MP 10 & HP 20%"
+        //new dew drop description, with space made by removing 'CELTLAND ' from the Healing Potion desc.
+        //also updated pointers for Dragon's Potion and Dew Drop, since their start point is now offset-9
+        //WARNING: have not changed Merrow's item description pointers, since only spell items are changed for now
+        public string[] newdewdropdesc = {
+            "D86E13","1204021104137F0F0E13080E0D8010E081070F7F800105007F811104020E15041118FFA0C0810C0F7F05140B0B7F1104020E15041118FFA0C0810C0F7F8001007F811A7F070F7F800200E0",
+            "D872B4","803A9567",
+            "D872B8","803A957B",
         };
 
         //name list for spoiler log

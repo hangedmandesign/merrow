@@ -168,7 +168,7 @@ namespace Merrow {
             patchstrings.Add("000000060000000100000001");
 
             //Spell Shuffle
-            if (rndSpellToggle.Checked && rndSpellDropdown.SelectedIndex != 24) { 
+            if (rndSpellToggle.Checked) { 
                 for (int q = 0; q < playerspells; q++) {
                     int tempq = 0;
 
@@ -311,7 +311,7 @@ namespace Merrow {
                     for (int j = 0; j < 5; j++) { //write 5 times
                         patchstrings.Add(Convert.ToString(spelladd + library.avalancheFix[(j * 2) + 9], 16));
                         patchstrings.Add("0001");
-                        patchstrings.Add(Convert.ToString(library.avalancheFix[(j * 2) + 10], 16).PadLeft(2,'0'));
+                        patchstrings.Add(Convert.ToString(library.avalancheFix[(j * 2) + 10], 16).PadLeft(2, '0'));
                     }
                 }
             }
@@ -1281,14 +1281,17 @@ namespace Merrow {
                 patchstrings.Add("0001");
                 patchstrings.Add("14");
 
-                object[] hintdata = new object[2]; //description translation
-                string hintstring = library.newitemdesc[0];
-                hintdata = TranslateString(hintstring);
-                int hintlen = (int)hintdata[1];
+                patchstrings.Add(library.newdewdropdesc[0]); //description patch
+                patchstrings.Add(75.ToString("X4"));
+                patchstrings.Add(library.newdewdropdesc[1]);
 
-                patchstrings.Add("D86E56"); //description patch
-                patchstrings.Add(hintlen.ToString("X4"));
-                patchstrings.Add((string)hintdata[0]);
+                patchstrings.Add(library.newdewdropdesc[2]); //dragon's potion desc pointer
+                patchstrings.Add("0004");
+                patchstrings.Add(library.newdewdropdesc[3]);
+
+                patchstrings.Add(library.newdewdropdesc[4]); //dew drop desc pointer
+                patchstrings.Add("0004");
+                patchstrings.Add(library.newdewdropdesc[5]);
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Dew Drop made useful." + Environment.NewLine);
             }
