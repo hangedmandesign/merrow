@@ -496,7 +496,7 @@ namespace Merrow {
             binFileBytes = null;
             crcErrorLabel.Visible = false;
             crcFileSelected = false;
-            if (tabsControl.SelectedIndex > 2) { helpLabel.Visible = false; }
+            if (tabsControl.SelectedIndex != 1 && tabsControl.SelectedIndex != 2) { helpLabel.Visible = false; }
             else { helpLabel.Visible = true; }
             expModeSet();
         }
@@ -1334,6 +1334,16 @@ namespace Merrow {
                 rndTextImprovementsToggle.Checked = true;
                 rndTextImprovementsToggle.Enabled = false;
 
+                //spell options
+                rndSpellToggle.Checked = true;
+                rndSpellNamesToggle.Checked = true;
+                rndEarlyHealingToggle.Checked = true;
+                rndExtraHealingToggle.Checked = true;
+                //spell defaults (do not undo on deselect LOST KEYS)
+                rndDistributeSpellsToggle.Checked = true;
+                rndSpellItemsToggle.Checked = true;
+                rndSpellOverridesToggle.Checked = true;
+
                 //disable all boss items in all item lists. they can be re-added after if so desired, but having only one is the whole point
                 int currItemTab = itemListTabs.SelectedIndex;
                 rndChestDropdown.SelectedIndex = 1; //just forcing these to STANDARD for simplicity's sake.
@@ -1379,7 +1389,12 @@ namespace Merrow {
                 rndGiftersToggle.Checked = false;
                 rndGiftersToggle.Enabled = true;
                 rndFastMonasteryToggle.Checked = false;
-                
+
+                rndSpellToggle.Checked = false;
+                rndSpellNamesToggle.Checked = false;
+                rndEarlyHealingToggle.Checked = false;
+                rndExtraHealingToggle.Checked = false;
+
                 rndFastMammonToggle.Checked = false;
                 rndIvoryWingsToggle.Checked = false;
                 rndIvoryWingsToggle.Enabled = true;
@@ -1660,6 +1675,46 @@ namespace Merrow {
                 crcErrorLabel.Visible = true;
                 crcErrorLabel.Text = "ERROR: File not selected or available.";
             }
+        }
+
+        //MENU - Top menu items
+
+        private void menuItemRND_Click(object sender, EventArgs e) {
+            rndTabsControl.SelectedIndex = 0;
+            tabsControl.SelectedIndex = 1;
+        }
+
+        private void menuItemREF_Click(object sender, EventArgs e) {
+            tabsControl.SelectedIndex = 2;
+        }
+
+        private void menuItemCRE_Click(object sender, EventArgs e) {
+            tabsControl.SelectedIndex = 0;
+        }
+
+        private void menuItemHLP_Click(object sender, EventArgs e) {
+            tabsControl.SelectedIndex = 5;
+        }
+
+        private void menuItemEXT_Click(object sender, EventArgs e) {
+            Application.Exit();
+        }
+
+        private void menuItemGPG_Click(object sender, EventArgs e) {
+            tabsControl.SelectedIndex = 3;
+        }
+
+        private void menuItemBFR_Click(object sender, EventArgs e) {
+            tabsControl.SelectedIndex = 4;
+        }
+
+        private void menuItemCRT_Click(object sender, EventArgs e) {
+            rndTabsControl.SelectedIndex = 3;
+            tabsControl.SelectedIndex = 1;
+        }
+
+        private void hlpHelpText_LinkClicked(object sender, LinkClickedEventArgs e) {
+            System.Diagnostics.Process.Start("explorer.exe", e.LinkText);
         }
     }
 }

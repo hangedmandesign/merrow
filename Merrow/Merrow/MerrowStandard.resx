@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="rndAccuracyToggle.ToolTip" xml:space="preserve">
     <value>Normalizes spell accuracy values to 100. 
 All spells will pass the initial accuracy check, but offensive spells can still miss 
@@ -136,13 +139,48 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
+  <data name="hlpHelpText.Text" xml:space="preserve">
+    <value>1. WARNING
+Merrow is considered experimental/educational software, and is offered without warranty or liability. By using Merrow, the user agrees to full responsibility for the uses and results of using Merrow. Back up files before patching.
+Merrow (as it is currently maintained by Hangedman Design) contains no networking or analytics functions, and all best faith attempts are made to ensure it has no bugs or issues that would compromise either the users' computer, or their game hardware. This may not apply to alternate forks of Merrow's code or any derivative works.
+
+2. WHAT IS MERROW?
+Merrow is primarily a "randomizer" for the game "Quest 64": a tool for randomizing various elements of the NA/U Z64 version of Quest 64, offering many randomization, difficulty modification, and quality-of-life options.
+Merrow is also a collection of hex data collation and patching tools.
+
+3. HOW TO USE MERROW
+Functions in Merrow have tooltips that explain them in greater detail, available by mousing over a function's name.
+To see a list of all functions in brief, visit https://hangedman.itch.io/merrow.
+
+4. HOW TO GET STARTED QUICKLY
+Double-check https://hangedman.itch.io/merrow to ensure you have the latest version, and follow these steps:
+    A. Open Merrow, and select "Quest 64 Randomizer" from the "Quest Features" menu.
+    B. Want a better vanilla game, or to add quality-of-life fixes to your randomizer? Enable "FRENCH VANILLA".
+    C. Want to play the recommended randomizer ruleset? Enable "LOST KEYS".
+    D. Optionally, enable any other features you want.
+    E. Switch to the "FILE EXPORT/CHECKSUM" tab.
+    F. Click the big "SELECT Z64 FILE" button, and select a clean Z64 Quest file.
+    G. Enter a filename if you want, and click "GENERATE FILE". 
+The Patches folder will automatically open, with your patched file and spoiler log (if enabled). 
+
+4. WHAT IS LOST KEYS?
+In brief, enabling LOST KEYS distributes a single copy of each key progression item randomly throughout the world, in such a way that no seed cannot be completed. It also enables a set of other options designed for varied play.
+If you're playing LOST KEYS and you want a quick overview of the changes, take a quick look over the Lost Keys Guide PDF, included with the Merrow download. 
+
+5. CHANGELOG
+A complete changelog is available at the bottom of the Itch page, at https://hangedman.itch.io/merrow.
+
+6. LICENSE and COPYRIGHT
+For development purposes, Merrow is copyright of Hangedman Design. But Merrow is MIT-licensed, functionally open source with conditions. License details are available at https://github.com/hangedmandesign/merrow.
+Development assistance is welcome. An overview of the Merrow codebase and code structure is available at https://github.com/hangedmandesign/merrow.
+Merrow contains no game code or copyrighted assets. Item sprites, names, etc, are used within Fair Use constraints. Rights to "Quest 64" and all associated materials are maintained by the copyright holders and Hangedman Design makes no claim to them.</value>
+  </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Added 'Spell combination fixes', first attempt at a system for auto-patching certain randomized spell combos.
-This will hopefully allow us to add specific crash fixes down the line, but right now it's just size fixes (as many spells had tiny animations when modified by healing/buff spells.)
+    <value>● A proper top menu, to replace the old Tabs On Tabs approach. Also, shortcut keys!
 
-● Added 'Minor text improvements', which adds LOST-KEYS-specific explanations (if LK is enabled) to the Abbott and Shannon in Melrode, and also tweaks a couple poorly-written UI text strings.
+● A Help page. It's largely just short descriptions and directions to the Itch and Github pages, but it also includes a quickstart guide.
 
-● Fixed 'Make Dew Drop useful' causing the new 'Useful' Dew Drop description to overrun the Mint Leaves' description. Shortening the Healing Potion description gave exactly enough space to properly update the Dew Drop.</value>
+● LOST KEYS now enables Spell Shuffle, and most of the related features and improvements. Given that the goal is a fun randomizer ruleset, it makes sense to add all solidly-built randomizing features, since brand-new players will likely not be playing it anyway. Boss Shuffle is not currently included, but may be in future.</value>
   </data>
   <data name="linkLabel1.Text" xml:space="preserve">
     <value>Data Exploration, Testing and Feedback:
@@ -211,7 +249,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAYABAwGAAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAYgBAwGIAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -742,6 +780,9 @@ Each entry should follow this format: (address),(length),...
 The binary file will be read starting at [address], for [length] bytes.
 After entry, ensure you select below what format each value type is in.</value>
   </data>
+  <metadata name="mainMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>248, 16</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>56</value>
   </metadata>
