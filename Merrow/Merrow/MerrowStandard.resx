@@ -129,8 +129,8 @@ Status spells: Changes positive/negative status effects' accuracy to 100.
 All spells: Changes all spells' accuracy to 100 (Also includes Escape, Extinction, etc.)</value>
   </data>
   <data name="rndZoomToggle.ToolTip" xml:space="preserve">
-    <value>Changes maximum zoom distance (2-12). 1 is default.
-Value is not a multiple, just a range of stable values available.
+    <value>Changes maximum zoom distance from 2-12 [1 is default].
+Value is NOT a multiple, this is just a range of stable values available.
 Higher values may cause instability, especially on hardware, 
 due to increasing the visible amount of content.</value>
   </data>
@@ -141,13 +141,6 @@ Save location is the "Patches" subfolder in the same folder as the Merrow execut
 Z64 Export will not overwrite your original Z64 file, it will instead export a Z64 copy into the save location. 
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
-  </data>
-  <data name="newLabel.Text" xml:space="preserve">
-    <value>● A proper top menu, to replace the old Tabs On Tabs approach. Also, shortcut keys!
-
-● A Help page. It's largely just short descriptions and directions to the Itch and Github pages, but it also includes a quickstart guide.
-
-● LOST KEYS now enables Spell Shuffle, and most of the related features and improvements. Given that the goal is a fun randomizer ruleset, it makes sense to add all solidly-built randomizing features, since brand-new players will likely not be playing it anyway. Boss Shuffle is not currently included, but may be in future.</value>
   </data>
   <data name="linkLabel1.Text" xml:space="preserve">
     <value>Data Exploration, Testing and Feedback:
@@ -183,6 +176,9 @@ item from being carried by either Shannon; they will always be found earlier.</v
     <value>Change the contents of all chests.
 [WARNING - Including gems or wings can cause sequence breaks.]
 
+When LOST KEYS is enabled, this determines what fills in the *rest* of the chests that
+aren't taken up by the 5 Key Items (gems and book) and Wings.
+
 SHUFFLED: All default chest contents are shuffled among all chests.
 STANDARD: Chests are randomized to contain any standard item.
 STANDARD&amp;WINGS: Chests are randomized to contain any standard item or wing. 
@@ -195,8 +191,9 @@ CUSTOM: Chests are randomized as selected below.</value>
   </data>
   <data name="rndDropsToggle.ToolTip" xml:space="preserve">
     <value>Change the items dropped by non-Boss enemies. 
-All Random options exclude blanks.
 [WARNING - Including gems or wings can cause sequence breaks.]
+
+All options other than SHUFFLED do not give enemies 'No Item'.
 
 SHUFFLED: All default item drops are shuffled among all enemies, including blanks.
 STANDARD: Drops are randomized to contain any standard item.
@@ -216,7 +213,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAZgBAwGYAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAbgBAwG4AQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -381,11 +378,15 @@ CUSTOM: Drops are randomized as selected below.</value>
 </value>
   </data>
   <data name="rndGiftersToggle.ToolTip" xml:space="preserve">
-    <value>Shuffle/randomize the items granted by item-gifting NPCs. 
+    <value>Shuffle/randomize the items granted by item-gifting NPCs.
+[WARNING - Including gems or wings can cause sequence breaks.]
+
+When LOST KEYS is enabled, this determines what fills in the *rest* of the gifters that
+aren't taken up by one of the 5 Key Items (gems and book.)
+
 Shannons and their endgame items (Eletale Book and Dark Gaol Key) are included by default, 
 but softlock protection will guarantee that they will be granted by earlier gifters.
 Optionally, use the toggle below to exclude Shannons: they will carry their items as default.
-[WARNING - Including gems or wings can cause sequence breaks.]
 
 SHUFFLED: All default gift items are shuffled among all gift NPCs.
 STANDARD: Gifts are randomized to be any standard item.
@@ -399,7 +400,7 @@ CUSTOM: Gifts are randomized as set in the below menu.</value>
   </data>
   <data name="rndWingsmithsToggle.ToolTip" xml:space="preserve">
     <value>Change the items granted by Wingsmith NPCs.
-[WARNING - Any of these options can cause sequence breaks.]
+[WARNING - Any of these options may cause sequence breaks, or remove Wings entirely.]
 
 SHUFFLED: All wings are shuffled among all wingsmith NPCs.
 STANDARD: Wingsmith items are randomized to be any standard item.
@@ -459,7 +460,8 @@ Obvious: Hinted spell names will always be in the format (original prefix, modif
   </data>
   <data name="rndFrenchVanillaToggle.ToolTip" xml:space="preserve">
     <value>FRENCH VANILLA is a set of Quality-of-Life options for improving the vanilla game experience, 
-without changing it too much. Intended for all experience levels. It is compatible with LOST KEYS.
+without changing it too much. Intended for all experience levels. 
+It is compatible with LOST KEYS (and recommended, honestly.)
 
 Enabling FRENCH VANILLA will overwrite many MERROW settings to create an improved ruleset.
 Disabling FRENCH VANILLA will simply disable many of the options enabled, rather than setting them back to whatever
@@ -481,20 +483,20 @@ LOST KEYS Regions:
 - Book: Brannoch Castle (not including Beigis)
 
 PROGRESSIVE: Search each region, and gamble on when to move on.
-Each gem/book and wing is available in its 'region' (up to the point where progression requires it.)
-It will either be held by a chest, gifter, or the boss. Mouse over the '?' to the upper right to see the regions.
-Wingsmiths are not randomized. Black Wings are in Fire region (Limelin/Dindom), along with new 'Ivory Wings'.
-Ivory Wings replace White Wings, and teleport to Shamwood. Lavaar is considered the Ivory Wingsmith by all options.
-Fire Ruby is required to enter Brannoch Castle. Crystal valley warp enabled. Shamwood exit shortcut enabled. 
-Some randomizations and options cannot be disabled.
+Each Key Item (gems/book) and Wing is available in its 'region' (so, anywhere up to the point where vanilla progression requires it.)
+It will either be held by a chest, a gifter, or the boss. Wingsmiths are not randomized by default.
+Black Wings appear in Fire region (Limelin/Dindom/Brannoch), along with new 'Ivory Wings'.
+Ivory Wings replace White Wings, and teleport to Shamwood. Lavaar is considered the Ivory Wingsmith.
+Fire Ruby is REQUIRED to enter Brannoch Castle. Crystal valley warp enabled. Shamwood exit shortcut enabled.
+Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.
 
 OPEN WORLD: Search each region, and rush the endgame as soon as you feel brave enough.
-All progression locks are unlocked, except for final Shannons.
-Each gem/book is available in a random Lost Keys region, as described above. 
-All four Elemental Gems are required to traverse Brannoch Castle roof to reach Mammon's World.
-One of each wing is scattered among all locations, including Ivory Wings.
+ALL progression locks (doors, shortcuts, boats, secrets) are unlocked, except for final Shannons.
+Each Key Item (gems/book) is available in a random Lost Keys region, according to the same rules as described above. 
+All four Elemental Gems are required to traverse Brannoch Castle roof to reach Mammon's World, which still requires the Book to enter.
+One of each wing is scattered among ALL possible Key Item locations, including Ivory Wings.
 Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled. 
-Some randomizations and options cannot be disabled.</value>
+Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.</value>
   </data>
   <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
     <value>Randomize the order of all bosses other than Beigis and Mammon.
@@ -538,6 +540,13 @@ The Melrode Wingsmith will not grant an item, and instead Lavaar in Shamwood
 will grant the Ivory Wings upon interacting. SHUFFLED Wingsmiths treat Lavaar
 as the granter of the Ivory Wings and shuffle accordingly.</value>
   </data>
+  <data name="rndUnlockDoorsToggle.ToolTip" xml:space="preserve">
+    <value>Unlocks all progression-related locks.
+Gems, Book, and Key are no longer required to progress.
+This includes doors, boats, shortcuts, and portals, and also
+unlocks the Crystal Valley Postern, if enabled.
+</value>
+  </data>
   <data name="rndCloakPaletteToggle.ToolTip" xml:space="preserve">
     <value>Changes the colour palette of Brian's cloak.
 RANDOM: Generate a palette at random by hue-shifting the original palette randomly by 0-359 degrees. 
@@ -573,6 +582,7 @@ incorrect, which causes certain hardware and emulation to fail on boot.
 
 This tool can be used to recalculate and update the checksum of a Z64 file,
 allowing hardware to recognize it as legitimate without errors or issues.
+
 It uses a DLL compiled from existing checksum calculation code in C. Full
 details of the algorithm and the license information for the C script are
 available in the repo, under the CRC64 subfolder.
@@ -582,6 +592,12 @@ other problems, but it is experimental software. Please ensure you back up any
 files before attempting any checksum repairs. It is your responsibility to 
 know what you are doing to files, and why. Merrow is offered without warranty: 
 please refer to the license readme file for more info.</value>
+  </data>
+  <data name="expModePatchIPS.ToolTip" xml:space="preserve">
+    <value>For experienced users only.
+GENERATE FILE will create an IPS binary patch file with the chosen
+settings. If certain options are selected, the patched rom will need
+to be repaired with the CHECKSUM REPAIR TOOL below.</value>
   </data>
   <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -749,16 +765,17 @@ After entry, ensure you select below what format each value type is in.</value>
   </data>
   <data name="hlpHelpText.Text" xml:space="preserve">
     <value>1. WARNING
-Merrow is considered experimental/educational software, and is offered without warranty or liability. By using Merrow, the user agrees to full responsibility for the uses and results of using Merrow. Back up files before patching.
-Merrow (as it is currently maintained by Hangedman Design) contains no networking or analytics functions, and all best faith attempts are made to ensure it has no bugs or issues that would compromise either the users' computer, or their game hardware. This may not apply to alternate forks of Merrow's code or any derivative works.
+Merrow is considered experimental/educational software, and is offered without warranty or liability. By using Merrow, the user agrees to full responsibility for the results of using Merrow. Back up files before patching.
+Merrow (as it is currently maintained by Hangedman Design) contains no networking or analytics functions, and all best faith attempts are made to ensure it has no bugs or issues that would compromise either the users' computer, or their game hardware. This is not a guarantee, and this also may not apply to alternate forks of Merrow's code or any derivative works.
 
 2. WHAT IS MERROW?
-Merrow is primarily a "randomizer" for the game "Quest 64": a tool for randomizing various elements of the NA/U Z64 version of Quest 64, offering many randomization, difficulty modification, and quality-of-life options.
+Merrow is primarily a "randomizer" for the game "Quest 64": a tool for shuffling around various game elements of the NA/U Z64 version of Quest 64, offering many randomization, difficulty modification, and quality-of-life options.
+The goal of a randomizer is to breathe some new life into an old game for existing fans by remixing it on every playthrough. Merrow also aims to add improvements for new players, to make the game easier to get into.
 Merrow is also a collection of hex data collation and patching tools.
 
 3. HOW TO USE MERROW
-The basic workflow is: select the features/randomizations/options you'd like to use, then go to the last tab of the Randomizer section, then select a clean file and export the patched version.
-Functions in Merrow have tooltips that explain them in greater detail, available by mousing over a function's name.
+The basic workflow is: select the features/randomizations/options you'd like to use, go to the last tab of the Randomizer section, select a clean file and export the patched version.
+Features in Merrow all have tooltips with more detail, available by mousing over a function's name.
 To see a list of all functions in brief, visit https://hangedman.itch.io/merrow.
 
 4. HOW TO GET STARTED QUICKLY
@@ -782,7 +799,12 @@ A complete changelog is available at the bottom of the Itch page, at https://han
 7. LICENSE and COPYRIGHT
 For development purposes, Merrow is copyright of Hangedman Design. But Merrow is MIT-licensed, functionally open source with conditions. License details are available at https://github.com/hangedmandesign/merrow.
 Development assistance is welcome. An overview of the Merrow codebase and code structure is available at https://github.com/hangedmandesign/merrow.
-Merrow contains no game code or copyrighted assets. Item sprites, names, etc, are used within Fair Use constraints. Rights to "Quest 64" and all associated materials are maintained by the copyright holders and Hangedman Design makes no claim to them.</value>
+Merrow contains no game code or copyrighted assets. Item sprites, names, etc, are used within Fair Use constraints. Rights to "Quest 64" and all associated materials are maintained by the copyright holders and Hangedman Design makes no claim to them.
+
+8. FEEDBACK
+If you have feedback or issues, your best bet is to comment on the itch page.
+Feel free to suggest feature ideas, but please understand that we have considered many features in the past, and there may be good reasons why we didn't add something. We are necessarily limited by the pre-play-patching method we use and by the data we have access to, and that's why this is not a major hack, omnibus mod, or total overhaul.
+I can also be reached on Twitter at @JonahD but I can't guarantee a timely reply, especially if I've moved onto other projects.</value>
   </data>
   <metadata name="mainMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>248, 16</value>

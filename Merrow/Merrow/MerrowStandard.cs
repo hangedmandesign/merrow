@@ -1343,6 +1343,7 @@ namespace Merrow {
                 rndDistributeSpellsToggle.Checked = true;
                 rndSpellItemsToggle.Checked = true;
                 rndSpellOverridesToggle.Checked = true;
+                rndBossOrderToggle.Checked = true;
 
                 //disable all boss items in all item lists. they can be re-added after if so desired, but having only one is the whole point
                 int currItemTab = itemListTabs.SelectedIndex;
@@ -1394,6 +1395,7 @@ namespace Merrow {
                 rndSpellNamesToggle.Checked = false;
                 rndEarlyHealingToggle.Checked = false;
                 rndExtraHealingToggle.Checked = false;
+                rndBossOrderToggle.Checked = false;
 
                 rndFastMammonToggle.Checked = false;
                 rndIvoryWingsToggle.Checked = false;

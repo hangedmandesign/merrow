@@ -427,9 +427,9 @@
             this.helpLabel = new System.Windows.Forms.Label();
             this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
             this.menuItem1 = new System.Windows.Forms.MenuItem();
-            this.menuItemCRE = new System.Windows.Forms.MenuItem();
             this.menuItemHLP = new System.Windows.Forms.MenuItem();
-            this.menuItem8 = new System.Windows.Forms.MenuItem();
+            this.menuItemCRE = new System.Windows.Forms.MenuItem();
+            this.menuItemDIV = new System.Windows.Forms.MenuItem();
             this.menuItemEXT = new System.Windows.Forms.MenuItem();
             this.MerrowMenu = new System.Windows.Forms.MenuItem();
             this.menuItemRND = new System.Windows.Forms.MenuItem();
@@ -532,7 +532,7 @@
             // rndLevelToggle
             // 
             this.rndLevelToggle.AutoSize = true;
-            this.rndLevelToggle.Location = new System.Drawing.Point(6, 385);
+            this.rndLevelToggle.Location = new System.Drawing.Point(6, 380);
             this.rndLevelToggle.Name = "rndLevelToggle";
             this.rndLevelToggle.Size = new System.Drawing.Size(216, 17);
             this.rndLevelToggle.TabIndex = 11;
@@ -550,9 +550,9 @@
             this.rndAccuracyDropdown.Items.AddRange(new object[] {
             "Status spells",
             "All spells"});
-            this.rndAccuracyDropdown.Location = new System.Drawing.Point(131, 232);
+            this.rndAccuracyDropdown.Location = new System.Drawing.Point(129, 232);
             this.rndAccuracyDropdown.Name = "rndAccuracyDropdown";
-            this.rndAccuracyDropdown.Size = new System.Drawing.Size(140, 21);
+            this.rndAccuracyDropdown.Size = new System.Drawing.Size(142, 21);
             this.rndAccuracyDropdown.TabIndex = 9;
             this.rndAccuracyDropdown.SelectedIndexChanged += new System.EventHandler(this.rndAccuracyDropdown_SelectedIndexChanged);
             // 
@@ -612,7 +612,7 @@
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(73, 45);
             this.labelVersion.TabIndex = 3;
-            this.labelVersion.Text = "v44";
+            this.labelVersion.Text = "v45";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // expSelectButton
@@ -622,7 +622,7 @@
             this.expSelectButton.Name = "expSelectButton";
             this.expSelectButton.Size = new System.Drawing.Size(110, 78);
             this.expSelectButton.TabIndex = 14;
-            this.expSelectButton.Text = "SELECT Z64 FILE";
+            this.expSelectButton.Text = "SELECT Z64 FILE\r\nTO PATCH";
             this.expSelectButton.UseVisualStyleBackColor = true;
             this.expSelectButton.Click += new System.EventHandler(this.expSelectButton_Click);
             // 
@@ -671,7 +671,7 @@
             this.expGenerateButton.Name = "expGenerateButton";
             this.expGenerateButton.Size = new System.Drawing.Size(102, 78);
             this.expGenerateButton.TabIndex = 2;
-            this.expGenerateButton.Text = "GENERATE FILE";
+            this.expGenerateButton.Text = "GENERATE\r\nFILE";
             this.expGenerateButton.UseVisualStyleBackColor = true;
             this.expGenerateButton.Click += new System.EventHandler(this.expGenerateButton_Click);
             // 
@@ -746,7 +746,9 @@
             this.newLabel.Name = "newLabel";
             this.newLabel.Size = new System.Drawing.Size(572, 201);
             this.newLabel.TabIndex = 0;
-            this.newLabel.Text = resources.GetString("newLabel.Text");
+            this.newLabel.Text = "● Disallowed a couple of rare Healing-related shuffled spell combinations due to " +
+    "the chance of crashes. This\'ll be a good candidate for attempting some proper da" +
+    "ta override fixes.";
             this.newLabel.UseMnemonic = false;
             // 
             // creditsBox
@@ -956,7 +958,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 413F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 407F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(567, 498);
             this.tableLayoutPanel2.TabIndex = 15;
             // 
@@ -1017,9 +1019,9 @@
             "Houses & Dungeons",
             "Isle of Skye",
             "Anywhere"});
-            this.rndWingUnlockDropdown.Location = new System.Drawing.Point(124, 396);
+            this.rndWingUnlockDropdown.Location = new System.Drawing.Point(120, 396);
             this.rndWingUnlockDropdown.Name = "rndWingUnlockDropdown";
-            this.rndWingUnlockDropdown.Size = new System.Drawing.Size(140, 21);
+            this.rndWingUnlockDropdown.Size = new System.Drawing.Size(144, 21);
             this.rndWingUnlockDropdown.TabIndex = 12;
             this.rndWingUnlockDropdown.SelectedIndexChanged += new System.EventHandler(this.rndWingUnlockDropdown_SelectedIndexChanged);
             // 
@@ -1723,9 +1725,9 @@
             this.rndSpellBox.Controls.Add(this.rndSpellNamesToggle);
             this.rndSpellBox.Controls.Add(this.rndSpellNamesDropdown);
             this.rndSpellBox.Controls.Add(this.rndSpellDropdown);
-            this.rndSpellBox.Location = new System.Drawing.Point(3, 88);
+            this.rndSpellBox.Location = new System.Drawing.Point(3, 94);
             this.rndSpellBox.Name = "rndSpellBox";
-            this.rndSpellBox.Size = new System.Drawing.Size(277, 407);
+            this.rndSpellBox.Size = new System.Drawing.Size(277, 401);
             this.rndSpellBox.TabIndex = 26;
             this.rndSpellBox.TabStop = false;
             this.rndSpellBox.Text = "SPELLS";
@@ -1925,7 +1927,7 @@
             this.rndOverrideBox.Controls.Add(this.rndLostKeysToggle);
             this.rndOverrideBox.Location = new System.Drawing.Point(3, 3);
             this.rndOverrideBox.Name = "rndOverrideBox";
-            this.rndOverrideBox.Size = new System.Drawing.Size(276, 79);
+            this.rndOverrideBox.Size = new System.Drawing.Size(276, 85);
             this.rndOverrideBox.TabIndex = 27;
             this.rndOverrideBox.TabStop = false;
             this.rndOverrideBox.Text = "RULESETS";
@@ -1934,7 +1936,7 @@
             // 
             this.rndFrenchVanillaToggle.AutoSize = true;
             this.rndFrenchVanillaToggle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rndFrenchVanillaToggle.Location = new System.Drawing.Point(23, 17);
+            this.rndFrenchVanillaToggle.Location = new System.Drawing.Point(23, 20);
             this.rndFrenchVanillaToggle.Name = "rndFrenchVanillaToggle";
             this.rndFrenchVanillaToggle.Size = new System.Drawing.Size(166, 24);
             this.rndFrenchVanillaToggle.TabIndex = 34;
@@ -1951,7 +1953,7 @@
             this.rndLostKeysDropdown.Items.AddRange(new object[] {
             "PROGRESSIVE",
             "OPEN WORLD"});
-            this.rndLostKeysDropdown.Location = new System.Drawing.Point(143, 46);
+            this.rndLostKeysDropdown.Location = new System.Drawing.Point(143, 51);
             this.rndLostKeysDropdown.MaxDropDownItems = 2;
             this.rndLostKeysDropdown.Name = "rndLostKeysDropdown";
             this.rndLostKeysDropdown.Size = new System.Drawing.Size(105, 21);
@@ -1962,7 +1964,7 @@
             // 
             this.rndLostKeysToggle.AutoSize = true;
             this.rndLostKeysToggle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rndLostKeysToggle.Location = new System.Drawing.Point(23, 46);
+            this.rndLostKeysToggle.Location = new System.Drawing.Point(23, 51);
             this.rndLostKeysToggle.Name = "rndLostKeysToggle";
             this.rndLostKeysToggle.Size = new System.Drawing.Size(116, 24);
             this.rndLostKeysToggle.TabIndex = 32;
@@ -2594,7 +2596,8 @@
             this.rndBlueHouseWarpToggle.TabIndex = 19;
             this.rndBlueHouseWarpToggle.Text = "Brannoch Blue House warp to Shamwood\r\n";
             this.rndToolTip.SetToolTip(this.rndBlueHouseWarpToggle, "Creates a warp back to Shamwood. \r\nThe warp is the door of Jannat\'s house in Bran" +
-        "noch, a squat blue house near the inn.");
+        "noch, a squat blue house near the inn.\r\nThis is here mainly as a backup option i" +
+        "f not playing with Ivory Wings.");
             this.rndBlueHouseWarpToggle.UseVisualStyleBackColor = true;
             this.rndBlueHouseWarpToggle.CheckedChanged += new System.EventHandler(this.rndBlueHouseWarpToggle_CheckedChanged);
             // 
@@ -2651,8 +2654,7 @@
             this.rndUnlockDoorsToggle.Size = new System.Drawing.Size(167, 17);
             this.rndUnlockDoorsToggle.TabIndex = 15;
             this.rndUnlockDoorsToggle.Text = "Unlock ALL progression locks";
-            this.rndToolTip.SetToolTip(this.rndUnlockDoorsToggle, "Unlocks all progression-related locks. \r\nGems, Book, and Key are no longer requir" +
-        "ed to progress.");
+            this.rndToolTip.SetToolTip(this.rndUnlockDoorsToggle, resources.GetString("rndUnlockDoorsToggle.ToolTip"));
             this.rndUnlockDoorsToggle.UseVisualStyleBackColor = true;
             this.rndUnlockDoorsToggle.CheckedChanged += new System.EventHandler(this.rndUnlockDoorsToggle_CheckedChanged);
             // 
@@ -3108,7 +3110,8 @@
             this.rndHUDLockToggle.Size = new System.Drawing.Size(124, 17);
             this.rndHUDLockToggle.TabIndex = 21;
             this.rndHUDLockToggle.Text = "Lock HUD onscreen";
-            this.rndToolTip.SetToolTip(this.rndHUDLockToggle, "HUD will always stay visible, and never transition offscreen.");
+            this.rndToolTip.SetToolTip(this.rndHUDLockToggle, "HUD will always stay visible, and never transition offscreen.\r\nIt may move offscr" +
+        "een and back on after load, but only once.");
             this.rndHUDLockToggle.UseVisualStyleBackColor = true;
             this.rndHUDLockToggle.CheckedChanged += new System.EventHandler(this.rndHUDLockToggle_CheckedChanged);
             // 
@@ -3187,7 +3190,7 @@
             this.crcFileButton.Name = "crcFileButton";
             this.crcFileButton.Size = new System.Drawing.Size(132, 61);
             this.crcFileButton.TabIndex = 34;
-            this.crcFileButton.Text = "SELECT Z64 FILE";
+            this.crcFileButton.Text = "SELECT Z64 FILE\r\nTO REPAIR";
             this.rndToolTip.SetToolTip(this.crcFileButton, "Select a binary file to read hexadecimal data from.\r\nThe file will be unloaded if" +
         " you switch tabs or exit.");
             this.crcFileButton.UseVisualStyleBackColor = true;
@@ -3222,7 +3225,7 @@
             this.expFakeZ64Button.Name = "expFakeZ64Button";
             this.expFakeZ64Button.Size = new System.Drawing.Size(91, 61);
             this.expFakeZ64Button.TabIndex = 42;
-            this.expFakeZ64Button.Text = "SELECT Z64 FILE";
+            this.expFakeZ64Button.Text = "SELECT Z64 FILE\r\nTO PATCH";
             this.expFakeZ64Button.UseVisualStyleBackColor = false;
             this.expFakeZ64Button.Visible = false;
             // 
@@ -3293,9 +3296,7 @@
             this.expModePatchIPS.Size = new System.Drawing.Size(110, 24);
             this.expModePatchIPS.TabIndex = 28;
             this.expModePatchIPS.Text = "CREATE IPS";
-            this.rndToolTip.SetToolTip(this.expModePatchIPS, "GENERATE FILE will create an IPS binary patch file with the chosen\r\nsettings. If " +
-        "certain options are selected, the patched rom will need\r\nto be repaired with the" +
-        " CHECKSUM REPAIR TOOL below.");
+            this.rndToolTip.SetToolTip(this.expModePatchIPS, resources.GetString("expModePatchIPS.ToolTip"));
             this.expModePatchIPS.UseVisualStyleBackColor = true;
             this.expModePatchIPS.CheckedChanged += new System.EventHandler(this.expModePatchIPS_CheckedChanged);
             // 
@@ -4351,30 +4352,30 @@
             // 
             this.menuItem1.Index = 0;
             this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItemCRE,
             this.menuItemHLP,
-            this.menuItem8,
+            this.menuItemCRE,
+            this.menuItemDIV,
             this.menuItemEXT});
             this.menuItem1.Text = "Meta";
             // 
-            // menuItemCRE
-            // 
-            this.menuItemCRE.Index = 0;
-            this.menuItemCRE.Shortcut = System.Windows.Forms.Shortcut.F2;
-            this.menuItemCRE.Text = "Credits/Changelog";
-            this.menuItemCRE.Click += new System.EventHandler(this.menuItemCRE_Click);
-            // 
             // menuItemHLP
             // 
-            this.menuItemHLP.Index = 1;
+            this.menuItemHLP.Index = 0;
             this.menuItemHLP.Shortcut = System.Windows.Forms.Shortcut.F1;
             this.menuItemHLP.Text = "Help";
             this.menuItemHLP.Click += new System.EventHandler(this.menuItemHLP_Click);
             // 
-            // menuItem8
+            // menuItemCRE
             // 
-            this.menuItem8.Index = 2;
-            this.menuItem8.Text = "-";
+            this.menuItemCRE.Index = 1;
+            this.menuItemCRE.Shortcut = System.Windows.Forms.Shortcut.F2;
+            this.menuItemCRE.Text = "Credits/Changelog";
+            this.menuItemCRE.Click += new System.EventHandler(this.menuItemCRE_Click);
+            // 
+            // menuItemDIV
+            // 
+            this.menuItemDIV.Index = 2;
+            this.menuItemDIV.Text = "-";
             // 
             // menuItemEXT
             // 
@@ -4817,7 +4818,7 @@
         private System.Windows.Forms.MenuItem menuItemGPG;
         private System.Windows.Forms.MenuItem menuItemBFR;
         private System.Windows.Forms.MenuItem menuItemCRT;
-        private System.Windows.Forms.MenuItem menuItem8;
+        private System.Windows.Forms.MenuItem menuItemDIV;
         private System.Windows.Forms.MenuItem menuItemCRE;
         private System.Windows.Forms.MenuItem menuItemHLP;
         private System.Windows.Forms.TabPage HelpTab;
