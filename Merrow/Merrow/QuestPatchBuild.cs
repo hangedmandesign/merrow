@@ -1356,13 +1356,13 @@ namespace Merrow {
 
             //FINAL ASSEMBLY/OUTPUT
 
-            //Randomizer logo
+            //Merrow/Randomizer logo
             patchstrings.Add("DAC040");
             patchstrings.Add("393C"); //main menu logo address/length
-            patchstrings.Add(library.randologo);
+            patchstrings.Add(library.merrowlogo);
             patchstrings.Add("DCE070");
             patchstrings.Add("393C"); //animation logo address/length
-            patchstrings.Add(library.randologo);
+            patchstrings.Add(library.merrowlogo);
 
             //Initialize patch authoring by counting number of items to write
             int patchparts = patchstrings.Count();
