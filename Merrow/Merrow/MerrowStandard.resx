@@ -146,11 +146,13 @@ However, exports will automatically overwrite any existing file with the same na
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Added Gifter and Chest checklists to the PDF Guide, for new/returning players working up to learning the Randomizer. Also added a single line telling you to read the game's manual. Cause you should, if you haven't.
+    <value>● Disallowed a couple of rare Healing-related shuffled spell combinations due to the chance of crashes. This'll be a good candidate for attempting some proper data override fixes down the line.
 
 ● Replaced "RANDOMIZER" on patched title screen with "MERROW" while I try to figure out how/if it should choose between the two.
 
-● Disallowed a couple of rare Healing-related shuffled spell combinations due to the chance of crashes. This'll be a good candidate for attempting some proper data override fixes.</value>
+● Added Gifter and Chest checklists to the PDF Guide, for new/returning players working up to learning the Randomizer. Also added a single line telling you to read the game's manual. Cause you should, if you haven't. Also added the Merrow posters I made. Since the Guide is now 11Mb, it'll still be included in the download but also alongside it on itch.
+
+● Cleaned up a bunch of tooltips and text in Merrow. Some were pretty outdated due to evolving features (e.g. Extra Healing Lv1 now changes the new healing spell's name, when it previously only did if Hinted Names was enabled.)</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
@@ -158,13 +160,13 @@ Merrow is offered without warranty and is experimental software.
 Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
   </data>
   <data name="linkLabel1.Text" xml:space="preserve">
-    <value>Data Exploration, Testing and Feedback:
+    <value>Pre-Release Exploration and Input:
 Andypanther, Bingchang, BurrItsCold, 
 Countdown, DrunkKami, FeralDemon, 
 FireEmbliem, Irenepunmaster, Jeville, 
 Kao, Kirkq, Landmine36, Mallos31, 
 Midboss, Mwobee, Raphix, Schooliedee, 
-Supmarf, Usedpizza, xIceBlue</value>
+Supmarf, Usedpizza, xIceBlue.</value>
   </data>
   <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
     <value>A shortcode that contains the currently-enabled
@@ -223,7 +225,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAcABAwHAAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAcgBAwHIAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -423,9 +425,15 @@ WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
 CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
   </data>
   <data name="rndSpellOverridesToggle.ToolTip" xml:space="preserve">
-    <value>Adds special override data to certain shuffled spell combinations.
+    <value>Checks special override data to certain shuffled spell combinations.
 If available, fixes will be added that allow volatile combos to work, 
-and that improve visuals on combos with visual/scaling issues.</value>
+and/or improve visuals on combos with effect/scaling issues.</value>
+  </data>
+  <data name="rndSpellItemsToggle.ToolTip" xml:space="preserve">
+    <value>REQUIRES Spell Shuffle to be enabled to have an effect.
+Update the names and descriptions of spell items.
+Name is determined by the modifier spell's element, 
+and the description is based on the modifier's effect.</value>
   </data>
   <data name="rndSpellRebalanceToggle.ToolTip" xml:space="preserve">
     <value>Adjusts damage values for most spells.
@@ -437,11 +445,6 @@ will do slightly more damage per hit than the high-level bigger ones with more h
     <value>Distributes the four most powerful combat spells (Avalanche, Magic Barrier, Water Pillar Lv3, Large Cutter)
 so that each is sorted into a different element when shuffled. Also generally tends towards the spells being
 at the higher end of their respective elements, to allow for better race enviroments.</value>
-  </data>
-  <data name="rndExtraHealingToggle.ToolTip" xml:space="preserve">
-    <value>Replaces Soul Search Lv1 with another copy of Healing Lv1.
-This spell will always be in a different element than the default Healing Lv1.
-Unless 'Hinted spell names' is enabled, the name will not be changed.</value>
   </data>
   <data name="rndElement99Toggle.ToolTip" xml:space="preserve">
     <value>Element level maximum is increased from 50 to 99.
@@ -514,11 +517,12 @@ Boss stats will maintain their stat:BST ratios, but BST will be scaled to the le
 the boss they're replacing, and they will drop the appropriate progression items.</value>
   </data>
   <data name="rndMonsterExpToggle.ToolTip" xml:space="preserve">
-    <value>Uses an approximate formula based on enemy Base Stat Total (BST)
+    <value>REQUIRES randomized/scaled stats or Boss Order to be enabled to have an effect.
+Uses an approximate formula based on enemy Base Stat Total (BST)
 to recalculate experience gained on victory. Useful for making more 
 significantly scaled/randomized runs theoretically possible.
 
-Requires either randomized or scaled stats to be enabled.</value>
+</value>
   </data>
   <data name="rndMonsterScaleToggle.ToolTip" xml:space="preserve">
     <value>Scales enemy stats by simple multiplication.
@@ -795,7 +799,7 @@ Double-check https://hangedman.itch.io/merrow to ensure you have the latest vers
     C. Want to play the recommended randomizer ruleset? Enable "LOST KEYS".
     D. Optionally, enable any other features you want.
     E. Switch to the "FILE EXPORT/CHECKSUM" tab.
-    F. Click the big "SELECT Z64 FILE" button, and select a clean Z64 Quest file.
+    F. Click the big "SELECT Z64 FILE TO PATCH" button, and select a clean Z64 Quest file.
     G. Enter a filename if you want, and click "GENERATE FILE". 
 The Patches folder will automatically open, with your patched file and spoiler log (if enabled). 
 
