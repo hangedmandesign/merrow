@@ -141,16 +141,16 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spells rebalanced." + Environment.NewLine);
                 rebalanced = 2;
             }
-            else {
-                for (int i = 0; i < 18; i++) { //back to default
-                    string spelldmghex = library.damageRebalance[i * 3 + 1].ToString("X4");
-                    string oldspell = library.spells[library.damageRebalance[i * 3] * 4 + 3];
-                    string newspell = oldspell.Substring(0, 24) + spelldmghex + oldspell.Substring(28);
-                    library.spells[library.damageRebalance[i * 3] * 4 + 3] = newspell;
-                }
-                //File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spells reset to default." + Environment.NewLine);
-                rebalanced = 1;
-            }
+            //else { // 2022-01-30: removed this because it overwrote shuffled spell values on repatch, duh
+            //    for (int i = 0; i < 18; i++) { //back to default
+            //        string spelldmghex = library.damageRebalance[i * 3 + 1].ToString("X4");
+            //        string oldspell = library.spells[library.damageRebalance[i * 3] * 4 + 3];
+            //        string newspell = oldspell.Substring(0, 24) + spelldmghex + oldspell.Substring(28);
+            //        library.spells[library.damageRebalance[i * 3] * 4 + 3] = newspell;
+            //    }
+            //    //File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spells reset to default." + Environment.NewLine);
+            //    rebalanced = 1;
+            //}
             if (rebalanced != 0 && !rndSpellToggle.Checked) { //special writing of damage values direct
                 for (int i = 0; i < 18; i++) {
                     string spelldmgaddr = (Convert.ToInt32(library.spells[library.damageRebalance[i * 3] * 4 + 2]) + 12).ToString("X6");
@@ -347,68 +347,6 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", fixcount.ToString() + " spell combination fixes applied." + Environment.NewLine);
             }
 
-            //Text Colour palette
-            if (rndTextPaletteToggle.Checked) { 
-                //default black palette is stored at D3E240
-                // black: F83E9C1B6AD5318D
-                // red: F83E9C1BBA0DD009
-                // blue: F83E9C1B629D19AB
-                // white: F83E318DBDEFF735
-
-                int temp = rndTextPaletteDropdown.SelectedIndex;
-                if (temp == 2) { temp = SysRand.Next(3, 7); }
-
-                patchstrings.Add("D3E240");
-                patchstrings.Add("0008");
-
-                if (temp == 0) {
-                    patchcontent = "F83E";
-                    patchcontent += textPaletteHex;
-                    patchstrings.Add(patchcontent);
-                    if (lightdarkicon) {
-                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " light)." + Environment.NewLine);
-                    }
-                    else {
-                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " dark)." + Environment.NewLine);
-                    }
-                }
-                if (temp == 1) {
-                    patchcontent = "F83E";
-                    patchcontent += textPaletteHex;
-                    patchstrings.Add(patchcontent);
-                    if (lightdarkicon) {
-                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to custom (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " light)." + Environment.NewLine);
-                    } else {
-                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to custom (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " dark)." + Environment.NewLine);
-                    }
-                }
-                if (temp == 3) {
-                    patchstrings.Add("F83E9C1BBA0DD009");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to red." + Environment.NewLine);
-                }
-                if (temp == 4) {
-                    patchstrings.Add("F83E9C1B629D19AB");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to blue." + Environment.NewLine);
-                }
-                if (temp == 5) {
-                    patchstrings.Add("F83E318DBDEFF735");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to white." + Environment.NewLine);
-                }
-                if (temp == 6) {
-                    patchstrings.Add("F83E9C1B6AD5318D");
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to black (default)." + Environment.NewLine);
-                }
-            }
-
-            //Staff Colour palette
-            if (rndStaffPaletteToggle.Checked) {
-                patchstrings.Add("86EB70");
-                patchstrings.Add("0600");
-                patchstrings.Add(staffPaletteHex);
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Staff palette set to custom (" + laststaffpaletteoffset.ToString().PadLeft(3, '0') + ")." + Environment.NewLine);
-            }
-
             //Chest shuffle
             if (rndChestToggle.Checked) {
                 //add chest addresses, and new byte
@@ -564,43 +502,6 @@ namespace Merrow {
                 patchstrings.Add("42");
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Enemy drop limit disabled." + Environment.NewLine);
-            }
-
-            //Text content shuffle
-            if (rndTextContentToggle.Checked) {
-                int temp = 0;
-                //add single text addresses, and new byte
-                for (int i = 0; i < 70; i++) {
-                    temp = library.singletextdata[i * 3] + 8; //text byte at offset 8
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0002");
-                    patchstrings.Add(texts[i].ToString("X4"));
-                }
-
-                //add double text addresses, and new byte
-                for (int i = 0; i < 65; i++) {
-                    temp = library.doubletextdata[i * 4] + 8; //first text at offset 8
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0002");
-                    patchstrings.Add(texts[i + 70].ToString("X4"));
-
-                    temp = library.doubletextdata[i * 4] + 10; //second text at offset 10
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0002");
-                    patchstrings.Add(texts[i + 70 + 65].ToString("X4"));
-                }
-
-                //add inn text addresses, and new byte
-                for (int i = 0; i < inntexts.Length; i++) {
-                    temp = library.inntextdata[i * 3] + 8; //text byte at offset 8
-                    patchstrings.Add(Convert.ToString(temp, 16));
-                    patchstrings.Add("0002");
-                    patchstrings.Add(inntexts[i].ToString("X4"));
-                }
-
-                if (rndTextContentDropdown.SelectedIndex == 0) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text content shuffled." + Environment.NewLine);
-                }
             }
 
             //MONSTER SCALING AND BOSS SHUFFLING FEATURES
@@ -782,24 +683,6 @@ namespace Merrow {
                 }
             }
 
-            //Zoom Option
-            if (rndZoomToggle.Checked) { 
-                //width 03698A height 036A26
-                //16368 = 3FF0 = default zoom value
-                //16356 = 3FE4 = lowest stable zoom value
-
-                zoomvalue = rndZoomDropdown.SelectedIndex + 2;
-                patchstrings.Add("03698A");
-                patchstrings.Add("0002");
-                patchstrings.Add(Convert.ToString(16368 - zoomvalue, 16));
-
-                patchstrings.Add("036A26");
-                patchstrings.Add("0002");
-                patchstrings.Add(Convert.ToString(16368 - zoomvalue, 16));
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Zoom out factor set to " + zoomvalue.ToString() + " [Default:1]" + Environment.NewLine);
-            }
-
             //Level 1 Unlock All
             if (rndLevelToggle.Checked) { 
                 for (int s = spellstart; s < ((spelloffset * playerspells) + spellstart); s += spelloffset) {
@@ -834,26 +717,6 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Soul search applied to all spells." + Environment.NewLine);
             }
 
-            //Restless NPCs
-            if (rndRestlessToggle.Checked) { 
-                for (int i = 0; i < library.npcmovement.Length; i++) {
-                    patchstrings.Add(Convert.ToString(library.npcmovement[i], 16));
-                    patchstrings.Add("0001");
-                    patchstrings.Add("02"); //Replace movement byte with 02 to cause wandering
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPCs are restless." + Environment.NewLine);
-            }
-
-            //Max Message Speed
-            if (rndMaxMessageToggle.Checked) { 
-                patchstrings.Add("060600");
-                patchstrings.Add("0001");
-                patchstrings.Add("00");
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Message speed set to maximum." + Environment.NewLine);
-            }
-
             //Fast Monastery
             if (rndFastMonasteryToggle.Checked) { 
                 patchstrings.Add("4361A0");
@@ -874,29 +737,6 @@ namespace Merrow {
                 patchstrings.Add("180018001A00000007"); // write second door target ID
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Blue Cave enabled." + Environment.NewLine);
-            }
-
-            //Vowel Shuffle
-            if (rndVowelsToggle.Checked) { 
-                for (int i = 0; i < voweled.Length; i++) {
-                    patchstrings.Add(library.monsternames[(i * 2) + 1]); //hex location
-
-                    int decLength = voweled[i].Length;
-                    patchstrings.Add(decLength.ToString("X4")); //name length in hex bytes
-
-                    patchstrings.Add(ToHex(voweled[i]));
-                }
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Vowel play enabled." + Environment.NewLine);
-            }
-
-            //HUD lock toggle
-            if (rndHUDLockToggle.Checked) {
-                patchstrings.Add("01F0AF");
-                patchstrings.Add("0001");
-                patchstrings.Add("00");
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "HUD onscreen lock enabled." + Environment.NewLine);
             }
 
             //Wing unlock toggle
@@ -960,9 +800,8 @@ namespace Merrow {
 
             //MP regain rate
             if (rndMPRegainToggle.Checked) {
-                //the trackbar is restricted to x2 and x3 in either direction. 
-                //also doesn't bother writing if the value's 10 = default. Value 7 = OFF.
-                if (rndMPRegainTrackBar.Value != 7 && rndMPRegainTrackBar.Value != 10) {
+                //the trackbar is restricted to x2 and x3 in either direction. Value 7 = OFF.
+                if (rndMPRegainTrackBar.Value != 7) {
                     //the old method multiplied the speed value, but the effect of that was logarithmic, not multiplicative.
                     //instead, I've selected hex values that map closely to the number of seconds spent running, which was the intent all along.
                     //for reference, I got these values by testing MP gained while running a set distance.
@@ -994,15 +833,6 @@ namespace Merrow {
                 patchstrings.Add("0000000F000D0000");
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Fast Mammon's World enabled." + Environment.NewLine);
-            }
-
-            //Celtland Drift
-            if (rndDriftToggle.Checked) {
-                patchstrings.Add("071B50");
-                patchstrings.Add("0004");
-                patchstrings.Add("3ff44444");
-
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Celtland Drift enabled." + Environment.NewLine);
             }
 
             //Crystal Valley Postern
@@ -1199,43 +1029,13 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Approach to Mammon's World locked by Elemental Gems." + Environment.NewLine);
             }
 
-            //Random spell palette
-            if (rndSpellPaletteToggle.Checked) {
-                for (int i = 0; i < rndspellcolours.Length; i++) {
-                    patchstrings.Add(library.allcolors[i * 2]);
-                    patchstrings.Add("0002");
-                    patchstrings.Add(library.allcolors[i * 2 + 1].Substring(0,2) + rndspellcolours[i].ToString("X2"));
-                }
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell palettes randomized." + Environment.NewLine);
-            }
-
-            //Random cloak palette
-            if (rndCloakPaletteToggle.Checked) {
-                for (int i = 0; i < library.cloaklocations.Length; i++) {
-                    patchstrings.Add(library.cloaklocations[i]);
-                    patchstrings.Add("0004");
-                    patchstrings.Add(rndCloakViewTextbox.Text + "FF");
-                }
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Cloak colour randomized." + Environment.NewLine);
-            }
-
-            //Random BGM
-            if (rndMusicShuffleToggle.Checked) {
-                for (int i = 0; i < rndbgms.Length; i++) {
-                    patchstrings.Add(library.bgmdata[i * 2]);
-                    patchstrings.Add("0001");
-                    patchstrings.Add(rndbgms[i].ToString("X2"));
-                }
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Background music randomized." + Environment.NewLine);
-            }
-
             //Shannon Hints
             if (rndShannonHintsToggle.Checked) {
                 for (int i = 0; i < 5; i++) {
                     object[] hintdata = new object[2];
                     string hintstring = "This is a hint.#Did it break?$If so, RIP%";
                     string localgem = library.gemnames[gemIDs[i] - 20];
-                    int coinflip = SysRand.Next(2);
+                    int coinflip = hintcoins[i]; //first hint coinflip
                     string hintword = "";
 
                     if (i == 0) { hintword = library.earthhints[(hints[0] * 2) + coinflip]; }
@@ -1247,7 +1047,7 @@ namespace Merrow {
                     //123456789012345678901234567
                     //good of all Celtland.
 
-                    coinflip = SysRand.Next(2);
+                    coinflip = hintcoins[i + 5]; //second hint coinflip
 
                     //string is written
                     if (coinflip == 0) { hintstring = "The " + localgem + " currently#rests somewhere " + hintword + ".#You must find it before any#darker purposes befall it.%"; }
@@ -1262,7 +1062,7 @@ namespace Merrow {
                     //string is encoded to patch
                     patchstrings.Add(library.shannonhints[i]);
                     patchstrings.Add(hintlen.ToString("X4"));
-                    patchstrings.Add((string)hintdata[0]); 
+                    patchstrings.Add((string)hintdata[0]);
 
                     //account for boss item shuffle - remove secondary dialogue from Shannons
                     //by doing this, I don't really need to worry about item order
@@ -1307,6 +1107,208 @@ namespace Merrow {
                 patchstrings.Add("C210000041E8");
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Hidden spirits moved to clearer locations." + Environment.NewLine);
+            }
+
+        //--------------------------COSMETIC EFFECTS BELOW THIS LINE SO THEY DON'T AFFECT ANYTHING ELSE-------------------------
+
+            //Text Colour palette
+            if (rndTextPaletteToggle.Checked) {
+                //default black palette is stored at D3E240
+                // black: F83E9C1B6AD5318D
+                // red: F83E9C1BBA0DD009
+                // blue: F83E9C1B629D19AB
+                // white: F83E318DBDEFF735
+
+                int temp = rndTextPaletteDropdown.SelectedIndex;
+                if (temp == 2) { temp = randbasetextpalette; }
+
+                patchstrings.Add("D3E240");
+                patchstrings.Add("0008");
+
+                if (temp == 0) {
+                    patchcontent = "F83E";
+                    patchcontent += textPaletteHex;
+                    patchstrings.Add(patchcontent);
+                    if (lightdarkicon) {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " light)." + Environment.NewLine);
+                    }
+                    else {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to random (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " dark)." + Environment.NewLine);
+                    }
+                }
+                if (temp == 1) {
+                    patchcontent = "F83E";
+                    patchcontent += textPaletteHex;
+                    patchstrings.Add(patchcontent);
+                    if (lightdarkicon) {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to custom (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " light)." + Environment.NewLine);
+                    }
+                    else {
+                        File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to custom (" + lasttextpaletteoffset.ToString().PadLeft(3, '0') + " dark)." + Environment.NewLine);
+                    }
+                }
+                if (temp == 3) {
+                    patchstrings.Add("F83E9C1BBA0DD009");
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to red." + Environment.NewLine);
+                }
+                if (temp == 4) {
+                    patchstrings.Add("F83E9C1B629D19AB");
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to blue." + Environment.NewLine);
+                }
+                if (temp == 5) {
+                    patchstrings.Add("F83E318DBDEFF735");
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to white." + Environment.NewLine);
+                }
+                if (temp == 6) {
+                    patchstrings.Add("F83E9C1B6AD5318D");
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text palette set to black (default)." + Environment.NewLine);
+                }
+            }
+
+            //Staff Colour palette
+            if (rndStaffPaletteToggle.Checked) {
+                patchstrings.Add("86EB70");
+                patchstrings.Add("0600");
+                patchstrings.Add(staffPaletteHex);
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Staff palette set to custom (" + laststaffpaletteoffset.ToString().PadLeft(3, '0') + ")." + Environment.NewLine);
+            }
+
+            //Text content shuffle
+            if (rndTextContentToggle.Checked) {
+                int temp = 0;
+                //add single text addresses, and new byte
+                for (int i = 0; i < 70; i++) {
+                    temp = library.singletextdata[i * 3] + 8; //text byte at offset 8
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0002");
+                    patchstrings.Add(texts[i].ToString("X4"));
+                }
+
+                //add double text addresses, and new byte
+                for (int i = 0; i < 65; i++) {
+                    temp = library.doubletextdata[i * 4] + 8; //first text at offset 8
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0002");
+                    patchstrings.Add(texts[i + 70].ToString("X4"));
+
+                    temp = library.doubletextdata[i * 4] + 10; //second text at offset 10
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0002");
+                    patchstrings.Add(texts[i + 70 + 65].ToString("X4"));
+                }
+
+                //add inn text addresses, and new byte
+                for (int i = 0; i < inntexts.Length; i++) {
+                    temp = library.inntextdata[i * 3] + 8; //text byte at offset 8
+                    patchstrings.Add(Convert.ToString(temp, 16));
+                    patchstrings.Add("0002");
+                    patchstrings.Add(inntexts[i].ToString("X4"));
+                }
+
+                if (rndTextContentDropdown.SelectedIndex == 0) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text content shuffled." + Environment.NewLine);
+                }
+            }
+
+            //Zoom Option
+            if (rndZoomToggle.Checked) {
+                //width 03698A height 036A26
+                //16368 = 3FF0 = default zoom value
+                //16356 = 3FE4 = lowest stable zoom value
+
+                zoomvalue = rndZoomDropdown.SelectedIndex + 2;
+                patchstrings.Add("03698A");
+                patchstrings.Add("0002");
+                patchstrings.Add(Convert.ToString(16368 - zoomvalue, 16));
+
+                patchstrings.Add("036A26");
+                patchstrings.Add("0002");
+                patchstrings.Add(Convert.ToString(16368 - zoomvalue, 16));
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Zoom out factor set to " + zoomvalue.ToString() + " [Default:1]" + Environment.NewLine);
+            }
+
+            //Restless NPCs
+            if (rndRestlessToggle.Checked) {
+                for (int i = 0; i < library.npcmovement.Length; i++) {
+                    patchstrings.Add(Convert.ToString(library.npcmovement[i], 16));
+                    patchstrings.Add("0001");
+                    patchstrings.Add("02"); //Replace movement byte with 02 to cause wandering
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "NPCs are restless." + Environment.NewLine);
+            }
+
+            //Max Message Speed
+            if (rndMaxMessageToggle.Checked) {
+                patchstrings.Add("060600");
+                patchstrings.Add("0001");
+                patchstrings.Add("00");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Message speed set to maximum." + Environment.NewLine);
+            }
+
+            //Vowel Shuffle
+            if (rndVowelsToggle.Checked) {
+                for (int i = 0; i < voweled.Length; i++) {
+                    patchstrings.Add(library.monsternames[(i * 2) + 1]); //hex location
+
+                    int decLength = voweled[i].Length;
+                    patchstrings.Add(decLength.ToString("X4")); //name length in hex bytes
+
+                    patchstrings.Add(ToHex(voweled[i]));
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Vowel play enabled." + Environment.NewLine);
+            }
+
+            //HUD lock toggle
+            if (rndHUDLockToggle.Checked) {
+                patchstrings.Add("01F0AF");
+                patchstrings.Add("0001");
+                patchstrings.Add("00");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "HUD onscreen lock enabled." + Environment.NewLine);
+            }
+
+            //Celtland Drift
+            if (rndDriftToggle.Checked) {
+                patchstrings.Add("071B50");
+                patchstrings.Add("0004");
+                patchstrings.Add("3ff44444");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Celtland Drift enabled." + Environment.NewLine);
+            }
+
+            //Random spell palette
+            if (rndSpellPaletteToggle.Checked) {
+                for (int i = 0; i < rndspellcolours.Length; i++) {
+                    patchstrings.Add(library.allcolors[i * 2]);
+                    patchstrings.Add("0002");
+                    patchstrings.Add(library.allcolors[i * 2 + 1].Substring(0,2) + rndspellcolours[i].ToString("X2"));
+                }
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell palettes randomized." + Environment.NewLine);
+            }
+
+            //Random cloak palette
+            if (rndCloakPaletteToggle.Checked) {
+                for (int i = 0; i < library.cloaklocations.Length; i++) {
+                    patchstrings.Add(library.cloaklocations[i]);
+                    patchstrings.Add("0004");
+                    patchstrings.Add(rndCloakViewTextbox.Text + "FF");
+                }
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Cloak colour randomized." + Environment.NewLine);
+            }
+
+            //Random BGM
+            if (rndMusicShuffleToggle.Checked) {
+                for (int i = 0; i < rndbgms.Length; i++) {
+                    patchstrings.Add(library.bgmdata[i * 2]);
+                    patchstrings.Add("0001");
+                    patchstrings.Add(rndbgms[i].ToString("X2"));
+                }
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Background music randomized." + Environment.NewLine);
             }
 
             //Brian Colour palette

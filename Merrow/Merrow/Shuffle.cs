@@ -24,10 +24,6 @@ namespace Merrow {
             //REINITIATE RANDOM WITH SEED
             SysRand = new System.Random(rngseed);
 
-            //The reason we reset the seed and reshuffle everything every time, whether they're enabled or not, is because the number of times the random seed is used determines the sequence of random values.
-            //So to guarantee the random seed to produce the same results with the same options, it has to do the same number of random checks each time. It might not always be necessary but it prevents errors.
-            //That's also why this doesn't check for checkboxes: checkbox state & dropdown visible state, or not tied to rerolling the RNG so this removes having to know what state every object is in.
-
             //SPELL SHUFFLING
             //'shuffles' is an array that will contain spells as indices, and modifiers as values. 
             //we start by filling it with -1 to denote unedited spells
@@ -436,163 +432,6 @@ namespace Merrow {
                 }
             }
 
-            //TEXT SHUFFLING (May be based on dropdown value more later, text shortening, whatever)
-
-            if (rndTextContentDropdown.SelectedIndex == 0) {
-                int c = texts.Length;
-                while (c > 1) {
-                    c--;
-                    k = SysRand.Next(c + 1);
-                    int temp = texts[k];
-                    texts[k] = texts[c];
-                    texts[c] = temp;
-                }
-
-                c = inntexts.Length;
-                while (c > 1) {
-                    c--;
-                    k = SysRand.Next(c + 1);
-                    int temp = inntexts[k];
-                    inntexts[k] = inntexts[c];
-                    inntexts[c] = temp;
-                }
-            }
-
-            //TEXT COLOUR SHUFFLING
-            lightdark = SysRand.NextDouble() > 0.5;
-            hueOffset = SysRand.NextDouble() * 360;
-
-            //pick random hue offset. don't re-randomize if CUSTOM is selected.
-            if (rndTextPaletteDropdown.SelectedIndex == 0) {
-                lightdarkicon = lightdark;
-                if (lightdarkicon) { rndTextLightDark.Text = "◌"; }
-                else { rndTextLightDark.Text = "●"; }
-
-                rndTextViewTextbox.Text = Convert.ToString((int)Math.Round(hueOffset));
-
-                //convert base colours from hex, and hue shift
-                if (lightdark) {
-                    texPal1 = HueShift(RGBAToColor(library.baseRedTextPalette[0]), hueOffset);
-                    texPal2 = HueShift(RGBAToColor(library.baseRedTextPalette[1]), hueOffset);
-                    texPal3 = HueShift(RGBAToColor(library.baseRedTextPalette[2]), hueOffset);
-                }
-                else {
-                    texPal1 = HueShift(RGBAToColor(library.baseDarkTextPalette[0]), hueOffset);
-                    texPal2 = HueShift(RGBAToColor(library.baseDarkTextPalette[1]), hueOffset);
-                    texPal3 = HueShift(RGBAToColor(library.baseDarkTextPalette[2]), hueOffset);
-                }
-
-                textPaletteHex = ColorToHex(texPal1) + ColorToHex(texPal2) + ColorToHex(texPal3);
-
-                rndColourPanel2.BackColor = texPal1;
-                rndColourPanel3.BackColor = texPal2;
-                rndColourPanel4.BackColor = texPal3;
-            }
-
-            //if CUSTOM is selected, update the palette view
-            if (rndTextPaletteDropdown.SelectedIndex == 1) {
-                lightdark = lightdarkicon;
-                hueOffset = Convert.ToDouble(rndTextViewTextbox.Text);
-
-                //convert base colours from hex, and hue shift
-                if (lightdark) {
-                    texPal1 = HueShift(RGBAToColor(library.baseRedTextPalette[0]), hueOffset);
-                    texPal2 = HueShift(RGBAToColor(library.baseRedTextPalette[1]), hueOffset);
-                    texPal3 = HueShift(RGBAToColor(library.baseRedTextPalette[2]), hueOffset);
-                }
-                else {
-                    texPal1 = HueShift(RGBAToColor(library.baseDarkTextPalette[0]), hueOffset);
-                    texPal2 = HueShift(RGBAToColor(library.baseDarkTextPalette[1]), hueOffset);
-                    texPal3 = HueShift(RGBAToColor(library.baseDarkTextPalette[2]), hueOffset);
-                }
-
-                textPaletteHex = ColorToHex(texPal1) + ColorToHex(texPal2) + ColorToHex(texPal3);
-
-                rndColourPanel2.BackColor = texPal1;
-                rndColourPanel3.BackColor = texPal2;
-                rndColourPanel4.BackColor = texPal3;
-            }
-
-            lasttextpaletteoffset = (int)Math.Round(hueOffset);
-
-            //STAFF COLOUR SHUFFLING
-            hueOffset = SysRand.NextDouble() * 360;
-
-            //pick random hue offset. don't re-randomize if CUSTOM is selected.
-            if (rndStaffPaletteDropdown.SelectedIndex == 0) {
-                rndStaffViewTextbox.Text = Convert.ToString((int)Math.Round(hueOffset));
-
-                staffPaletteHex = "";
-                string[] staffbytes = new string[768];
-                for (int i = 0; i < 768; i++) {
-                    staffbytes[i] = library.stafftexture.Substring(0 + (i * 4), 4);
-                    staffPaletteHex += ColorToHex(HueShift(RGBAToColor(staffbytes[i]), hueOffset));
-                }
-
-                rndColourPanelS.BackColor = HueShift(RGBAToColor(staffbytes[36]), hueOffset);
-            }
-
-            //if CUSTOM is selected, ignore the random generation and override the palette view
-            if (rndStaffPaletteDropdown.SelectedIndex == 1) {
-                hueOffset = Convert.ToDouble(rndStaffViewTextbox.Text);
-
-                staffPaletteHex = "";
-                string[] staffbytes = new string[768];
-                for (int i = 0; i < 768; i++) {
-                    staffbytes[i] = library.stafftexture.Substring(0 + (i * 4), 4);
-                    staffPaletteHex += ColorToHex(HueShift(RGBAToColor(staffbytes[i]), hueOffset));
-                }
-
-                rndColourPanelS.BackColor = HueShift(RGBAToColor(staffbytes[30]), hueOffset);
-            }
-
-            laststaffpaletteoffset = (int)Math.Round(hueOffset);
-
-            //CLOAK COLOUR SHUFFLING
-            string randcolor = String.Format("#{0:X6}", SysRand.Next(0x1000000)); // = random "#A197B9"
-
-            //pick random color. don't re-randomize if CUSTOM is selected.
-            if (rndCloakPaletteDropdown.SelectedIndex == 0) {
-                rndCloakViewTextbox.Text = randcolor;
-                rndColourPanelC.BackColor = System.Drawing.ColorTranslator.FromHtml(randcolor);
-            }
-
-            //if CUSTOM is selected, ignore the random generation and override the palette view
-            if (rndCloakPaletteDropdown.SelectedIndex == 1) {
-                randcolor = "#" + rndCloakViewTextbox.Text.PadRight(6,'8');
-                rndCloakViewTextbox.Text = rndCloakViewTextbox.Text.PadRight(6, '8');
-                rndColourPanelC.BackColor = System.Drawing.ColorTranslator.FromHtml(randcolor);
-            }
-
-            lastcloakpalettecolor = System.Drawing.ColorTranslator.FromHtml(randcolor);
-
-            //SPELL PALETTE RANDOMIZATION
-
-            for (int i = 0; i < rndspellcolours.Length; i++) {
-                rndspellcolours[i] = SysRand.Next(17) + 1;
-            }
-
-            //BRIAN COLOUR SHUFFLING
-            if(rndBrianClothesToggle.Checked) {
-                hueOffset = SysRand.NextDouble() * 360;
-
-                brianPaletteHex1 = "";
-                string[] brian1bytes = new string[1216];
-                for (int i = 0; i < brian1bytes.Length; i++) {
-                    brian1bytes[i] = library.briantexture1.Substring(0 + (i * 4), 4);
-                    brianPaletteHex1 += ColorToHex(HueShift(RGBAToColor(brian1bytes[i]), hueOffset));
-                }
-
-                hueOffset = SysRand.NextDouble() * 360;
-
-                brianPaletteHex2 = "";
-                string[] brian2bytes = new string[1328];
-                for (int i = 0; i < brian1bytes.Length; i++) {
-                    brian2bytes[i] = library.briantexture2.Substring(0 + (i * 4), 4);
-                    brianPaletteHex2 += ColorToHex(HueShift(RGBAToColor(brian2bytes[i]), hueOffset));
-                }
-            }
-
             //MONSTER STAT AND BOSS ORDER RANDOMIZATION
 
             //initiate monster stats again, in case this is happening for the nth time
@@ -918,7 +757,14 @@ namespace Merrow {
                         if (gemvals[i] >= 101 && gemvals[i] <= 102) { gifts[library.area_open[gemvals[i]]] = gemIDs[i]; hints[i] = 1; } //gifts
                     }
                 }
+
+                //flip ten coins for hint data randomization
+                for (int i = 0; i < hintcoins.Length; i++) {
+                    hintcoins[i] = SysRand.Next(2);
+                }
             }
+
+            //--------------COSMETIC OPTIONS BELOW THIS LINE-----------------------------------
 
             //VOWEL SHUFFLE
 
@@ -943,6 +789,162 @@ namespace Merrow {
             for (int i = 0; i < rndbgms.Length; i++) {
                 rndbgms[i] = SysRand.Next(38); //0-37. 0-26 is first 26 tracks, 27-37 is last 11 tracks 
                 if (rndbgms[i] >= 27) { rndbgms[i] = rndbgms[i] + 4; } //add 4 because last 11 are numbered 31-41 in data
+            }
+
+            //TEXT SHUFFLING (May be based on dropdown value more later, text shortening, whatever)
+            if (rndTextContentDropdown.SelectedIndex == 0) {
+                int c = texts.Length;
+                while (c > 1) {
+                    c--;
+                    k = SysRand.Next(c + 1);
+                    int temp = texts[k];
+                    texts[k] = texts[c];
+                    texts[c] = temp;
+                }
+
+                c = inntexts.Length;
+                while (c > 1) {
+                    c--;
+                    k = SysRand.Next(c + 1);
+                    int temp = inntexts[k];
+                    inntexts[k] = inntexts[c];
+                    inntexts[c] = temp;
+                }
+            }
+
+            //TEXT COLOUR SHUFFLING
+            lightdark = SysRand.NextDouble() > 0.5;
+            hueOffset = SysRand.NextDouble() * 360;
+
+            //pick random hue offset. don't re-randomize if CUSTOM is selected.
+            if (rndTextPaletteDropdown.SelectedIndex == 0) {
+                lightdarkicon = lightdark;
+                if (lightdarkicon) { rndTextLightDark.Text = "◌"; }
+                else { rndTextLightDark.Text = "●"; }
+
+                rndTextViewTextbox.Text = Convert.ToString((int)Math.Round(hueOffset));
+
+                //convert base colours from hex, and hue shift
+                if (lightdark) {
+                    texPal1 = HueShift(RGBAToColor(library.baseRedTextPalette[0]), hueOffset);
+                    texPal2 = HueShift(RGBAToColor(library.baseRedTextPalette[1]), hueOffset);
+                    texPal3 = HueShift(RGBAToColor(library.baseRedTextPalette[2]), hueOffset);
+                }
+                else {
+                    texPal1 = HueShift(RGBAToColor(library.baseDarkTextPalette[0]), hueOffset);
+                    texPal2 = HueShift(RGBAToColor(library.baseDarkTextPalette[1]), hueOffset);
+                    texPal3 = HueShift(RGBAToColor(library.baseDarkTextPalette[2]), hueOffset);
+                }
+
+                textPaletteHex = ColorToHex(texPal1) + ColorToHex(texPal2) + ColorToHex(texPal3);
+
+                rndColourPanel2.BackColor = texPal1;
+                rndColourPanel3.BackColor = texPal2;
+                rndColourPanel4.BackColor = texPal3;
+            }
+
+            //if CUSTOM is selected, update the palette view
+            if (rndTextPaletteDropdown.SelectedIndex == 1) {
+                lightdark = lightdarkicon;
+                hueOffset = Convert.ToDouble(rndTextViewTextbox.Text);
+
+                //convert base colours from hex, and hue shift
+                if (lightdark) {
+                    texPal1 = HueShift(RGBAToColor(library.baseRedTextPalette[0]), hueOffset);
+                    texPal2 = HueShift(RGBAToColor(library.baseRedTextPalette[1]), hueOffset);
+                    texPal3 = HueShift(RGBAToColor(library.baseRedTextPalette[2]), hueOffset);
+                }
+                else {
+                    texPal1 = HueShift(RGBAToColor(library.baseDarkTextPalette[0]), hueOffset);
+                    texPal2 = HueShift(RGBAToColor(library.baseDarkTextPalette[1]), hueOffset);
+                    texPal3 = HueShift(RGBAToColor(library.baseDarkTextPalette[2]), hueOffset);
+                }
+
+                textPaletteHex = ColorToHex(texPal1) + ColorToHex(texPal2) + ColorToHex(texPal3);
+
+                rndColourPanel2.BackColor = texPal1;
+                rndColourPanel3.BackColor = texPal2;
+                rndColourPanel4.BackColor = texPal3;
+            }
+
+            lasttextpaletteoffset = (int)Math.Round(hueOffset);
+            randbasetextpalette = SysRand.Next(3, 7);
+
+            //STAFF COLOUR SHUFFLING
+            hueOffset = SysRand.NextDouble() * 360;
+
+            //pick random hue offset. don't re-randomize if CUSTOM is selected.
+            if (rndStaffPaletteDropdown.SelectedIndex == 0) {
+                rndStaffViewTextbox.Text = Convert.ToString((int)Math.Round(hueOffset));
+
+                staffPaletteHex = "";
+                string[] staffbytes = new string[768];
+                for (int i = 0; i < 768; i++) {
+                    staffbytes[i] = library.stafftexture.Substring(0 + (i * 4), 4);
+                    staffPaletteHex += ColorToHex(HueShift(RGBAToColor(staffbytes[i]), hueOffset));
+                }
+
+                rndColourPanelS.BackColor = HueShift(RGBAToColor(staffbytes[36]), hueOffset);
+            }
+
+            //if CUSTOM is selected, ignore the random generation and override the palette view
+            if (rndStaffPaletteDropdown.SelectedIndex == 1) {
+                hueOffset = Convert.ToDouble(rndStaffViewTextbox.Text);
+
+                staffPaletteHex = "";
+                string[] staffbytes = new string[768];
+                for (int i = 0; i < 768; i++) {
+                    staffbytes[i] = library.stafftexture.Substring(0 + (i * 4), 4);
+                    staffPaletteHex += ColorToHex(HueShift(RGBAToColor(staffbytes[i]), hueOffset));
+                }
+
+                rndColourPanelS.BackColor = HueShift(RGBAToColor(staffbytes[30]), hueOffset);
+            }
+
+            laststaffpaletteoffset = (int)Math.Round(hueOffset);
+
+            //CLOAK COLOUR SHUFFLING
+            string randcolor = String.Format("#{0:X6}", SysRand.Next(0x1000000)); // = random "#A197B9"
+
+            //pick random color. don't re-randomize if CUSTOM is selected.
+            if (rndCloakPaletteDropdown.SelectedIndex == 0) {
+                rndCloakViewTextbox.Text = randcolor;
+                rndColourPanelC.BackColor = System.Drawing.ColorTranslator.FromHtml(randcolor);
+            }
+
+            //if CUSTOM is selected, ignore the random generation and override the palette view
+            if (rndCloakPaletteDropdown.SelectedIndex == 1) {
+                randcolor = "#" + rndCloakViewTextbox.Text.PadRight(6, '8');
+                rndCloakViewTextbox.Text = rndCloakViewTextbox.Text.PadRight(6, '8');
+                rndColourPanelC.BackColor = System.Drawing.ColorTranslator.FromHtml(randcolor);
+            }
+
+            lastcloakpalettecolor = System.Drawing.ColorTranslator.FromHtml(randcolor);
+
+            //SPELL PALETTE RANDOMIZATION
+            for (int i = 0; i < rndspellcolours.Length; i++) {
+                rndspellcolours[i] = SysRand.Next(17) + 1;
+            }
+
+            //BRIAN COLOUR SHUFFLING
+            if (rndBrianClothesToggle.Checked) {
+                hueOffset = SysRand.NextDouble() * 360;
+
+                brianPaletteHex1 = "";
+                string[] brian1bytes = new string[1216];
+                for (int i = 0; i < brian1bytes.Length; i++) {
+                    brian1bytes[i] = library.briantexture1.Substring(0 + (i * 4), 4);
+                    brianPaletteHex1 += ColorToHex(HueShift(RGBAToColor(brian1bytes[i]), hueOffset));
+                }
+
+                hueOffset = SysRand.NextDouble() * 360;
+
+                brianPaletteHex2 = "";
+                string[] brian2bytes = new string[1328];
+                for (int i = 0; i < brian1bytes.Length; i++) {
+                    brian2bytes[i] = library.briantexture2.Substring(0 + (i * 4), 4);
+                    brianPaletteHex2 += ColorToHex(HueShift(RGBAToColor(brian2bytes[i]), hueOffset));
+                }
             }
 
             shufflingnow = false;

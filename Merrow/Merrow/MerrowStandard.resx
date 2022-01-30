@@ -146,13 +146,11 @@ However, exports will automatically overwrite any existing file with the same na
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Disallowed a couple of rare Healing-related shuffled spell combinations due to the chance of crashes. This'll be a good candidate for attempting some proper data override fixes down the line.
+    <value>● Rebalanced damage used to restore the regular damage values if it wasn't enabled, to allow reverting of files. That's been removed, because it had unintended side effects when multi-patching the same file.
 
-● Replaced "RANDOMIZER" on patched title screen with "MERROW" while I try to figure out how/if it should choose between the two.
+● Moved all 'cosmetic' effects to the end of the generation process, to ensure there are no side effects from repatching/random order.
 
-● Added Gifter and Chest checklists to the PDF Guide, for new/returning players working up to learning the Randomizer. Also added a single line telling you to read the game's manual. Cause you should, if you haven't. Also added the Merrow posters I made. Since the Guide is now 11Mb, it'll still be included in the download but also alongside it on itch.
-
-● Cleaned up a bunch of tooltips and text in Merrow. Some were pretty outdated due to evolving features (e.g. Extra Healing Lv1 now changes the new healing spell's name, when it previously only did if Hinted Names was enabled.)</value>
+● Moved the couple bits of randomization that happened during patch building into the randomization function, so it's all guaranteed to unaffect patch building.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
@@ -225,7 +223,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAcgBAwHIAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAdABAwHQAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA

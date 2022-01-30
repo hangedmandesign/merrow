@@ -100,6 +100,7 @@ namespace Merrow {
         int[] newbosselem = { 4, 4 };
         int lasttextpaletteoffset = 0;
         int laststaffpaletteoffset = 0;
+        int randbasetextpalette = 0;
         int[] lostkeysbossitemlist = { 255, 255, 255, 255, 255, 255 };
         int[] gemIDs = { 20, 21, 22, 23, 24 };
         int[] lostkeysdrops = new int[67];
@@ -114,6 +115,7 @@ namespace Merrow {
         Color lastcloakpalettecolor;
         bool crashlockoutput = false;
         int[] hints = new int[5];
+        int[] hintcoins = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         int unlockcount = 0;
         int fixcount = 0;
 
