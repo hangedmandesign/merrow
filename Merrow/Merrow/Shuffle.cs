@@ -573,7 +573,7 @@ namespace Merrow {
                     int[] fireval = new int[3];
                     int[] bookval = new int[1];
                     gemIDs = new int[5] { 20, 21, 22, 23, 24 }; //reset this so the spoiler log is back to default order
-                    hints = new int[5] { 0, 0, 0, 0, 0 };
+                    hints = new int[5] { -1, -1, -1, -1, -1 };
 
                     if (rndIvoryWingsToggle.Checked) {
                         earthval = new int[2];
@@ -621,36 +621,36 @@ namespace Merrow {
                     //eletale book: 2 bosses, 18 chests, 2 gifters, 1 wingsmith	-    0-1,2-19,20-21, //X22
 
                     for (int i = 0; i < earthval.Length; i++) { //earth gem and wings
-                        if (earthval[i] == 0) { lostkeysbossitemlist[0] = earthitemIDs[i]; if (hints[0] == 0) { hints[0] = earthval[i]; } } //solvaring
-                        if (earthval[i] >= 1 && earthval[i] <= 15) { chests[library.area_earth[earthval[i]]] = earthitemIDs[i]; if (hints[0] == 0) { hints[0] = earthval[i]; } } //chests
-                        if (earthval[i] >= 16 && earthval[i] <= 18) { gifts[library.area_earth[earthval[i]]] = earthitemIDs[i]; if (hints[0] == 0) { hints[0] = earthval[i]; } } //gifts
+                        if (earthval[i] == 0) { lostkeysbossitemlist[0] = earthitemIDs[i]; if (hints[0] == -1) { hints[0] = earthval[i]; } } //solvaring
+                        if (earthval[i] >= 1 && earthval[i] <= 15) { chests[library.area_earth[earthval[i]]] = earthitemIDs[i]; if (hints[0] == -1) { hints[0] = earthval[i]; } } //chests
+                        if (earthval[i] >= 16 && earthval[i] <= 18) { gifts[library.area_earth[earthval[i]]] = earthitemIDs[i]; if (hints[0] == -1) { hints[0] = earthval[i]; } } //gifts
                     }
 
                     for (int i = 0; i < windval.Length; i++) { //wind gem and wings
-                        if (windval[i] == 0) { lostkeysbossitemlist[1] = winditemIDs[i]; if (hints[1] == 0) { hints[1] = windval[i]; } } //zelse
-                        if (windval[i] >= 1 && windval[i] <= 15) { chests[library.area_wind[windval[i]]] = winditemIDs[i]; if (hints[1] == 0) { hints[1] = windval[i]; } } //chests
-                        if (windval[i] >= 16 && windval[i] <= 17) { gifts[library.area_wind[windval[i]]] = winditemIDs[i]; if (hints[1] == 0) { hints[1] = windval[i]; } } //gifts
+                        if (windval[i] == 0) { lostkeysbossitemlist[1] = winditemIDs[i]; if (hints[1] == -1) { hints[1] = windval[i]; } } //zelse
+                        if (windval[i] >= 1 && windval[i] <= 15) { chests[library.area_wind[windval[i]]] = winditemIDs[i]; if (hints[1] == -1) { hints[1] = windval[i]; } } //chests
+                        if (windval[i] >= 16 && windval[i] <= 17) { gifts[library.area_wind[windval[i]]] = winditemIDs[i]; if (hints[1] == -1) { hints[1] = windval[i]; } } //gifts
                     }
 
                     //water gem
-                    if (waterval[0] == 0) { lostkeysbossitemlist[1] = wateritemIDs[0]; if (hints[2] == 0) { hints[2] = waterval[0]; } } //zelse
-                    if (waterval[0] >= 1 && waterval[0] <= 15) { chests[library.area_water_nowings[waterval[0]]] = wateritemIDs[0]; if (hints[2] == 0) { hints[2] = waterval[0]; } } //chests
-                    if (waterval[0] >= 16 && waterval[0] <= 17) { gifts[library.area_water_nowings[waterval[0]]] = wateritemIDs[0]; if (hints[2] == 0) { hints[2] = waterval[0]; } } //gifts
-                    if (waterval[0] == 18) { lostkeysbossitemlist[2] = wateritemIDs[0]; if (hints[2] == 0) { hints[2] = waterval[0]; } } //nepty
-                    if (waterval[0] >= 19 && waterval[0] <= 25) { chests[library.area_water_nowings[waterval[0]]] = wateritemIDs[0]; if (hints[2] == 0) { hints[2] = waterval[0]; } } //water-only chests
+                    if (waterval[0] == 0) { lostkeysbossitemlist[1] = wateritemIDs[0]; if (hints[2] == -1) { hints[2] = waterval[0]; } } //zelse
+                    if (waterval[0] >= 1 && waterval[0] <= 15) { chests[library.area_water_nowings[waterval[0]]] = wateritemIDs[0]; if (hints[2] == -1) { hints[2] = waterval[0]; } } //chests
+                    if (waterval[0] >= 16 && waterval[0] <= 17) { gifts[library.area_water_nowings[waterval[0]]] = wateritemIDs[0]; if (hints[2] == -1) { hints[2] = waterval[0]; } } //gifts
+                    if (waterval[0] == 18) { lostkeysbossitemlist[2] = wateritemIDs[0]; if (hints[2] == -1) { hints[2] = waterval[0]; } } //nepty
+                    if (waterval[0] >= 19 && waterval[0] <= 25) { chests[library.area_water_nowings[waterval[0]]] = wateritemIDs[0]; if (hints[2] == -1) { hints[2] = waterval[0]; } } //water-only chests
 
                     for (int i = 0; i < fireval.Length; i++) { //fire gem and wings
-                        if (fireval[i] == 0) { lostkeysbossitemlist[3] = fireitemIDs[i]; if (hints[3] == 0) { hints[3] = fireval[i]; } } //shilf
-                        if (fireval[i] == 1) { lostkeysbossitemlist[4] = fireitemIDs[i]; if (hints[3] == 0) { hints[3] = fireval[i]; } } //fargo
-                        if (fireval[i] >= 2 && fireval[i] <= 34) { chests[library.area_fire[fireval[i]]] = fireitemIDs[i]; if (hints[3] == 0) { hints[3] = fireval[i]; } } //chests
-                        if (fireval[i] >= 35 && fireval[i] <= 36) { gifts[library.area_fire[fireval[i]]] = fireitemIDs[i]; if (hints[3] == 0) { hints[3] = fireval[i]; } } //gifts
+                        if (fireval[i] == 0) { lostkeysbossitemlist[3] = fireitemIDs[i]; if (hints[3] == -1) { hints[3] = fireval[i]; } } //shilf
+                        if (fireval[i] == 1) { lostkeysbossitemlist[4] = fireitemIDs[i]; if (hints[3] == -1) { hints[3] = fireval[i]; } } //fargo
+                        if (fireval[i] >= 2 && fireval[i] <= 34) { chests[library.area_fire[fireval[i]]] = fireitemIDs[i]; if (hints[3] == -1) { hints[3] = fireval[i]; } } //chests
+                        if (fireval[i] >= 35 && fireval[i] <= 36) { gifts[library.area_fire[fireval[i]]] = fireitemIDs[i]; if (hints[3] == -1) { hints[3] = fireval[i]; } } //gifts
                     }
 
                     //book
-                    if (bookval[0] == 0) { lostkeysbossitemlist[5] = bookitemIDs[0]; if (hints[4] == 0) { hints[4] = bookval[0]; } } //guilty
+                    if (bookval[0] == 0) { lostkeysbossitemlist[5] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //guilty
                     //if (bookval[0] == 1) { lostkeysbossitemlist[6] = bookitemIDs[0]; hints[4] = 1; } //beigis
-                    if (bookval[0] >= 1 && bookval[0] <= 18) { chests[library.area_book_nobeigis[bookval[0]]] = bookitemIDs[0]; if (hints[4] == 0) { hints[4] = bookval[0]; } } //chests
-                    if (bookval[0] >= 19 && bookval[0] <= 20) { gifts[library.area_book_nobeigis[bookval[0]]] = bookitemIDs[0]; if (hints[4] == 0) { hints[4] = bookval[0]; } } //gifts
+                    if (bookval[0] >= 1 && bookval[0] <= 18) { chests[library.area_book_nobeigis[bookval[0]]] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //chests
+                    if (bookval[0] >= 19 && bookval[0] <= 20) { gifts[library.area_book_nobeigis[bookval[0]]] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //gifts
 
                     //Console.WriteLine(library.area_wind[windval[0]] + " " + library.area_wind[windval[1]] + " " + library.area_wind[windval[2]]);
                     //Console.WriteLine(library.area_water_nowings[waterval[0]]);
@@ -666,7 +666,7 @@ namespace Merrow {
                     int[] wingvals = new int[6];
                     int[] wingIDs = { 14, 15, 16, 17, 18, 19 };
                     gemIDs = new int[5] { 20, 21, 22, 23, 24 };
-                    hints = new int[5] { 0, 0, 0, 0, 0 };
+                    hints = new int[5] { -1, -1, -1, -1, -1 };
 
                     //fill and randomize possiblevals to guarantee unique values
                     CountAndShuffleArray(possiblevals);
@@ -695,7 +695,7 @@ namespace Merrow {
                         }
                         if (gemvals[4] == -1) { //102 for no beigis
                             if (possiblevals[i] >= 82 && possiblevals[i] <= 102) { gemvals[4] = possiblevals[i]; hints[4] = possiblevals[i] - 82; }
-                        } 
+                        }
 
                         if (gemvals[0] != -1 && gemvals[1] != -1 && gemvals[2] != -1 && gemvals[3] != -1 && gemvals[4] != -1) { break; }
                     }
@@ -739,22 +739,22 @@ namespace Merrow {
 
                     //put gems anywhere
                     for (int i = 0; i < 5; i++) {
-                        if (gemvals[i] == 0) { lostkeysbossitemlist[0] = gemIDs[i]; hints[i] = 1; } //solvaring
-                        if (gemvals[i] >= 1 && gemvals[i] <= 15) { chests[library.area_open[gemvals[i]]] = gemIDs[i]; hints[i] = 2; } //chests
-                        if (gemvals[i] >= 16 && gemvals[i] <= 18) { gifts[library.area_open[gemvals[i]]] = gemIDs[i]; hints[i] = 1; } //gifts
-                        if (gemvals[i] == 19) { lostkeysbossitemlist[1] = gemIDs[i]; hints[i] = 1; } //zelse
-                        if (gemvals[i] >= 20 && gemvals[i] <= 34) { chests[library.area_open[gemvals[i]]] = gemIDs[i]; hints[i] = 2; } //chests
-                        if (gemvals[i] >= 35 && gemvals[i] <= 36) { gifts[library.area_open[gemvals[i]]] = gemIDs[i]; hints[i] = 1; } //gifts
-                        if (gemvals[i] == 37) { lostkeysbossitemlist[2] = gemIDs[i]; hints[i] = 1; } //nepty
-                        if (gemvals[i] >= 38 && gemvals[i] <= 44) { chests[library.area_open[gemvals[i]]] = gemIDs[i]; hints[i] = 2; } //water-only chests
-                        if (gemvals[i] == 45) { lostkeysbossitemlist[3] = gemIDs[i]; hints[i] = 1; } //shilf
-                        if (gemvals[i] == 46) { lostkeysbossitemlist[4] = gemIDs[i]; hints[i] = 1; } //fargo
-                        if (gemvals[i] >= 47 && gemvals[i] <= 79) { chests[library.area_open[gemvals[i]]] = gemIDs[i]; hints[i] = 2; } //chests
-                        if (gemvals[i] >= 80 && gemvals[i] <= 81) { gifts[library.area_open[gemvals[i]]] = gemIDs[i]; hints[i] = 1; } //gifts
-                        if (gemvals[i] == 82) { lostkeysbossitemlist[5] = gemIDs[i]; hints[i] = 1; } //guilty
-                        //if (gemvals[i] == 83) { lostkeysbossitemlist[6] = gemIDs[i]; hints[i] = 1; } //beigis
-                        if (gemvals[i] >= 83 && gemvals[i] <= 100) { chests[library.area_open[gemvals[i]]] = gemIDs[i]; hints[i] = 2; } //chests
-                        if (gemvals[i] >= 101 && gemvals[i] <= 102) { gifts[library.area_open[gemvals[i]]] = gemIDs[i]; hints[i] = 1; } //gifts
+                        if (gemvals[i] == 0) { lostkeysbossitemlist[0] = gemIDs[i]; } //solvaring
+                        if (gemvals[i] >= 1 && gemvals[i] <= 15) { chests[library.area_open[gemvals[i]]] = gemIDs[i]; } //chests
+                        if (gemvals[i] >= 16 && gemvals[i] <= 18) { gifts[library.area_open[gemvals[i]]] = gemIDs[i]; } //gifts
+                        if (gemvals[i] == 19) { lostkeysbossitemlist[1] = gemIDs[i]; } //zelse
+                        if (gemvals[i] >= 20 && gemvals[i] <= 34) { chests[library.area_open[gemvals[i]]] = gemIDs[i]; } //chests
+                        if (gemvals[i] >= 35 && gemvals[i] <= 36) { gifts[library.area_open[gemvals[i]]] = gemIDs[i]; } //gifts
+                        if (gemvals[i] == 37) { lostkeysbossitemlist[2] = gemIDs[i]; } //nepty
+                        if (gemvals[i] >= 38 && gemvals[i] <= 44) { chests[library.area_open[gemvals[i]]] = gemIDs[i]; } //water-only chests
+                        if (gemvals[i] == 45) { lostkeysbossitemlist[3] = gemIDs[i]; } //shilf
+                        if (gemvals[i] == 46) { lostkeysbossitemlist[4] = gemIDs[i]; } //fargo
+                        if (gemvals[i] >= 47 && gemvals[i] <= 79) { chests[library.area_open[gemvals[i]]] = gemIDs[i]; } //chests
+                        if (gemvals[i] >= 80 && gemvals[i] <= 81) { gifts[library.area_open[gemvals[i]]] = gemIDs[i]; } //gifts
+                        if (gemvals[i] == 82) { lostkeysbossitemlist[5] = gemIDs[i]; } //guilty
+                        //if (gemvals[i] == 83) { lostkeysbossitemlist[6] = gemIDs[i]; } //beigis
+                        if (gemvals[i] >= 83 && gemvals[i] <= 100) { chests[library.area_open[gemvals[i]]] = gemIDs[i]; } //chests
+                        if (gemvals[i] >= 101 && gemvals[i] <= 102) { gifts[library.area_open[gemvals[i]]] = gemIDs[i]; } //gifts
                     }
                 }
 

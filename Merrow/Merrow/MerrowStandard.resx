@@ -146,11 +146,13 @@ However, exports will automatically overwrite any existing file with the same na
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Rebalanced damage used to restore the regular damage values if it wasn't enabled, to allow reverting of files. That's been removed, because it had unintended side effects when multi-patching the same file.
+    <value>● In previous versions, Rebalanced Spell Damage would restore the default damage values if it wasn't enabled, to allow reverting of files. That's been removed, because it had unintended side effects when repatching a patched file.
 
-● Moved all 'cosmetic' effects to the end of the generation process, to ensure there are no side effects from repatching/random order.
+● Moved the last three cases of randomization during patch building into the randomization function, so all randomization happens in a guaranteed order. Also moved all 'cosmetic' effects to the end of both shuffling and patch building, to ensure there are no side effects from repatching (e.g, to add custom colours to an existing race seed file).
 
-● Moved the couple bits of randomization that happened during patch building into the randomization function, so it's all guaranteed to unaffect patch building.</value>
+● Fixed LOST KEYS: PROGRESSIVE hints potentially getting incorrectly rerolled if the Key Item was carried by the boss.
+
+● Fixed LOST KEYS: OPEN WORLD hints just being probably wrong, due to remnants of the old simple hint system.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
@@ -223,7 +225,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAdABAwHQAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAdgBAwHYAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA

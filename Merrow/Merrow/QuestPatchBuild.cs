@@ -1047,6 +1047,8 @@ namespace Merrow {
                     //123456789012345678901234567
                     //good of all Celtland.
 
+                    spoilerextra.Add(hintword + " Loc:" + hints[i].ToString() + " Item:" + i.ToString() + " Coin:" + coinflip.ToString());
+
                     coinflip = hintcoins[i + 5]; //second hint coinflip
 
                     //string is written
