@@ -152,7 +152,9 @@ It will also create a 'filename + Spoiler.txt' file in the same directory that l
 
 ● Fixed LOST KEYS: PROGRESSIVE hints potentially getting incorrectly rerolled if the Key Item was carried by the boss.
 
-● Fixed LOST KEYS: OPEN WORLD hints just being probably wrong, due to remnants of the old simple hint system.</value>
+● Fixed LOST KEYS: OPEN WORLD hints just being probably wrong, due to remnants of the old simple hint system.
+
+● Rewrote several vague tooltips to improve clarity.</value>
   </data>
   <data name="termsLinkLabel.Text" xml:space="preserve">
     <value>Merrow is copyright (c) 2021 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
@@ -225,7 +227,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAdgBAwHYAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAeABAwHgAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -505,7 +507,7 @@ Spell and boss shuffle are enabled, but can be disabled if desired. Some randomi
 
 OPEN WORLD: Search each region, and rush the endgame as soon as you feel brave enough.
 ALL progression locks (doors, shortcuts, boats, secrets) are unlocked, except for final Shannons.
-Each Key Item (gems/book) is available in a random Lost Keys region, according to the same rules as described above. 
+Each Key Item (gems/book) is available in a random Lost Keys region (like PROGRESSIVE, but with key items shuffled between the default region slots.)
 All four Elemental Gems are required to traverse Brannoch Castle roof to reach Mammon's World, which still requires the Book to enter.
 One of each wing is scattered among ALL possible Key Item locations, including Ivory Wings.
 Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled. 
