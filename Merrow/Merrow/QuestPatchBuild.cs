@@ -1035,21 +1035,24 @@ namespace Merrow {
                     object[] hintdata = new object[2];
                     string hintstring = "This is a hint.#Did it break?$If so, RIP%";
                     string localgem = library.gemnames[gemIDs[i] - 20];
-                    int coinflip = hintcoins[i]; //first hint coinflip
+                    int coinflip = hintcoins[i]; //first coinflip: which word to use
                     string hintword = "";
 
                     if (i == 0) { hintword = library.earthhints[(hints[0] * 2) + coinflip]; }
                     if (i == 1) { hintword = library.windhints[(hints[1] * 2) + coinflip]; }
                     if (i == 2) { hintword = library.waterhints[(hints[2] * 2) + coinflip]; }
                     if (i == 3) { hintword = library.firehints[(hints[3] * 2) + coinflip]; }
-                    if (i == 4) { hintword = library.bookhints[(hints[4] * 2) + coinflip]; }
+                    if (i == 4) {
+                        if (!rndFireBookToggle.Checked) { hintword = library.bookhints[(hints[4] * 2) + coinflip]; } //book only
+                        else { hintword = library.bookfhints[(hints[4] * 2) + coinflip]; } //fire+book
+                    }
 
                     //123456789012345678901234567
                     //good of all Celtland.
 
                     spoilerextra.Add(hintword + " Loc:" + hints[i].ToString() + " Item:" + i.ToString() + " Coin:" + coinflip.ToString());
 
-                    coinflip = hintcoins[i + 5]; //second hint coinflip
+                    coinflip = hintcoins[i + 5]; //second coinflip: which string to use
 
                     //string is written
                     if (coinflip == 0) { hintstring = "The " + localgem + " currently#rests somewhere " + hintword + ".#You must find it before any#darker purposes befall it.%"; }

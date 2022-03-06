@@ -610,7 +610,11 @@ namespace Merrow {
 
                     for (int i = 0; i < fireval.Length; i++) { fireval[i] = firelocs[i]; }
 
-                    bookval[0] = SysRand.Next(21); //21 for nobeigis
+                    if (!rndFireBookToggle.Checked) { bookval[0] = SysRand.Next(21); } //21 for nobeigis
+                    else {
+                        bookval[0] = SysRand.Next(58); 
+                        while (fireval[3] == bookval[0] || fireval[2] == bookval[0] || fireval[1] == bookval[0] || fireval[0] == bookval[0]) { bookval[0] = SysRand.Next(58); }
+                    }
 
                     //distribute individual boss items and wings according to values.
 
@@ -618,7 +622,7 @@ namespace Merrow {
                     //wind jade:    1 boss, 15 chests, 2 gifters, 2 wingsmiths -     0,1-15,16-17, //X18-19
                     //water jewel:  above + 1 boss, 7 chests -	    		         0,1-15,16-17,18,19-25 //X18-19,20,21-27
                     //fire ruby:    2 bosses, 33 chests, 2 gifters, 1 wingsmith	-    0-1,2-34,35-36, //X37
-                    //eletale book: 2 bosses, 18 chests, 2 gifters, 1 wingsmith	-    0-1,2-19,20-21, //X22
+                    //eletale book: 2 bosses, 18 chests, 2 gifters, 1 wingsmith	-    0-1,2-19,20-21, //X21
 
                     for (int i = 0; i < earthval.Length; i++) { //earth gem and wings
                         if (earthval[i] == 0) { lostkeysbossitemlist[0] = earthitemIDs[i]; if (hints[0] == -1) { hints[0] = earthval[i]; } } //solvaring
@@ -647,10 +651,20 @@ namespace Merrow {
                     }
 
                     //book
-                    if (bookval[0] == 0) { lostkeysbossitemlist[5] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //guilty
-                    //if (bookval[0] == 1) { lostkeysbossitemlist[6] = bookitemIDs[0]; hints[4] = 1; } //beigis
-                    if (bookval[0] >= 1 && bookval[0] <= 18) { chests[library.area_book_nobeigis[bookval[0]]] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //chests
-                    if (bookval[0] >= 19 && bookval[0] <= 20) { gifts[library.area_book_nobeigis[bookval[0]]] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //gifts
+                    if (!rndFireBookToggle.Checked) { 
+                       if (bookval[0] == 0) { lostkeysbossitemlist[5] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //guilty
+                       //if (bookval[0] == 1) { lostkeysbossitemlist[6] = bookitemIDs[0]; hints[4] = 1; } //beigis
+                       if (bookval[0] >= 1 && bookval[0] <= 18) { chests[library.area_book_nobeigis[bookval[0]]] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //chests
+                       if (bookval[0] >= 19 && bookval[0] <= 20) { gifts[library.area_book_nobeigis[bookval[0]]] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //gifts
+                    } else {
+                        if (bookval[0] == 0) { lostkeysbossitemlist[3] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //shilf
+                        if (bookval[0] == 1) { lostkeysbossitemlist[4] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //fargo
+                        if (bookval[0] >= 2 && bookval[0] <= 34) { chests[library.area_fire[bookval[0]]] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //chests
+                        if (bookval[0] >= 35 && bookval[0] <= 36) { gifts[library.area_fire[bookval[0]]] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //gifts
+                        if (bookval[0] == 37) { lostkeysbossitemlist[5] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //guilty
+                        if (bookval[0] >= 38 && bookval[0] <= 55) { chests[library.area_bookf_nowings[bookval[0]]] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //chests
+                        if (bookval[0] >= 56 && bookval[0] <= 57) { gifts[library.area_bookf_nowings[bookval[0]]] = bookitemIDs[0]; if (hints[4] == -1) { hints[4] = bookval[0]; } } //gifts
+                    }
 
                     //Console.WriteLine(library.area_wind[windval[0]] + " " + library.area_wind[windval[1]] + " " + library.area_wind[windval[2]]);
                     //Console.WriteLine(library.area_water_nowings[waterval[0]]);
@@ -690,11 +704,20 @@ namespace Merrow {
                         if (gemvals[2] == -1) {
                             if (possiblevals[i] >= 19 && possiblevals[i] <= 44 && possiblevals[i] != gemvals[1]) { gemvals[2] = possiblevals[i]; hints[2] = possiblevals[i] - 19; }
                         }
-                        if (gemvals[3] == -1) {
-                            if (possiblevals[i] >= 45 && possiblevals[i] <= 81) { gemvals[3] = possiblevals[i]; hints[3] = possiblevals[i] - 45; }
-                        }
-                        if (gemvals[4] == -1) { //102 for no beigis
-                            if (possiblevals[i] >= 82 && possiblevals[i] <= 102) { gemvals[4] = possiblevals[i]; hints[4] = possiblevals[i] - 82; }
+                        if (!rndFireBookToggle.Checked) { 
+                            if (gemvals[3] == -1) {
+                                if (possiblevals[i] >= 45 && possiblevals[i] <= 81) { gemvals[3] = possiblevals[i]; hints[3] = possiblevals[i] - 45; }
+                            }
+                            if (gemvals[4] == -1) { //102 for no beigis
+                                if (possiblevals[i] >= 82 && possiblevals[i] <= 102) { gemvals[4] = possiblevals[i]; hints[4] = possiblevals[i] - 82; }
+                            }
+                        } else {
+                            if (gemvals[3] == -1) {
+                                if (possiblevals[i] >= 45 && possiblevals[i] <= 81 && possiblevals[i] != gemvals[4]) { gemvals[3] = possiblevals[i]; hints[3] = possiblevals[i] - 45; }
+                            }
+                            if (gemvals[4] == -1) {
+                                if (possiblevals[i] >= 45 && possiblevals[i] <= 102 && possiblevals[i] != gemvals[3]) { gemvals[4] = possiblevals[i]; hints[4] = possiblevals[i] - 45; }
+                            }
                         }
 
                         if (gemvals[0] != -1 && gemvals[1] != -1 && gemvals[2] != -1 && gemvals[3] != -1 && gemvals[4] != -1) { break; }

@@ -145,10 +145,32 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
-  <data name="termsLinkLabel.Text" xml:space="preserve">
-    <value>Merrow is copyright (c) 2022 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
-Merrow is offered without warranty and is experimental software. 
-Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
+  <data name="rndFireBookToggle.ToolTip" xml:space="preserve">
+    <value>If this option is enabled, the Book region will now overlap the Fire region, in the same way that Wind and Water overlap.
+The Book could now be found in any Fire location in addition to the Book locations (but Fire distribution is unchanged.)
+
+Enabled by default for LOST KEYS, can be disabled to return to old behaviour (Fire and Book areas are separate.)
+Requires LOST KEYS to be enabled.</value>
+  </data>
+  <data name="rndIvoryWingsToggle.ToolTip" xml:space="preserve">
+    <value>Replaces the White Wings with Ivory Wings, which warp the player to Shamwood. 
+The Melrode Wingsmith will not grant an item, and instead Lavaar in Shamwood
+will grant the Ivory Wings upon interacting. SHUFFLED Wingsmiths treat Lavaar
+as the granter of the Ivory Wings and shuffle accordingly.</value>
+  </data>
+  <data name="rndUnlockDoorsToggle.ToolTip" xml:space="preserve">
+    <value>Unlocks all progression-related locks.
+Gems, Book, and Key are no longer required to progress.
+This includes doors, boats, shortcuts, and portals, and also
+unlocks the Crystal Valley Postern, if enabled.
+</value>
+  </data>
+  <data name="newLabel.Text" xml:space="preserve">
+    <value>● IMPORTANT CHANGE TO LOST KEYS LOGIC:
+There's a new Progression option that's enabled by default: 'Put Book in Fire Region.' If this is enabled, the Book region will now overlap the Fire region in the same way that Wind and Water do: the Book can now be in any Fire location in addition to the Book locations (but Fire is unchanged.)
+We found that the Eletale Book wasn't really adding anything to routing. Between it being stuck in the endgame, and the relative size and wing density of the Fire Region, the late-game dungeons were rarely visited and getting to Brannoch was extremely straightforward (and therefore, so was getting the Book.)  This new option can be disabled to return to the Fire/Book distribution.
+
+● Fixed a couple MERROW UI enable/disable-state errors, which were locking some checkboxes on open (i.e., locked until another option was enabled and then disabled again).</value>
   </data>
   <data name="linkLabel1.Text" xml:space="preserve">
     <value>Pre-Release Testing, Input and Exploration:
@@ -158,6 +180,11 @@ FireEmbliem, Irenepunmaster, Jeville,
 Kao, Kirkq, Landmine36, Mallos31, 
 Midboss, Mwobee, Raphix, Schooliedee, 
 Supmarf, Usedpizza, xIceBlue.</value>
+  </data>
+  <data name="termsLinkLabel.Text" xml:space="preserve">
+    <value>Merrow is copyright (c) 2022 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
+Merrow is offered without warranty and is experimental software. 
+Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
   </data>
   <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
     <value>A shortcode that contains the currently-enabled
@@ -216,7 +243,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAfABAwHwAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAfgBAwH4AQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -538,19 +565,6 @@ HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
 
 NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
 and Variance. Setting both values higher may have extreme results.</value>
-  </data>
-  <data name="rndIvoryWingsToggle.ToolTip" xml:space="preserve">
-    <value>Replaces the White Wings with Ivory Wings, which warp the player to Shamwood. 
-The Melrode Wingsmith will not grant an item, and instead Lavaar in Shamwood
-will grant the Ivory Wings upon interacting. SHUFFLED Wingsmiths treat Lavaar
-as the granter of the Ivory Wings and shuffle accordingly.</value>
-  </data>
-  <data name="rndUnlockDoorsToggle.ToolTip" xml:space="preserve">
-    <value>Unlocks all progression-related locks.
-Gems, Book, and Key are no longer required to progress.
-This includes doors, boats, shortcuts, and portals, and also
-unlocks the Crystal Valley Postern, if enabled.
-</value>
   </data>
   <data name="rndCloakPaletteToggle.ToolTip" xml:space="preserve">
     <value>Changes the colour palette of Brian's cloak.

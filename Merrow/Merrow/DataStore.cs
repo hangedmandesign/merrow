@@ -769,22 +769,20 @@ namespace Merrow {
         //item 'areas' for Lost Keys.
         //item lists include the array IDs of all the listed elements
         //earth orb:    1 boss, 15 chests, 3 gifters, 2 wingsmiths -     21 total
-        public int area_earth_count = 21;
         public int[] area_earth = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 81, 82, 83, 84, 0, 1, 2, 0, 1 };
         //wind jade:    1 boss, 15 chests, 2 gifters, 2 wingsmiths -     20 total
-        public int area_wind_count = 20;
         public int[] area_wind = { 1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4, 2, 3 };
         //water jewel:  above + 1 boss, 7 chests -	    		         28 total 
-        public int area_water_count = 28;
         public int[] area_water = { 1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4, 2, 3, 2, 15, 47, 48, 49, 50, 51, 52 };
         public int[] area_water_nowings = { 1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4, 2, 15, 47, 48, 49, 50, 51, 52 };
         //fire ruby:    2 bosses, 33 chests, 2 gifters, 1 wingsmith	-    38 total
-        public int area_fire_count = 38;
         public int[] area_fire = { 3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7, 4 };
-        //eletale book: 2 bosses, 18 chests, 2 gifters, 1 wingsmith	-    23 total
-        public int area_book_count = 23; 
+        //eletale book: 1 boss (no beigis), 18 chests, 2 gifters, 1 wingsmith	-    22 total
         public int[] area_book = { 5, 6, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8, 5 };
         public int[] area_book_nobeigis = { 5, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8, 5 };
+
+        //fire and book: fire + 1 boss (no beigis), 18 chests, 2 gifters, no wingsmiths	-    58 total
+        public int[] area_bookf_nowings = { 3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7, 5, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8 };
 
         //2021-08-32: created a no-beigis area list, and removed from the open list below, because not being included in boss shuffle means he never gets handed special items, just the regularly randomized assignments
 
@@ -1700,6 +1698,67 @@ namespace Merrow {
             "hidden","bright",//18
             "dark","warm",//19
             "forlorn","windy"//20
+        };
+
+        public string[] bookfhints = {
+            "vile","lost",//0
+            "vile","burning",//1
+            "hidden","lost",//2
+            "hidden","gilded",//3
+            "hidden","gilded",//4
+            "hidden","gilded",//5
+            "hidden","warm",//6
+            "hidden","gilded",//7
+            "hidden","gilded",//8
+            "hidden","gilded",//9
+            "hidden","warm",//10
+            "hidden","warm",//11
+            "hidden","warm",//12
+            "hidden","warm",//13
+            "hidden","lost",//14
+            "hidden","lost",//15
+            "hidden","lost",//16
+            "hidden","lost",//17
+            "hidden","lost",//18
+            "hidden","lost",//19
+            "hidden","lost",//20
+            "hidden","lost",//21
+            "hidden","lost",//22
+            "hidden","lost",//23
+            "hidden","dark",//24
+            "hidden","dark",//25
+            "hidden","dark",//26
+            "hidden","dark",//27
+            "hidden","dark",//28
+            "hidden","dark",//29
+            "hidden","dark",//30
+            "hidden","burning",//31
+            "hidden","burning",//32
+            "hidden","burning",//33
+            "hidden","burning",//34
+            "bright","warm",//35
+            "bright","lost",//36
+            "vile","dark",//37
+            "hidden","warm",//38
+            "hidden","warm",//39
+            "hidden","warm",//40
+            "hidden","warm",//41
+            "hidden","warm",//42
+            "hidden","warm",//43
+            "hidden","burning",//44
+            "hidden","hateful",//45
+            "hidden","hateful",//46
+            "hidden","hateful",//47
+            "hidden","hateful",//48
+            "hidden","hateful",//49
+            "hidden","hateful",//50
+            "hidden","bright",//51
+            "hidden","bright",//52
+            "hidden","bright",//53
+            "hidden","bright",//54
+            "hidden","bright",//55
+            "dark","warm",//56
+            "forlorn","windy"//57
         };
 
         //72 entries, offset is +8 from addr (single/double total is 208 values)

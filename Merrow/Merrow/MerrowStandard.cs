@@ -1259,6 +1259,10 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndFireBookToggle_CheckedChanged(object sender, EventArgs e) {
+
+        }
+
         //FRENCH VANILLA OVERRIDE
         public void VanillaHandling() {
             if (rndFrenchVanillaToggle.Checked) {
@@ -1335,6 +1339,8 @@ namespace Merrow {
                 rndShannonHintsToggle.Checked = true;
                 rndTextImprovementsToggle.Checked = true;
                 rndTextImprovementsToggle.Enabled = false;
+                rndFireBookToggle.Checked = true;
+                rndFireBookToggle.Enabled = true; //turned on by default but can be turned off if needed
 
                 //spell options
                 rndSpellToggle.Checked = true;
@@ -1416,6 +1422,9 @@ namespace Merrow {
                 rndLockedEndgameToggle.Enabled = true;
 
                 rndTextImprovementsToggle.Enabled = true;
+
+                rndFireBookToggle.Checked = false;
+                rndFireBookToggle.Enabled = false;
 
                 if (!rndFrenchVanillaToggle.Checked) { //only disable if the other isn't using it
                     rndFastShamwoodToggle.Checked = false;
@@ -1720,5 +1729,6 @@ namespace Merrow {
         private void hlpHelpText_LinkClicked(object sender, LinkClickedEventArgs e) {
             System.Diagnostics.Process.Start("explorer.exe", e.LinkText);
         }
+
     }
 }
