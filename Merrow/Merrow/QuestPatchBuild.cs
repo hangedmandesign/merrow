@@ -1323,7 +1323,7 @@ namespace Merrow {
                 patchstrings.Add(brianPaletteHex1);
 
                 patchstrings.Add("86DFF0");
-                patchstrings.Add("0A60");
+                patchstrings.Add("0980");
                 patchstrings.Add(brianPaletteHex2);
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Brian palette set to random." + Environment.NewLine);
@@ -1389,6 +1389,7 @@ namespace Merrow {
                     for (int j = 0; j < targetLength; j++) { 
                         rndFileBytes[targetAddr + j] = targetData[j];
                     }
+                    if (debugoutput) { File.AppendAllText(filePath + fileName + "_spoiler.txt", patchstrings[i] + " " + targetLength.ToString("X4") + " " + patchstrings[i + 2] + Environment.NewLine); }
                 }
 
                 //write updated file bytearray to new file
@@ -1399,7 +1400,6 @@ namespace Merrow {
                 System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
                 rndErrorLabel.Text = "Z64 file creation complete. CRC repaired.";
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Z64 file patched. Checksum repaired." + Environment.NewLine);
-
             }
 
             //Patching mode: CREATE IPS PATCH
@@ -1409,6 +1409,12 @@ namespace Merrow {
                 patchbuild += headerHex;
                 for (int ps = 0; ps < patchparts; ps++) {
                     patchbuild += patchstrings[ps];
+
+                    if (debugoutput) {
+                        if (ps % 3 == 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", patchstrings[ps] + " "); }
+                        if (ps % 3 == 1) { File.AppendAllText(filePath + fileName + "_spoiler.txt", patchstrings[ps] + " "); }
+                        if (ps % 3 == 2) { File.AppendAllText(filePath + fileName + "_spoiler.txt", patchstrings[ps] + Environment.NewLine); }
+                    }
                 }
                 patchbuild += footerHex;
 
@@ -1420,6 +1426,8 @@ namespace Merrow {
                 rndErrorLabel.Text = "IPS Patch creation complete.";
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "IPS patch generated." + Environment.NewLine);
             }
+
+
 
             //Verbose spoiler log is all down at the bottom to allow checks without spoilers.
             if (verboselog) {
@@ -1472,6 +1480,12 @@ namespace Merrow {
                     foreach (string line in spoilerdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 
+                //boss order/item spoilers
+                if (rndBossOrderToggle.Checked || rndLostKeysToggle.Checked) {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED BOSS DROPS:" + Environment.NewLine);
+                    foreach (string line in spoilerbossdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
+                }
+
                 //gifter spoilers
                 if (rndGiftersToggle.Checked) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED GIFTS:" + Environment.NewLine);
@@ -1490,14 +1504,8 @@ namespace Merrow {
                     foreach (string line in spoilerscales) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 
-                //boss order/item spoilers
-                if (rndBossOrderToggle.Checked || rndLostKeysToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED BOSS DROPS:" + Environment.NewLine);
-                    foreach (string line in spoilerbossdrops) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
-                }
-
                 //extra/debug spoilers
-                if (spoilerextra.Count > 0) {
+                if (spoilerextra.Count > 0 && debugoutput) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "DEBUG OUTPUT:" + Environment.NewLine);
                     foreach (string line in spoilerextra) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }

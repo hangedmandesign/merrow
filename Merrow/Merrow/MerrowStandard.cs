@@ -65,6 +65,7 @@ namespace Merrow {
         double riskvalue = 1.0;
         bool updatingcode = false;
         bool shufflingnow = false;
+        bool debugoutput = false;
 
         //collection arrays and lists
         byte[] patcharray;
@@ -732,6 +733,7 @@ namespace Merrow {
 
         private void rndLevelToggle_CheckedChanged(object sender, EventArgs e) {
             rndSpellDropdown.Visible = true;
+            debugoutput = true;
             UpdateCode();
         }
 

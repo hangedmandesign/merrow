@@ -558,13 +558,13 @@ namespace Merrow {
             "D4E402","0028"
         };
 
-        //Font characters. Equivalents have been found wherever possible, "#" marks useless or duplicate chars
+        //Font characters. Equivalents have been found wherever possible, "@" marks useless or duplicate chars
         //Special chars: (7F - Space) (E0 - Linebreak) (F0 - Pagebreak) (FF - Dialogue Stop) (F2 - Yes/No/Inn)
         public string[] fontchars = {
             //below characters are 00-1F
-            "0123456789!?()[].,##:-##~#####", //80
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ&###", //81
-            "abcdefghijklmnopqrstuvwxyz'###"  //82
+            "0123456789!?()[].,@@:-@@~@@@@@", //80
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ&@@@", //81
+            "abcdefghijklmnopqrstuvwxyz'@@@"  //82
         };
 
         //take ascii string, convert to array of ascii values, convert values to game hex, parse with table changes
