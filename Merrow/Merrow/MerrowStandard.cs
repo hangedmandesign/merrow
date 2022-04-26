@@ -79,7 +79,9 @@ namespace Merrow {
         int[] drops = new int[67];
         int[] gifts = new int[10];
         int[] wings = new int[6];
-        int[] texts = new int[208];
+        int singletextcount = 69; //69 with hint+end Shannons removed, 72 without
+        int doubletextcount = 65; //65 with hint+end Shannons removed, 68 without
+        int[] texts = new int[199]; //199 with hint+end Shannons removed, 208 without
         int[] inntexts = new int[17];
         string[] hintnames = new string[60];
         string[] spoilerspells = new string[60];
@@ -170,11 +172,13 @@ namespace Merrow {
             for (int k = 0; k < drops.Length; k++) { drops[k] = library.dropdata[k * 2 + 1]; }
 
             //initiate text lists
-            int lenS = library.singletextdata.Length / 3; //70
-            int lenD = library.doubletextdata.Length / 4; //65
-            for (int m = 0; m < lenS; m++) { texts[m] = library.singletextdata[m * 3 + 2]; } //add single texts
-            for (int m = 0; m < lenD; m++) { texts[lenS + m] = library.doubletextdata[m * 4 + 2]; } //add double texts
-            for (int m = 0; m < lenD; m++) { texts[lenS + lenD + m] = library.doubletextdata[m * 4 + 3]; } //i know this could be tidier but getting it right was annoying
+            singletextcount = library.singletextdata.Length / 3; //69
+            doubletextcount = library.doubletextdata.Length / 4; //65
+            texts = new int[singletextcount + doubletextcount + doubletextcount]; //accounts for both columns
+
+            for (int m = 0; m < singletextcount; m++) { texts[m] = library.singletextdata[m * 3 + 2]; } //add single texts
+            for (int m = 0; m < doubletextcount; m++) { texts[singletextcount + m] = library.doubletextdata[m * 4 + 2]; } //add double texts
+            for (int m = 0; m < doubletextcount; m++) { texts[singletextcount + doubletextcount + m] = library.doubletextdata[m * 4 + 3]; } //i know this could be tidier but getting it right was annoying
             for (int m = 0; m < inntexts.Length; m++) { inntexts[m] = library.inntextdata[m * 3 + 2]; } //add inn texts
 
             //initiate monster stats
@@ -437,27 +441,21 @@ namespace Merrow {
 
 
             //hinted name reference
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < 60; i++) {
                 hintedDataGridView.Rows.Add();
-                for (int j = 0; j < 3; j++) {
+                for (int j = 0; j < 4; j++) {
                     if (j == 0) { //grab spell name
                         hintedDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6].ToUpper();
                         if (i < 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose; }
-                        if (i >= 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
+                        if (i >= 15 && i < 30) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
+                        if (i >= 30 && i < 45) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure; }
+                        if (i >= 45) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew; }
                     }
-                    if (j > 0) { //grab 0,1 hints
+                    if (j == 1 || j == 2) { //grab 0,1 hints
                         hintedDataGridView.Rows[i].Cells[j].Value = library.shuffleNames[(i * 5) + (j - 1)];
                     }
-                }
-
-                for (int j = 0; j < 3; j++) {
-                    if (j == 0) { //grab spell name
-                        hintedDataGridView.Rows[i].Cells[j + 3].Value = library.spelldatatable[(i + 30) * 6].ToUpper();
-                        if (i < 15) { hintedDataGridView.Rows[i].Cells[j + 3].Style.BackColor = Color.Azure; }
-                        if (i >= 15) { hintedDataGridView.Rows[i].Cells[j + 3].Style.BackColor = Color.Honeydew; }
-                    }
-                    if (j > 0) { //grab 0,1 hints
-                        hintedDataGridView.Rows[i].Cells[j + 3].Value = library.shuffleNames[(i + 30) * 5 + (j - 1)];
+                    if (j == 3) { //grab new descriptions
+                        hintedDataGridView.Rows[i].Cells[j].Value = library.spelldescdatatable[i];
                     }
                 }
             }

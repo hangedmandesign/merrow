@@ -1183,7 +1183,7 @@ namespace Merrow {
             if (rndTextContentToggle.Checked) {
                 int temp = 0;
                 //add single text addresses, and new byte
-                for (int i = 0; i < 70; i++) {
+                for (int i = 0; i < singletextcount; i++) {
                     temp = library.singletextdata[i * 3] + 8; //text byte at offset 8
                     patchstrings.Add(Convert.ToString(temp, 16));
                     patchstrings.Add("0002");
@@ -1191,16 +1191,16 @@ namespace Merrow {
                 }
 
                 //add double text addresses, and new byte
-                for (int i = 0; i < 65; i++) {
+                for (int i = 0; i < doubletextcount; i++) {
                     temp = library.doubletextdata[i * 4] + 8; //first text at offset 8
                     patchstrings.Add(Convert.ToString(temp, 16));
                     patchstrings.Add("0002");
-                    patchstrings.Add(texts[i + 70].ToString("X4"));
+                    patchstrings.Add(texts[i + singletextcount].ToString("X4"));
 
                     temp = library.doubletextdata[i * 4] + 10; //second text at offset 10
                     patchstrings.Add(Convert.ToString(temp, 16));
                     patchstrings.Add("0002");
-                    patchstrings.Add(texts[i + 70 + 65].ToString("X4"));
+                    patchstrings.Add(texts[i + singletextcount + doubletextcount].ToString("X4"));
                 }
 
                 //add inn text addresses, and new byte
@@ -1470,7 +1470,6 @@ namespace Merrow {
                             chestcount++;
                         }
                         File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine);
-                        
                     }
                 }
 
@@ -1488,7 +1487,7 @@ namespace Merrow {
 
                 //gifter spoilers
                 if (rndGiftersToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED GIFTS:" + Environment.NewLine);
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", /*Environment.NewLine +*/ "ALTERED GIFTS:" + Environment.NewLine); //extra newline removed
                     foreach (string line in spoilergifts) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 
