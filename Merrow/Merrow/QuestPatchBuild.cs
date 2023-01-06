@@ -253,7 +253,7 @@ namespace Merrow {
                 }
 
                 //Updated Spell Item Names/Descriptions
-                if (rndSpellItemsToggle.Checked) {
+                if (true) { //rndSpellItemsToggle.Checked) { ALWAYS DO, OPTION REMOVED
                     //name
                     for (int i = 0; i < 6; i++) {
                         object[] hintdata = new object[2];
@@ -461,7 +461,7 @@ namespace Merrow {
 
             //Updated Gifter/Wingsmith text
             if (rndGiftersToggle.Checked || rndWingsmithsToggle.Checked) { //only has an effect if one or both are enabled
-                if (rndGifterTextToggle.Checked) {
+                if (true) { //rndGifterTextToggle.Checked) { ALWAYS DO, OPTION REMOVED
                     if (rndIvoryWingsToggle.Checked) { library.itemcapitalcase[14] = "Ivory Wings"; }
                     int[] gifternum = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 10, 10 };
                     for (int i = 0; i < 28; i++) {
@@ -1112,6 +1112,17 @@ namespace Merrow {
                 patchstrings.Add("C210000041E8");
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Hidden spirits moved to clearer locations." + Environment.NewLine);
+            }
+
+            //Monster flying shuffle
+            if (rndFlyingShuffle.Checked) {
+                for (int i = 0; i < 74; i++) {
+                    patchstrings.Add(library.monsterflyingvanilla[i].ToString("X6"));
+                    patchstrings.Add("0002");
+                    patchstrings.Add(rndflying[i].ToString("X4"));
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Gravity Disaster enabled." + Environment.NewLine);
             }
 
         //--------------------------COSMETIC EFFECTS BELOW THIS LINE SO THEY DON'T AFFECT ANYTHING ELSE-------------------------

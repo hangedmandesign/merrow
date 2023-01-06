@@ -121,6 +121,7 @@ namespace Merrow {
         int[] hintcoins = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         int unlockcount = 0;
         int fixcount = 0;
+        int[] rndflying = new int[74];
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -515,7 +516,7 @@ namespace Merrow {
                 rndEarlyHealingToggle.Enabled = true;
                 rndExtraHealingToggle.Enabled = true;
                 rndDistributeSpellsToggle.Enabled = true;
-                rndSpellItemsToggle.Enabled = true;
+                //rndSpellItemsToggle.Enabled = true;
                 rndSpellOverridesToggle.Enabled = true;
                 if (rndSpellNamesToggle.Checked) { rndSpellNamesDropdown.Enabled = true; }
             } else {
@@ -525,7 +526,7 @@ namespace Merrow {
                 rndEarlyHealingToggle.Enabled = false;
                 rndExtraHealingToggle.Enabled = false;
                 rndDistributeSpellsToggle.Enabled = false;
-                rndSpellItemsToggle.Enabled = false;
+                //rndSpellItemsToggle.Enabled = false;
                 rndSpellOverridesToggle.Enabled = false;
             }
             UpdateCode();
@@ -614,13 +615,13 @@ namespace Merrow {
         private void rndGiftersToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndGiftersToggle.Checked) {
                 rndGiftersDropdown.Enabled = true;
-                rndGifterTextToggle.Enabled = true;
+                //rndGifterTextToggle.Enabled = true;
                 if(!rndLostKeysToggle.Checked) { rndShuffleShannonToggle.Enabled = true; }
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 2;
             } else {
                 rndGiftersDropdown.Enabled = false;
-                if (!rndWingsmithsToggle.Checked) { rndGifterTextToggle.Enabled = false; }
+                //if (!rndWingsmithsToggle.Checked) { rndGifterTextToggle.Enabled = false; }
                 rndShuffleShannonToggle.Enabled = false;
                 if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
                     itemListTabs.Visible = false;
@@ -632,13 +633,13 @@ namespace Merrow {
         private void rndWingsmithsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndWingsmithsToggle.Checked) {
                 rndWingsmithsDropdown.Enabled = true;
-                rndGifterTextToggle.Enabled = true;
+                //rndGifterTextToggle.Enabled = true;
                 itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 3;
             }
             else {
                 rndWingsmithsDropdown.Enabled = false;
-                if (!rndGiftersToggle.Checked) { rndGifterTextToggle.Enabled = false; }
+                //if (!rndGiftersToggle.Checked) { rndGifterTextToggle.Enabled = false; }
                 if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
                     itemListTabs.Visible = false;
                 }
@@ -710,7 +711,7 @@ namespace Merrow {
         private void rndGiftersDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             itemListTabs.SelectedIndex = 2;
             itemListUpdate(itemListView3, rndGiftersDropdown.SelectedIndex);
-            rndShuffleShannonToggle.Enabled = rndGiftersToggle.Checked;
+            if (!rndLostKeysToggle.Checked) { rndShuffleShannonToggle.Enabled = rndGiftersToggle.Checked; } //don't let this get changed if Lost Keys is enabled
             UpdateCode();
         }
 
@@ -1218,10 +1219,6 @@ namespace Merrow {
             UpdateCode();
         }
 
-        private void rndSpellItemsToggle_CheckedChanged(object sender, EventArgs e) {
-            UpdateCode();
-        }
-
         private void rndBetterDewDrop_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
         }
@@ -1231,10 +1228,6 @@ namespace Merrow {
         }
 
         private void rndBrianClothesToggle_CheckedChanged(object sender, EventArgs e) {
-            UpdateCode();
-        }
-
-        private void rndGifterTextToggle_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
         }
 
@@ -1260,7 +1253,11 @@ namespace Merrow {
         }
 
         private void rndFireBookToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
 
+        private void rndFlyingShuffle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
         }
 
         //FRENCH VANILLA OVERRIDE
@@ -1305,6 +1302,7 @@ namespace Merrow {
                 if (!rndLostKeysToggle.Checked) { //only disable if the other isn't using it
                     rndFastShamwoodToggle.Checked = false;
                     rndTextImprovementsToggle.Checked = false;
+                    rndWingUnlockToggle.Checked = false;
                 } 
             }
 
@@ -1349,7 +1347,7 @@ namespace Merrow {
                 rndExtraHealingToggle.Checked = true;
                 //spell defaults (do not undo on deselect LOST KEYS)
                 rndDistributeSpellsToggle.Checked = true;
-                rndSpellItemsToggle.Checked = true;
+                //rndSpellItemsToggle.Checked = true;
                 rndSpellOverridesToggle.Checked = true;
                 rndBossOrderToggle.Checked = true;
 
@@ -1367,6 +1365,9 @@ namespace Merrow {
                 //disable shuffling of final shannons, for simplicity, and to ensure key remains in place
                 rndShuffleShannonToggle.Checked = true;
                 rndShuffleShannonToggle.Enabled = false;
+
+                //wings anywhere to prevent potential softlocks if book/key are shuffled at all
+                rndWingUnlockToggle.Checked = true;
 
                 if (rndLostKeysDropdown.SelectedIndex == 0) { //Progressive
                     rndUnlockDoorsToggle.Checked = false;
@@ -1429,7 +1430,8 @@ namespace Merrow {
                 if (!rndFrenchVanillaToggle.Checked) { //only disable if the other isn't using it
                     rndFastShamwoodToggle.Checked = false;
                     rndTextImprovementsToggle.Checked = false;
-                } 
+                    rndWingUnlockToggle.Checked = false;
+                }
             }
 
             expUpdateWarning();
@@ -1729,6 +1731,5 @@ namespace Merrow {
         private void hlpHelpText_LinkClicked(object sender, LinkClickedEventArgs e) {
             System.Diagnostics.Process.Start("explorer.exe", e.LinkText);
         }
-
     }
 }

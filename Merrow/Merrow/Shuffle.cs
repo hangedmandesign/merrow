@@ -554,6 +554,13 @@ namespace Merrow {
                 }
             }
 
+            //monster flying effect shuffle
+            if (rndFlyingShuffle.Checked) {
+                for (int i = 0; i < 74; i++) {
+                    rndflying[i] = SysRand.Next(2); //0 or 1
+                }
+            }
+
             //RULESET OVERRIDE: Lost Keys
             if (rndLostKeysToggle.Checked) {
                 //21-07-11: after getting some feedback, we're going to try a couple changes.

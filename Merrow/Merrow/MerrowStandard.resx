@@ -145,6 +145,91 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
+  <data name="rndFrenchVanillaToggle.ToolTip" xml:space="preserve">
+    <value>FRENCH VANILLA is a set of Quality-of-Life options for improving the vanilla game experience, 
+without changing it too much. Intended for all experience levels. 
+It is compatible with LOST KEYS (and recommended, honestly.)
+
+Enabling FRENCH VANILLA will overwrite many MERROW settings to create an improved ruleset.
+Disabling FRENCH VANILLA will simply disable many of the options enabled, rather than setting them back to whatever
+setting you had them set to previously. Be sure to re-check any options you want after disabling FRENCH VANILLA.</value>
+  </data>
+  <data name="rndLostKeysToggle.ToolTip" xml:space="preserve">
+    <value>LOST KEYS is a special ruleset based around the Elemental Gems and Wings only appearing *once* each, 
+scattered around the world, allowing for original pathing, experimental routing, and risky choices.
+
+Enabling LOST KEYS will overwrite many MERROW randomizer settings to create a playable ruleset.
+Disabling LOST KEYS will simply disable many of the options enabled, rather than setting them back to whatever
+setting you had them set to previously. Be sure to re-check any options you want after disabling LOST KEYS.
+
+LOST KEYS Regions:
+- Earth: Melrode Monastery to Solvaring (&amp; Yellow Wings)
+- Wind: Dondoran Treasury to Zelse (&amp; Blue/Green Wings)
+- Water: Dondoran Treasury to Nepty
+- Fire: Limelin to Brannoch (&amp; Red/Ivory/Black Wings)
+- Book: Limelin to Brannoch Castle Roof (not including Beigis)
+
+PROGRESSIVE: Search each region, and gamble on when to move on.
+Each Key Item (gems/book) and Wing is available in its 'region' (so, anywhere up to the point where vanilla progression requires it.)
+It will either be held by a chest, a gifter, or the boss. Wingsmiths are not randomized by default.
+Black Wings appear in Fire region (Limelin/Dindom/Brannoch), along with new 'Ivory Wings'.
+Ivory Wings replace White Wings, and teleport to Shamwood. Lavaar is considered the Ivory Wingsmith.
+Fire Ruby is REQUIRED to enter Brannoch Castle. Crystal valley warp enabled. Shamwood exit shortcut enabled.
+Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.
+
+OPEN WORLD: Search each region, and rush the endgame as soon as you feel brave enough.
+ALL progression locks (doors, shortcuts, boats, secrets) are unlocked, except for final Shannons.
+Each Key Item (gems/book) is available in a random Lost Keys region (like PROGRESSIVE, but with key items shuffled between the default region slots.)
+All four Elemental Gems are required to traverse Brannoch Castle roof to reach Mammon's World, which still requires the Book to enter.
+One of each wing is scattered among ALL possible Key Item locations, including Ivory Wings.
+Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled. 
+Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.</value>
+  </data>
+  <data name="newLabel.Text" xml:space="preserve">
+    <value>● IMPORTANT: To avoid running out of space in shortcodes, a few essentially-mandatory options are being removed: 
+Update Spell Items, Update Items In Gifter Text.
+Others may be removed in future, but only cosmetic features, to preserve difficulty customization.
+
+● Added new Fun option: "Gravity Disaster". May or may not be a very bad idea.
+
+● Added "Unlock Wing use" to be enabled with LOST KEYS ruleset (already included in FRENCH VANILLA ruleset). 
+If Book/Key are both shuffled or added to random item drops, not having this option enabled can lead to rare late game softlocks. Also, runs/races are generally more fun and smooth when the option is enabled. Feel free to disable if desired.</value>
+  </data>
+  <data name="linkLabel1.Text" xml:space="preserve">
+    <value>Pre-Release Testing, Input and Exploration:
+Andypanther, Bingchang, BurrItsCold, 
+Countdown, DrunkKami, FeralDemon, 
+FireEmbliem, Irenepunmaster, Jeville, 
+Kao, Kirkq, Landmine36, Mallos31, 
+Midboss, Mwobee, Raphix, Schooliedee, 
+Supmarf, Usedpizza, xIceBlue.</value>
+  </data>
+  <data name="termsLinkLabel.Text" xml:space="preserve">
+    <value>Merrow is copyright (c) 2023 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
+Merrow is offered without warranty and is experimental software. 
+Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
+  </data>
+  <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
+    <value>A shortcode that contains the currently-enabled
+randomizer settings. Editing this code will change
+all the settings at once. Codes are tied to version
+numbers, because the number of Merrow options
+changes from version to version.
+
+Error-checking isn't perfect yet, so invalid codes 
+should just blank themselves. They may crash.</value>
+  </data>
+  <data name="rndWingUnlockToggle.ToolTip" xml:space="preserve">
+    <value>Unlocks the use of Wings in the specified locations:
+in all interior locations, on the Isle of Skye, or both.
+Dungeons and houses are checked at the same byte,
+so cannot currently be separated.
+
+WARNING: To avoid late-game softlocks, make sure 
+to enable this option if you are randomizing the location 
+of both Book and Key, or are adding them to the enemy
+item drop pool.</value>
+  </data>
   <data name="rndShuffleShannonToggle.ToolTip" xml:space="preserve">
     <value>Shuffle/randomization will exclude the final two Shannons entirely, 
 so the Eletale Book and the Dark Gaol Key will be in their original locations.
@@ -184,97 +269,6 @@ GEMS: Drops are randomized to contain any Elemental Gem.
 WINGS&amp;GEMS: Drops are randomized to contain any wing or Elemental Gem.
 CUSTOM: Drops are randomized as selected below.</value>
   </data>
-  <data name="rndGiftersToggle.ToolTip" xml:space="preserve">
-    <value>Shuffle/randomize the items granted by item-gifting NPCs.
-[WARNING - Including gems or wings can cause sequence breaks.]
-
-When LOST KEYS is enabled, this determines what fills in the *rest* of the gifters that
-aren't taken up by one of the 5 Key Items (gems and book.)
-
-Shannons and their endgame items (Eletale Book and Dark Gaol Key) are included by default, 
-but softlock protection will guarantee that they will be granted by earlier gifters.
-Optionally, use the toggle below to exclude Shannons: they will carry their items as default.
-
-SHUFFLED: All default gift items are shuffled among all gift NPCs.
-STANDARD: Gifts are randomized to be any standard item.
-STANDARD&amp;WINGS: Gifts are randomized to be any standard item or wing. 
-STANDARD&amp;GEMS: Gifts are randomized to be any standard item or Elemental Gem.
-CHAOS: Gifts are randomized to be any standard item, wing, or Elemental Gem.
-WINGS: Gifts are randomized to be any wing.
-GEMS: Gifts are randomized to be any Elemental Gem.
-WINGS&amp;GEMS: Gifts are randomized to be any wing or Elemental Gem.
-CUSTOM: Gifts are randomized as set in the below menu.</value>
-  </data>
-  <data name="rndWingsmithsToggle.ToolTip" xml:space="preserve">
-    <value>Change the items granted by Wingsmith NPCs.
-[WARNING - Any of these options may cause sequence breaks, or remove Wings entirely.]
-
-SHUFFLED: All wings are shuffled among all wingsmith NPCs.
-STANDARD: Wingsmith items are randomized to be any standard item.
-STANDARD&amp;WINGS: Wingsmith items are randomized to be any standard item or wing. 
-STANDARD&amp;GEMS: Wingsmith items are randomized to be any standard item or Elemental Gem.
-CHAOS: Wingsmith items are randomized to be any standard item, wing, or Elemental Gem.
-WINGS: Wingsmith items are randomized to be any wing.
-GEMS: Wingsmith items are randomized to be any Elemental Gem.
-WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
-CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
-  </data>
-  <data name="crcHelpLabel.ToolTip" xml:space="preserve">
-    <value>This is a CRC (N64 file checksum) Repair Tool.
-The checksum is a value calculated based on a certain portion of a Z64 file, 
-that is used to verify that the file is legitimate. Making modifications (with 
-tools or patches) to that portion of the file will cause the checksum to be
-incorrect, which causes certain hardware and emulation to fail on boot.
-
-This tool can be used to recalculate and update the checksum of a Z64 file,
-allowing hardware to recognize it as legitimate without errors or issues.
-
-It uses a DLL compiled from existing checksum calculation code in C. Full
-details of the algorithm and the license information for the C script are
-available in the repo, under the CRC64 subfolder.
-
-This tool is restricted to Z64 files, to prevent possible memory errors and
-other problems, but it is experimental software. Please ensure you back up any
-files before attempting any checksum repairs. It is your responsibility to 
-know what you are doing to files, and why. Merrow is offered without warranty: 
-please refer to the license readme file for more info.</value>
-  </data>
-  <data name="newLabel.Text" xml:space="preserve">
-    <value>● IMPORTANT CHANGE TO LOST KEYS LOGIC: 
-Added a new Progression option that's enabled by default: 'ADD BOOK TO FIRE REGION'. When enabled, the Book region will now overlap the Fire region in the same way that the Water region overlaps Wind - this means that the Eletale Book can now be in any Fire region location in addition to the Book region locations (The Fire Ruby is unchanged.) 
-
-We found that the Eletale Book wasn't really adding anything to routing; between it being stuck in the endgame, and the relative size and wing density of the Fire Region, late-game dungeons were rarely visited and skipping to Brannoch was straightforward (and therefore, so was getting the Book.) This option can be disabled to revert to the old distribution.
-
-OTHER CHANGES:
-● Added the Shuffled Spells' new item descriptions to the Quest 64 Reference, under the 'SHUFFLED NAMES' tab.
-● Fixed a massive error with IPS patch data handling, that broke any patch that changed Brian's colours.
-● Fixed a single blank textbox that was somehow mixed into the textbox shuffle.
-● Fixed a couple minor MERROW UI errors, which were incorrectly locking some checkboxes once enabled.</value>
-  </data>
-  <data name="linkLabel1.Text" xml:space="preserve">
-    <value>Pre-Release Testing, Input and Exploration:
-Andypanther, Bingchang, BurrItsCold, 
-Countdown, DrunkKami, FeralDemon, 
-FireEmbliem, Irenepunmaster, Jeville, 
-Kao, Kirkq, Landmine36, Mallos31, 
-Midboss, Mwobee, Raphix, Schooliedee, 
-Supmarf, Usedpizza, xIceBlue.</value>
-  </data>
-  <data name="termsLinkLabel.Text" xml:space="preserve">
-    <value>Merrow is copyright (c) 2022 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
-Merrow is offered without warranty and is experimental software. 
-Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
-  </data>
-  <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
-    <value>A shortcode that contains the currently-enabled
-randomizer settings. Editing this code will change
-all the settings at once. Codes are tied to version
-numbers, because the number of Merrow options
-changes from version to version.
-
-Error-checking isn't perfect yet, so invalid codes 
-should just blank themselves. They may crash.</value>
-  </data>
   <metadata name="itemImageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>120, 16</value>
   </metadata>
@@ -283,7 +277,7 @@ should just blank themselves. They may crash.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAARABBAEQAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAASgBBAEoAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -447,16 +441,45 @@ should just blank themselves. They may crash.</value>
         AQMBwAEBAfgBHwHgAQMB4AEHAeABAwH4AR8B8AEHAfgBHwHwAQcB/AE/AfwBHwP/AQ8B/gF/CP8L
 </value>
   </data>
+  <data name="rndGiftersToggle.ToolTip" xml:space="preserve">
+    <value>Shuffle/randomize the items granted by item-gifting NPCs.
+[WARNING - Including gems or wings can cause sequence breaks.]
+
+When LOST KEYS is enabled, this determines what fills in the *rest* of the gifters that
+aren't taken up by one of the 5 Key Items (gems and book.)
+
+Shannons and their endgame items (Eletale Book and Dark Gaol Key) are included by default, 
+but softlock protection will guarantee that they will be granted by earlier gifters.
+Optionally, use the toggle below to exclude Shannons: they will carry their items as default.
+
+SHUFFLED: All default gift items are shuffled among all gift NPCs.
+STANDARD: Gifts are randomized to be any standard item.
+STANDARD&amp;WINGS: Gifts are randomized to be any standard item or wing. 
+STANDARD&amp;GEMS: Gifts are randomized to be any standard item or Elemental Gem.
+CHAOS: Gifts are randomized to be any standard item, wing, or Elemental Gem.
+WINGS: Gifts are randomized to be any wing.
+GEMS: Gifts are randomized to be any Elemental Gem.
+WINGS&amp;GEMS: Gifts are randomized to be any wing or Elemental Gem.
+CUSTOM: Gifts are randomized as set in the below menu.</value>
+  </data>
+  <data name="rndWingsmithsToggle.ToolTip" xml:space="preserve">
+    <value>Change the items granted by Wingsmith NPCs.
+[WARNING - Any of these options may cause sequence breaks, or remove Wings entirely.]
+
+SHUFFLED: All wings are shuffled among all wingsmith NPCs.
+STANDARD: Wingsmith items are randomized to be any standard item.
+STANDARD&amp;WINGS: Wingsmith items are randomized to be any standard item or wing. 
+STANDARD&amp;GEMS: Wingsmith items are randomized to be any standard item or Elemental Gem.
+CHAOS: Wingsmith items are randomized to be any standard item, wing, or Elemental Gem.
+WINGS: Wingsmith items are randomized to be any wing.
+GEMS: Wingsmith items are randomized to be any Elemental Gem.
+WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
+CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
+  </data>
   <data name="rndSpellOverridesToggle.ToolTip" xml:space="preserve">
     <value>Checks special override data to certain shuffled spell combinations.
 If available, fixes will be added that allow volatile combos to work, 
 and/or improve visuals on combos with effect/scaling issues.</value>
-  </data>
-  <data name="rndSpellItemsToggle.ToolTip" xml:space="preserve">
-    <value>REQUIRES Spell Shuffle to be enabled to have an effect.
-Update the names and descriptions of spell items.
-Name is determined by the modifier spell's element, 
-and the description is based on the modifier's effect.</value>
   </data>
   <data name="rndSpellRebalanceToggle.ToolTip" xml:space="preserve">
     <value>Adjusts damage values for most spells.
@@ -493,46 +516,6 @@ SHUFFLED: Redistribute spell properties randomly, with some crash protection rul
     <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
 Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
 Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
-  </data>
-  <data name="rndFrenchVanillaToggle.ToolTip" xml:space="preserve">
-    <value>FRENCH VANILLA is a set of Quality-of-Life options for improving the vanilla game experience, 
-without changing it too much. Intended for all experience levels. 
-It is compatible with LOST KEYS (and recommended, honestly.)
-
-Enabling FRENCH VANILLA will overwrite many MERROW settings to create an improved ruleset.
-Disabling FRENCH VANILLA will simply disable many of the options enabled, rather than setting them back to whatever
-setting you had them set to previously. Be sure to re-check any options you want after disabling FRENCH VANILLA.</value>
-  </data>
-  <data name="rndLostKeysToggle.ToolTip" xml:space="preserve">
-    <value>LOST KEYS is a special ruleset based around the Elemental Gems and Wings only appearing *once* each, 
-scattered around the world, allowing for original pathing, experimental routing, and risky choices.
-
-Enabling LOST KEYS will overwrite many MERROW randomizer settings to create a playable ruleset.
-Disabling LOST KEYS will simply disable many of the options enabled, rather than setting them back to whatever
-setting you had them set to previously. Be sure to re-check any options you want after disabling LOST KEYS.
-
-LOST KEYS Regions:
-- Earth: Melrode Monastery to Solvaring (&amp; Yellow Wings)
-- Wind: Dondoran Treasury to Zelse (&amp; Blue/Green Wings)
-- Water: Dondoran Treasury to Nepty
-- Fire: Limelin to Brannoch (&amp; Red/Ivory/Black Wings)
-- Book: Brannoch Castle (not including Beigis)
-
-PROGRESSIVE: Search each region, and gamble on when to move on.
-Each Key Item (gems/book) and Wing is available in its 'region' (so, anywhere up to the point where vanilla progression requires it.)
-It will either be held by a chest, a gifter, or the boss. Wingsmiths are not randomized by default.
-Black Wings appear in Fire region (Limelin/Dindom/Brannoch), along with new 'Ivory Wings'.
-Ivory Wings replace White Wings, and teleport to Shamwood. Lavaar is considered the Ivory Wingsmith.
-Fire Ruby is REQUIRED to enter Brannoch Castle. Crystal valley warp enabled. Shamwood exit shortcut enabled.
-Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.
-
-OPEN WORLD: Search each region, and rush the endgame as soon as you feel brave enough.
-ALL progression locks (doors, shortcuts, boats, secrets) are unlocked, except for final Shannons.
-Each Key Item (gems/book) is available in a random Lost Keys region (like PROGRESSIVE, but with key items shuffled between the default region slots.)
-All four Elemental Gems are required to traverse Brannoch Castle roof to reach Mammon's World, which still requires the Book to enter.
-One of each wing is scattered among ALL possible Key Item locations, including Ivory Wings.
-Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled. 
-Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.</value>
   </data>
   <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
     <value>Randomize the order of all bosses other than Beigis and Mammon.
@@ -616,6 +599,26 @@ SHUFFLED: Select one of the below four included colours at random.
 for reference, so you can ensure it's acceptable.
 If CUSTOM is selected, you can manually set a hue offset value from 0-359,
 and click the circle to change between light/dark palettes.</value>
+  </data>
+  <data name="crcHelpLabel.ToolTip" xml:space="preserve">
+    <value>This is a CRC (N64 file checksum) Repair Tool.
+The checksum is a value calculated based on a certain portion of a Z64 file, 
+that is used to verify that the file is legitimate. Making modifications (with 
+tools or patches) to that portion of the file will cause the checksum to be
+incorrect, which causes certain hardware and emulation to fail on boot.
+
+This tool can be used to recalculate and update the checksum of a Z64 file,
+allowing hardware to recognize it as legitimate without errors or issues.
+
+It uses a DLL compiled from existing checksum calculation code in C. Full
+details of the algorithm and the license information for the C script are
+available in the repo, under the CRC64 subfolder.
+
+This tool is restricted to Z64 files, to prevent possible memory errors and
+other problems, but it is experimental software. Please ensure you back up any
+files before attempting any checksum repairs. It is your responsibility to 
+know what you are doing to files, and why. Merrow is offered without warranty: 
+please refer to the license readme file for more info.</value>
   </data>
   <data name="expModePatchIPS.ToolTip" xml:space="preserve">
     <value>For experienced users only.
