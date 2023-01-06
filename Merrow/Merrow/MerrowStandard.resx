@@ -120,9 +120,6 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="rndAccuracyToggle.ToolTip" xml:space="preserve">
     <value>Normalizes spell accuracy values to 100. 
 All spells will pass the initial accuracy check, but offensive spells can still miss 
@@ -145,55 +142,17 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
-  <data name="rndFrenchVanillaToggle.ToolTip" xml:space="preserve">
-    <value>FRENCH VANILLA is a set of Quality-of-Life options for improving the vanilla game experience, 
-without changing it too much. Intended for all experience levels. 
-It is compatible with LOST KEYS (and recommended, honestly.)
-
-Enabling FRENCH VANILLA will overwrite many MERROW settings to create an improved ruleset.
-Disabling FRENCH VANILLA will simply disable many of the options enabled, rather than setting them back to whatever
-setting you had them set to previously. Be sure to re-check any options you want after disabling FRENCH VANILLA.</value>
-  </data>
-  <data name="rndLostKeysToggle.ToolTip" xml:space="preserve">
-    <value>LOST KEYS is a special ruleset based around the Elemental Gems and Wings only appearing *once* each, 
-scattered around the world, allowing for original pathing, experimental routing, and risky choices.
-
-Enabling LOST KEYS will overwrite many MERROW randomizer settings to create a playable ruleset.
-Disabling LOST KEYS will simply disable many of the options enabled, rather than setting them back to whatever
-setting you had them set to previously. Be sure to re-check any options you want after disabling LOST KEYS.
-
-LOST KEYS Regions:
-- Earth: Melrode Monastery to Solvaring (&amp; Yellow Wings)
-- Wind: Dondoran Treasury to Zelse (&amp; Blue/Green Wings)
-- Water: Dondoran Treasury to Nepty
-- Fire: Limelin to Brannoch (&amp; Red/Ivory/Black Wings)
-- Book: Limelin to Brannoch Castle Roof (not including Beigis)
-
-PROGRESSIVE: Search each region, and gamble on when to move on.
-Each Key Item (gems/book) and Wing is available in its 'region' (so, anywhere up to the point where vanilla progression requires it.)
-It will either be held by a chest, a gifter, or the boss. Wingsmiths are not randomized by default.
-Black Wings appear in Fire region (Limelin/Dindom/Brannoch), along with new 'Ivory Wings'.
-Ivory Wings replace White Wings, and teleport to Shamwood. Lavaar is considered the Ivory Wingsmith.
-Fire Ruby is REQUIRED to enter Brannoch Castle. Crystal valley warp enabled. Shamwood exit shortcut enabled.
-Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.
-
-OPEN WORLD: Search each region, and rush the endgame as soon as you feel brave enough.
-ALL progression locks (doors, shortcuts, boats, secrets) are unlocked, except for final Shannons.
-Each Key Item (gems/book) is available in a random Lost Keys region (like PROGRESSIVE, but with key items shuffled between the default region slots.)
-All four Elemental Gems are required to traverse Brannoch Castle roof to reach Mammon's World, which still requires the Book to enter.
-One of each wing is scattered among ALL possible Key Item locations, including Ivory Wings.
-Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled. 
-Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.</value>
-  </data>
   <data name="newLabel.Text" xml:space="preserve">
     <value>● IMPORTANT: To avoid running out of space in shortcodes, a few essentially-mandatory options are being removed: 
-Update Spell Items, Update Items In Gifter Text.
+"Update Spell Items", and "Update Items In Gifter Text". They are now always on.
 Others may be removed in future, but only cosmetic features, to preserve difficulty customization.
 
 ● Added new Fun option: "Gravity Disaster". May or may not be a very bad idea.
 
-● Added "Unlock Wing use" to be enabled with LOST KEYS ruleset (already included in FRENCH VANILLA ruleset). 
-If Book/Key are both shuffled or added to random item drops, not having this option enabled can lead to rare late game softlocks. Also, runs/races are generally more fun and smooth when the option is enabled. Feel free to disable if desired.</value>
+● "Unlock Wing use" is now enabled with LOST KEYS ruleset (already included in FRENCH VANILLA ruleset). 
+If Book/Key are both shuffled or added to random item drops, not having this option enabled can lead to rare late game softlocks. Also, runs/races are generally more fun and smooth when the option is enabled. Feel free to disable if desired.
+
+● Fixed a Merrow UI error with "Set final Shannons to default gifts" that might've potentially lead to odd item distribution.</value>
   </data>
   <data name="linkLabel1.Text" xml:space="preserve">
     <value>Pre-Release Testing, Input and Exploration:
@@ -277,7 +236,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAASgBBAEoAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAATABBAEwAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -516,6 +475,46 @@ SHUFFLED: Redistribute spell properties randomly, with some crash protection rul
     <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
 Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
 Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
+  </data>
+  <data name="rndFrenchVanillaToggle.ToolTip" xml:space="preserve">
+    <value>FRENCH VANILLA is a set of Quality-of-Life options for improving the vanilla game experience, 
+without changing it too much. Intended for all experience levels. 
+It is compatible with LOST KEYS (and recommended, honestly.)
+
+Enabling FRENCH VANILLA will overwrite many MERROW settings to create an improved ruleset.
+Disabling FRENCH VANILLA will simply disable many of the options enabled, rather than setting them back to whatever
+setting you had them set to previously. Be sure to re-check any options you want after disabling FRENCH VANILLA.</value>
+  </data>
+  <data name="rndLostKeysToggle.ToolTip" xml:space="preserve">
+    <value>LOST KEYS is a special ruleset based around the Elemental Gems and Wings only appearing *once* each, 
+scattered around the world, allowing for original pathing, experimental routing, and risky choices.
+
+Enabling LOST KEYS will overwrite many MERROW randomizer settings to create a playable ruleset.
+Disabling LOST KEYS will simply disable many of the options enabled, rather than setting them back to whatever
+setting you had them set to previously. Be sure to re-check any options you want after disabling LOST KEYS.
+
+LOST KEYS Regions:
+- Earth: Melrode Monastery to Solvaring (&amp; Yellow Wings)
+- Wind: Dondoran Treasury to Zelse (&amp; Blue/Green Wings)
+- Water: Dondoran Treasury to Nepty
+- Fire: Limelin to Brannoch (&amp; Red/Ivory/Black Wings)
+- Book: Limelin to Brannoch Castle Roof (not including Beigis)
+
+PROGRESSIVE: Search each region, and gamble on when to move on.
+Each Key Item (gems/book) and Wing is available in its 'region' (so, anywhere up to the point where vanilla progression requires it.)
+It will either be held by a chest, a gifter, or the boss. Wingsmiths are not randomized by default.
+Black Wings appear in Fire region (Limelin/Dindom/Brannoch), along with new 'Ivory Wings'.
+Ivory Wings replace White Wings, and teleport to Shamwood. Lavaar is considered the Ivory Wingsmith.
+Fire Ruby is REQUIRED to enter Brannoch Castle. Crystal valley warp enabled. Shamwood exit shortcut enabled.
+Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.
+
+OPEN WORLD: Search each region, and rush the endgame as soon as you feel brave enough.
+ALL progression locks (doors, shortcuts, boats, secrets) are unlocked, except for final Shannons.
+Each Key Item (gems/book) is available in a random Lost Keys region (like PROGRESSIVE, but with key items shuffled between the default region slots.)
+All four Elemental Gems are required to traverse Brannoch Castle roof to reach Mammon's World, which still requires the Book to enter.
+One of each wing is scattered among ALL possible Key Item locations, including Ivory Wings.
+Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled. 
+Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.</value>
   </data>
   <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
     <value>Randomize the order of all bosses other than Beigis and Mammon.
