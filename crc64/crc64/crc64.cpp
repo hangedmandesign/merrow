@@ -4,7 +4,7 @@
  *  Copyright (C) 2005 Parasyte
  *
  * Based on uCON64's N64 checksum algorithm by Andreas Sterbenz
- * Adapted into DLL form for MERROW
+ * Adapted into DLL form for MERROW by Jonah Davidson ()
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

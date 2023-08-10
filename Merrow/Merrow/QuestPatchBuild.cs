@@ -788,8 +788,12 @@ namespace Merrow {
                 patchstrings.Add("0001");
                 patchstrings.Add("63");
 
-                //individual elemental caps
-                for (int i = 0; i < 4; i++) { 
+                patchstrings.Add("003ED7"); //Overworld spirit grab cap
+                patchstrings.Add("0001");
+                patchstrings.Add("63");
+
+                //individual elemental caps, and menu elemental caps
+                for (int i = 0; i < 8; i++) { 
                     patchstrings.Add(library.elementCapLocations[i]);
                     patchstrings.Add("0001");
                     patchstrings.Add("63");

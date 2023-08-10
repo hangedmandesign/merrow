@@ -418,7 +418,7 @@ namespace Merrow {
         public int[] effectSpells = { 17, 19, 22, 25, 27, 32, 38, 40, 43, 44, 47, 48, 49, 52, 54, 56, 57, 58 };
         public int[] brianSpells = { 2, 6, 7, 11, 24, 29, 33, 37, 39, 41 };
 
-        public string[] elementCapLocations = { "0202FF", "02033F", "02037F", "0203C7" };
+        public string[] elementCapLocations = { "0202FF", "02033F", "02037F", "0203C7", "02A3DF", "02A3FB", "02A417", "02A433" };
 
         //spell colours: 22+22+19+16=79
         //only includes the spell elements, pre-offset, that have colour values.
