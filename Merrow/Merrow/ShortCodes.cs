@@ -61,22 +61,10 @@ namespace Merrow {
                 updatingcode = true;
                 //int tabpagestocheck = 3;
                 string codeString = labelVersion.Text.Substring(1);
-                string tempString;
-                string binString2;
-                //var toggles = new List<CheckBox>();
-                //var dropdowns = new List<ComboBox>();
-                //var sliders = new List<TrackBar>();
-
-                ////check each page in turn, convert each page's values and add it to the code string
-                //for (int i = 0; i < tabpagestocheck; i++) {
-                //    toggles.AddRange(GetAllToggles(rndTabsControl.TabPages[i]));
-                //    dropdowns.AddRange(GetAllDropdowns(rndTabsControl.TabPages[i]));
-                //    sliders.AddRange(GetAllSliders(rndTabsControl.TabPages[i]));
-                //}
-
+                string tempString = "";
+                string binString2 = "";
                 int steps = 0;
-                tempString = "";
-                binString2 = "";
+
                 foreach (var toggle in toggles) { //build binary strings
                     steps++;
                     if (toggle.Checked) {
@@ -138,7 +126,7 @@ namespace Merrow {
                         if (!bighex) { tempString += dropdown.SelectedIndex.ToString("X1"); }
                     }
                 }
-                codeString += tempString + itemString + ".";//HexToBase64(tempString) + itemString + ".";
+                codeString += tempString + itemString + ".";
 
                 tempString = "";
                 if (sliders.Count > 0) {
@@ -146,7 +134,7 @@ namespace Merrow {
                         tempString += slider.Value.ToString("X3"); //convert values to hex
                     }
                     if (tempString.Length % 2 != 0) { tempString = "0" + tempString; } //ensure it's an even number of characters
-                    codeString += "S." + tempString;//HexToBase64(tempString);
+                    codeString += "S." + tempString;
                 }
                 else {
                     codeString += "SZ";

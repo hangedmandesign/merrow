@@ -246,20 +246,28 @@ namespace Merrow {
 
         //update risk value
         public void UpdateRisk() {
+            //base risk value is based on variance and scale
             float variance = extremity + 1.2f; //slight scale up on randomness, cause it can easily be more punishing
-            if (difficultyscale >= 1.0) { //scaling matters more than variance, above 1.0
+            if (difficultyscale > 1.0f) { //scaling matters more than variance, above 1.0
                 riskvalue = Math.Round((difficultyscale * difficultyscale * difficultyscale) * (variance * variance) * 10);
             }
-            if (difficultyscale < 1.0) {
+            if (difficultyscale <= 1.0f) {
                 riskvalue = Math.Round((difficultyscale * difficultyscale) * (variance * variance) * 10);
             }
-            if (rndBossOrderToggle.Checked) { riskvalue *= 1.2; } //late solvaring WILL murder you
-            if (rndBossElementToggle.Checked) { riskvalue *= 0.9; } //makes Guilty easier
-            if (rndInvalidityToggle.Checked) { riskvalue *= 0.9; } //makes every boss easier
-            if (!rndMonsterExpToggle.Checked) { //makes higher difficulties easier and lower ones harder
-                if (difficultyscale >= 1.0) { riskvalue *= 0.9; }
-                if (difficultyscale < 1.0) { riskvalue *= 1.1; }
-            } 
+            //modifiers
+            if (rndBossOrderToggle.Checked) { riskvalue *= 1.2f; } //late solvaring WILL murder you
+            if (rndBossElementToggle.Checked) { riskvalue *= 0.9f; } //makes Guilty easier
+            if (rndInvalidityToggle.Checked) { riskvalue *= 0.9f; } //makes every boss easier
+            if (rndMonsterExpToggle.Checked) { //makes higher difficulties easier and lower ones harder
+                if (rndMonsterStatsToggle.Checked) { riskvalue *= (1.0f + (extremity / 2)); }
+                if (difficultyscale > 1.0f) { riskvalue *= 0.9f; }
+                if (difficultyscale < 1.0f) { riskvalue *= 1.2f; }
+            }
+            if (!rndMonsterExpToggle.Checked) { //makes higher difficulties harder and lower ones easier
+                if (rndMonsterStatsToggle.Checked) { riskvalue *= (1.1f + (extremity / 2)); }
+                if (difficultyscale > 1.0f) { riskvalue *= 1.2f; }
+                if (difficultyscale < 1.0f) { riskvalue *= 0.9f; }
+            }
 
             if (!rndMonsterScaleToggle.Checked &&
                 !rndMonsterStatsToggle.Checked &&
@@ -278,13 +286,13 @@ namespace Merrow {
 
                 int redRisk = 255;
                 int greenRisk = 255;
-                if (riskvalue <= 20) {
-                    greenRisk = 225 - (int)(225 * (riskvalue / 20));
-                    redRisk = (int)(255 * (riskvalue / 20));
+                if (riskvalue <= 50) {
+                    greenRisk = 225 - (int)(225 * (riskvalue / 50));
+                    redRisk = (int)(255 * (riskvalue / 50));
                 }
-                if (riskvalue > 20) {
+                if (riskvalue > 50) {
                     greenRisk = 0;
-                    redRisk = 255 - (int)(255 * (riskvalue / 80));
+                    redRisk = 255 - (int)(255 * (riskvalue / 150));
                 }
 
                 redRisk = Math.Min(255, Math.Max(0, redRisk));
@@ -301,19 +309,19 @@ namespace Merrow {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (MODERATE)";
                     rndRiskLabelText.Text = "Roughly vanilla";
                 }
-                if (riskvalue >= 14 && riskvalue < 25) {
+                if (riskvalue >= 14 && riskvalue < 50) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (GALE)";
                     rndRiskLabelText.Text = "Difficult without grinding";
                 }
-                if (riskvalue >= 25 && riskvalue < 41) {
+                if (riskvalue >= 50 && riskvalue < 90) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (STORM)";
                     rndRiskLabelText.Text = "Extremely challenging and grindy";
                 }
-                if (riskvalue >= 41 && riskvalue < 80) {
+                if (riskvalue >= 90 && riskvalue < 150) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (HURRICANE)";
                     rndRiskLabelText.Text = "Possibly impossible";
                 }
-                if (riskvalue >= 80) {
+                if (riskvalue >= 150) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (SUPERCELL)";
                     rndRiskLabelText.Text = "Mammon approaches";
                 }
@@ -533,15 +541,8 @@ namespace Merrow {
         }
 
         private void rndTextPaletteToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndTextPaletteToggle.Checked) {
-                rndTextPaletteDropdown.Enabled = true;
-                rndTextViewToggle.Enabled = true; 
-            } else {
-                rndTextPaletteDropdown.Enabled = false;
-                rndTextViewPanel.Visible = false;
-                rndTextViewToggle.Enabled = false;
-                rndTextViewToggle.Checked = false; //hide again to avoid spoilers if things change
-            }
+            rndTextPaletteDropdown.Enabled = rndTextPaletteToggle.Checked;
+            rndTextViewPanel.Visible = rndTextPaletteToggle.Checked; 
             UpdateCode();
         }
 
@@ -550,23 +551,7 @@ namespace Merrow {
             UpdateCode();
         }
 
-        private void rndColorViewCheckbox_CheckedChanged(object sender, EventArgs e) {
-            if (rndTextViewToggle.Checked) {
-                rndTextViewToggle.Text = "View random colours:";
-                Shuffling(true); //if you don't do this, the colour doesn't update the first time, despite my best efforts
-                rndTextViewPanel.Visible = true;
-            }
-            else {
-                rndTextViewToggle.Text = "View random colours";
-                rndTextViewPanel.Visible = false;
-            }
-            UpdateCode();
-        }
-
         private void rndTextPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            if (rndTextPaletteDropdown.SelectedIndex == 0) { rndTextViewToggle.Checked = false; }
-            if (rndTextPaletteDropdown.SelectedIndex == 1) { rndTextViewToggle.Checked = true; }
-            if (rndTextPaletteDropdown.SelectedIndex >= 2) { rndTextViewToggle.Checked = false; }
             UpdateCode();
             Shuffling(true);
         }
@@ -672,11 +657,6 @@ namespace Merrow {
 
         private void rndSpellNamesToggle_CheckedChanged(object sender, EventArgs e) {
             rndSpellNamesDropdown.Enabled = rndSpellNamesToggle.Checked;
-            UpdateCode();
-        }
-
-        private void rndColorViewToggle_CheckedChanged(object sender, EventArgs e) {
-            rndTextViewPanel.Visible = rndTextViewToggle.Checked;
             UpdateCode();
         }
 
@@ -814,42 +794,7 @@ namespace Merrow {
             UpdateCode();
         }
 
-        private void rndStartingStatsToggle_CheckedChanged(object sender, EventArgs e) {
-            Color currentcol = SystemColors.ControlText;
-            if (!rndStartingStatsToggle.Checked) { currentcol = SystemColors.ControlDark; }
-
-            rndStartHPLabel.ForeColor = currentcol;
-            rndStartMPLabel.ForeColor = currentcol;
-            rndStartAgiLabel.ForeColor = currentcol;
-            rndStartDefLabel.ForeColor = currentcol;
-            rndStartHPValue.ForeColor = currentcol;
-            rndStartMPValue.ForeColor = currentcol;
-            rndStartAgiValue.ForeColor = currentcol;
-            rndStartDefValue.ForeColor = currentcol;
-
-            rndHPTrackBar.Enabled = rndStartingStatsToggle.Checked;
-            rndMPTrackBar.Enabled = rndStartingStatsToggle.Checked;
-            rndAgiTrackBar.Enabled = rndStartingStatsToggle.Checked;
-            rndDefTrackBar.Enabled = rndStartingStatsToggle.Checked;
-            expUpdateWarning();
-            UpdateCode();
-        }
-
         private void rndElement99Toggle_CheckedChanged(object sender, EventArgs e) {
-            expUpdateWarning();
-            UpdateCode();
-        }
-
-        private void rndMPRegainToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndMPRegainToggle.Checked) {
-                rndMPRegainLabel.ForeColor = SystemColors.ControlText;
-                rndMPRegainValue.ForeColor = SystemColors.ControlText;
-            }
-            else {
-                rndMPRegainLabel.ForeColor = SystemColors.ControlDark;
-                rndMPRegainValue.ForeColor = SystemColors.ControlDark;
-            }
-            rndMPRegainTrackBar.Enabled = rndMPRegainToggle.Checked;
             expUpdateWarning();
             UpdateCode();
         }
@@ -1011,19 +956,6 @@ namespace Merrow {
             UpdateCode();
         }
 
-        private void rndHitMPToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndHitMPToggle.Checked) {
-                rndHitMPLabel.ForeColor = SystemColors.ControlText;
-                rndHitMPValue.ForeColor = SystemColors.ControlText;
-            } else {
-                rndHitMPLabel.ForeColor = SystemColors.ControlDark;
-                rndHitMPValue.ForeColor = SystemColors.ControlDark;
-            }
-            rndHitMPTrackBar.Enabled = rndHitMPToggle.Checked;
-            expUpdateWarning();
-            UpdateCode();
-        }
-
         private void rndUnlockDoorsToggle_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
         }
@@ -1074,16 +1006,8 @@ namespace Merrow {
         }
 
         private void rndStaffPaletteToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndStaffPaletteToggle.Checked) {
-                rndStaffPaletteDropdown.Enabled = true;
-                rndStaffViewToggle.Enabled = true;
-            }
-            else {
-                rndStaffPaletteDropdown.Enabled = false;
-                rndStaffViewPanel.Visible = false;
-                rndStaffViewToggle.Enabled = false;
-                rndStaffViewToggle.Checked = false; //hide again to avoid spoilers if things change
-            }
+            rndStaffPaletteDropdown.Enabled = rndStaffPaletteToggle.Checked;
+            rndStaffViewPanel.Visible = rndStaffPaletteToggle.Checked;
             UpdateCode();
         }
 
@@ -1101,15 +1025,8 @@ namespace Merrow {
         }
 
         private void rndStaffPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            if (rndStaffPaletteDropdown.SelectedIndex == 0) { rndStaffViewToggle.Checked = false; }
-            if (rndStaffPaletteDropdown.SelectedIndex == 1) { rndStaffViewToggle.Checked = true; }
             UpdateCode();
             Shuffling(true);
-        }
-
-        private void rndStaffViewToggle_CheckedChanged(object sender, EventArgs e) {
-            rndStaffViewPanel.Visible = rndStaffViewToggle.Checked;
-            UpdateCode();
         }
 
         private void rndTextViewTextbox_TextChanged(object sender, EventArgs e) {
@@ -1139,29 +1056,14 @@ namespace Merrow {
         }
 
         private void rndCloakPaletteToggle_CheckedChanged(object sender, EventArgs e) {
-            if (rndCloakPaletteToggle.Checked) {
-                rndCloakPaletteDropdown.Enabled = true;
-                rndCloakViewToggle.Enabled = true;
-            }
-            else {
-                rndCloakPaletteDropdown.Enabled = false;
-                rndCloakViewPanel.Visible = false;
-                rndCloakViewToggle.Enabled = false;
-                rndCloakViewToggle.Checked = false; //hide again to avoid spoilers if things change
-            }
+            rndCloakPaletteDropdown.Enabled = rndCloakPaletteToggle.Checked;
+            rndCloakViewPanel.Visible = rndCloakPaletteToggle.Checked;
             UpdateCode();
         }
 
         private void rndCloakPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
-            if (rndCloakPaletteDropdown.SelectedIndex == 0) { rndCloakViewToggle.Checked = false; }
-            if (rndCloakPaletteDropdown.SelectedIndex == 1) { rndCloakViewToggle.Checked = true; }
             UpdateCode();
             Shuffling(true);
-        }
-
-        private void rndCloakViewToggle_CheckedChanged(object sender, EventArgs e) {
-            rndCloakViewPanel.Visible = rndCloakViewToggle.Checked;
-            UpdateCode();
         }
 
         private void rndCloakViewTextbox_TextChanged(object sender, EventArgs e) {
@@ -1270,9 +1172,7 @@ namespace Merrow {
                 rndWingUnlockToggle.Checked = true;
                 rndBetterDewDrop.Checked = true;
                 rndInvalidityToggle.Checked = true;
-                rndStartingStatsToggle.Checked = true;
                 rndDefTrackBar.Value = 5;
-                rndHitMPToggle.Checked = true;
                 rndHitMPTrackBar.Value = 2;
                 rndHitMPValue.Text = "2x";
                 rndFastShamwoodToggle.Checked = true;
@@ -1290,9 +1190,7 @@ namespace Merrow {
                 rndWingUnlockToggle.Checked = false;
                 rndBetterDewDrop.Checked = false;
                 rndInvalidityToggle.Checked = false;
-                rndStartingStatsToggle.Checked = false;
                 rndDefTrackBar.Value = 4;
-                rndHitMPToggle.Checked = false;
                 rndHitMPTrackBar.Value = 1;
                 rndHitMPValue.Text = "1x";
                 rndRevealSpiritsToggle.Checked = false;
@@ -1549,14 +1447,11 @@ namespace Merrow {
                 rndDropLimitToggle.Checked ||
                 rndWingUnlockToggle.Checked ||
                 rndHUDLockToggle.Checked ||
-                rndStartingStatsToggle.Checked ||
                 rndElement99Toggle.Checked ||
-                rndMPRegainToggle.Checked ||
                 rndDriftToggle.Checked || 
                 rndMusicShuffleToggle.Checked ||
                 rndBossOrderToggle.Checked ||
-                rndTextImprovementsToggle.Checked ||
-                rndHitMPToggle.Checked) 
+                rndTextImprovementsToggle.Checked) 
                 { rndErrorLabel.Text = rndErrorString; }
 
                 //This is separate just because both have to be true

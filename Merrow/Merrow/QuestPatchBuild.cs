@@ -39,10 +39,6 @@ namespace Merrow {
                 !rndInvalidityToggle.Checked &&
                 !rndBossElementToggle.Checked &&
 
-                !rndStartingStatsToggle.Checked &&
-                !rndMPRegainToggle.Checked &&
-                !rndHitMPToggle.Checked &&
-
                 !rndFastMonasteryToggle.Checked &&
                 !rndFastMammonToggle.Checked &&
                 !rndFastBlueToggle.Checked &&
@@ -759,7 +755,7 @@ namespace Merrow {
             }
 
             //Starting stats
-            if (rndStartingStatsToggle.Checked) {
+            if (rndHPTrackBar.Value != 50 || rndMPTrackBar.Value != 15 || rndAgiTrackBar.Value != 5 || rndDefTrackBar.Value != 4) {
                 patchstrings.Add("054908");
                 patchstrings.Add("000C");
                 string tempstats = "";
@@ -803,7 +799,7 @@ namespace Merrow {
             }
 
             //MP regain rate
-            if (rndMPRegainToggle.Checked) {
+            if (rndMPRegainTrackBar.Value != 10) {
                 //the trackbar is restricted to x2 and x3 in either direction. Value 7 = OFF.
                 if (rndMPRegainTrackBar.Value != 7) {
                     //the old method multiplied the speed value, but the effect of that was logarithmic, not multiplicative.
@@ -851,7 +847,7 @@ namespace Merrow {
             }
 
             //Staff Hit MP Regain
-            if (rndHitMPToggle.Checked) {
+            if (rndHitMPTrackBar.Value != 1) {
                 patchstrings.Add("0050DB");
                 patchstrings.Add("0001");
                 patchstrings.Add("0" + rndHitMPTrackBar.Value.ToString());

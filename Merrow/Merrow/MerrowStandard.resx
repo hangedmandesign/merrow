@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="rndAccuracyToggle.ToolTip" xml:space="preserve">
     <value>Normalizes spell accuracy values to 100. 
 All spells will pass the initial accuracy check, but offensive spells can still miss 
@@ -144,8 +147,8 @@ It will also create a 'filename + Spoiler.txt' file in the same directory that l
   </data>
   <data name="newLabel.Text" xml:space="preserve">
     <value>● IMPORTANT: To avoid running out of space in shortcodes, a few essentially-mandatory options are being removed: 
-"Update Spell Items", and "Update Items In Gifter Text". They are now always on.
-Others may be removed in future, but only cosmetic features, to preserve difficulty customization.
+"Update Spell Items", and "Update Items In Gifter Text". They are now always on, if their prerequisites are enabled.
+Many redundant checkboxes have also been removed from sliders, colours, etc.
 
 ● Added new Fun option: "Gravity Disaster". May or may not be a very bad idea.
 
@@ -153,6 +156,11 @@ Others may be removed in future, but only cosmetic features, to preserve difficu
 If Book/Key are both shuffled or added to random item drops, not having this option enabled can lead to rare late game softlocks. Also, runs/races are generally more fun and smooth when the option is enabled. Feel free to disable if desired.
 
 ● Fixed a Merrow UI error with "Set final Shannons to default gifts" that might've potentially lead to odd item distribution.</value>
+  </data>
+  <data name="termsLinkLabel.Text" xml:space="preserve">
+    <value>Merrow is copyright (c) 2023 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
+Merrow is offered without warranty and is experimental software. 
+Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
   </data>
   <data name="linkLabel1.Text" xml:space="preserve">
     <value>Pre-Release Testing, Input and Exploration:
@@ -162,11 +170,6 @@ FireEmbliem, Irenepunmaster, Jeville,
 Kao, Kirkq, Landmine36, Mallos31, 
 Midboss, Mwobee, Raphix, Schooliedee, 
 Supmarf, Usedpizza, xIceBlue.</value>
-  </data>
-  <data name="termsLinkLabel.Text" xml:space="preserve">
-    <value>Merrow is copyright (c) 2023 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
-Merrow is offered without warranty and is experimental software. 
-Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
   </data>
   <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
     <value>A shortcode that contains the currently-enabled
@@ -236,7 +239,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAATABBAEwAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAUABBAFAAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -573,18 +576,6 @@ This includes doors, boats, shortcuts, and portals, and also
 unlocks the Crystal Valley Postern, if enabled.
 </value>
   </data>
-  <data name="rndCloakPaletteToggle.ToolTip" xml:space="preserve">
-    <value>Changes the colour palette of Brian's cloak.
-RANDOM: Generate a palette at random by hue-shifting the original palette randomly by 0-359 degrees. 
-Has a 50-50 chance to be a light/dark palette.
-CUSTOM: Edit the hue-shift value as desired below.</value>
-  </data>
-  <data name="rndStaffPaletteToggle.ToolTip" xml:space="preserve">
-    <value>Changes the colour palette of Brian's staff.
-RANDOM: Generate a palette at random by hue-shifting the original palette randomly by 0-359 degrees. 
-Has a 50-50 chance to be a light/dark palette.
-CUSTOM: Edit the hue-shift value as desired below.</value>
-  </data>
   <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
     <value>Changes the text colour palette.
 RANDOM: Generate a palette at random by hue-shifting the original palette randomly by 0-359 degrees. 
@@ -592,12 +583,6 @@ Has a 50-50 chance to be a light/dark palette.
 CUSTOM: Edit the hue-shift and light/dark values below.
 SHUFFLED: Select one of the below four included colours at random.
 &lt;COLOUR&gt;: Use one of four default included colours.</value>
-  </data>
-  <data name="rndTextViewToggle.ToolTip" xml:space="preserve">
-    <value>If enabled, the text colour palette will be displayed to the right
-for reference, so you can ensure it's acceptable.
-If CUSTOM is selected, you can manually set a hue offset value from 0-359,
-and click the circle to change between light/dark palettes.</value>
   </data>
   <data name="crcHelpLabel.ToolTip" xml:space="preserve">
     <value>This is a CRC (N64 file checksum) Repair Tool.
