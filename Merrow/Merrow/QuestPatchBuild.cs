@@ -23,6 +23,7 @@ namespace Merrow {
                 !rndLevel2Toggle.Checked &&
                 !rndSpellRebalanceToggle.Checked &&
 
+                !rndFrenchVanillaToggle.Checked &&
                 !rndLostKeysToggle.Checked &&
 
                 !rndChestToggle.Checked &&
@@ -38,6 +39,15 @@ namespace Merrow {
                 !rndBossOrderToggle.Checked &&
                 !rndInvalidityToggle.Checked &&
                 !rndBossElementToggle.Checked &&
+                !rndCombatExpToggle.Checked &&
+
+                rndHPTrackBar.Value == 50 &&
+                rndMPTrackBar.Value == 15 &&
+                rndAgiTrackBar.Value == 5 &&
+                rndDefTrackBar.Value == 4 &&
+                rndMPRegainTrackBar.Value == 10 &&
+                rndHitMPTrackBar.Value == 1 &&
+                rndEncounterTrackBar.Value == 2 &&
 
                 !rndFastMonasteryToggle.Checked &&
                 !rndFastMammonToggle.Checked &&
@@ -56,17 +66,18 @@ namespace Merrow {
                 !rndStaffPaletteToggle.Checked &&
                 !rndSpellPaletteToggle.Checked &&
                 !rndCloakPaletteToggle.Checked &&
+                !rndBrianClothesToggle.Checked &&
                 !rndZoomToggle.Checked &&
                 !rndMaxMessageToggle.Checked &&
                 !rndHUDLockToggle.Checked &&
-                !rndBrianClothesToggle.Checked &&
                 !rndTextImprovementsToggle.Checked &&
 
                 !rndRestlessToggle.Checked &&
                 !rndVowelsToggle.Checked &&
                 !rndTextContentToggle.Checked &&
                 !rndDriftToggle.Checked &&
-                !rndMusicShuffleToggle.Checked
+                !rndMusicShuffleToggle.Checked &&
+                !rndFlyingShuffle.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -1117,12 +1128,29 @@ namespace Merrow {
             //Monster flying shuffle
             if (rndFlyingShuffle.Checked) {
                 for (int i = 0; i < 74; i++) {
-                    patchstrings.Add(library.monsterflyingvanilla[i].ToString("X6"));
+                    patchstrings.Add(library.monsterflyingvanilla[i * 2].ToString("X6"));
                     patchstrings.Add("0002");
                     patchstrings.Add(rndflying[i].ToString("X4"));
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Gravity Disaster enabled." + Environment.NewLine);
+            }
+
+            //Encounter rate changes
+            if (rndEncounterTrackBar.Value != 2) {
+                patchstrings.Add(library.encountervalues[0]);
+                patchstrings.Add("0001");
+                patchstrings.Add(library.encountervalues[3 + rndEncounterTrackBar.Value]);
+
+                patchstrings.Add(library.encountervalues[1]);
+                patchstrings.Add("0001");
+                patchstrings.Add(library.encountervalues[8 + rndEncounterTrackBar.Value]);
+
+                patchstrings.Add(library.encountervalues[2]);
+                patchstrings.Add("0002");
+                patchstrings.Add(library.encountervalues[13 + rndEncounterTrackBar.Value]);
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Encounter rate: " + rndEncounterValue.Text + Environment.NewLine);
             }
 
         //--------------------------COSMETIC EFFECTS BELOW THIS LINE SO THEY DON'T AFFECT ANYTHING ELSE-------------------------
@@ -1370,6 +1398,15 @@ namespace Merrow {
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text improvements added." + Environment.NewLine);
+            }
+
+            //Combat XP display
+            if (rndCombatExpToggle.Checked) {
+                for (int i = 0; i < 14; i++) {
+                    patchstrings.Add(library.combatexpdisplay[i * 2]);
+                    patchstrings.Add("0002");
+                    patchstrings.Add(library.combatexpdisplay[(i * 2) + 1]);
+                }
             }
 
             //FINAL ASSEMBLY/OUTPUT

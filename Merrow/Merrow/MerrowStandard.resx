@@ -120,9 +120,12 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="rndRestlessToggle.ToolTip" xml:space="preserve">
+    <value>For each NPC, randomly sets the bit that determines if it is wandering.
+[WARNING: May cause unforeseen issues. If a vital NPC moves out of 
+reach, try leaving and re-entering the room to reset their position.]
+</value>
+  </data>
   <data name="rndAccuracyToggle.ToolTip" xml:space="preserve">
     <value>Normalizes spell accuracy values to 100. 
 All spells will pass the initial accuracy check, but offensive spells can still miss 
@@ -146,21 +149,20 @@ However, exports will automatically overwrite any existing file with the same na
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● IMPORTANT: To avoid running out of space in shortcodes, a few essentially-mandatory options are being removed: 
-"Update Spell Items", and "Update Items In Gifter Text". They are now always on, if their prerequisites are enabled.
-Many redundant checkboxes have also been removed from sliders, colours, etc.
+    <value>● Added new Monsters option: "Encounter rate". Halved/Reduced/Increased/Doubled. We got there, folks.
+
+● Added new Stats option: "Numerical combat experience". Changes EXP% in the menu to EXP remaining.
 
 ● Added new Fun option: "Gravity Disaster". May or may not be a very bad idea.
 
 ● "Unlock Wing use" is now enabled with LOST KEYS ruleset (already included in FRENCH VANILLA ruleset). 
 If Book/Key are both shuffled or added to random item drops, not having this option enabled can lead to rare late game softlocks. Also, runs/races are generally more fun and smooth when the option is enabled. Feel free to disable if desired.
 
+● To avoid running out of space in shortcodes, a few essentially-mandatory options are being removed: 
+"Update Spell Items", and "Update Items In Gifter Text". They are now always on, if their prerequisites are enabled.
+Many redundant checkboxes have also been removed from sliders, colours, etc.
+
 ● Fixed a Merrow UI error with "Set final Shannons to default gifts" that might've potentially lead to odd item distribution.</value>
-  </data>
-  <data name="termsLinkLabel.Text" xml:space="preserve">
-    <value>Merrow is copyright (c) 2023 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
-Merrow is offered without warranty and is experimental software. 
-Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
   </data>
   <data name="linkLabel1.Text" xml:space="preserve">
     <value>Pre-Release Testing, Input and Exploration:
@@ -170,6 +172,11 @@ FireEmbliem, Irenepunmaster, Jeville,
 Kao, Kirkq, Landmine36, Mallos31, 
 Midboss, Mwobee, Raphix, Schooliedee, 
 Supmarf, Usedpizza, xIceBlue.</value>
+  </data>
+  <data name="termsLinkLabel.Text" xml:space="preserve">
+    <value>Merrow is copyright (c) 2023 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
+Merrow is offered without warranty and is experimental software. 
+Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
   </data>
   <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
     <value>A shortcode that contains the currently-enabled
@@ -191,6 +198,12 @@ WARNING: To avoid late-game softlocks, make sure
 to enable this option if you are randomizing the location 
 of both Book and Key, or are adding them to the enemy
 item drop pool.</value>
+  </data>
+  <data name="rndIvoryWingsToggle.ToolTip" xml:space="preserve">
+    <value>Replaces the White Wings with Ivory Wings, which warp the player to Shamwood. 
+The Melrode Wingsmith will not grant an item, and instead Lavaar in Shamwood
+will grant the Ivory Wings upon interacting. SHUFFLED Wingsmiths treat Lavaar
+as the granter of the Ivory Wings and shuffle accordingly.</value>
   </data>
   <data name="rndShuffleShannonToggle.ToolTip" xml:space="preserve">
     <value>Shuffle/randomization will exclude the final two Shannons entirely, 
@@ -239,7 +252,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAUABBAFAAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAVgBBAFYAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -519,6 +532,12 @@ One of each wing is scattered among ALL possible Key Item locations, including I
 Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled. 
 Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.</value>
   </data>
+  <data name="rndEncounterLabel.ToolTip" xml:space="preserve">
+    <value>Encounter rate: check frequency (step) and maximum steps before a guaranteed fight (max).
+Halved and Doubled modify both check frequency and maximum amount as described.
+Reduced lowers the check frequency, and  lowers the maximum amount to make encounters less close together but reliably frequent.
+Increased raises the check frequency, and maintains the maximum to make encounters more frequent but no more dense.</value>
+  </data>
   <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
     <value>Randomize the order of all bosses other than Beigis and Mammon.
 Boss stats will maintain their stat:BST ratios, but BST will be scaled to the level of
@@ -562,12 +581,6 @@ The Eletale Book could now be found in any Fire location in addition to the Book
 
 Enabled by default for LOST KEYS, can be disabled to return to old behaviour (Fire and Book areas are separate.)
 Requires LOST KEYS to be enabled.</value>
-  </data>
-  <data name="rndIvoryWingsToggle.ToolTip" xml:space="preserve">
-    <value>Replaces the White Wings with Ivory Wings, which warp the player to Shamwood. 
-The Melrode Wingsmith will not grant an item, and instead Lavaar in Shamwood
-will grant the Ivory Wings upon interacting. SHUFFLED Wingsmiths treat Lavaar
-as the granter of the Ivory Wings and shuffle accordingly.</value>
   </data>
   <data name="rndUnlockDoorsToggle.ToolTip" xml:space="preserve">
     <value>Unlocks all progression-related locks.

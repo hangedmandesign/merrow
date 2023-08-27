@@ -268,12 +268,16 @@ namespace Merrow {
                 if (difficultyscale > 1.0f) { riskvalue *= 1.2f; }
                 if (difficultyscale < 1.0f) { riskvalue *= 0.9f; }
             }
+            if (rndEncounterTrackBar.Value != 2) { //grindier, so harder to finish
+                if (rndEncounterTrackBar.Value > 2) { riskvalue *= 1.2f; }
+            }
 
             if (!rndMonsterScaleToggle.Checked &&
                 !rndMonsterStatsToggle.Checked &&
                 !rndBossOrderToggle.Checked &&
                 !rndBossElementToggle.Checked &&
-                !rndInvalidityToggle.Checked) {
+                !rndInvalidityToggle.Checked &&
+                rndEncounterTrackBar.Value == 2) {
 
                 rndRiskLabel.Visible = false;
                 rndRiskLabelText.Visible = false;
@@ -282,7 +286,8 @@ namespace Merrow {
                 rndMonsterStatsToggle.Checked ||
                 rndBossOrderToggle.Checked ||
                 rndBossElementToggle.Checked ||
-                rndInvalidityToggle.Checked) {
+                rndInvalidityToggle.Checked ||
+                rndEncounterTrackBar.Value != 2) {
 
                 int redRisk = 255;
                 int greenRisk = 255;
@@ -1162,6 +1167,17 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndEncounterTrackBar_Scroll(object sender, EventArgs e) {
+            rndEncounterValue.Text = library.merrowencountertext[rndEncounterTrackBar.Value * 2];
+            rndEncounterLabel2.Text = library.merrowencountertext[rndEncounterTrackBar.Value * 2 + 1];
+            UpdateCode();
+            UpdateRisk();
+        }
+
+        private void rndCombatExpToggle_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
         //FRENCH VANILLA OVERRIDE
         public void VanillaHandling() {
             if (rndFrenchVanillaToggle.Checked) {
@@ -1175,11 +1191,15 @@ namespace Merrow {
                 rndDefTrackBar.Value = 5;
                 rndHitMPTrackBar.Value = 2;
                 rndHitMPValue.Text = "2x";
+                rndEncounterTrackBar.Value = 1;
+                rndEncounterValue.Text = "Reduced";
+                rndEncounterLabel2.Text = "100 step / 2500 max";
                 rndFastShamwoodToggle.Checked = true;
                 rndRevealSpiritsToggle.Checked = true;
                 rndHUDLockToggle.Checked = true;
                 rndMaxMessageToggle.Checked = true;
                 rndTextImprovementsToggle.Checked = true;
+                rndCombatExpToggle.Checked = true;
             }
 
             if (!rndFrenchVanillaToggle.Checked) {
@@ -1193,9 +1213,13 @@ namespace Merrow {
                 rndDefTrackBar.Value = 4;
                 rndHitMPTrackBar.Value = 1;
                 rndHitMPValue.Text = "1x";
+                rndEncounterTrackBar.Value = 2;
+                rndEncounterValue.Text = "Default";
+                rndEncounterLabel2.Text = "50 step / 2000 max";
                 rndRevealSpiritsToggle.Checked = false;
                 rndHUDLockToggle.Checked = false;
                 rndMaxMessageToggle.Checked = false;
+                rndCombatExpToggle.Checked = false;
 
                 if (!rndLostKeysToggle.Checked) { //only disable if the other isn't using it
                     rndFastShamwoodToggle.Checked = false;
