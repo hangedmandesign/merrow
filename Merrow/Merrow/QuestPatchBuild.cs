@@ -48,6 +48,7 @@ namespace Merrow {
                 rndMPRegainTrackBar.Value == 10 &&
                 rndHitMPTrackBar.Value == 1 &&
                 rndEncounterTrackBar.Value == 2 &&
+                rndEXPBoostTrackBar.Value == 4 &&
 
                 !rndFastMonasteryToggle.Checked &&
                 !rndFastMammonToggle.Checked &&
@@ -514,7 +515,7 @@ namespace Merrow {
             //MONSTER SCALING AND BOSS SHUFFLING FEATURES
 
             //Stat randomization/scaling, Boss order shuffle
-            if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked || rndBossOrderToggle.Checked) {
+            if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked || rndBossOrderToggle.Checked || rndEXPBoostTrackBar.Value != 4) {
                 int moncount = 0;
                 for (int i = 0; i < newmonsterstats.Length; i++) {
                     moncount = (i - (i % 6)) / 6; //monster index counter just to make boss checks smoother
@@ -585,7 +586,10 @@ namespace Merrow {
 
                 //don't bother saying EXP is scaled if only boss order is enabled and not scaling/random
                 if (rndMonsterExpToggle.Checked) {
-                    if (rndMonsterScaleToggle.Checked || rndMonsterStatsToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster experience scaled to new stat values." + Environment.NewLine); }
+                    if (rndMonsterScaleToggle.Checked || rndMonsterStatsToggle.Checked) { File.AppendAllText(filePath + fileName + "_spoiler.txt", "Monster experience adjusted based on new stat values." + Environment.NewLine); }
+                }
+                if (rndEXPBoostTrackBar.Value != 4) { 
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Combat experience multiplied by " + (rndEXPBoostTrackBar.Value * 0.25f).ToString() + "x." + Environment.NewLine); 
                 }
             }
 
@@ -1546,7 +1550,7 @@ namespace Merrow {
                 }
 
                 //monster stat spoilers
-                if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked || rndBossOrderToggle.Checked) {
+                if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked || rndBossOrderToggle.Checked || rndEXPBoostTrackBar.Value != 4) {
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED MONSTER STATS (HP, ATK, DEF, AGI, EXP, ELEMENT):" + Environment.NewLine);
                     foreach (string line in spoilerscales) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }

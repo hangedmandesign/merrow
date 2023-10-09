@@ -475,8 +475,8 @@ namespace Merrow {
                             double lowend = ((library.avg_monster[(i * 7) + 6] + 10) / 2) * (1 - extremity); //+10/2 halves variance
                             double variance = SysRand.NextDouble() * (highend - lowend) + lowend;
                             double modifiedstat = (currentstat * (variance / 10) * (difficultyscale));
-                            newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(modifiedstat);
-                            if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; }
+                            newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(modifiedstat); 
+                            if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; } //if any stat would become 0, make it 1 instead
                         }
                     }
                 }
@@ -504,13 +504,13 @@ namespace Merrow {
                             double lowend = ((library.avg_monster[(region * 7) + 6] + 20) / 3) * (1 - extremity); //+20/3 thirds variance
                             double variance = SysRand.NextDouble() * (highend - lowend) + lowend;
                             double modifiedstat = (currentstat * (variance / 10) * (difficultyscale));
-                            newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(modifiedstat);
-                            if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; }
+                            newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(modifiedstat); 
+                            if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; } //if any stat would become 0, make it 1 instead
                         }
                         else {
                             //if unrandomized, just redistribute the BST-adjusted stats
-                            newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(currentstat);
-                            if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; }
+                            newmonsterstats[(currentmonster * 6) + m] = (int)Math.Round(currentstat); 
+                            if (newmonsterstats[(currentmonster * 6) + m] == 0) { newmonsterstats[(currentmonster * 6) + m] = 1; } //if any stat would become 0, make it 1 instead
                         }
                     }
                 }
@@ -520,8 +520,18 @@ namespace Merrow {
             if (!rndMonsterStatsToggle.Checked && rndMonsterScaleToggle.Checked) {
                 for (int i = 0; i < 75; i++) {
                     for (int j = 0; j < 5; j++) {
-                        newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale));
+                        newmonsterstats[(i * 6) + j] = (int)Math.Round(newmonsterstats[(i * 6) + j] * (difficultyscale)); 
                     }
+                }
+            }
+
+            //scale all combat xp regardless of other options
+            if (rndEXPBoostTrackBar.Value != 4) {
+                for (int i = 0; i < 75; i++) {
+                    if (rndEXPBoostTrackBar.Value != 0) { 
+                        newmonsterstats[(i * 6) + 4] = (int)Math.Round(newmonsterstats[(i * 6) + 4] * (difficultyscale) * (rndEXPBoostTrackBar.Value * 0.25f));
+                        if (newmonsterstats[(i * 6) + 4] == 0) { newmonsterstats[(i * 6) + 4] = 1; } //if any stat would become 0, make it 1 instead
+                    } else { newmonsterstats[(i * 6) + 4] = 0; } //unless exp is set to 0x, in which case make them all 0
                 }
             }
 

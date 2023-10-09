@@ -120,6 +120,9 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="rndRestlessToggle.ToolTip" xml:space="preserve">
     <value>For each NPC, randomly sets the bit that determines if it is wandering.
 [WARNING: May cause unforeseen issues. If a vital NPC moves out of 
@@ -148,21 +151,53 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
+  <data name="rndEncounterLabel.ToolTip" xml:space="preserve">
+    <value>Encounter rate: check frequency (step) and maximum steps before a guaranteed fight (max).
+Halved and Doubled modify both check frequency and maximum amount as described.
+Reduced lowers the check frequency, and  lowers the maximum amount to make encounters less close together but reliably frequent.
+Increased raises the check frequency, and maintains the maximum to make encounters more frequent but no more dense.</value>
+  </data>
+  <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
+    <value>Randomize the order of all bosses other than Beigis and Mammon.
+Boss stats will maintain their stat:BST ratios, but BST will be scaled to the level of
+the boss they're replacing, and they will drop the appropriate progression items.</value>
+  </data>
+  <data name="rndMonsterExpToggle.ToolTip" xml:space="preserve">
+    <value>REQUIRES randomized/scaled stats or Boss Order to be enabled to have an effect.
+Uses an approximate formula based on enemy Base Stat Total (BST)
+to recalculate experience gained on victory. Useful for making more 
+significantly scaled/randomized runs theoretically possible.
+
+</value>
+  </data>
+  <data name="rndMonsterScaleToggle.ToolTip" xml:space="preserve">
+    <value>Scales enemy stats by simple multiplication.
+Has a more severe effect than variance.
+
+NOTE: The 'Enemy stat scaling' feature is applied AFTER the effects of 
+'Randomize monster stats'. Setting both to higher values may cause 
+extreme results.
+</value>
+  </data>
+  <data name="rndMonsterStatsToggle.ToolTip" xml:space="preserve">
+    <value>Randomizes enemy stats.
+All monsters in each region will receive new stats, randomly chosen
+from a range from lowest to highest local vanilla values for that stat.
+Increasing the Variance modifier will increase the width of that range,
+beyond the vanilla lowest-highest bounds.
+Bosses are included in stat randomization, but their Variance scaling
+is halved to make up for their generally larger numbers skewing output.
+
+Example: At Variance 1.0, all Holy Plain enemies will get a new random 
+HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
+
+NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
+and Variance. Setting both values higher may have extreme results.</value>
+  </data>
   <data name="newLabel.Text" xml:space="preserve">
-    <value>● Added new Monsters option: "Encounter rate". Halved/Reduced/Increased/Doubled. We got there, folks.
+    <value>● Added new Monsters option: "Experience multiplier". Took me a little too long, but here it is.
 
-● Added new Stats option: "Numerical combat experience". Changes EXP% in the menu to EXP remaining.
-
-● Added new Fun option: "Gravity Disaster". May or may not be a very bad idea.
-
-● "Unlock Wing use" is now enabled with LOST KEYS ruleset (already included in FRENCH VANILLA ruleset). 
-If Book/Key are both shuffled or added to random item drops, not having this option enabled can lead to rare late game softlocks. Also, runs/races are generally more fun and smooth when the option is enabled. Feel free to disable if desired.
-
-● To avoid running out of space in shortcodes, a few essentially-mandatory options are being removed: 
-"Update Spell Items", and "Update Items In Gifter Text". They are now always on, if their prerequisites are enabled.
-Many redundant checkboxes have also been removed from sliders, colours, etc.
-
-● Fixed a Merrow UI error with "Set final Shannons to default gifts" that might've potentially lead to odd item distribution.</value>
+● Enabled a couple of Shuffled Spells options by default: "Early Healing" and "Distributed powerful spells", since they're vital QoL for players trying the French Vanilla + Spell Shuffle combo.</value>
   </data>
   <data name="linkLabel1.Text" xml:space="preserve">
     <value>Pre-Release Testing, Input and Exploration:
@@ -252,7 +287,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAVgBBAFYAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAWABBAFgAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -451,11 +486,6 @@ GEMS: Wingsmith items are randomized to be any Elemental Gem.
 WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
 CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
   </data>
-  <data name="rndSpellOverridesToggle.ToolTip" xml:space="preserve">
-    <value>Checks special override data to certain shuffled spell combinations.
-If available, fixes will be added that allow volatile combos to work, 
-and/or improve visuals on combos with effect/scaling issues.</value>
-  </data>
   <data name="rndSpellRebalanceToggle.ToolTip" xml:space="preserve">
     <value>Adjusts damage values for most spells.
 Makes many assorted spells more useful, slightly nerfs the most powerful spells.
@@ -531,49 +561,6 @@ All four Elemental Gems are required to traverse Brannoch Castle roof to reach M
 One of each wing is scattered among ALL possible Key Item locations, including Ivory Wings.
 Crystal valley warp enabled (and unlocked). Shamwood exit shortcut enabled. 
 Spell and boss shuffle are enabled, but can be disabled if desired. Some randomizations and options cannot be disabled.</value>
-  </data>
-  <data name="rndEncounterLabel.ToolTip" xml:space="preserve">
-    <value>Encounter rate: check frequency (step) and maximum steps before a guaranteed fight (max).
-Halved and Doubled modify both check frequency and maximum amount as described.
-Reduced lowers the check frequency, and  lowers the maximum amount to make encounters less close together but reliably frequent.
-Increased raises the check frequency, and maintains the maximum to make encounters more frequent but no more dense.</value>
-  </data>
-  <data name="rndBossOrderToggle.ToolTip" xml:space="preserve">
-    <value>Randomize the order of all bosses other than Beigis and Mammon.
-Boss stats will maintain their stat:BST ratios, but BST will be scaled to the level of
-the boss they're replacing, and they will drop the appropriate progression items.</value>
-  </data>
-  <data name="rndMonsterExpToggle.ToolTip" xml:space="preserve">
-    <value>REQUIRES randomized/scaled stats or Boss Order to be enabled to have an effect.
-Uses an approximate formula based on enemy Base Stat Total (BST)
-to recalculate experience gained on victory. Useful for making more 
-significantly scaled/randomized runs theoretically possible.
-
-</value>
-  </data>
-  <data name="rndMonsterScaleToggle.ToolTip" xml:space="preserve">
-    <value>Scales enemy stats by simple multiplication.
-Has a more severe effect than variance.
-
-NOTE: The 'Enemy stat scaling' feature is applied AFTER the effects of 
-'Randomize monster stats'. Setting both to higher values may cause 
-extreme results.
-</value>
-  </data>
-  <data name="rndMonsterStatsToggle.ToolTip" xml:space="preserve">
-    <value>Randomizes enemy stats.
-All monsters in each region will receive new stats, randomly chosen
-from a range from lowest to highest local vanilla values for that stat.
-Increasing the Variance modifier will increase the width of that range,
-beyond the vanilla lowest-highest bounds.
-Bosses are included in stat randomization, but their Variance scaling
-is halved to make up for their generally larger numbers skewing output.
-
-Example: At Variance 1.0, all Holy Plain enemies will get a new random 
-HP value between 9HP (Were Hare HP) and 28HP (Big Mouth HP).
-
-NOTE: The 'Enemy stat scaling' feature is applied AFTER randomization 
-and Variance. Setting both values higher may have extreme results.</value>
   </data>
   <data name="rndFireBookToggle.ToolTip" xml:space="preserve">
     <value>If this option is enabled, the Book region will now overlap the Fire region, in the same way that Water overlaps Wind.

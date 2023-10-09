@@ -258,12 +258,12 @@ namespace Merrow {
             if (rndBossOrderToggle.Checked) { riskvalue *= 1.2f; } //late solvaring WILL murder you
             if (rndBossElementToggle.Checked) { riskvalue *= 0.9f; } //makes Guilty easier
             if (rndInvalidityToggle.Checked) { riskvalue *= 0.9f; } //makes every boss easier
-            if (rndMonsterExpToggle.Checked) { //makes higher difficulties easier and lower ones harder
+            if (rndMonsterExpToggle.Checked && rndEXPBoostTrackBar.Value != 0) { //makes higher difficulties easier and lower ones harder
                 if (rndMonsterStatsToggle.Checked) { riskvalue *= (1.0f + (extremity / 2)); }
                 if (difficultyscale > 1.0f) { riskvalue *= 0.9f; }
                 if (difficultyscale < 1.0f) { riskvalue *= 1.2f; }
             }
-            if (!rndMonsterExpToggle.Checked) { //makes higher difficulties harder and lower ones easier
+            if (!rndMonsterExpToggle.Checked && rndEXPBoostTrackBar.Value != 0) { //makes higher difficulties harder and lower ones easier
                 if (rndMonsterStatsToggle.Checked) { riskvalue *= (1.1f + (extremity / 2)); }
                 if (difficultyscale > 1.0f) { riskvalue *= 1.2f; }
                 if (difficultyscale < 1.0f) { riskvalue *= 0.9f; }
@@ -271,13 +271,19 @@ namespace Merrow {
             if (rndEncounterTrackBar.Value != 2) { //grindier, so harder to finish
                 if (rndEncounterTrackBar.Value > 2) { riskvalue *= 1.2f; }
             }
+            if (rndEXPBoostTrackBar.Value != 4) {
+                if (rndEXPBoostTrackBar.Value == 0) { riskvalue *= 8.0f; }
+                else if (rndEXPBoostTrackBar.Value < 4) { riskvalue *= (4 - rndEXPBoostTrackBar.Value) * 1.4f; }
+                else { riskvalue *= (1 - ((rndEXPBoostTrackBar.Value - 4) * 0.0833f)); }
+            }
 
             if (!rndMonsterScaleToggle.Checked &&
                 !rndMonsterStatsToggle.Checked &&
                 !rndBossOrderToggle.Checked &&
                 !rndBossElementToggle.Checked &&
                 !rndInvalidityToggle.Checked &&
-                rndEncounterTrackBar.Value == 2) {
+                rndEncounterTrackBar.Value == 2 &&
+                rndEXPBoostTrackBar.Value == 4) {
 
                 rndRiskLabel.Visible = false;
                 rndRiskLabelText.Visible = false;
@@ -287,17 +293,18 @@ namespace Merrow {
                 rndBossOrderToggle.Checked ||
                 rndBossElementToggle.Checked ||
                 rndInvalidityToggle.Checked ||
-                rndEncounterTrackBar.Value != 2) {
+                rndEncounterTrackBar.Value != 2 ||
+                rndEXPBoostTrackBar.Value != 4) {
 
                 int redRisk = 255;
                 int greenRisk = 255;
-                if (riskvalue <= 50) {
+                if (riskvalue <= 100) {
                     greenRisk = 225 - (int)(225 * (riskvalue / 50));
-                    redRisk = (int)(255 * (riskvalue / 50));
+                    redRisk = (int)(225 * (riskvalue / 50));
                 }
-                if (riskvalue > 50) {
+                if (riskvalue > 100) {
                     greenRisk = 0;
-                    redRisk = 255 - (int)(255 * (riskvalue / 150));
+                    redRisk = 225 - (int)(225 * (riskvalue / 300));
                 }
 
                 redRisk = Math.Min(255, Math.Max(0, redRisk));
@@ -306,7 +313,7 @@ namespace Merrow {
                 rndRiskLabel.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
                 rndRiskLabelText.BackColor = Color.FromArgb(redRisk, greenRisk, 0);
 
-                if (riskvalue >= 2 && riskvalue < 8) {
+                if (riskvalue < 8) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (BREEZE)";
                     rndRiskLabelText.Text = "Smooth and easy";
                 }
@@ -314,19 +321,19 @@ namespace Merrow {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (MODERATE)";
                     rndRiskLabelText.Text = "Roughly vanilla";
                 }
-                if (riskvalue >= 14 && riskvalue < 50) {
+                if (riskvalue >= 14 && riskvalue < 60) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (GALE)";
                     rndRiskLabelText.Text = "Difficult without grinding";
                 }
-                if (riskvalue >= 50 && riskvalue < 90) {
+                if (riskvalue >= 60 && riskvalue < 130) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (STORM)";
                     rndRiskLabelText.Text = "Extremely challenging and grindy";
                 }
-                if (riskvalue >= 90 && riskvalue < 150) {
+                if (riskvalue >= 130 && riskvalue < 300) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (HURRICANE)";
                     rndRiskLabelText.Text = "Possibly impossible";
                 }
-                if (riskvalue >= 150) {
+                if (riskvalue >= 300) {
                     rndRiskLabel.Text = "RISK " + riskvalue.ToString("N0") + " (SUPERCELL)";
                     rndRiskLabelText.Text = "Mammon approaches";
                 }
@@ -1176,6 +1183,13 @@ namespace Merrow {
 
         private void rndCombatExpToggle_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
+        }
+
+        private void rndEXPBoostTrackBar_Scroll(object sender, EventArgs e) {
+            if (rndEXPBoostTrackBar.Value == 0) { rndEXPBoostValue.Text = "NONE"; }
+            else { rndEXPBoostValue.Text = ((float)rndEXPBoostTrackBar.Value * 0.25f).ToString() + "x"; }
+            UpdateCode();
+            UpdateRisk();
         }
 
         //FRENCH VANILLA OVERRIDE
