@@ -1625,7 +1625,17 @@ namespace Merrow {
             }
         }
 
-        //MENU - Top menu items
+        //RLE - RLE decompression tools
+
+        private void rleDecButton_Click(object sender, EventArgs e) {
+            rleDecOutputTextBox.Text = decompressString(rleDecInputTextBox.Text).ToUpper();
+        }
+
+        private void rleDecExportButton_Click(object sender, EventArgs e) {
+
+        }
+
+        //MENU/HLP - Top menu items
 
         private void menuItemRND_Click(object sender, EventArgs e) {
             rndTabsControl.SelectedIndex = 0;
@@ -1641,7 +1651,7 @@ namespace Merrow {
         }
 
         private void menuItemHLP_Click(object sender, EventArgs e) {
-            tabsControl.SelectedIndex = 5;
+            tabsControl.SelectedIndex = 6;
         }
 
         private void menuItemEXT_Click(object sender, EventArgs e) {
@@ -1659,6 +1669,10 @@ namespace Merrow {
         private void menuItemCRT_Click(object sender, EventArgs e) {
             rndTabsControl.SelectedIndex = 3;
             tabsControl.SelectedIndex = 1;
+        }
+
+        private void menuItemRLE_Click(object sender, EventArgs e) {
+            tabsControl.SelectedIndex = 5;
         }
 
         private void hlpHelpText_LinkClicked(object sender, LinkClickedEventArgs e) {

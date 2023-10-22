@@ -1433,7 +1433,7 @@ namespace Merrow {
                 //advance by 3 (address, length, and data) writing as you go
                 for (int i = 0; i < patchparts; i += 3) { 
                     int targetAddr = Convert.ToInt32(patchstrings[i], 16);
-                    byte[] targetData = StringToByteArray(patchstrings[i + 2]);
+                    byte[] targetData = StringToByteArray(patchstrings[i + 2], true);
                     int targetLength = targetData.Length;
                     //Console.WriteLine(patchstrings[i]);
                     //Console.WriteLine(patchstrings[i + 1]);
@@ -1471,7 +1471,7 @@ namespace Merrow {
                 patchbuild += footerHex;
 
                 //write patch to file
-                patcharray = StringToByteArray(patchbuild);
+                patcharray = StringToByteArray(patchbuild, true);
                 File.WriteAllBytes(filePath + fileName + ".ips", patcharray);
                 filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
                 System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");

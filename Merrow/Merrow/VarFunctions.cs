@@ -121,7 +121,7 @@ namespace Merrow {
             return hex.ToString();
         }
 
-        public static byte[] StringToByteArray(string hex) { //Convert hex string to byte array
+        public static byte[] StringToByteArray(string hex, bool addZero) { //Convert hex string to byte array
             int NumberChars = hex.Length;
             if (NumberChars % 2 != 0) {
                 hex = "0" + hex;
@@ -133,7 +133,7 @@ namespace Merrow {
         }
 
         public static string HexToBase64(string input) { //convert hex string to base64 string
-            return System.Convert.ToBase64String(StringToByteArray(input));
+            return System.Convert.ToBase64String(StringToByteArray(input, true));
         }
 
         public static string Base64ToHex(string input) { //convert hex string to base64 string
