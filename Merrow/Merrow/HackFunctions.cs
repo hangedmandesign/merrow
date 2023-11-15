@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Security;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.Runtime.ConstrainedExecution;
 
 namespace Merrow {
     public partial class MerrowStandard {
@@ -165,6 +166,99 @@ namespace Merrow {
         }
 
         //RLE DECOMPRESSOR-------------------------------------------------------------------------------------
+        public string Interleave(string str1, string str2) {
+            string string1 = RemoveWhitespace(str1);
+            string string2 = RemoveWhitespace(str2);
+            string output = "";
+
+            int maxlen = string1.Length;
+            if (string2.Length < maxlen) { maxlen = string2.Length; }
+            maxlen -= maxlen % 2;
+
+            for (int i = 0; i < maxlen; i += 2) {
+                output += string1[i + 0];
+                output += string1[i + 1];
+                output += string2[i + 0];
+                output += string2[i + 1];
+            }
+
+            return output;
+        }
+
+        public void DeInterleave(string str1)
+        {
+            string string1 = RemoveWhitespace(str1);
+            string output1 = "";
+            string output2 = "";
+            bool flip = false;
+
+            int maxlen = string1.Length;
+            maxlen -= maxlen % 2;
+
+            for (int i = 0; i < maxlen; i += 2) {
+                if (i + 2 < maxlen) {  
+                    if (!flip) { output1 += string1.Substring(i, 2); }
+                    if (flip) { output2 += string1.Substring(i, 2); }
+                }
+                flip = !flip;
+            }
+
+            rleIntTextBox.Text = output1.ToUpper();
+            rleDecOutputTextBox.Text = output2.ToUpper();
+        }
+
+        public string RemoveWhitespace(string input) {
+            int j = 0, inputlen = input.Length;
+            char[] newarr = new char[inputlen];
+
+            for (int i = 0; i < inputlen; ++i) {
+                char tmp = input[i];
+
+                if (!char.IsWhiteSpace(tmp)) {
+                    newarr[j] = tmp;
+                    ++j;
+                }
+            }
+            return new String(newarr, 0, j);
+        }
+
+        public string DharmaRLEDecompress(string input) {
+            string cleanstr = RemoveWhitespace(input);
+            string newstr = "";
+            int charcount = (cleanstr.Length - (cleanstr.Length % 2)); //make sure it matches byte pattern
+            int ctr = 0;
+            int hexint;
+            bool endloop = false;
+
+            while (ctr < charcount && !endloop) {
+                hexint = Convert.ToInt32(cleanstr.Substring(ctr, 2), 16);
+                ctr += 2;
+
+                if (hexint < 128) { //uncompressed data, spool
+                    int repeat = 128 - hexint;
+                    while (repeat > 0) {
+                        if (ctr + 2 <= charcount) { 
+                            newstr += cleanstr.Substring(ctr, 2);
+                            ctr += 2; 
+                        } else { endloop = true; }
+                        repeat--;
+                    }
+                } else { //compressed data, repeat
+                    int repeat = 256 - hexint;
+                    while (repeat > 0) {
+                        if (ctr + 2 <= charcount) {
+                            newstr += cleanstr.Substring(ctr, 2);
+                        } else { endloop = true; }
+                        repeat--;
+                    }
+                    ctr += 2;
+                }
+
+                if (ctr + 2 > charcount) { endloop = true; }
+            }
+            return newstr;
+        }
+
         public static MemoryStream Decompress(byte[] input, uint inputSize) {
             byte marker, symbol;
             uint i, inputPosition, outputPosition, count;

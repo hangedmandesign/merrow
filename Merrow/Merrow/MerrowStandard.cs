@@ -1628,11 +1628,21 @@ namespace Merrow {
         //RLE - RLE decompression tools
 
         private void rleDecButton_Click(object sender, EventArgs e) {
-            rleDecOutputTextBox.Text = decompressString(rleDecInputTextBox.Text).ToUpper();
+            if (rleDecInputTextBox.Text != null && rleDecInputTextBox.Text != "") {
+                rleDecOutputTextBox.Text = DharmaRLEDecompress(rleDecInputTextBox.Text).ToUpper();
+            }
         }
 
-        private void rleDecExportButton_Click(object sender, EventArgs e) {
+        private void rleInterleaveButton_Click(object sender, EventArgs e) {
+            if (rleDecInputTextBox.Text != null && rleDecInputTextBox.Text != "" && rleIntTextBox.Text != null && rleIntTextBox.Text != "") {
+                rleDecOutputTextBox.Text = Interleave(rleDecInputTextBox.Text, rleIntTextBox.Text).ToUpper();
+            }
+        }
 
+        private void rleDeinterleaveButton_Click(object sender, EventArgs e) {
+            if (rleDecInputTextBox.Text != null && rleDecInputTextBox.Text != "") {
+               DeInterleave(rleDecInputTextBox.Text);
+            }
         }
 
         //MENU/HLP - Top menu items
