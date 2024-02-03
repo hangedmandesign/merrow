@@ -1305,6 +1305,8 @@ namespace Merrow {
                 //wings anywhere to prevent potential softlocks if book/key are shuffled at all
                 rndWingUnlockToggle.Checked = true;
 
+                expSeedTitleToggle.Checked = true;
+
                 if (rndLostKeysDropdown.SelectedIndex == 0) { //Progressive
                     rndUnlockDoorsToggle.Checked = false;
                     rndUnlockDoorsToggle.Enabled = true;
@@ -1362,6 +1364,8 @@ namespace Merrow {
 
                 rndFireBookToggle.Checked = false;
                 rndFireBookToggle.Enabled = false;
+
+                expSeedTitleToggle.Checked = false;
 
                 if (!rndFrenchVanillaToggle.Checked) { //only disable if the other isn't using it
                     rndFastShamwoodToggle.Checked = false;

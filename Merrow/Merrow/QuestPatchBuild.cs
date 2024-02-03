@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Security;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace Merrow {
     public partial class MerrowStandard {
@@ -1404,13 +1405,15 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Text improvements added." + Environment.NewLine);
             }
 
-            //Combat XP display
+            //Combat EXP display
             if (rndCombatExpToggle.Checked) {
                 for (int i = 0; i < 14; i++) {
                     patchstrings.Add(library.combatexpdisplay[i * 2]);
                     patchstrings.Add("0002");
                     patchstrings.Add(library.combatexpdisplay[(i * 2) + 1]);
                 }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Combat EXP display changed to numerical." + Environment.NewLine);
             }
 
             //FINAL ASSEMBLY/OUTPUT
@@ -1421,7 +1424,38 @@ namespace Merrow {
             patchstrings.Add(library.merrowlogo);
             patchstrings.Add("DCE070");
             patchstrings.Add("393C"); //animation logo address/length
-            patchstrings.Add(library.merrowlogo);
+            patchstrings.Add(library.merrowlogostatic);
+
+            if (expSeedTitleToggle.Checked) { 
+                //Seed integer icons on title screen background
+                //The concept here is overwriting the leftmost 16x16b with each seed character's icon
+                int[] seedints = NumbersIn(rngseed);
+                for (int i = 0; i < seedints.Length; i++) { //for each seed character
+                
+                    for (int j = 0; j < 16; j++) { //for each line of the icon
+
+                        string currline = library.icondigits[seedints[i]].Substring(j * 32, 32);
+                        string combinedline = "";
+                        int currloc = (i * 5120) + (j * 320) + 2560 + 8 + 640 + 2; //this is byte location in the background image. skips 16 image lines per character, then 1 per line. adjustments for overscan
+                        int gameloc = 14351232 + currloc; //DAFB80 + current location is byte location in ROM.
+
+                        for (int k = 0; k < 32; k += 2) { //for each byte of the line
+
+                            if (currline[k] == 'X') { //if this one starts with X, get the byte chars from the background rather than the icon (transparency)
+                                combinedline += library.menubg[(currloc * 2) + k];
+                                combinedline += library.menubg[(currloc * 2) + k + 1];
+                            } else { //else, get the byte chars from icondigits
+                                combinedline += currline[k];
+                                combinedline += currline[k + 1];
+                            } 
+                        }
+
+                        patchstrings.Add(gameloc.ToString("X3"));
+                        patchstrings.Add("0010"); 
+                        patchstrings.Add(combinedline);
+                    }
+                }
+            }
 
             //Initialize patch authoring by counting number of items to write
             int patchparts = patchstrings.Count();
@@ -1493,13 +1527,14 @@ namespace Merrow {
                     rndMonsterStatsToggle.Checked ||
                     rndMonsterScaleToggle.Checked ||
                     rndBossOrderToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + Environment.NewLine + Environment.NewLine + "----------EXTENDED SPOILER LOG BELOW----------" + Environment.NewLine + Environment.NewLine + Environment.NewLine);
+                    for (int i = 0; i < 20; i++) { File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine); }
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "----------EXTENDED SPOILER LOG BELOW----------" + Environment.NewLine);
                 }
 
                 //spell spoilers
                 int spellscount = 0;
                 if (rndSpellToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED SPELLS:" + Environment.NewLine);
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED SPELLS (Slot/Visuals > Effect/Animations):" + Environment.NewLine);
                     foreach (string line in spoilerspells) {
                         if (spellscount % 15 == 0 && spellscount != 0) { File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine); }
                         File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine);

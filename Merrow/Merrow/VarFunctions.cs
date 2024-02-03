@@ -109,6 +109,12 @@ namespace Merrow {
             }
         }
 
+        public int[] NumbersIn(int value) {
+            var numbers = new Stack<int>();
+            for (; value > 0; value /= 10) { numbers.Push(value % 10); }
+            return numbers.ToArray();
+        }
+
         public static string ByteArrayToString(byte[] ba) { //Convert byte array to hex string
             StringBuilder hex = new StringBuilder(ba.Length * 2);
             foreach (byte b in ba) { hex.AppendFormat("{0:x2}", b); }
