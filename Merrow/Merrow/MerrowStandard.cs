@@ -786,41 +786,8 @@ namespace Merrow {
             UpdateCode();
         }
 
-        private void rndHPTrackBar_Scroll(object sender, EventArgs e) {
-            rndStartHPValue.Text = rndHPTrackBar.Value.ToString();
-            UpdateCode();
-        }
-
-        private void rndMPTrackBar_Scroll(object sender, EventArgs e) {
-            rndStartMPValue.Text = rndMPTrackBar.Value.ToString();
-            UpdateCode();
-        }
-
-        private void rndAgiTrackBar_Scroll(object sender, EventArgs e) {
-            rndStartAgiValue.Text = rndAgiTrackBar.Value.ToString();
-            UpdateCode();
-        }
-
-        private void rndDefTrackBar_Scroll(object sender, EventArgs e) {
-            rndStartDefValue.Text = rndDefTrackBar.Value.ToString();
-            UpdateCode();
-        }
-
         private void rndElement99Toggle_CheckedChanged(object sender, EventArgs e) {
             expUpdateWarning();
-            UpdateCode();
-        }
-
-        private void rndMPRegainTrackBar_Scroll(object sender, EventArgs e) {
-            if (rndMPRegainTrackBar.Value == 7) {
-                rndMPRegainValue.Text = "OFF";
-            }
-            if (rndMPRegainTrackBar.Value < 10 && rndMPRegainTrackBar.Value > 7) {
-                rndMPRegainValue.Text = "1/" + (11 - rndMPRegainTrackBar.Value).ToString() + "x";
-            }
-            if (rndMPRegainTrackBar.Value >= 10) {
-                rndMPRegainValue.Text = (rndMPRegainTrackBar.Value - 9).ToString() + "x";
-            }
             UpdateCode();
         }
 
@@ -909,6 +876,26 @@ namespace Merrow {
             }
         }
 
+        private void rndHPTrackBar_Scroll(object sender, EventArgs e) {
+            rndStartHPValue.Text = rndHPTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndMPTrackBar_Scroll(object sender, EventArgs e) {
+            rndStartMPValue.Text = rndMPTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndAgiTrackBar_Scroll(object sender, EventArgs e) {
+            rndStartAgiValue.Text = rndAgiTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
+        private void rndDefTrackBar_Scroll(object sender, EventArgs e) {
+            rndStartDefValue.Text = rndDefTrackBar.Value.ToString();
+            UpdateCode();
+        }
+
         private void rndHPTrackBar_ValueChanged(object sender, EventArgs e) {
             rndStartHPValue.Text = rndHPTrackBar.Value.ToString();
             UpdateCode();
@@ -942,9 +929,58 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndMPRegainTrackBar_Scroll(object sender, EventArgs e) {
+            if (rndMPRegainTrackBar.Value == 7)
+            {
+                rndMPRegainValue.Text = "OFF";
+            }
+            if (rndMPRegainTrackBar.Value < 10 && rndMPRegainTrackBar.Value > 7)
+            {
+                rndMPRegainValue.Text = "1/" + (11 - rndMPRegainTrackBar.Value).ToString() + "x";
+            }
+            if (rndMPRegainTrackBar.Value >= 10)
+            {
+                rndMPRegainValue.Text = (rndMPRegainTrackBar.Value - 9).ToString() + "x";
+            }
+            UpdateCode();
+        }
+
         private void rndHitMPTrackBar_Scroll(object sender, EventArgs e) {
             rndHitMPValue.Text = rndHitMPTrackBar.Value.ToString() + "x";
             UpdateCode();
+        }
+
+        private void rndHitMPTrackBar_ValueChanged(object sender, EventArgs e) {
+            rndHitMPValue.Text = rndHitMPTrackBar.Value.ToString() + "x";
+            UpdateCode();
+        }
+
+        private void rndEncounterTrackBar_Scroll(object sender, EventArgs e) {
+            rndEncounterValue.Text = library.merrowencountertext[rndEncounterTrackBar.Value * 2];
+            rndEncounterLabel2.Text = library.merrowencountertext[rndEncounterTrackBar.Value * 2 + 1];
+            UpdateCode();
+            UpdateRisk();
+        }
+
+        private void rndEncounterTrackBar_ValueChanged(object sender, EventArgs e) {
+            rndEncounterValue.Text = library.merrowencountertext[rndEncounterTrackBar.Value * 2];
+            rndEncounterLabel2.Text = library.merrowencountertext[rndEncounterTrackBar.Value * 2 + 1];
+            UpdateCode();
+            UpdateRisk();
+        }
+
+        private void rndEXPBoostTrackBar_Scroll(object sender, EventArgs e) {
+            if (rndEXPBoostTrackBar.Value == 0) { rndEXPBoostValue.Text = "NONE"; }
+            else { rndEXPBoostValue.Text = ((float)rndEXPBoostTrackBar.Value * 0.25f).ToString() + "x"; }
+            UpdateCode();
+            UpdateRisk();
+        }
+
+        private void rndEXPBoostTrackBar_ValueChanged(object sender, EventArgs e) {
+            if (rndEXPBoostTrackBar.Value == 0) { rndEXPBoostValue.Text = "NONE"; }
+            else { rndEXPBoostValue.Text = ((float)rndEXPBoostTrackBar.Value * 0.25f).ToString() + "x"; }
+            UpdateCode();
+            UpdateRisk();
         }
 
         private void rndDriftToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1174,22 +1210,8 @@ namespace Merrow {
             UpdateCode();
         }
 
-        private void rndEncounterTrackBar_Scroll(object sender, EventArgs e) {
-            rndEncounterValue.Text = library.merrowencountertext[rndEncounterTrackBar.Value * 2];
-            rndEncounterLabel2.Text = library.merrowencountertext[rndEncounterTrackBar.Value * 2 + 1];
-            UpdateCode();
-            UpdateRisk();
-        }
-
         private void rndCombatExpToggle_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
-        }
-
-        private void rndEXPBoostTrackBar_Scroll(object sender, EventArgs e) {
-            if (rndEXPBoostTrackBar.Value == 0) { rndEXPBoostValue.Text = "NONE"; }
-            else { rndEXPBoostValue.Text = ((float)rndEXPBoostTrackBar.Value * 0.25f).ToString() + "x"; }
-            UpdateCode();
-            UpdateRisk();
         }
 
         //FRENCH VANILLA OVERRIDE
@@ -1692,5 +1714,7 @@ namespace Merrow {
         private void hlpHelpText_LinkClicked(object sender, LinkClickedEventArgs e) {
             System.Diagnostics.Process.Start("explorer.exe", e.LinkText);
         }
+
+
     }
 }
