@@ -64,23 +64,36 @@ namespace Merrow {
                 string tempString = "";
                 string binString2 = "";
                 int steps = 0;
+                bool newShortCodeMethod = false;
 
-                foreach (var toggle in toggles) { //build binary strings
-                    steps++;
-                    if (toggle.Checked) {
-                        if (steps <= 32) { tempString += 1; }
-                        if (steps > 32) { binString2 += 1; }
-                    }
-                    else {
-                        if (steps <= 32) { tempString += 0; }
-                        if (steps > 32) { binString2 += 0; }
-                    }
+                //THEORY FOR SHORTCODE UPDATE:
+                //YOU KNOW HOW MANY TOGGLES THERE ARE, SO RATHER THAN USING LONG BINARY STRING, GROUP SHORT SETS OF BIN AND STORE
+                //COULD DO WITH ASCII OFFSET: ?@ and Alphanumerics is 64
+                //SET UP SEPARATELY FROM EXISTING STUFF
+
+                if (newShortCodeMethod) { 
+                    
+                
                 }
-                int test = Convert.ToInt32(tempString, 2); //convert binary string to int
-                int test2 = 0;
-                if (steps > 32) { test2 = Convert.ToInt32(binString2, 2); }
-                if (steps > 32) { codeString += ".T." + test.ToString("X") + "-" + test2.ToString("X") + "."; }//int to hex
-                else { codeString += ".T." + test.ToString("X") + "."; }
+
+                if (!newShortCodeMethod) {
+                    foreach (var toggle in toggles) { //build binary strings
+                        steps++;
+                        if (toggle.Checked) {
+                            if (steps <= 32) { tempString += 1; }
+                            if (steps > 32) { binString2 += 1; }
+                        }
+                        else {
+                            if (steps <= 32) { tempString += 0; }
+                            if (steps > 32) { binString2 += 0; }
+                        }
+                    }
+                    int test = Convert.ToInt32(tempString, 2); //convert binary string to int
+                    int test2 = 0;
+                    if (steps > 32) { test2 = Convert.ToInt32(binString2, 2); }
+                    if (steps > 32) { codeString += ".T." + test.ToString("X") + "-" + test2.ToString("X") + "."; }//int to hex
+                    else { codeString += ".T." + test.ToString("X") + "."; }
+                }
 
                 //this string needs to be encoded piece by piece
                 //custom values will have custom delimiter and format

@@ -151,32 +151,11 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
-  <data name="newLabel.Text" xml:space="preserve">
-    <value>● Added new MONSTERS option: "Combat Experience", the much-requested combat EXP multiplier. HP/MP/Agi/Def EXP are trickier to multiply, so they're still in the works.
+  <data name="creditsLinkLabel.Text" xml:space="preserve">
+    <value>Developed by:  Hangedman (Jonah Davidson)
 
-● Added 'Add Seed to Title Screen', which shows the seed as icons on the Title Screen, for verifying race files, etc. Enabled by LOST KEYS, can manually enable/disable in the Export tab. This will need improving, but it'll do for now.
-
-● "Extra healing" now includes Vampire's Touch if "Early healing" is enabled, as a third healing spell that is distributed into a different element than Healing Lv1 and Mending (the copy of Healing Lv1 which replaces Soul Search Lv1).
-
-● Enabled a couple of Shuffled Spells options by default: "Early healing", "Extra healing" and "Distributed powerful spells", since they're good quality-of-life for players trying the French Vanilla + Spell Shuffle combo.
-
-● Reorganized the FUN options, which are now in order from least-likely-to-most-likely to mess up your game.
-
-● Removed the warning from "Raise Element cap to 99" about getting locked out of collecting spirits at 50-50-50-50 - we fixed that a while ago but forgot to change the tooltip!</value>
-  </data>
-  <data name="linkLabel1.Text" xml:space="preserve">
-    <value>Pre-Release Testing, Input and Exploration:
-Andypanther, Bingchang, BurrItsCold, 
-Countdown, DrunkKami, FeralDemon, 
-FireEmbliem, Irenepunmaster, Jeville, 
-Kao, Kirkq, Landmine36, Mallos31, 
-Midboss, Mwobee, Raphix, Schooliedee, 
-Supmarf, Usedpizza, xIceBlue.</value>
-  </data>
-  <data name="termsLinkLabel.Text" xml:space="preserve">
-    <value>Merrow is copyright (c) 2024 Jonah Davidson (Hangedman), but is made freely available under the MIT License.
-Merrow is offered without warranty and is experimental software. 
-Please visit https://github.com/hangedmandesign/merrow for the license terms.</value>
+Thanks to: Andypanther, Bingchang, BurrItsCold, Countdown, DrunkKami, FeralDemon, FireEmbliem, Irenepunmaster, Jeville, Kao, Kirkq, Landmine36, Mallos31, Midboss, Mwobee, Raphix, Schooliedee, Supmarf, Usedpizza, xIceBlue, the Eltale Monsters Discord, the Rosemary Branch, the Pizza Box, and Dirty Rectangles.
+</value>
   </data>
   <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
     <value>A shortcode that contains the currently-enabled
@@ -252,7 +231,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAaABBAGgAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAbABBAGwAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -819,9 +798,8 @@ Development assistance is welcome. An overview of the Merrow codebase and code s
 Merrow contains no game code or copyrighted assets. Item sprites, names, etc, are used within Fair Use constraints. Rights to "Quest 64" and all associated materials are maintained by the copyright holders and Hangedman Design makes no claim to them.
 
 8. FEEDBACK
-If you have feedback or issues, your best bet is to comment on the itch page. Submitting your spoiler log (with version, shortcode, and info) makes solving bugs much easier.
-Feel free to suggest feature ideas, but please understand that we have considered many features in the past, and there may be good reasons why we didn't add something. We are necessarily limited by the pre-play-patching method we use and by the data we have access to, and that's why this is not a major hack, omnibus mod, or total overhaul.
-I can also be reached on Twitter at @JonahD but I can't guarantee a timely reply, especially if I've moved onto other projects.</value>
+If you have feedback or issues, your best bet is to comment on the itch page. Submitting your spoiler log (with version, shortcode, and info) makes solving bugs much easier. I'm not looking at most social media anymore.
+Feel free to suggest feature ideas, but please understand that we have considered many features in the past, and there may be good reasons why we didn't add something. We are necessarily limited by the pre-play-patching method we use and by the data we have access to, and that's why this is not a major hack, omnibus mod, or total overhaul.</value>
   </data>
   <metadata name="mainMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>248, 16</value>

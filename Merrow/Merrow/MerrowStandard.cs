@@ -575,18 +575,14 @@ namespace Merrow {
                     rndWeightedChestToggle.Enabled = true;
                     rndWeightedChestDropdown.Enabled = true;
                 } 
-                itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 0;
             }
             else {
                 rndChestDropdown.Enabled = false;
                 rndWeightedChestToggle.Enabled = false;
                 rndWeightedChestDropdown.Enabled = false;
-                if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
-                    itemListTabs.Visible = false;
-                }
             }
-            UpdateCode();
+            ShowHideItemList();
         }
 
         private void rndDropsToggle_CheckedChanged(object sender, EventArgs e) {
@@ -596,17 +592,13 @@ namespace Merrow {
                     rndWeightedDropsToggle.Enabled = true;
                     rndWeightedDropsDropdown.Enabled = true;
                 }
-                itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 1;
             } else {
                 rndDropsDropdown.Enabled = false;
                 rndWeightedDropsToggle.Enabled = false;
                 rndWeightedDropsDropdown.Enabled = false;
-                if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
-                    itemListTabs.Visible = false;
-                }
             }
-            UpdateCode();
+            ShowHideItemList();
         }
 
         private void rndGiftersToggle_CheckedChanged(object sender, EventArgs e) {
@@ -614,33 +606,37 @@ namespace Merrow {
                 rndGiftersDropdown.Enabled = true;
                 //rndGifterTextToggle.Enabled = true;
                 if(!rndLostKeysToggle.Checked) { rndShuffleShannonToggle.Enabled = true; }
-                itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 2;
             } else {
                 rndGiftersDropdown.Enabled = false;
                 //if (!rndWingsmithsToggle.Checked) { rndGifterTextToggle.Enabled = false; }
                 rndShuffleShannonToggle.Enabled = false;
-                if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
-                    itemListTabs.Visible = false;
-                }
+                
             }
-            UpdateCode();
+            ShowHideItemList();
         }
 
         private void rndWingsmithsToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndWingsmithsToggle.Checked) {
                 rndWingsmithsDropdown.Enabled = true;
                 //rndGifterTextToggle.Enabled = true;
-                itemListTabs.Visible = true;
                 itemListTabs.SelectedIndex = 3;
             }
             else {
                 rndWingsmithsDropdown.Enabled = false;
                 //if (!rndGiftersToggle.Checked) { rndGifterTextToggle.Enabled = false; }
-                if (!rndChestToggle.Checked && !rndDropsToggle.Checked && !rndGiftersToggle.Checked && !rndWingsmithsToggle.Checked) {
-                    itemListTabs.Visible = false;
-                }
             }
+
+            ShowHideItemList();
+        }
+
+        private void ShowHideItemList() {
+            if (rndChestDropdown.SelectedIndex > 0 || rndDropsDropdown.SelectedIndex > 0 || rndGiftersDropdown.SelectedIndex > 0 || rndWingsmithsDropdown.SelectedIndex > 0) {
+                itemListTabs.Visible = true;
+            } else {
+                itemListTabs.Visible = false;
+            }
+
             UpdateCode();
         }
 
@@ -683,7 +679,7 @@ namespace Merrow {
                 rndWeightedChestToggle.Enabled = false;
                 rndWeightedChestDropdown.Enabled = false;
             }
-            UpdateCode();
+            ShowHideItemList();
         }
 
         private void rndDropsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
@@ -697,20 +693,20 @@ namespace Merrow {
                 rndWeightedDropsToggle.Enabled = false;
                 rndWeightedDropsDropdown.Enabled = false;
             }
-            UpdateCode();
+            ShowHideItemList();
         }
 
         private void rndGiftersDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             itemListTabs.SelectedIndex = 2;
             itemListUpdate(itemListView3, rndGiftersDropdown.SelectedIndex);
             if (!rndLostKeysToggle.Checked) { rndShuffleShannonToggle.Enabled = rndGiftersToggle.Checked; } //don't let this get changed if Lost Keys is enabled
-            UpdateCode();
+            ShowHideItemList();
         }
 
         private void rndWingsmithsDropdown_SelectedIndexChanged(object sender, EventArgs e) {
             itemListTabs.SelectedIndex = 3;
             itemListUpdate(itemListView4, rndWingsmithsDropdown.SelectedIndex);
-            UpdateCode();
+            ShowHideItemList();
         }
 
         private void rndDropLimitToggle_CheckedChanged(object sender, EventArgs e) {
@@ -1532,6 +1528,8 @@ namespace Merrow {
                         rndFileName = Path.GetFileNameWithoutExtension(fullPath);
                         rndErrorLabel.Text = "File loaded: " + rndOpenFileDialog.FileName + ".";
                         rndFileSelected = true;
+                        expSelectButton.ForeColor = Color.Black;
+                        expGenerateButton.ForeColor = Color.Firebrick;
                     }
                     catch (SecurityException ex) {
                         MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
@@ -1674,8 +1672,8 @@ namespace Merrow {
         //MENU/HLP - Top menu items
 
         private void menuItemRND_Click(object sender, EventArgs e) {
-            rndTabsControl.SelectedIndex = 0;
             tabsControl.SelectedIndex = 1;
+            rndTabsControl.SelectedIndex = 0;
         }
 
         private void menuItemREF_Click(object sender, EventArgs e) {
@@ -1703,8 +1701,8 @@ namespace Merrow {
         }
 
         private void menuItemCRT_Click(object sender, EventArgs e) {
-            rndTabsControl.SelectedIndex = 3;
             tabsControl.SelectedIndex = 1;
+            rndTabsControl.SelectedIndex = 3;
         }
 
         private void menuItemRLE_Click(object sender, EventArgs e) {
@@ -1715,6 +1713,38 @@ namespace Merrow {
             System.Diagnostics.Process.Start("explorer.exe", e.LinkText);
         }
 
+        private void menuRandoShortcut_Click(object sender, EventArgs e) {
+            tabsControl.SelectedIndex = 1;
+            rndTabsControl.SelectedIndex = 0;
+        }
 
+        private void menuFrenchShortcut_Click(object sender, EventArgs e) {
+            rndFrenchVanillaToggle.Checked = true;
+            tabsControl.SelectedIndex = 1;
+            rndTabsControl.SelectedIndex = 3;
+        }
+
+        private void menuSpellsShortcut_Click(object sender, EventArgs e) {
+            rndFrenchVanillaToggle.Checked = true;
+            rndSpellToggle.Checked = true;
+            tabsControl.SelectedIndex = 1;
+            rndTabsControl.SelectedIndex = 3;
+        }
+
+        private void menuProgressiveShortcut_Click(object sender, EventArgs e) {
+            rndFrenchVanillaToggle.Checked = true;
+            rndLostKeysToggle.Checked = true;
+            rndLostKeysDropdown.SelectedIndex = 0;
+            tabsControl.SelectedIndex = 1;
+            rndTabsControl.SelectedIndex = 3;
+        }
+
+        private void menuOpenShortcut_Click(object sender, EventArgs e) {
+            rndFrenchVanillaToggle.Checked = true;
+            rndLostKeysToggle.Checked = true;
+            rndLostKeysDropdown.SelectedIndex = 1;
+            tabsControl.SelectedIndex = 1;
+            rndTabsControl.SelectedIndex = 3;
+        }
     }
 }
