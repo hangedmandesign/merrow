@@ -521,7 +521,7 @@ namespace Merrow {
                 for (int i = 0; i < newmonsterstats.Length; i++) {
                     moncount = (i - (i % 6)) / 6; //monster index counter just to make boss checks smoother
 
-                    if (moncount < 67 || moncount >= 73) { //V30: changed to >= 73 to exclude Beigis for now
+                    if (moncount < 67 || moncount >= 74) { //V30: changed to >= 73 to exclude Beigis for now //V50: changed to 74 for Beigis
                         patchstrings.Add(library.monsterstatlocations[i].ToString("X6"));
                         patchstrings.Add("0002");
                         patchstrings.Add(newmonsterstats[i].ToString("X4"));
@@ -532,7 +532,7 @@ namespace Merrow {
                             patchstrings.Add(newmonsterstats[i].ToString("X4"));
                         }
                     }
-                    if (moncount >= 67 && moncount < 73) { //V30: changed to < 73 to exclude Beigis for now
+                    if (moncount >= 67 && moncount < 74) { //V30: changed to < 73 to exclude Beigis for now //V50: changed to 74 for Beigis
                         int columnstep = i % 6;
                         int rowstep = newbossorder[moncount - 67];
                         patchstrings.Add(library.monsterstatlocations[402 + (rowstep * 6) + columnstep].ToString("X6"));
@@ -549,7 +549,7 @@ namespace Merrow {
 
                 //populate spoiler log
                 for (int i = 0; i < 75; i++) {
-                    if (i < 67 || i >= 73) { //V30: changed to >= 73 to exclude Beigis for now
+                    if (i < 67 || i >= 74) { //V30: changed to >= 73 to exclude Beigis for now //V50: changed to 74 for Beigis
                         if (!rndVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[i * 2] + ": "; }
                         if (rndVowelsToggle.Checked) { spoilerscales[i] = voweled[i] + ": "; }
                         spoilerscales[i] += newmonsterstats[i * 6].ToString() + " ";
@@ -563,7 +563,7 @@ namespace Merrow {
                         if (newmonsterstats[(i * 6) + 5] == 3) { spoilerscales[i] += "WIND"; }
                         if (newmonsterstats[(i * 6) + 5] == 4) { spoilerscales[i] += "DARK"; }
                     }
-                    if (i >= 67 && i < 73) { //V30: changed to < 73 to exclude Beigis for now
+                    if (i >= 67 && i < 74) { //V30: changed to < 73 to exclude Beigis for now //V50: changed to 74 for Beigis
                         int falsei = i;
                         if (rndBossOrderToggle.Checked) { falsei = 67 + newbossorder[i - 67]; }
                         if (!rndVowelsToggle.Checked) { spoilerscales[i] = library.monsternames[falsei * 2] + ": "; }
@@ -595,28 +595,29 @@ namespace Merrow {
             }
 
             //Boss Order Shuffle
+            //V50: tried to readd beigis, let's see if it breaks
             if (rndBossOrderToggle.Checked) { 
                 //this data could all be extracted from the library in code but you know what, this is easier
-                int[] bossitemslist = { 20, 21, 22, 255, 23, 255 };
+                int[] bossitemslist = { 20, 21, 22, 255, 23, 255, 255 };
                 if (rndLostKeysToggle.Checked) {
-                    for (int i = 0; i < 6; i++) { bossitemslist[i] = lostkeysbossitemlist[i]; }
+                    for (int i = 0; i < bossCount; i++) { bossitemslist[i] = lostkeysbossitemlist[i]; }
                 }
 
-                string[] bossitemnames = { "EARTH ORB", "WIND JADE", "WATER JEWEL", "NOTHING", "FIRE RUBY", "NOTHING" };
-                int[] bossaddresses = { 14186532, 14186588, 14186644, 14186700, 14186756, 14186812 };
-                int[] backassign = new int[6];
+                string[] bossitemnames = { "EARTH ORB", "WIND JADE", "WATER JEWEL", "NOTHING", "FIRE RUBY", "NOTHING", "NOTHING" };
+                int[] bossaddresses = { 14186532, 14186588, 14186644, 14186700, 14186756, 14186812, 14186868 };
+                int[] backassign = new int[bossCount];
 
                 //data extraction code for items, in boss order. please do not remove until we're done fighting with boss order
                 //14186532,4,14186588,4,14186644,4,14186700,4,14186756,4,14186812,4,14186868,4,14186924,4 
-                //D87824,D8785C,D87894,D878CC,D87904,D8793C
+                //D87824,D8785C,D87894,D878CC,D87904,D8793C,D87974
 
                 //items have to be handed backwards, so we're abstracting out the boss order
-                for (int j = 0; j < 6; j++) { 
+                for (int j = 0; j < bossCount; j++) { 
                     backassign[j] = bossaddresses[newbossorder[j]];
                 }
 
                 //writing locations, additional data, and items
-                for (int i = 0; i < 6; i++) { //V30: changed this to 6 to exclude Beigis for now
+                for (int i = 0; i < bossCount; i++) { //V30: changed this to 6 to exclude Beigis for now //V50: updated for Beigis
                     patchstrings.Add(library.bosslocdata[newbossorder[i] * 4]); //location data replacement
                     patchstrings.Add("0004");
                     patchstrings.Add(library.bosslocdata[(i * 4) + 1]);
@@ -637,6 +638,13 @@ namespace Merrow {
                     patchstrings.Add(backassign[i].ToString("X6"));
                     patchstrings.Add("0001");
                     patchstrings.Add(bossitemslist[i].ToString("X2"));
+
+                    //skip beigis location check map move, if beigis isn't at home
+                    if (newbossorder[6] != 6) {
+                        patchstrings.Add("01D4D7");
+                        patchstrings.Add("0001");
+                        patchstrings.Add("0A");
+                    }
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Boss order shuffled." + Environment.NewLine);
@@ -997,14 +1005,15 @@ namespace Merrow {
                     patchstrings.Add(library.firegate);
                 }
 
+                //V50:updated for beigis
                 if (!rndBossOrderToggle.Checked) {
                     //this data could all be extracted from the library in code but you know what, this is easier
-                    int[] bossitemslist = new int[6];
-                    for (int i = 0; i < 6; i++) { bossitemslist[i] = lostkeysbossitemlist[i]; }
+                    int[] bossitemslist = new int[bossCount];
+                    for (int i = 0; i < bossCount; i++) { bossitemslist[i] = lostkeysbossitemlist[i]; }
 
                     string[] bossitemnames = { "EARTH ORB", "WIND JADE", "WATER JEWEL", "NOTHING", "FIRE RUBY", "NOTHING" };
                     int[] bossaddresses = { 14186532, 14186588, 14186644, 14186700, 14186756, 14186812 };
-                    int[] backassign = new int[6];
+                    int[] backassign = new int[bossCount];
 
                     //data extraction code for items, in boss order. please do not remove until we're done fighting with boss order
                     //14186532,4,14186588,4,14186644,4,14186700,4,14186756,4,14186812,4,14186868,4,14186924,4 
@@ -1012,7 +1021,7 @@ namespace Merrow {
 
                     //items have to be handed backwards, so we're abstracting out the boss order
                     //item drops
-                    for (int i = 0; i < 6; i++) {
+                    for (int i = 0; i < bossCount; i++) {
                         int newitemaddr = 0;
                         backassign[i] = bossaddresses[newbossorder[i]];
                         newitemaddr = library.dropdata[(newbossorder[i] + 67) * 2];
@@ -1574,7 +1583,7 @@ namespace Merrow {
 
                 //gifter spoilers
                 if (rndGiftersToggle.Checked) {
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", /*Environment.NewLine +*/ "ALTERED GIFTS:" + Environment.NewLine); //extra newline removed
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "ALTERED GIFTS:" + Environment.NewLine); //extra newline removed
                     foreach (string line in spoilergifts) { File.AppendAllText(filePath + fileName + "_spoiler.txt", line + Environment.NewLine); }
                 }
 

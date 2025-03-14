@@ -847,9 +847,7 @@
             this.newLabel.Name = "newLabel";
             this.newLabel.Size = new System.Drawing.Size(572, 181);
             this.newLabel.TabIndex = 0;
-            this.newLabel.Text = "● New Shortcut buttons below, one click to enable rulesets and skip right to Expo" +
-    "rt!\r\n\r\n● Fixed a visual bug in Merrow where certain values weren\'t appearing to " +
-    "be updated by shortcodes.";
+            this.newLabel.Text = resources.GetString("newLabel.Text");
             this.newLabel.UseMnemonic = false;
             // 
             // creditsBox

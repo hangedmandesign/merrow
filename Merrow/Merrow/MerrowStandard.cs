@@ -99,12 +99,12 @@ namespace Merrow {
         byte[] binFileBytes;
         byte[] rndFileBytes;
         List<string> patchstrings = new List<string>();
-        int[] newbossorder = new int[6]; //V30: changed to <6 to exclude beigis
+        int[] newbossorder = new int[7]; //V30: changed to <6 to exclude beigis //V50: updated for Beigis
         int[] newbosselem = { 4, 4 };
         int lasttextpaletteoffset = 0;
         int laststaffpaletteoffset = 0;
         int randbasetextpalette = 0;
-        int[] lostkeysbossitemlist = { 255, 255, 255, 255, 255, 255 };
+        int[] lostkeysbossitemlist = { 255, 255, 255, 255, 255, 255, 255 };
         int[] gemIDs = { 20, 21, 22, 23, 24 };
         int[] lostkeysdrops = new int[67];
         string staffPaletteHex = "";
@@ -122,6 +122,7 @@ namespace Merrow {
         int unlockcount = 0;
         int fixcount = 0;
         int[] rndflying = new int[74];
+        int bossCount = 7; //V50: added for Beigis
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -184,7 +185,7 @@ namespace Merrow {
 
             //initiate monster stats
             for (int i = 0; i < 450; i++) { newmonsterstats[i] = library.monsterstatvanilla[i]; }
-            for (int i = 0; i < 6; i++) { newbossorder[i] = i; } //V30: changed to <6 to exclude beigis
+            for (int i = 0; i < bossCount; i++) { newbossorder[i] = i; } //V30: changed to <6 to exclude beigis //V50: beigis
 
             //fix item list order, because we had to change it. even though they look wrong in editor this fixes them on run
             for (int i = 0; i < 26; i++) {

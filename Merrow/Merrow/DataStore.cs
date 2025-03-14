@@ -787,6 +787,9 @@ namespace Merrow {
         //fire and book: fire + 1 boss (no beigis), 18 chests, 2 gifters, no wingsmiths	-    58 total
         public int[] area_bookf_nowings = { 3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7, 5, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8 };
 
+        //fire and book: fire + 2 boss, 18 chests, 2 gifters, no wingsmiths	-    59 total
+        public int[] area_bookf_beigis_nowings = { 3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 6, 7, 5, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8 };
+
         //2021-08-32: created a no-beigis area list, and removed from the open list below, because not being included in boss shuffle means he never gets handed special items, just the regularly randomized assignments
 
         //all areas combined, wingsmiths and removed
@@ -796,6 +799,14 @@ namespace Merrow {
             2, 15, 47, 48, 49, 50, 51, 52,
             3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7,
             5, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8
+        };
+
+        public int[] area_open_beigis = {
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 81, 82, 83, 84, 0, 1, 2,
+            1, 11, 12, 13, 16, 17, 18, 19, 53, 54, 55, 56, 57, 85, 86, 87, 3, 4,
+            2, 15, 47, 48, 49, 50, 51, 52,
+            3, 4, 0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 5, 7,
+            5, 6, 31, 32, 33, 34, 35, 36, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 6, 8
         };
 
         //spell item spell IDs
