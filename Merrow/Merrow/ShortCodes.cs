@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Security;
 using System.Drawing;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Merrow {
     public partial class MerrowStandard {
@@ -64,20 +65,39 @@ namespace Merrow {
                 string tempString = "";
                 string binString2 = "";
                 int steps = 0;
-                bool newShortCodeMethod = false;
 
-                //THEORY FOR SHORTCODE UPDATE:
-                //YOU KNOW HOW MANY TOGGLES THERE ARE, SO RATHER THAN USING LONG BINARY STRING, GROUP SHORT SETS OF BIN AND STORE
-                //COULD DO WITH ASCII OFFSET: ?@ and Alphanumerics is 64
-                //SET UP SEPARATELY FROM EXISTING STUFF
+                //encode toggles
+                //new method chops binary states of all checkboxes into 6-bit binary strings, and then converts those to a custom ascii equivalent
+                //could expand on it and add another single bit, by using safe extended ascii code for accented characters
+                if (newShortCodeMethod) {
+                    int toggleCount = toggles.Count; //number of checkboxes
+                    int toggleRemain = toggleCount % 6; //remainder after 6-digit bins
+                    int toggleBlocks = (toggleCount - toggleRemain) / 6; //number of 6-digit bins in count
 
-                if (newShortCodeMethod) { 
-                    
-                
+                    //build one giant binary string
+                    foreach (var toggle in toggles) { 
+                        if (toggle.Checked) { binString2 += 1; } else { binString2 += 0; }   
+                    }
+
+                    //for each set of 6 bins, convert to a ascii char in VarFunctions
+                    for (int i = 0; i < toggleBlocks; i++) { 
+                        tempString += Bin6ToAsc64(binString2.Substring(i * 6, 6));
+                    }
+
+                    //check if there is a remainder short string on the end, take it
+                    if (toggleRemain != 0) { 
+                        string remainderString = binString2.Substring(toggleCount - toggleRemain);
+
+                        for (int i = 0; i < 6 - remainderString.Length; i++) {  remainderString += "0"; } //append zeroes to it if it's short
+                        tempString += Bin6ToAsc64(remainderString);
+                    }
+
+                    codeString += ".T." + tempString + ".";
                 }
 
                 if (!newShortCodeMethod) {
-                    foreach (var toggle in toggles) { //build binary strings
+                    //build binary strings
+                    foreach (var toggle in toggles) { 
                         steps++;
                         if (toggle.Checked) {
                             if (steps <= 32) { tempString += 1; }
@@ -88,8 +108,11 @@ namespace Merrow {
                             if (steps > 32) { binString2 += 0; }
                         }
                     }
-                    int test = Convert.ToInt32(tempString, 2); //convert binary string to int
+
+                    //convert binary string to int
+                    int test = Convert.ToInt32(tempString, 2); 
                     int test2 = 0;
+
                     if (steps > 32) { test2 = Convert.ToInt32(binString2, 2); }
                     if (steps > 32) { codeString += ".T." + test.ToString("X") + "-" + test2.ToString("X") + "."; }//int to hex
                     else { codeString += ".T." + test.ToString("X") + "."; }
@@ -99,6 +122,7 @@ namespace Merrow {
                 //custom values will have custom delimiter and format
                 //for custom values, collect each 4 items in each list as a binary>hex conversion, single hex character 0-F
 
+                //encode dropdowns
                 tempString = "";
                 string itemString = "";
                 codeString += "L.";
@@ -141,12 +165,13 @@ namespace Merrow {
                 }
                 codeString += tempString + itemString + ".";
 
+                //encode sliders
                 tempString = "";
                 if (sliders.Count > 0) {
                     foreach (var slider in sliders) {
-                        tempString += slider.Value.ToString("X3"); //convert values to hex
+                        tempString += slider.Value.ToString("X2"); //convert values to hex //v50: X3 -> X2
                     }
-                    if (tempString.Length % 2 != 0) { tempString = "0" + tempString; } //ensure it's an even number of characters
+                    //if (tempString.Length % 2 != 0) { tempString = "0" + tempString; } //ensure it's an even number of characters //v50: skip
                     codeString += "S." + tempString;
                 }
                 else {
@@ -166,6 +191,7 @@ namespace Merrow {
             //int tabpagestocheck = 3;
             string versionNumber = labelVersion.Text.Substring(1); //current version to check against
             string tempString;
+            int tempIdx = 0;
             //var toggles = new List<CheckBox>();
             //var dropdowns = new List<ComboBox>();
             //var sliders = new List<TrackBar>();
@@ -242,36 +268,66 @@ namespace Merrow {
             //if (dropdownstring.Length % 2 != 0) { return 5; }
             if (sliderstring.Length % 2 != 0) { return 6; }
 
-            //DECODE TOGGLES
-            //64b to hex to int to binary
-            string toggletemp = togglestring;
-            string toggletemp2 = "";
-            for (int i = 0; i < togglestring.Length; i++) {
-                if (togglestring[i] == '-') {
-                    toggletemp = togglestring.Substring(0, i); //first half of string, up to hyphens
-                    toggletemp2 = togglestring.Substring(i + 1); //separate out second half of string, skip hyphens
+
+            if (newShortCodeMethod) {
+                //DECODE TOGGLES: NEW
+                string toggletemp = "";
+                string toggletemp2 = "";
+
+                //asc64 to ints to 6-bit binary 
+                for (int i = 0; i < togglestring.Length; i++) { 
+                    toggletemp = Asc64ToBin6(togglestring[i].ToString());
+
+                    //prepend zeroes to it if it's short
+                    int shortLen = 6 - toggletemp.Length;
+                    if (shortLen > 0) {
+                        for (int j = 0; j < shortLen; j++) { toggletemp = "0" + toggletemp; } 
+                    }
+
+                    toggletemp2 += toggletemp;
+                }
+
+                //then read binary string as bools. this doesn't actually check appended extra zeroes
+                foreach (var toggle in toggles) {
+                    if (toggletemp2[tempIdx] == '1') { toggle.Checked = true; } else { toggle.Checked = false; }
+                    tempIdx++;
                 }
             }
 
-            //converting back to strings, PadLeft prevents the binary conversion from removing leading zeroes
-            if (toggles.Count <= 32) {
-                toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2).PadLeft(toggles.Count, '0');
-                //if (togglestring.Length % 2 != 0) { return 4; }
-            }
-            if (toggles.Count > 32) {
-                toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2).PadLeft(32, '0');
 
-                //just add toggletemp2 to the binary string, since it's not bound by 32-char limit like the binary number
-                toggletemp += Convert.ToString(Convert.ToInt32(toggletemp2, 16), 2).PadLeft(toggles.Count - 32, '0');
-                //if (togglestring.Length % 2 != 0) { return 7; }
+            if (!newShortCodeMethod) { 
+                //DECODE TOGGLES: OLD
+                //64b to hex to int to binary
+                string toggletemp = togglestring;
+                string toggletemp2 = "";
+                for (int i = 0; i < togglestring.Length; i++) {
+                    if (togglestring[i] == '-') {
+                        toggletemp = togglestring.Substring(0, i); //first half of string, up to hyphens
+                        toggletemp2 = togglestring.Substring(i + 1); //separate out second half of string, skip hyphens
+                    }
+                }
+
+                //converting back to strings, PadLeft prevents the binary conversion from removing leading zeroes
+                if (toggles.Count <= 32) {
+                    toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2).PadLeft(toggles.Count, '0');
+                    //if (togglestring.Length % 2 != 0) { return 4; }
+                }
+                if (toggles.Count > 32) {
+                    toggletemp = Convert.ToString(Convert.ToInt32(toggletemp, 16), 2).PadLeft(32, '0');
+
+                    //just add toggletemp2 to the binary string, since it's not bound by 32-char limit like the binary number
+                    toggletemp += Convert.ToString(Convert.ToInt32(toggletemp2, 16), 2).PadLeft(toggles.Count - 32, '0');
+                    //if (togglestring.Length % 2 != 0) { return 7; }
+                }
+
+                //then read binary string as bools
+                foreach (var toggle in toggles) {
+                    if (toggletemp[tempIdx] == '1') { toggle.Checked = true; } else { toggle.Checked = false; }
+                    tempIdx++;
+                }
+
             }
 
-            //then read binary string as bools
-            var x = 0;
-            foreach (var toggle in toggles) {
-                if (toggletemp[x] == '1') { toggle.Checked = true; } else { toggle.Checked = false; } 
-                x++;
-            }
 
             //DECODE DROPDOWNS
             //set all them first: check the dropdown's length, and iterate the count by either 1 or 2 if bighex.
@@ -279,7 +335,7 @@ namespace Merrow {
             //and then override the item lists after if needed
 
             string dropdowntemp = dropdownstring;//Base64ToHex(dropdownstring);
-            x = 0;
+            tempIdx = 0;
             
             foreach (var dropdown in dropdowns) {
                 //Console.WriteLine(dropdown.Name);
@@ -288,12 +344,12 @@ namespace Merrow {
                 if (dropdown.Items.Count > 16) { bighex = true; }
 
                 if (bighex) { //two hex chars as int
-                    currentvalue = Convert.ToInt32(dropdowntemp.Substring(x, 2), 16); 
-                    x += 2;
+                    currentvalue = Convert.ToInt32(dropdowntemp.Substring(tempIdx, 2), 16);
+                    tempIdx += 2;
                 }
                 if (!bighex) { //one hex char as int
-                    currentvalue = Convert.ToInt32(dropdowntemp.Substring(x, 1), 16); 
-                    x += 1;
+                    currentvalue = Convert.ToInt32(dropdowntemp.Substring(tempIdx, 1), 16);
+                    tempIdx += 1;
                 }
                 dropdown.SelectedIndex = currentvalue; //update the dropdown
             }
@@ -318,17 +374,19 @@ namespace Merrow {
                 }
             }
 
+
             //DECODE SLIDERS
 
             if (sliderstart != -1) { //only if sliders exist
                 string slidertemp = sliderstring;// Base64ToHex(sliderstring);
-                if (slidertemp.Length % 3 != 0) { slidertemp = slidertemp.Substring(1); } //remove the optional leading zero
-                x = 0;
+                //if (slidertemp.Length % 3 != 0) { slidertemp = slidertemp.Substring(1); } //remove the optional leading zero //v50: skip
+                tempIdx = 0;
                 foreach (var slider in sliders) {
-                    slider.Value = Convert.ToInt32(slidertemp.Substring(x, 3), 16); //convert each 3-char hex value to int
-                    x += 3;
+                    slider.Value = Convert.ToInt32(slidertemp.Substring(tempIdx, 2), 16); //convert each 3-char hex value to int //V50: 3 -> 2
+                    tempIdx += 2;
                 }
             }
+
 
             //DONE
             updatingcode = false;

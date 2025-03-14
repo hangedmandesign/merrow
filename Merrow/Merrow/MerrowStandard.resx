@@ -120,9 +120,6 @@
   <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="rndToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="rndRestlessToggle.ToolTip" xml:space="preserve">
     <value>For each NPC, randomly sets the bit that determines if it is wandering.
 [WARNING: May cause unforeseen issues. If a vital NPC moves out of 
@@ -161,7 +158,7 @@ It will also create a 'filename + Spoiler.txt' file in the same directory that l
   <data name="creditsLinkLabel.Text" xml:space="preserve">
     <value>Developed by:  Hangedman (Jonah Davidson)
 
-Thanks to: Andypanther, Bingchang, BurrItsCold, Countdown, DrunkKami, FeralDemon, FireEmbliem, Irenepunmaster, Jeville, Kao, Kirkq, Landmine36, Mallos31, Midboss, Mwobee, Raphix, Schooliedee, Supmarf, Usedpizza, xIceBlue, the Eltale Monsters Discord, the Rosemary Branch, the Pizza Box, and Dirty Rectangles.
+Thanks to:  Andypanther, Bingchang, BurrItsCold, Countdown, DrunkKami, FeralDemon, FireEmbliem, Irenepunmaster, Jeville, Kao, Kirkq, Landmine36, Mallos31, Midboss, Mwobee, Raphix, Schooliedee, Supmarf, Usedpizza, xIceBlue, the Eltale Monsters Discord, the Rosemary Branch, the Pizza Box, and Dirty Rectangles.
 </value>
   </data>
   <data name="rndShortcodeLabel.ToolTip" xml:space="preserve">
@@ -238,7 +235,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAbgBBAG4AQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAcABBAHAAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA

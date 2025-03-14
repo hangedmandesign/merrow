@@ -66,6 +66,7 @@ namespace Merrow {
         bool updatingcode = false;
         bool shufflingnow = false;
         bool debugoutput = false;
+        bool newShortCodeMethod = true;
 
         //collection arrays and lists
         byte[] patcharray;
@@ -555,7 +556,7 @@ namespace Merrow {
 
         private void rndTextPaletteToggle_CheckedChanged(object sender, EventArgs e) {
             rndTextPaletteDropdown.Enabled = rndTextPaletteToggle.Checked;
-            rndTextViewPanel.Visible = rndTextPaletteToggle.Checked; 
+            rndTextViewPanel.Visible = rndTextPaletteToggle.Checked;
             UpdateCode();
         }
 
@@ -565,6 +566,8 @@ namespace Merrow {
         }
 
         private void rndTextPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            if (rndTextPaletteDropdown.SelectedIndex == 1) { rndTextViewTextbox.Enabled = true; }
+            else { rndTextViewTextbox.Enabled = false; }
             UpdateCode();
             Shuffling(true);
         }
@@ -1070,6 +1073,8 @@ namespace Merrow {
         }
 
         private void rndStaffPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            if (rndStaffPaletteDropdown.SelectedIndex == 1) { rndStaffViewTextbox.Enabled = true; }
+            else { rndStaffViewTextbox.Enabled = false; }
             UpdateCode();
             Shuffling(true);
         }
@@ -1107,6 +1112,8 @@ namespace Merrow {
         }
 
         private void rndCloakPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e) {
+            if (rndCloakPaletteDropdown.SelectedIndex == 1) { rndCloakViewTextbox.Enabled = true; }
+            else { rndCloakViewTextbox.Enabled = false; }
             UpdateCode();
             Shuffling(true);
         }

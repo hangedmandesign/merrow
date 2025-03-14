@@ -153,6 +153,39 @@ namespace Merrow {
             return sb.ToString().Trim();
         }
 
+        public static string Bin6ToAsc64(string input) { //Convert 6-digit binary to compressed ascii 6-bit value
+            int tempInt = Convert.ToInt32(input, 2);
+            int asciiOffset = 0;
+            
+            if (tempInt <= 9) { asciiOffset = 48; } //0-9, 48-57
+            else if (tempInt >= 10 && tempInt <= 37) { asciiOffset = 53; } //?@A-Z, 63-90
+            else if (tempInt >= 38) { asciiOffset = 59; } //a-z, 97-122
+
+            return IntToAscii(tempInt + asciiOffset).ToString();
+        }
+
+        public static string Asc64ToBin6(string input) { //Convert compressed ascii 6-bit value to 6-digit binary
+            char tempChar = input[0]; 
+            int tempInt = AsciiToInt(tempChar);
+            int asciiOffset = 0;
+
+            if (tempInt <= 57) { asciiOffset = 48; } //0-9, 48-57
+            else if (tempInt >= 63 && tempInt <= 90) { asciiOffset = 53; } //?@A-Z, 63-90
+            else if (tempInt >= 97) { asciiOffset = 59; } //a-z, 97-122
+
+            string binString = Convert.ToString(tempInt -= asciiOffset, 2);
+
+            return binString;
+        }
+
+        public static int AsciiToInt(char ch) {
+            return (int)ch;
+        }
+
+        public static char IntToAscii(int num) {
+            return (char)num;
+        }
+
         public static Color RGBAToColor(string hexvalue) { //Convert 4-char hex string to Color
             string binCol = Convert.ToString(Convert.ToInt32(hexvalue, 16), 2).PadLeft(16, '0'); //convert the hex string to an int, and then to binary string
 
