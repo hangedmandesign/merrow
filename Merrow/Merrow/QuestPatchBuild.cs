@@ -48,7 +48,7 @@ namespace Merrow {
                 rndDefTrackBar.Value == 4 &&
                 rndMPRegainTrackBar.Value == 10 &&
                 rndHitMPTrackBar.Value == 1 &&
-                rndStaffPowerTrackBar.Value == 16 &&
+                rndStaffPowerTrackBar.Value == 1 &&
                 rndEncounterTrackBar.Value == 2 &&
                 rndEXPBoostTrackBar.Value == 4 &&
 
@@ -909,7 +909,7 @@ namespace Merrow {
                 patchstrings.Add($"{powerStaffLevelOne:X02}");
 
                 // Power Staff 2
-                patchstrings.Add($"{0x17D28 + 3:X04}");
+                patchstrings.Add($"{0x17D3C + 3:X04}");
                 patchstrings.Add("0001");
                 patchstrings.Add($"{powerStaffLevelTwo:X02}");
 
