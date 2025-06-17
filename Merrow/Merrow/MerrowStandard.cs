@@ -124,6 +124,7 @@ namespace Merrow {
         int fixcount = 0;
         int[] rndflying = new int[74];
         int bossCount = 7; //V50: added for Beigis
+        byte[] staffPowerValues = new byte[] { 8, 16, 24, 32, 40, 48};
 
         //INITIALIZATION----------------------------------------------------------------
 
@@ -1753,6 +1754,23 @@ namespace Merrow {
             rndLostKeysDropdown.SelectedIndex = 1;
             tabsControl.SelectedIndex = 1;
             rndTabsControl.SelectedIndex = 3;
+        }
+
+
+        private void rndStaffPowerTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            var powerIndex = rndStaffPowerTrackBar.Value;
+            var powerValue = this.staffPowerValues[powerIndex];
+            rndStaffPowerValue.Text = powerValue.ToString();
+            UpdateCode();
+        }
+
+        private void rndStaffPowerTrackBar_Scroll(object sender, EventArgs e)
+        {
+            var powerIndex = rndStaffPowerTrackBar.Value;
+            var powerValue = this.staffPowerValues[powerIndex];
+            rndStaffPowerValue.Text = powerValue.ToString();
+            UpdateCode();
         }
     }
 }
