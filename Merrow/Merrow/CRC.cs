@@ -20,7 +20,7 @@ namespace Merrow
 
         static readonly uint[] crcTable = new uint[256];
 
-        static uint Rol(uint value, int bits) =>
+        public static uint Rol(uint value, int bits) =>
             (value << bits) | (value >> (32 - bits));
 
         static uint BytesToUInt32(byte[] buffer, int offset) =>
@@ -35,7 +35,7 @@ namespace Merrow
             buffer[offset + 3] = (byte)(value & 0xFF);
         }
 
-        static void GenTable()
+        static void GenCRCTableInPlace()
         {
             const uint poly = 0xEDB88320;
             for (uint i = 0; i < 256; i++)
@@ -46,6 +46,12 @@ namespace Merrow
 
                 crcTable[i] = crc;
             }
+        }
+
+        public static uint[] GenCRCTable()
+        {
+            GenCRCTableInPlace();
+            return crcTable;
         }
 
         static uint Crc32(byte[] data, int offset, int length)
@@ -139,7 +145,7 @@ namespace Merrow
 
         public static int FixCrc(string filePath)
         {
-            GenTable();
+            GenCRCTableInPlace();
 
             byte[] buffer;
             try

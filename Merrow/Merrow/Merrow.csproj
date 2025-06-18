@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CRC.cs" />
     <Compile Include="QuestPatchBuild.cs">
       <SubType>Form</SubType>
     </Compile>
