@@ -913,7 +913,7 @@ namespace Merrow {
                 patchstrings.Add("0001");
                 patchstrings.Add($"{powerStaffLevelTwo:X02}");
 
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", $"Staff Power set to {powerValue:X02}, {powerStaffLevelOne:X02}, {powerStaffLevelTwo:X02}." + Environment.NewLine);
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", $"Staff Power set to {powerValue}, {powerStaffLevelOne}, {powerStaffLevelTwo}." + Environment.NewLine);
             }
 
             //Unlock All Progression Locks
