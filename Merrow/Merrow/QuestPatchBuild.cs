@@ -1490,7 +1490,7 @@ namespace Merrow {
                 //write updated file bytearray to new file
                 string thisFile = filePath + fileName + ".z64";
                 File.WriteAllBytes(thisFile, rndFileBytes);
-                var crctext = fix_crc(thisFile); //repair checksum
+                var crctext = CRC.FixCrc(thisFile); //repair checksum
                 filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
                 System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
                 rndErrorLabel.Text = "Z64 file creation complete. CRC repaired.";
