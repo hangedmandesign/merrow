@@ -48,6 +48,7 @@ namespace Merrow {
                 rndDefTrackBar.Value == 4 &&
                 rndMPRegainTrackBar.Value == 10 &&
                 rndHitMPTrackBar.Value == 1 &&
+                rndStaffPowerTrackBar.Value == 1 &&
                 rndEncounterTrackBar.Value == 2 &&
                 rndEXPBoostTrackBar.Value == 4 &&
 
@@ -869,7 +870,7 @@ namespace Merrow {
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Crystal Valley return warp enabled." + Environment.NewLine);
             }
-
+            
             //Staff Hit MP Regain
             if (rndHitMPTrackBar.Value != 1) {
                 patchstrings.Add("0050DB");
@@ -877,6 +878,42 @@ namespace Merrow {
                 patchstrings.Add("0" + rndHitMPTrackBar.Value.ToString());
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Staff hit MP regain set to " + rndHitMPValue.Text + "." + Environment.NewLine);
+            }
+
+            //Staff Power Adjustment
+            if (rndStaffPowerTrackBar.Value != 1) {
+
+                int powerIndex = rndStaffPowerTrackBar.Value;
+                byte powerValue = this.staffPowerValues[powerIndex];
+                byte powerStaffLevelOne = (byte)(powerValue + (powerValue >> 1));
+                byte powerStaffLevelTwo = (byte)(powerValue << 1);
+
+                // Default
+                patchstrings.Add($"{0x46E4+3:X04}");
+                patchstrings.Add("0001");
+                patchstrings.Add($"{powerValue:X02}");
+                   
+                // Invalidity / Dispel
+                patchstrings.Add($"{0x178F4 + 3:X04}");
+                patchstrings.Add("0001");
+                patchstrings.Add($"{powerValue:X02}");
+                   
+                // Expiration
+                patchstrings.Add($"{0x18D94 + 3:X04}");
+                patchstrings.Add("0001");
+                patchstrings.Add($"{powerValue:X02}");
+
+                // Power Staff 1
+                patchstrings.Add($"{0x17D28 + 3:X04}");
+                patchstrings.Add("0001");
+                patchstrings.Add($"{powerStaffLevelOne:X02}");
+
+                // Power Staff 2
+                patchstrings.Add($"{0x17D3C + 3:X04}");
+                patchstrings.Add("0001");
+                patchstrings.Add($"{powerStaffLevelTwo:X02}");
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", $"Staff Power set to {powerValue}, {powerStaffLevelOne}, {powerStaffLevelTwo}." + Environment.NewLine);
             }
 
             //Unlock All Progression Locks
