@@ -26,8 +26,8 @@ namespace Merrow {
         int tabpagestocheck = 3;
 
         //crc dll import
-        [DllImport("crc64.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int fix_crc(string crcPath);
+        // [DllImport("crc64.dll", CallingConvention = CallingConvention.Cdecl)]
+        // public static extern int fix_crc(string crcPath);
 
         //variables
         int spellstart = 13941344; //D4BA60
@@ -242,7 +242,7 @@ namespace Merrow {
         //simplified CRC function call to return error messages
         public int RepairCRC() {
             int check = -1;
-            if (crcFileSelected) { check = fix_crc(fullPath); }
+            if (crcFileSelected) { check = CRC.FixCrc(fullPath); }
             return check;
         }
 
