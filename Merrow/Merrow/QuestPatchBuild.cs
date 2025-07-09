@@ -829,7 +829,8 @@ namespace Merrow {
                     //the old method multiplied the speed value, but the effect of that was logarithmic, not multiplicative.
                     //instead, I've selected hex values that map closely to the number of seconds spent running, which was the intent all along.
                     //for reference, I got these values by testing MP gained while running a set distance.
-                    string[] speeds = new string[5] { "28", "31", "41", "51", "58" }; //40, 49, 65, 81, 88
+                    //V50: the array was backwards. Now it's fixed.
+                    string[] speeds = new string[5] { "58", "51", "41", "31", "28" }; //88, 81, 65, 49, 40
 
                     patchstrings.Add("071B39");
                     patchstrings.Add("0001");

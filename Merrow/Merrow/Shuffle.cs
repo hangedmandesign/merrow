@@ -820,13 +820,20 @@ namespace Merrow {
             //populate updated monster name array and vowel list
             for (int l = 0; l < voweled.Length; l++) { voweled[l] = library.monsternames[l * 2]; }
             char[] vowels = { 'A', 'E', 'I', 'O', 'U' };
+            char[] vowelsXi = { 'A', 'E', 'O', 'U' };
 
             for (int h = 0; h < voweled.Length; h++) { //iterate through all names
                 char[] charArr = voweled[h].ToCharArray();
 
                 for (int i = 0; i < charArr.Length; i++) { //iterate through name characters
-                    if (charArr[i] == 'A' || charArr[i] == 'E' || charArr[i] == 'I' || charArr[i] == 'O' || charArr[i] == 'U') {
-                        charArr[i] = vowels[SysRand.Next(5)];
+                    if (h != 16) { 
+                        if (charArr[i] == 'A' || charArr[i] == 'E' || charArr[i] == 'I' || charArr[i] == 'O' || charArr[i] == 'U') {
+                            charArr[i] = vowels[SysRand.Next(5)];
+                        }
+                    } else { //death hugger doesn't get an 'i' in the second word. don't @ me
+                        if (charArr[i] == 'A' || charArr[i] == 'E' || charArr[i] == 'I' || charArr[i] == 'O' || charArr[i] == 'U') {
+                            charArr[i] = vowelsXi[SysRand.Next(4)];
+                        }
                     }
                 }
 
