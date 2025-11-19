@@ -1106,25 +1106,53 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shannon Hints enabled." + Environment.NewLine);
             }
 
-            //Better Dew Drop
-            if (rndBetterDewDrop.Checked) {
+            //currently, Better Dew Drop is overridden by Archipelago Dew Drop, to avoid issues with descriptions. 25-11-16
+            if (!rndArchipelagoDewDrop.Checked) { 
+
+                //Better Dew Drop
+                if (rndBetterDewDrop.Checked) {
+                    patchstrings.Add("D86B01"); //function patch
+                    patchstrings.Add("0001");
+                    patchstrings.Add("14");
+
+                    patchstrings.Add(library.newdewdropdesc[0]); //description patch
+                    patchstrings.Add(75.ToString("X4"));
+                    patchstrings.Add(library.newdewdropdesc[1]);
+
+                    patchstrings.Add(library.newdewdropdesc[2]); //dragon's potion desc pointer
+                    patchstrings.Add("0004");
+                    patchstrings.Add(library.newdewdropdesc[3]);
+
+                    patchstrings.Add(library.newdewdropdesc[4]); //dew drop desc pointer
+                    patchstrings.Add("0004");
+                    patchstrings.Add(library.newdewdropdesc[5]);
+
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Dew Drop made useful." + Environment.NewLine);
+                }
+            }
+
+            if (rndArchipelagoDewDrop.Checked) {
                 patchstrings.Add("D86B01"); //function patch
-                patchstrings.Add("0001");
-                patchstrings.Add("14");
+                patchstrings.Add("0003");
+                patchstrings.Add("0A0005");
 
-                patchstrings.Add(library.newdewdropdesc[0]); //description patch
-                patchstrings.Add(75.ToString("X4"));
-                patchstrings.Add(library.newdewdropdesc[1]);
+                patchstrings.Add(library.archidewdropinfo[0]); //healing potion, dragon potion, dew drop desc text
+                patchstrings.Add("005B");
+                patchstrings.Add(library.archidewdropinfo[1]);
 
-                patchstrings.Add(library.newdewdropdesc[2]); //dragon's potion desc pointer
-                patchstrings.Add("0004");
-                patchstrings.Add(library.newdewdropdesc[3]);
+                patchstrings.Add(library.archidewdropinfo[2]); //healing potion, dragon potion, dew drop desc pointer
+                patchstrings.Add("000C");
+                patchstrings.Add(library.archidewdropinfo[3]);
 
-                patchstrings.Add(library.newdewdropdesc[4]); //dew drop desc pointer
-                patchstrings.Add("0004");
-                patchstrings.Add(library.newdewdropdesc[5]);
+                patchstrings.Add(library.archidewdropinfo[4]); //healing potion, dragon potion, sidhe's gift name text
+                patchstrings.Add("0039");
+                patchstrings.Add(library.archidewdropinfo[5]);
 
-                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Dew Drop made useful." + Environment.NewLine);
+                patchstrings.Add(library.archidewdropinfo[6]); //healing potion, dragon potion, dew drop name pointer
+                patchstrings.Add("000C");
+                patchstrings.Add(library.archidewdropinfo[7]);
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "ARCHIPELAGO TESTING: Dew Drop replaced with Sidhe's Gift." + Environment.NewLine);
             }
 
             //Reveal hidden spirits

@@ -925,6 +925,20 @@ namespace Merrow {
             "D872B8","803A957B",
         };
 
+        //archipelago dew drop description, uses the same space saving as newdewdropdesc in case more space is needed.
+        //see above for details.
+        public string[] archidewdropinfo = {
+            "D86E0D","A0C0811204021104137F0F0E13080E0D8010E081070F7F800105007F811104020E15041118FFA0C0810C0F7F05140B0B7F1104020E15041118FFA0C081060805137F05110E0C7F0104180E0D03E080010081070F7F8005810C0FFF", //healing potion, dragon potion, dew drop desc text (91b, 0x5B)
+            //"D872B0","803A953B803A9561803A9575", //healing potion, dragon potion, dew drop desc pointer (4b each, 12b, 0x0C)
+            "D872B0","803A953F803A9566803A957A", //healing potion, dragon potion, dew drop desc pointer (4b each, 12b, 0x0C)
+
+            "D86C1B","A0C0810704000B080D067F0F0E13080E0DFFA0C081031100060E0D821A81127F0F0E13080E0DFFA0C0811208030704821A81127F06080513FF", //healing potion, dragon potion, sidhe's gift names (57b, 0x39)
+            //"D87230","803A9349803A935A803A9370", //healing potion, dragon potion, dew drop name pointer (4b each, 12b, 0x0C)
+            "D87230","803A934B803A935D803A9372" //healing potion, dragon potion, dew drop name pointer (4b each, 12b, 0x0C)
+        };
+        // SOMETHING IS WRONG WITH THE POINTERS, MAYBE? THE DATA SEEMS TO BE INCORRECT BUT ADJUSTMENTS AREN'T WORKING
+
+
         //name list for spoiler log
         public string[] monsternames = {
             "WERE HARE","ADC360",

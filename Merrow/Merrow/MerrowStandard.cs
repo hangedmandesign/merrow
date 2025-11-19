@@ -1218,6 +1218,10 @@ namespace Merrow {
             UpdateCode();
         }
 
+        private void rndArchipelagoDewDrop_CheckedChanged(object sender, EventArgs e) {
+            UpdateCode();
+        }
+
         //FRENCH VANILLA OVERRIDE
         public void VanillaHandling() {
             if (rndFrenchVanillaToggle.Checked) {
@@ -1674,6 +1678,12 @@ namespace Merrow {
         private void rleDeinterleaveButton_Click(object sender, EventArgs e) {
             if (rleDecInputTextBox.Text != null && rleDecInputTextBox.Text != "") {
                DeInterleave(rleDecInputTextBox.Text);
+            }
+        }
+
+        private void rleEncodeButton_Click(object sender, EventArgs e) {
+            if (rleEncodeInputTextBox.Text != null && rleEncodeInputTextBox.Text != "") {
+                rleEncodeOutputTextBox.Text = (string)TranslateString(rleEncodeInputTextBox.Text)[0];
             }
         }
 
