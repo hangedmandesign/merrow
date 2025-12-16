@@ -192,6 +192,7 @@
             this.tabPage0 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.rndItemsBox = new System.Windows.Forms.GroupBox();
+            this.rndArchipelagoDewDrop = new System.Windows.Forms.CheckBox();
             this.rndWingUnlockDropdown = new System.Windows.Forms.ComboBox();
             this.rndWingUnlockToggle = new System.Windows.Forms.CheckBox();
             this.rndBetterDewDrop = new System.Windows.Forms.CheckBox();
@@ -427,6 +428,13 @@
             this.binFilenameTextBox = new System.Windows.Forms.TextBox();
             this.binContentTextBox = new System.Windows.Forms.TextBox();
             this.DecoderTab = new System.Windows.Forms.TabPage();
+            this.rleEncodingGroupBox = new System.Windows.Forms.GroupBox();
+            this.rleEncodeInputTextBox = new System.Windows.Forms.TextBox();
+            this.rleEncodeButton = new System.Windows.Forms.Button();
+            this.rleDecodeButton = new System.Windows.Forms.Button();
+            this.rleDecodeOuputLabel = new System.Windows.Forms.Label();
+            this.rleDecodeInputLabel = new System.Windows.Forms.Label();
+            this.rleEncodeOutputTextBox = new System.Windows.Forms.TextBox();
             this.rleDecompGroupBox = new System.Windows.Forms.GroupBox();
             this.rleInterleaveButton = new System.Windows.Forms.Button();
             this.rleIntTextBox = new System.Windows.Forms.TextBox();
@@ -455,14 +463,6 @@
             this.menuItemBFR = new System.Windows.Forms.MenuItem();
             this.menuItemCRT = new System.Windows.Forms.MenuItem();
             this.menuItemRLE = new System.Windows.Forms.MenuItem();
-            this.rndArchipelagoDewDrop = new System.Windows.Forms.CheckBox();
-            this.rleEncodingGroupBox = new System.Windows.Forms.GroupBox();
-            this.rleEncodeInputTextBox = new System.Windows.Forms.TextBox();
-            this.rleEncodeButton = new System.Windows.Forms.Button();
-            this.rleDecodeButton = new System.Windows.Forms.Button();
-            this.rleDecodeOuputLabel = new System.Windows.Forms.Label();
-            this.rleDecodeInputLabel = new System.Windows.Forms.Label();
-            this.rleEncodeOutputTextBox = new System.Windows.Forms.TextBox();
             this.tabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.shortcutsBox.SuspendLayout();
@@ -529,9 +529,9 @@
             this.binLengthGroup.SuspendLayout();
             this.binAddrGroup.SuspendLayout();
             this.DecoderTab.SuspendLayout();
+            this.rleEncodingGroupBox.SuspendLayout();
             this.rleDecompGroupBox.SuspendLayout();
             this.HelpTab.SuspendLayout();
-            this.rleEncodingGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // rndMaxMessageToggle
@@ -1088,6 +1088,18 @@
             this.rndItemsBox.TabIndex = 34;
             this.rndItemsBox.TabStop = false;
             this.rndItemsBox.Text = "ITEMS";
+            // 
+            // rndArchipelagoDewDrop
+            // 
+            this.rndArchipelagoDewDrop.AutoSize = true;
+            this.rndArchipelagoDewDrop.Location = new System.Drawing.Point(6, 471);
+            this.rndArchipelagoDewDrop.Name = "rndArchipelagoDewDrop";
+            this.rndArchipelagoDewDrop.Size = new System.Drawing.Size(157, 17);
+            this.rndArchipelagoDewDrop.TabIndex = 40;
+            this.rndArchipelagoDewDrop.Text = "TESTING: Archipelago item";
+            this.rndToolTip.SetToolTip(this.rndArchipelagoDewDrop, resources.GetString("rndArchipelagoDewDrop.ToolTip"));
+            this.rndArchipelagoDewDrop.UseVisualStyleBackColor = true;
+            this.rndArchipelagoDewDrop.CheckedChanged += new System.EventHandler(this.rndArchipelagoDewDrop_CheckedChanged);
             // 
             // rndWingUnlockDropdown
             // 
@@ -4414,6 +4426,77 @@
             this.DecoderTab.Text = "RLEDecoder";
             this.DecoderTab.UseVisualStyleBackColor = true;
             // 
+            // rleEncodingGroupBox
+            // 
+            this.rleEncodingGroupBox.Controls.Add(this.rleEncodeInputTextBox);
+            this.rleEncodingGroupBox.Controls.Add(this.rleEncodeButton);
+            this.rleEncodingGroupBox.Controls.Add(this.rleDecodeButton);
+            this.rleEncodingGroupBox.Controls.Add(this.rleDecodeOuputLabel);
+            this.rleEncodingGroupBox.Controls.Add(this.rleDecodeInputLabel);
+            this.rleEncodingGroupBox.Controls.Add(this.rleEncodeOutputTextBox);
+            this.rleEncodingGroupBox.Location = new System.Drawing.Point(3, 262);
+            this.rleEncodingGroupBox.Name = "rleEncodingGroupBox";
+            this.rleEncodingGroupBox.Size = new System.Drawing.Size(587, 306);
+            this.rleEncodingGroupBox.TabIndex = 6;
+            this.rleEncodingGroupBox.TabStop = false;
+            this.rleEncodingGroupBox.Text = "QUEST TEXT ENCODING";
+            // 
+            // rleEncodeInputTextBox
+            // 
+            this.rleEncodeInputTextBox.Location = new System.Drawing.Point(6, 38);
+            this.rleEncodeInputTextBox.Multiline = true;
+            this.rleEncodeInputTextBox.Name = "rleEncodeInputTextBox";
+            this.rleEncodeInputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.rleEncodeInputTextBox.Size = new System.Drawing.Size(575, 108);
+            this.rleEncodeInputTextBox.TabIndex = 8;
+            // 
+            // rleEncodeButton
+            // 
+            this.rleEncodeButton.Location = new System.Drawing.Point(191, 151);
+            this.rleEncodeButton.Name = "rleEncodeButton";
+            this.rleEncodeButton.Size = new System.Drawing.Size(109, 33);
+            this.rleEncodeButton.TabIndex = 7;
+            this.rleEncodeButton.Text = "ENCODE";
+            this.rleEncodeButton.UseVisualStyleBackColor = true;
+            this.rleEncodeButton.Click += new System.EventHandler(this.rleEncodeButton_Click);
+            // 
+            // rleDecodeButton
+            // 
+            this.rleDecodeButton.Enabled = false;
+            this.rleDecodeButton.Location = new System.Drawing.Point(306, 151);
+            this.rleDecodeButton.Name = "rleDecodeButton";
+            this.rleDecodeButton.Size = new System.Drawing.Size(109, 33);
+            this.rleDecodeButton.TabIndex = 5;
+            this.rleDecodeButton.Text = "DECODE";
+            this.rleDecodeButton.UseVisualStyleBackColor = true;
+            // 
+            // rleDecodeOuputLabel
+            // 
+            this.rleDecodeOuputLabel.AutoSize = true;
+            this.rleDecodeOuputLabel.Location = new System.Drawing.Point(5, 174);
+            this.rleDecodeOuputLabel.Name = "rleDecodeOuputLabel";
+            this.rleDecodeOuputLabel.Size = new System.Drawing.Size(39, 13);
+            this.rleDecodeOuputLabel.TabIndex = 3;
+            this.rleDecodeOuputLabel.Text = "Output";
+            // 
+            // rleDecodeInputLabel
+            // 
+            this.rleDecodeInputLabel.AutoSize = true;
+            this.rleDecodeInputLabel.Location = new System.Drawing.Point(6, 22);
+            this.rleDecodeInputLabel.Name = "rleDecodeInputLabel";
+            this.rleDecodeInputLabel.Size = new System.Drawing.Size(31, 13);
+            this.rleDecodeInputLabel.TabIndex = 2;
+            this.rleDecodeInputLabel.Text = "Input";
+            // 
+            // rleEncodeOutputTextBox
+            // 
+            this.rleEncodeOutputTextBox.Location = new System.Drawing.Point(5, 190);
+            this.rleEncodeOutputTextBox.Multiline = true;
+            this.rleEncodeOutputTextBox.Name = "rleEncodeOutputTextBox";
+            this.rleEncodeOutputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.rleEncodeOutputTextBox.Size = new System.Drawing.Size(575, 108);
+            this.rleEncodeOutputTextBox.TabIndex = 1;
+            // 
             // rleDecompGroupBox
             // 
             this.rleDecompGroupBox.Controls.Add(this.rleInterleaveButton);
@@ -4658,89 +4741,6 @@
             this.menuItemRLE.Text = "RLE/Quest String Converter";
             this.menuItemRLE.Click += new System.EventHandler(this.menuItemRLE_Click);
             // 
-            // rndArchipelagoDewDrop
-            // 
-            this.rndArchipelagoDewDrop.AutoSize = true;
-            this.rndArchipelagoDewDrop.Location = new System.Drawing.Point(6, 469);
-            this.rndArchipelagoDewDrop.Name = "rndArchipelagoDewDrop";
-            this.rndArchipelagoDewDrop.Size = new System.Drawing.Size(222, 17);
-            this.rndArchipelagoDewDrop.TabIndex = 40;
-            this.rndArchipelagoDewDrop.Text = "TESTING: Dew Drop as Archipelago item";
-            this.rndToolTip.SetToolTip(this.rndArchipelagoDewDrop, resources.GetString("rndArchipelagoDewDrop.ToolTip"));
-            this.rndArchipelagoDewDrop.UseVisualStyleBackColor = true;
-            this.rndArchipelagoDewDrop.CheckedChanged += new System.EventHandler(this.rndArchipelagoDewDrop_CheckedChanged);
-            // 
-            // rleEncodingGroupBox
-            // 
-            this.rleEncodingGroupBox.Controls.Add(this.rleEncodeInputTextBox);
-            this.rleEncodingGroupBox.Controls.Add(this.rleEncodeButton);
-            this.rleEncodingGroupBox.Controls.Add(this.rleDecodeButton);
-            this.rleEncodingGroupBox.Controls.Add(this.rleDecodeOuputLabel);
-            this.rleEncodingGroupBox.Controls.Add(this.rleDecodeInputLabel);
-            this.rleEncodingGroupBox.Controls.Add(this.rleEncodeOutputTextBox);
-            this.rleEncodingGroupBox.Location = new System.Drawing.Point(3, 262);
-            this.rleEncodingGroupBox.Name = "rleEncodingGroupBox";
-            this.rleEncodingGroupBox.Size = new System.Drawing.Size(587, 306);
-            this.rleEncodingGroupBox.TabIndex = 6;
-            this.rleEncodingGroupBox.TabStop = false;
-            this.rleEncodingGroupBox.Text = "QUEST TEXT ENCODING";
-            // 
-            // rleEncodeInputTextBox
-            // 
-            this.rleEncodeInputTextBox.Location = new System.Drawing.Point(6, 38);
-            this.rleEncodeInputTextBox.Multiline = true;
-            this.rleEncodeInputTextBox.Name = "rleEncodeInputTextBox";
-            this.rleEncodeInputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.rleEncodeInputTextBox.Size = new System.Drawing.Size(575, 108);
-            this.rleEncodeInputTextBox.TabIndex = 8;
-            // 
-            // rleEncodeButton
-            // 
-            this.rleEncodeButton.Location = new System.Drawing.Point(191, 151);
-            this.rleEncodeButton.Name = "rleEncodeButton";
-            this.rleEncodeButton.Size = new System.Drawing.Size(109, 33);
-            this.rleEncodeButton.TabIndex = 7;
-            this.rleEncodeButton.Text = "ENCODE";
-            this.rleEncodeButton.UseVisualStyleBackColor = true;
-            this.rleEncodeButton.Click += new System.EventHandler(this.rleEncodeButton_Click);
-            // 
-            // rleDecodeButton
-            // 
-            this.rleDecodeButton.Enabled = false;
-            this.rleDecodeButton.Location = new System.Drawing.Point(306, 151);
-            this.rleDecodeButton.Name = "rleDecodeButton";
-            this.rleDecodeButton.Size = new System.Drawing.Size(109, 33);
-            this.rleDecodeButton.TabIndex = 5;
-            this.rleDecodeButton.Text = "DECODE";
-            this.rleDecodeButton.UseVisualStyleBackColor = true;
-            // 
-            // rleDecodeOuputLabel
-            // 
-            this.rleDecodeOuputLabel.AutoSize = true;
-            this.rleDecodeOuputLabel.Location = new System.Drawing.Point(5, 174);
-            this.rleDecodeOuputLabel.Name = "rleDecodeOuputLabel";
-            this.rleDecodeOuputLabel.Size = new System.Drawing.Size(39, 13);
-            this.rleDecodeOuputLabel.TabIndex = 3;
-            this.rleDecodeOuputLabel.Text = "Output";
-            // 
-            // rleDecodeInputLabel
-            // 
-            this.rleDecodeInputLabel.AutoSize = true;
-            this.rleDecodeInputLabel.Location = new System.Drawing.Point(6, 22);
-            this.rleDecodeInputLabel.Name = "rleDecodeInputLabel";
-            this.rleDecodeInputLabel.Size = new System.Drawing.Size(31, 13);
-            this.rleDecodeInputLabel.TabIndex = 2;
-            this.rleDecodeInputLabel.Text = "Input";
-            // 
-            // rleEncodeOutputTextBox
-            // 
-            this.rleEncodeOutputTextBox.Location = new System.Drawing.Point(5, 190);
-            this.rleEncodeOutputTextBox.Multiline = true;
-            this.rleEncodeOutputTextBox.Name = "rleEncodeOutputTextBox";
-            this.rleEncodeOutputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.rleEncodeOutputTextBox.Size = new System.Drawing.Size(575, 108);
-            this.rleEncodeOutputTextBox.TabIndex = 1;
-            // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4840,11 +4840,11 @@
             this.binLengthGroup.ResumeLayout(false);
             this.binAddrGroup.ResumeLayout(false);
             this.DecoderTab.ResumeLayout(false);
+            this.rleEncodingGroupBox.ResumeLayout(false);
+            this.rleEncodingGroupBox.PerformLayout();
             this.rleDecompGroupBox.ResumeLayout(false);
             this.rleDecompGroupBox.PerformLayout();
             this.HelpTab.ResumeLayout(false);
-            this.rleEncodingGroupBox.ResumeLayout(false);
-            this.rleEncodingGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
