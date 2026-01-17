@@ -88,6 +88,7 @@
     <Compile Include="Shuffle.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Util\MonsterTable.cs" />
     <Compile Include="VarFunctions.cs">
       <SubType>Form</SubType>
     </Compile>
