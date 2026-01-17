@@ -77,32 +77,53 @@ namespace Merrow.Util
         }
     }
 
-    public class AreaMonsterTableIndex
+    public class AreaMapData
     {
-        public int ROMIndexAddress { get; private set; }
+        public int ROMAddress { get; private set; }
 
-        public int tableIndex;
-        
-        public AreaMonsterTableIndex(int ROMIndexAddress, int defaultTableIndex)
+        public int unk0;
+        public int ptrDoorData;
+        public int doorCount;
+        public int unk8;
+        public short unk10;
+        public short tableIndex;
+        public int unk14;
+
+        public AreaMapData(int rOMAddress, int unk0, int ptrDoorData, int doorCount, int unk8, short unk10, short tableIndex, int unk14)
         {
-            this.ROMIndexAddress = ROMIndexAddress;
-            this.tableIndex = defaultTableIndex;
+            ROMAddress = rOMAddress;
+            this.unk0 = unk0;
+            this.ptrDoorData = ptrDoorData;
+            this.doorCount = doorCount;
+            this.unk8 = unk8;
+            this.unk10 = unk10;
+            this.tableIndex = tableIndex;
+            this.unk14 = unk14;
         }
 
-        public void AssignTableIndex(int index)
+        public void AssignTableIndex(int assignedIndex)
         {
-            this.tableIndex = index;
+            this.tableIndex = (short)assignedIndex;
         }
 
         public void RandomizeTableIndex(int maxIndexInclusive = 5)
         {
             var rng = new System.Random();
-            this.tableIndex = rng.Next(maxIndexInclusive + 1);
+            this.tableIndex = (short)rng.Next(maxIndexInclusive + 1);
         }
 
-        public string GenerateHexBlock()
+        public string[] GenerateHexBlock()
         {
-            return $"{this.tableIndex:4X}";
+            return new string[]
+            {
+                $"{this.unk0}:8X",
+                $"{this.ptrDoorData}:8X",
+                $"{this.doorCount}:8X",
+                $"{this.unk8}:8X",
+                $"{this.unk10}:4X",
+                $"{this.tableIndex}:4X",
+                $"{this.unk14}:8X",
+            };
         }
     }
 
