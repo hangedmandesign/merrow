@@ -1146,16 +1146,35 @@ namespace Merrow {
 
         private void rndExtraHealingToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndExtraHealingToggle.Checked) { //replace the spell's data and the randomized names
-                library.spells[135] = library.ss1healing[0];
-                library.shuffleNames[161] = "MEND";
-                library.shuffleNames[165] = "HEALING";
-                library.shuffleNames[166] = "HEAL";
-            }
-            else {  //return the data to normal
-                library.spells[135] = library.ss1healing[1];
-                library.shuffleNames[161] = "HEALING";
-                library.shuffleNames[165] = "SCAN";
-                library.shuffleNames[166] = "VISION";
+                //library.spells[135] = library.ss1healing[0];
+                library.spells[79] = library.wk1healing[0];
+                //library.shuffleNames[161] = "MEND";
+                //library.shuffleNames[165] = "HEALING";
+                //library.shuffleNames[166] = "HEAL";
+                //library.shuffleNames2[231] = "MENDING";
+                //library.shuffleNames2[232] = "RESPITE";
+                //library.shuffleNames2[233] = "MEND";
+                //library.shuffleNames2[234] = "RESTORE";
+                library.shuffleNames2[133] = "MENDING";
+                library.shuffleNames2[134] = "RESPITE";
+                library.shuffleNames2[135] = "MEND";
+                library.shuffleNames2[136] = "RESTORE";
+                library.spells[76] = "Mending Lv1";
+            } else {  //return the data to normal
+                //library.spells[135] = library.ss1healing[1];
+                library.spells[79] = library.wk1healing[1];
+                //library.shuffleNames[161] = "HEALING";
+                //library.shuffleNames[165] = "SCAN";
+                //library.shuffleNames[166] = "VISION";
+                //library.shuffleNames2[231] = "SCAN";
+                //library.shuffleNames2[232] = "SOUL";
+                //library.shuffleNames2[233] = "VISION";
+                //library.shuffleNames2[234] = "SENSE";
+                library.shuffleNames2[133] = "WEAKEN";
+                library.shuffleNames2[134] = "CRACKED";
+                library.shuffleNames2[135] = "WEAK";
+                library.shuffleNames2[136] = "CRACK";
+                library.spells[76] = "Weakness Lv1";
             }
             UpdateCode();
             Shuffling(true);
@@ -1220,6 +1239,26 @@ namespace Merrow {
 
         private void rndArchipelagoDewDrop_CheckedChanged(object sender, EventArgs e) {
             UpdateCode();
+        }
+
+        private void rndBubbleToggle_CheckedChanged(object sender, EventArgs e) {
+            if (rndBubbleToggle.Checked) { //replace the spell's data and the randomized names
+                library.spells[135] = library.ss1bubble[0];
+                library.shuffleNames2[231] = "BUBBLE";
+                library.shuffleNames2[232] = "SPLASH";
+                library.shuffleNames2[233] = "BUBBLES";
+                library.shuffleNames2[234] = "POP";
+                library.spells[132] = "Bubble";
+            } else {  //return the data to normal
+                library.spells[135] = library.ss1bubble[1];
+                library.shuffleNames2[231] = "SCAN";
+                library.shuffleNames2[232] = "SOUL";
+                library.shuffleNames2[233] = "VISION";
+                library.shuffleNames2[234] = "SENSE";
+                library.spells[132] = "Soul Searcher Lv1";
+            }
+            UpdateCode();
+            Shuffling(true);
         }
 
         //FRENCH VANILLA OVERRIDE
@@ -1306,11 +1345,15 @@ namespace Merrow {
                 rndFireBookToggle.Checked = true;
                 rndFireBookToggle.Enabled = true; //turned on by default but can be turned off if needed
 
-                //spell options
+                //spell options. 
                 rndSpellToggle.Checked = true;
                 rndSpellNamesToggle.Checked = true;
                 rndEarlyHealingToggle.Checked = true;
+                //these get toggled off and on to guarantee that names are fixed. I should probably move that to Shuffle.
+                rndExtraHealingToggle.Checked = false; 
                 rndExtraHealingToggle.Checked = true;
+                rndBubbleToggle.Checked = false;
+                rndBubbleToggle.Checked = true;
                 //spell defaults (do not undo on deselect LOST KEYS)
                 rndDistributeSpellsToggle.Checked = true;
                 //rndSpellItemsToggle.Checked = true;
@@ -1373,6 +1416,7 @@ namespace Merrow {
                 rndEarlyHealingToggle.Checked = false;
                 rndExtraHealingToggle.Checked = false;
                 rndBossOrderToggle.Checked = false;
+                rndBubbleToggle.Checked = false;
 
                 rndFastMammonToggle.Checked = false;
                 rndIvoryWingsToggle.Checked = false;
@@ -1745,6 +1789,11 @@ namespace Merrow {
         private void menuSpellsShortcut_Click(object sender, EventArgs e) {
             rndFrenchVanillaToggle.Checked = true;
             rndSpellToggle.Checked = true;
+            //these get toggled off and on to guarantee that names are fixed. I should probably move this to Shuffle.
+            rndExtraHealingToggle.Checked = false;
+            rndExtraHealingToggle.Checked = true;
+            rndBubbleToggle.Checked = false;
+            rndBubbleToggle.Checked = true;
             tabsControl.SelectedIndex = 1;
             rndTabsControl.SelectedIndex = 3;
         }

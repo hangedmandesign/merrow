@@ -59,10 +59,10 @@ namespace Merrow {
                 //the crashlock array (which restricts spell combos to avoid crashes) is also used to restrict spells by element
                 bool step = false;
 
-                //first, reset H1/SS1 and AVA/MBR/WP3/LC to default crashlock lists, in case they've changed before.
+                //first, reset H1/W1 and AVA/MBR/WP3/LC to default crashlock lists, in case they've changed before.
                 for (int i = 0; i < playerspells; i++) {
                     library.crashlock[(i * playerspells) + 32] = library.noearlyhealing[i];
-                    library.crashlock[(i * playerspells) + 33] = library.noearlyhealing[i];
+                    library.crashlock[(i * playerspells) + 19] = library.noearlyhealing[i];
 
                     library.crashlock[(i * playerspells) + 23] = library.defaultavalanche[i];
                     library.crashlock[(i * playerspells) + 27] = library.defaultmagicbarrier[i];
@@ -96,34 +96,35 @@ namespace Merrow {
                     for (int i = 0; i < playerspells; i++) {
                         library.crashlock[(i * playerspells) + 32] = library.earlyhealingmodifier[i];
                         //if extra healing is on, make sure SS1 and VT are limited to early healing too
-                        if (rndExtraHealingToggle.Checked) { 
-                            library.crashlock[(i * playerspells) + 33] = library.earlyhealingmodifier[i]; //SS1
+                        if (rndExtraHealingToggle.Checked) {
+                            //library.crashlock[(i * playerspells) + 33] = library.earlyhealingmodifier[i]; //SS1
+                            library.crashlock[(i * playerspells) + 19] = library.earlyhealingmodifier[i]; //W1
                             library.crashlock[(i * playerspells) + 11] = library.earlyhealingmodifier[i]; //VT
                         }
                     }
                 }
 
-                //now lock H1/SS1/VT into healelement[0-2], by locking them out of the other three elements.
+                //now lock H1/W1/VT into healelement[0-2], by locking them out of the other three elements.
                 //if Early/Extra are disabled, this has no negative effects, it just puts H1 into one element as it would anyway
                 for (int i = 0; i < playerspells; i++) {
                     if (i < 15) { //fire
                         if (healelements[0] != 0) { library.crashlock[(i * playerspells) + 32] = 32; }
-                        if (healelements[1] != 0 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 33] = 33; }
+                        if (healelements[1] != 0 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 19] = 19; }
                         if (healelements[2] != 0 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 11] = 11; }
                     }
                     if (i >= 15 && i < 30) { //earth
                         if (healelements[0] != 1) { library.crashlock[(i * playerspells) + 32] = 32; }
-                        if (healelements[1] != 1 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 33] = 33; }
+                        if (healelements[1] != 1 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 19] = 19; }
                         if (healelements[2] != 1 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 11] = 11; }
                     }
                     if (i >= 30 && i < 45) { //water
                         if (healelements[0] != 2) { library.crashlock[(i * playerspells) + 32] = 32; }
-                        if (healelements[1] != 2 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 33] = 33; }
+                        if (healelements[1] != 2 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 19] = 19; }
                         if (healelements[2] != 2 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 11] = 11; }
                     }
                     if (i >= 45) { //wind
                         if (healelements[0] != 3) { library.crashlock[(i * playerspells) + 32] = 32; }
-                        if (healelements[1] != 3 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 33] = 33; }
+                        if (healelements[1] != 3 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 19] = 19; }
                         if (healelements[2] != 3 && rndExtraHealingToggle.Checked) { library.crashlock[(i * playerspells) + 11] = 11; }
                     }
                 }
@@ -231,18 +232,36 @@ namespace Merrow {
 
             //SPELL NAME SHUFFLING (based on shuffles array and existing data)
 
-            //Console.WriteLine("seed:" + rngseed.ToString());
             for (int i = 0; i < playerspells; i++) {
-                bool fiftyfifty = SysRand.NextDouble() > 0.5; ;
-                if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfifty = true; } //"Linear" option
-                if (fiftyfifty) {
-                    hintnames[i] = library.shuffleNames[i * 5];
-                    hintnames[i] += " " + library.shuffleNames[(shuffles[i] * 5) + 1];
+                int fiftyfiftyfiftyfifty = SysRand.Next(4);
+                if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfiftyfiftyfifty = 0; } //"Linear" option
+                switch (fiftyfiftyfiftyfifty) {
+                    case 0:
+                        hintnames[i] = library.shuffleNames2[i * 7];
+                        hintnames[i] += " " + library.shuffleNames2[(shuffles[i] * 7) + 2];
+                        break;
+
+                    case 1:
+                        hintnames[i] = library.shuffleNames2[i * 7];
+                        hintnames[i] += " " + library.shuffleNames2[(shuffles[i] * 7) + 3];
+                        break;
+
+                    case 2:
+                        hintnames[i] = library.shuffleNames2[shuffles[i] * 7];
+                        hintnames[i] += " " + library.shuffleNames2[(i * 7) + 2];
+                        break;
+
+                    case 3:
+                        hintnames[i] = library.shuffleNames2[shuffles[i] * 7];
+                        hintnames[i] += " " + library.shuffleNames2[(i * 7) + 3];
+                        break;
+
+                    default:
+                        hintnames[i] = library.shuffleNames2[i * 7];
+                        hintnames[i] += " " + library.shuffleNames2[(shuffles[i] * 7) + 2];
+                        break;
                 }
-                else {
-                    hintnames[i] = library.shuffleNames[shuffles[i] * 5];
-                    hintnames[i] += " " + library.shuffleNames[(i * 5) + 1];
-                }
+                Console.WriteLine(i.ToString() + ": " + hintnames[i]);
             }
 
             //RANDOM CHESTS

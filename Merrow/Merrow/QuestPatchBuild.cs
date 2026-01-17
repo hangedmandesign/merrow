@@ -210,10 +210,21 @@ namespace Merrow {
 
                 //Extra Healing
                 if (rndExtraHealingToggle.Checked) {
-                    if (!rndSpellNamesToggle.Checked) { //if you don't have hinted names, add Mending name over SS1
+                    if (!rndSpellNamesToggle.Checked) { //if you don't have hinted names, add Mending name over W1
                         for (int i = 0; i < 3; i++) { patchstrings.Add(library.mendingdata[i]); }
                     }
+
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Extra Healing enabled." + Environment.NewLine);
+                }
+
+                //Bubble SS1, with shuffled spells. Just patch animation, since spell data is handled by shuffle
+                if (rndBubbleToggle.Checked) {
+                    if (!rndSpellNamesToggle.Checked) { //if you don't have hinted names, add Bubble name over SS1
+                        for (int i = 0; i < 3; i++) { patchstrings.Add(library.bubbledata[i]); }
+                    }
+
+                    for (int i = 0; i < 3; i++) { patchstrings.Add(library.bubbleanim[i]); }
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Soul Search Lv1 replaced with Bubble." + Environment.NewLine);
                 }
 
                 //Hinted Spell Names
@@ -323,6 +334,18 @@ namespace Merrow {
                         patchstrings.Add(Convert.ToString(library.avalancheFix[(j * 2) + 10], 16).PadLeft(2, '0'));
                     }
                 }
+            }
+
+            //Bubble SS1, without shuffled spells
+            if (rndBubbleToggle.Checked) {
+                if (!rndSpellToggle.Checked) { //can't check based on hinted names alone because it defaults to true
+                    for (int i = 0; i < 3; i++) { patchstrings.Add(library.bubbledata[i]); }
+                    for (int i = 0; i < 3; i++) { patchstrings.Add(library.bubblecode[i]); }
+                    for (int i = 0; i < 3; i++) { patchstrings.Add(library.bubbleanim[i]); }
+
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Soul Search Lv1 replaced with Bubble." + Environment.NewLine);
+                } 
+                //if it is checked, it's already handled by spell shuffle.
             }
 
             //Spell Combination Fixes: Fix writing
