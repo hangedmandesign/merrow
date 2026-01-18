@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Merrow.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Merrow.Util.MonsterPackDefinition;
 
 namespace Merrow {
     public class DataStore {
@@ -2613,5 +2615,1031 @@ namespace Merrow {
             "02A688", "0000",
             "02A68A", "0000"
         };
+
+
+        public static readonly Util.EnemyTable[] monsterTables = new Util.EnemyTable[] {
+
+            new Util.EnemyTable(0xADC090, new Util.EnemyEntry[]
+            {
+                new Util.EnemyEntry(0xADC090, "WERE HARE"),
+                new Util.EnemyEntry(0xADC0C8, "HELL HOUND"),
+                new Util.EnemyEntry(0xADC100, "MAN EATER"),
+                new Util.EnemyEntry(0xADC138, "BIG MOUTH"),
+                new Util.EnemyEntry(0xADC170, "BUMBERSHOOT"),
+                new Util.EnemyEntry(0xADC1A8, "PARASAULT"),
+                new Util.EnemyEntry(0xADC1E0, "ORK JR"),
+                new Util.EnemyEntry(0xADC218, "GREMLIN"),
+                new Util.EnemyEntry(0xADC250, "SKELETON"),
+                new Util.EnemyEntry(0xADC288, "GHOSTHOUND"),
+                new Util.EnemyEntry(0xADC2C0, "MERROW"),
+                new Util.EnemyEntry(0xADC2F8, "WOLF GOAT"),
+            }),
+
+
+            new Util.EnemyTable(0xB63378, new Util.EnemyEntry[]
+            {
+                new Util.EnemyEntry(0xB63378, "GOBLIN"),
+                new Util.EnemyEntry(0xB633B0, "FROG KING"),
+                new Util.EnemyEntry(0xB633E8, "APOPHIS"),
+                new Util.EnemyEntry(0xB63420, "MAD DOLL"),
+                new Util.EnemyEntry(0xB63458, "DEATH HUGGER"),
+                new Util.EnemyEntry(0xB63490, "KOBOLD"),
+                new Util.EnemyEntry(0xB634C8, "MAN TRAP"),
+                new Util.EnemyEntry(0xB63500, "BAT"),
+                new Util.EnemyEntry(0xB63538, "FROG KNIGHT"),
+                new Util.EnemyEntry(0xB63570, "MARIONASTY"),
+                new Util.EnemyEntry(0xB635A8, "DARK GOBLIN"),
+                new Util.EnemyEntry(0xB635E0, "HOT LIPS"),
+                new Util.EnemyEntry(0xB63618, "GHOST STALKER"),
+                new Util.EnemyEntry(0xB63650, "TREANT"),
+                new Util.EnemyEntry(0xB63688, "COCKATRICE"),
+            }),
+
+            new Util.EnemyTable(0xBBDE98, new Util.EnemyEntry[]
+            {
+                new Util.EnemyEntry(0xBBDE98, "MULTI OPTICS"),
+                new Util.EnemyEntry(0xBBDED0, "MIMIC"),
+                new Util.EnemyEntry(0xBBDF08, "CRAWLER"),
+                new Util.EnemyEntry(0xBBDF40, "SCORPION"),
+                new Util.EnemyEntry(0xBBDF78, "SCARE CROW"),
+                new Util.EnemyEntry(0xBBDFB0, "WYVERN"),
+                new Util.EnemyEntry(0xBBDFE8, "SKELEBAT"),
+                new Util.EnemyEntry(0xBBE020, "CRYSHELL"),
+                new Util.EnemyEntry(0xBBE058, "BLOOD JELL"),
+                new Util.EnemyEntry(0xBBE090, "CATERPILLAR"),
+                new Util.EnemyEntry(0xBBE0C8, "FISH MAN"),
+            }),
+
+            new Util.EnemyTable(0xC317E8, new Util.EnemyEntry[]
+            {
+                new Util.EnemyEntry(0xC317E8, "SANDMAN"),
+                new Util.EnemyEntry(0xC31820, "WERE CAT"),
+                new Util.EnemyEntry(0xC31858, "NIGHTMARE"),
+                new Util.EnemyEntry(0xC31890, "BLUE MAN"),
+                new Util.EnemyEntry(0xC318C8, "WINGED SUNFISH"),
+                new Util.EnemyEntry(0xC31900, "GLOOM WING"),
+                new Util.EnemyEntry(0xC31938, "OGRE"),
+                new Util.EnemyEntry(0xC31970, "ROCKY"),
+                new Util.EnemyEntry(0xC319A8, "RED WYVERN"),
+                new Util.EnemyEntry(0xC319E0, "FLAMED MANE"),
+                new Util.EnemyEntry(0xC31A18, "MAGMA FISH"),
+                new Util.EnemyEntry(0xC31A50, "RED ROSE KNIGHT"),
+                new Util.EnemyEntry(0xC31A88, "WHITE ROSE KNIGHT"),
+            }),
+
+            new Util.EnemyTable(0xC9BE50, new Util.EnemyEntry[]
+            {
+                new Util.EnemyEntry(0xC9BE50, "ORK"),
+                new Util.EnemyEntry(0xC9BE88, "GHOST"),
+                new Util.EnemyEntry(0xC9BEC0, "WILL-O'-WISP"),
+                new Util.EnemyEntry(0xC9BEF8, "SPRITE"),
+                new Util.EnemyEntry(0xC9BF30, "JACK-O'-LANTERN"),
+                new Util.EnemyEntry(0xC9BF68, "ARACHNOID"),
+                new Util.EnemyEntry(0xC9BFA0, "LAMIA"),
+                new Util.EnemyEntry(0xC9BFD8, "TEMPTRESS"),
+                new Util.EnemyEntry(0xC9C010, "PIXIE"),
+                new Util.EnemyEntry(0xC9C048, "GRANGACH"),
+                new Util.EnemyEntry(0xC9C080, "THUNDER JELL"),
+                new Util.EnemyEntry(0xC9C0B8, "TERMANT"),
+            }),
+
+
+            new Util.EnemyTable(0xC9BE50, new Util.EnemyEntry[]
+            {
+                new Util.EnemyEntry(0xC9BE50, "JUDGMENT"),
+                new Util.EnemyEntry(0xCC4470, "PALE RIDER"),
+                new Util.EnemyEntry(0xCC44A8, "PIN HEAD"),
+                new Util.EnemyEntry(0xCC44E0, "SPRIGGAN"),
+            })
+        };
+
+        public static readonly Util.AreaMapData[] allAreaMapData = {
+            new Util.AreaMapData(0x19CA38, "Holy Plains",       0x00000000, 0x80144740, 0x00000005, 0x801447F4, 0x0005, 0x0000, 0x00010000),
+            new Util.AreaMapData(0x7BF9A0, "Connor Forest",     0x00000000, 0x80147DB0, 0x00000004, 0x80147E40, 0x0004, 0x0001, 0x00010000),
+            new Util.AreaMapData(0x1CAF30, "Dondoran Flats",    0x00000000, 0x8013C8A0, 0x00000004, 0x8013C930, 0x0004, 0x0001, 0x00010000),
+            new Util.AreaMapData(0x7EF8C0, "Glencoe Forest",    0x00000000, 0x8013B680, 0x00000003, 0x8013B6EC, 0x0003, 0x0001, 0x00030000),
+            new Util.AreaMapData(0x2515F8, "West Carmaugh",     0x00000000, 0x80158320, 0x00000007, 0x8015841C, 0x0007, 0x0000, 0x00010000),
+            new Util.AreaMapData(0x6C2048, "Cull Hazard",       0x00000000, 0x8016A5C0, 0x00000003, 0x8016A62C, 0x0003, 0x0002, 0x00030000),
+            new Util.AreaMapData(0x8230B0, "Windward Forest",   0x00000000, 0x80141220, 0x00000003, 0x8014128C, 0x0003, 0x0004, 0x00010000),
+            new Util.AreaMapData(0x65F674, "Blue Cave",         0x00000000, 0x80165540, 0x00000009, 0x80165684, 0x0009, 0x0002, 0x00030000),
+            new Util.AreaMapData(0x3E19D4, "Isle of Skye",      0x00000000, 0x80126070, 0x00000003, 0x801260DC, 0x0003, 0x0004, 0x00050000),
+            new Util.AreaMapData(0x2A82D8, "West Limelin",      0x00000000, 0x8013F530, 0x00000005, 0x8013F5E4, 0x0005, 0x0002, 0x00010000),
+            new Util.AreaMapData(0x71B920, "Baragoon Tunnel",   0x00000000, 0x80164CC0, 0x00000002, 0x80164D08, 0x0002, 0x0004, 0x00030000),
+            new Util.AreaMapData(0x343950, "Dindom Dries",      0x00000000, 0x8015AE40, 0x00000012, 0x8015B0C8, 0x0012, 0x0003, 0x00010000),
+            new Util.AreaMapData(0x741610, "Boil Hole",         0x00000000, 0x80130640, 0x00000002, 0x80130688, 0x0002, 0x0003, 0x00030000),
+            new Util.AreaMapData(0x3C7888, "Baragoon Moor 1",   0x00020000, 0x801699A0, 0x00000003, 0x80169A0C, 0x0003, 0x0003, 0x00010000),
+            new Util.AreaMapData(0x3C7870, "Baragoon Moor 2",   0x00010000, 0x80169930, 0x00000002, 0x80169978, 0x0002, 0x0003, 0x00030000),
+            new Util.AreaMapData(0x782A64, "Brannoch 1",        0x00000000, 0x8014D760, 0x00000002, 0x8014D7A8, 0x0002, 0x0003, 0x00010000),
+            new Util.AreaMapData(0x782A7C, "Brannoch 2",        0x00020000, 0x8014D7D0, 0x00000003, 0x8014D83C, 0x0003, 0x0003, 0x00010000),
+            new Util.AreaMapData(0x782A94, "Brannoch 3",        0x00050000, 0x8014D878, 0x00000002, 0x8014D8C0, 0x0002, 0x0003, 0x00010000),
+            new Util.AreaMapData(0x782AAC, "Brannoch 4",        0x00080000, 0x8014D8E8, 0x00000002, 0x8014D930, 0x0002, 0x0003, 0x00010000),
+            new Util.AreaMapData(0x782AC4, "Brannoch 5",        0x000A0000, 0x8014D958, 0x00000003, 0x8014D9C4, 0x0003, 0x0003, 0x00010000),
+            new Util.AreaMapData(0x782ADC, "Brannoch 6",        0x000C0000, 0x8014DA00, 0x00000002, 0x8014DA48, 0x0002, 0x0003, 0x00010000),
+            new Util.AreaMapData(0x84F0CC, "Mammon 1",          0x00000000, 0x801397E0, 0x00000001, 0x80139804, 0x0002, 0x0005, 0x00030000),
+            new Util.AreaMapData(0x84F174, "Mammon 2",          0x00010001, 0x801399B4, 0x00000001, 0x801399D8, 0x0002, 0x0005, 0x00010000),
+            new Util.AreaMapData(0x84F12C, "Mammon 3",          0x00040002, 0x801398F8, 0x00000001, 0x8013991C, 0x0002, 0x0005, 0x00010000),
+            new Util.AreaMapData(0x84F0FC, "Mammon 4",          0x00020001, 0x80139840, 0x00000002, 0x80139888, 0x0001, 0x0005, 0x00010000),
+            new Util.AreaMapData(0x84F144, "Mammon 5",          0x00050003, 0x80139944, 0x00000001, 0x80139968, 0x0001, 0x0005, 0x00010000),
+            new Util.AreaMapData(0x84F18C, "Mammon 6",          0x00050004, 0x80139A00, 0x00000002, 0x80139A48, 0x0001, 0x0005, 0x00010000),
+        };
+
+        // Holy Plains
+        // 
+        public static MonsterPackDefinition[] packsHolyPlains = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x19DFBC, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x19DFC8, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x19DFD4, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x19DFE0, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000003, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x19DFEC, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x19DFF8, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x19E010, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000000, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x19E028, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x19E040, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000000),
+            }),
+        };
+
+        // Dondoran Flats
+        //
+        public static MonsterPackDefinition[] packsDondoranFlats = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x1CC74C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x1CC758, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000004, 0x00000003, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x1CC764, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x1CC770, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000004, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x1CC788, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x1CC794, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000002, 0x00000000),
+                new EnemyPackMember(0x00000004, 0x00000003, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x1CC7AC, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x1CC7B8, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000008, 0x00000002, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x1CC7D0, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000002, 0x00000001),
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x1CC7E8, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000E, 0x00000001, 0x00000001),
+            }),
+        };
+
+        // West Carmagh
+        //
+        public static MonsterPackDefinition[] packsWestCarmagh = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x253B00, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000003, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x253B0C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x253B18, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000007, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x253B24, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x253B30, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x253B3C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x253B48, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x253B54, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000002, 0x00000001),
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x253B6C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x253B84, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x253B9C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x253BB4, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x253BD8, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000001),
+            }),
+        };
+
+        // East Limelin
+        //
+        public static MonsterPackDefinition[] packsEastLimelin = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x2AA204, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x2AA210, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000002, 0x00000004),
+            }),
+            new MonsterPackDefinition(0x2AA21C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000009, 0x00000002, 0x00000003),
+            }),
+            new MonsterPackDefinition(0x2AA228, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000003),
+            }),
+            new MonsterPackDefinition(0x2AA234, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x2AA240, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x2AA24C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x2AA264, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x2AA27C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x2AA294, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000002, 0x00000000),
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x2AA2AC, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000000),
+            }),
+        };
+
+        // Dindom Dries
+        //
+        public static MonsterPackDefinition[] packsDindomDries = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x346FEC, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x346FF8, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x347004, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000003, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x347010, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000002, 0x00000003),
+            }),
+            new MonsterPackDefinition(0x34701C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x347028, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000004),
+            }),
+            new MonsterPackDefinition(0x347034, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x34704C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x347064, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000002),
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x34707C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x347094, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000001),
+            }),
+        };
+
+        // Baragoon Moor
+        //
+        public static MonsterPackDefinition[] packsBaragoonMoor = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x3CB31C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000005, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x3CB328, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x3CB334, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000007, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x3CB340, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x3CB34C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x3CB358, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000C, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x3CB364, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x3CB37C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x0000000C, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x3CB394, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000004, 0x00000002, 0x00000001),
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x3CB3AC, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000001),
+            }),
+        };
+
+        // Isle Of Skye
+        //
+        public static MonsterPackDefinition[] packsIsleOfSkye = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x3E3064, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x3E3070, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x3E307C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x3E3088, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x3E3094, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x3E30B8, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000001),
+            }),
+        };
+
+        // Blue Cave
+        //
+        public static MonsterPackDefinition[] packsBlueCave = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x667230, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x66723C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x667248, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x667254, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x667260, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000006, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x66726C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x667278, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000003, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x667290, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x6672A8, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000002, 0x00000001),
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x6672C0, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000000),
+            }),
+        };
+
+        // Cull Hazard
+        //
+        public static MonsterPackDefinition[] packsCullHazard = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x6C6438, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x6C6444, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x6C6450, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x6C645C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x6C6468, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x6C6474, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x6C648C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000006, 0x00000002, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x6C64A4, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000000),
+            }),
+        };
+
+        // Baragoon Tunnel
+        //
+        public static MonsterPackDefinition[] packsBaragoonTunnel = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x720A38, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x720A44, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x720A50, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x720A5C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x720A68, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x720A80, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x720A98, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000001, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x720AB0, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000001),
+            }),
+        };
+
+        // Boil Hole
+        //
+        public static MonsterPackDefinition[] packsBoilHole = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x7444DC, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x7444E8, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x7444F4, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x744500, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x74450C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x744518, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x744530, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x744548, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x744560, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000000),
+            }),
+        };
+
+        // Brannoch Castle
+        //
+        public static MonsterPackDefinition[] packsBrannochCastle = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x7874F4, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x787500, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000C, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x78750C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x0000000C, 0x00000001, 0x00000001),
+            }),
+        };
+
+        // Connor Forest
+        //
+        public static MonsterPackDefinition[] packsConnorForest = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x7C3B70, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x7C3B7C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x7C3B88, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000007, 0x00000003, 0x00000003),
+            }),
+            new MonsterPackDefinition(0x7C3B94, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x7C3BA0, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x7C3BAC, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x7C3BC4, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x7C3BDC, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000008, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000009, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x7C3C00, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000001),
+            }),
+        };
+
+        // Glencoe Forest
+        //
+        public static MonsterPackDefinition[] packsGlencoeForest = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x7F1760, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000002, 0x00000004),
+            }),
+            new MonsterPackDefinition(0x7F176C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x7F1778, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000C, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x7F1784, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000D, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x7F1790, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000D, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x0000000C, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x7F17A8, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000002, 0x00000001),
+                new EnemyPackMember(0x0000000C, 0x00000001, 0x00000001),
+            }),
+        };
+
+        // Windward Forest
+        //
+        public static MonsterPackDefinition[] packsWindwardForest = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x82511C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000003),
+            }),
+            new MonsterPackDefinition(0x825128, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000005, 0x00000002, 0x00000003),
+            }),
+            new MonsterPackDefinition(0x825134, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000006, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x825140, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000007, 0x00000002, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x82514C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000003, 0x00000003),
+            }),
+            new MonsterPackDefinition(0x825158, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000003, 0x00000003),
+            }),
+            new MonsterPackDefinition(0x825164, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000B, 0x00000002, 0x00000001),
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000002),
+            }),
+            new MonsterPackDefinition(0x82517C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000007, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x825194, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x0000000A, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x0000000B, 0x00000001, 0x00000001),
+                new EnemyPackMember(0x00000005, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000007, 0x00000001, 0x00000000),
+            }),
+            new MonsterPackDefinition(0x8251C4, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x8251D0, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000004, 0x00000001, 0x00000000),
+            }),
+        };
+
+        // Mammon's World
+        //
+        public static MonsterPackDefinition[] packsMammonsWorld = new MonsterPackDefinition[]
+        {
+            new MonsterPackDefinition(0x852FF4, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x853000, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000001, 0x00000002, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x85300C, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000003),
+            }),
+            new MonsterPackDefinition(0x853018, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000003, 0x00000001, 0x00000001),
+            }),
+            new MonsterPackDefinition(0x853024, new EnemyPackMember[]
+            {
+                new EnemyPackMember(0x00000000, 0x00000001, 0x00000000),
+                new EnemyPackMember(0x00000002, 0x00000001, 0x00000001),
+            }),
+        };
+
+        public static EncounterRegion[] regionsHolyPlains = new EncounterRegion[] {
+             new EncounterRegion(0x0019E290, 0xFD9C, 0xFC04, 0xFD9C, 0x06CA, 0x0004, 0x0005, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x0019E2A8, 0xF795, 0x0559, 0xF795, 0x0378, 0x0002, 0x0007, 0x0004, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x0019E2C0, 0xFD9C, 0x02CD, 0xFD9C, 0x04CE, 0x0004, 0x0007, 0x0005, 0x0002, 0x0004, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x0019E2D8, 0xFEEC, 0xF8C5, 0xFEEC, 0x033F, 0x0002, 0x0000, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x0019E2F0, 0xF7D8, 0x0097, 0xF7D8, 0x04C2, 0x0003, 0x0000, 0x0003, 0x0002, 0x0000, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsConnorForest = new EncounterRegion[] {
+             new EncounterRegion(0x007C3E68, 0xFC90, 0xFD34, 0xFC90, 0x06E8, 0x0007, 0x0000, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007),
+             new EncounterRegion(0x007C3E80, 0x0406, 0xFEEA, 0x0406, 0x0638, 0x0006, 0x0000, 0x0001, 0x0002, 0x0003, 0x0005, 0x0008, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsDondoranFlats = new EncounterRegion[] {
+             new EncounterRegion(0x001CC940, 0x0014, 0x019E, 0x0014, 0x04FC, 0x0005, 0x0004, 0x0006, 0x0007, 0x0008, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x001CC958, 0xFF4C, 0xFCA4, 0xFF4C, 0x04FA, 0x0004, 0x0004, 0x0000, 0x0005, 0x0003, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x001CC970, 0xFA49, 0xFCA4, 0xFA49, 0x035F, 0x0004, 0x0000, 0x0003, 0x0001, 0x0009, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsGlencoeForest = new EncounterRegion[] {
+             new EncounterRegion(0x001CC988, 0xFCB2, 0xF945, 0xFCB2, 0x035F, 0x0003, 0x0003, 0x0001, 0x0002, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x007F1A4C, 0xF9BD, 0xFDC3, 0xF9BD, 0x05FA, 0x0004, 0x0000, 0x0002, 0x0003, 0x0005, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x007F1A64, 0xFC9F, 0xFDC3, 0xFC9F, 0x05FA, 0x0003, 0x0001, 0x0002, 0x0004, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x007F1A7C, 0x00BC, 0xFCF6, 0x00BC, 0x0609, 0x0004, 0x0000, 0x0002, 0x0003, 0x0005, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsWestCarmaugh = new EncounterRegion[] {
+             new EncounterRegion(0x00253DAC, 0xFC77, 0x030C, 0xFC77, 0x04FD, 0x0006, 0x0005, 0x0006, 0x0003, 0x0004, 0x000A, 0x000C, 0x0000),
+             new EncounterRegion(0x00253DC4, 0xFD9A, 0xFC69, 0xFD9A, 0x033B, 0x0006, 0x0000, 0x0001, 0x0002, 0x0007, 0x0008, 0x0004, 0x0000),
+             new EncounterRegion(0x00253DDC, 0xFB26, 0xFC68, 0xFB26, 0x04FD, 0x0007, 0x0002, 0x0001, 0x0005, 0x0008, 0x000B, 0x0006, 0x0003),
+             new EncounterRegion(0x00253DF4, 0xFD9A, 0xFFA4, 0xFD9A, 0x0368, 0x0006, 0x0000, 0x0001, 0x0002, 0x0005, 0x0007, 0x0008, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsCullHazard = new EncounterRegion[] {
+             new EncounterRegion(0x006C6940, 0x010E, 0xFA00, 0x010E, 0x04EB, 0x0001, 0x0004, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x006C6958, 0x033D, 0xF745, 0x033D, 0x07ED, 0x0005, 0x0000, 0x0003, 0x0005, 0x0006, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x006C6970, 0x0686, 0xE5FE, 0x0686, 0x060B, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x006C6988, 0xFF4B, 0xF9F9, 0xFF4B, 0x01EF, 0x0001, 0x0004, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x006C69A0, 0x0C50, 0xEEC7, 0x0C50, 0x078E, 0x0001, 0x0005, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsWindwardForest = new EncounterRegion[] {
+             new EncounterRegion(0x0082530C, 0x0231, 0xFCEA, 0x0231, 0x02F1, 0x0007, 0x0000, 0x0001, 0x0002, 0x0003, 0x0007, 0x0009, 0x000A),
+             new EncounterRegion(0x00825324, 0x0231, 0xFCEA, 0x0231, 0x02F1, 0x0007, 0x0000, 0x0001, 0x0002, 0x0003, 0x0007, 0x0009, 0x000A),
+             new EncounterRegion(0x0082533C, 0xFC07, 0xFBE6, 0xFC07, 0x04BE, 0x0007, 0x0000, 0x0001, 0x0002, 0x0003, 0x0007, 0x0009, 0x000A),
+             new EncounterRegion(0x00825354, 0xFC07, 0xFBE6, 0xFC07, 0x04BE, 0x0007, 0x0000, 0x0001, 0x0002, 0x0003, 0x0007, 0x0009, 0x000A),
+             new EncounterRegion(0x0082536C, 0xFC07, 0x00A4, 0xFC07, 0x0468, 0x0006, 0x0001, 0x0003, 0x0004, 0x0005, 0x0006, 0x0008, 0x0000),
+             new EncounterRegion(0x00825384, 0xFC07, 0x00A4, 0xFC07, 0x0468, 0x0006, 0x0001, 0x0003, 0x0004, 0x0005, 0x0006, 0x0008, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBlueCave = new EncounterRegion[] {
+             new EncounterRegion(0x006676B8, 0x03E0, 0xE70A, 0x03E0, 0x0769, 0x0001, 0x0004, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x006676D0, 0x043B, 0xDE15, 0x043B, 0x08F5, 0x0004, 0x0000, 0x0005, 0x0008, 0x0009, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x006676E8, 0xFB49, 0xEE73, 0xFB49, 0x1344, 0x0006, 0x0000, 0x0001, 0x0002, 0x0003, 0x0006, 0x0007, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsIsleofSkye = new EncounterRegion[] {
+             new EncounterRegion(0x003E3124, 0x00EA, 0xFD94, 0x00EA, 0x01EF, 0x0006, 0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0000),
+             new EncounterRegion(0x003E313C, 0x0112, 0xFFAB, 0x0112, 0x010F, 0x0006, 0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0000),
+             new EncounterRegion(0x003E3154, 0x0112, 0xFFAB, 0x0112, 0x010F, 0x0006, 0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsEastLimelin = new EncounterRegion[] {
+             new EncounterRegion(0x002AA58C, 0xF67E, 0xFDEC, 0xF67E, 0x0462, 0x0005, 0x0000, 0x0004, 0x0003, 0x0009, 0x000A, 0x0000, 0x0000),
+             new EncounterRegion(0x002AA5A4, 0xFE16, 0xFDF1, 0xFE16, 0x0463, 0x0005, 0x0000, 0x0004, 0x0002, 0x0005, 0x0008, 0x0000, 0x0000),
+             new EncounterRegion(0x002AA5BC, 0x020D, 0xFDB9, 0x020D, 0x02CE, 0x0004, 0x0002, 0x0001, 0x0004, 0x0006, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x002AA5D4, 0x020D, 0x0087, 0x020D, 0x03E6, 0x0004, 0x0001, 0x0005, 0x0002, 0x0007, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBaragoonTunnel = new EncounterRegion[] {
+             new EncounterRegion(0x00720CB4, 0xFF98, 0xF6E9, 0xFF98, 0x0792, 0x0007, 0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006),
+             new EncounterRegion(0x00720CCC, 0xE953, 0xFC33, 0xE953, 0x0627, 0x0004, 0x0000, 0x0002, 0x0003, 0x0006, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x00720CE4, 0x0A3C, 0xF77E, 0x0A3C, 0x02F4, 0x0004, 0x0002, 0x0003, 0x0001, 0x0004, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsDindomDries = new EncounterRegion[] {
+             new EncounterRegion(0x00347850, 0xF6CC, 0xFF4D, 0xF6CC, 0x03D6, 0x0005, 0x0002, 0x0003, 0x0005, 0x0008, 0x000A, 0x0000, 0x0000),
+             new EncounterRegion(0x00347868, 0xF6C7, 0xF9D2, 0xF6C7, 0x057B, 0x0004, 0x0001, 0x0002, 0x0003, 0x0009, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x00347880, 0xFD87, 0xFCA0, 0xFD87, 0x056D, 0x0004, 0x0001, 0x0005, 0x0002, 0x0003, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x00347898, 0xFF95, 0xF832, 0xFF95, 0x0A0C, 0x0005, 0x0000, 0x0005, 0x0002, 0x0004, 0x0007, 0x0000, 0x0000),
+             new EncounterRegion(0x003478B0, 0x0443, 0x023E, 0x0443, 0x0B2B, 0x0006, 0x0004, 0x0005, 0x0002, 0x0000, 0x0006, 0x0008, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBoilHole = new EncounterRegion[] {
+             new EncounterRegion(0x0074499C, 0xFDF1, 0xF9E9, 0xFDF1, 0x0A6B, 0x0004, 0x0000, 0x0001, 0x0004, 0x0005, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x007449B4, 0x0909, 0xF9DB, 0x0909, 0x0A6B, 0x0004, 0x0000, 0x0001, 0x0004, 0x0005, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x007449CC, 0x0651, 0xF9DD, 0x0651, 0x0A86, 0x0001, 0x0003, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x007449E4, 0x080A, 0xF900, 0x080A, 0x0C09, 0x0003, 0x0001, 0x0000, 0x0006, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x007449FC, 0x12F2, 0xFA03, 0x12F2, 0x03CB, 0x0003, 0x0001, 0x0000, 0x0006, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x00744A14, 0x12F2, 0xFDCE, 0x12F2, 0x0AA3, 0x0004, 0x0000, 0x0001, 0x0004, 0x0005, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBaragoonMoor1 = new EncounterRegion[] {
+             new EncounterRegion(0x003CB4BC, 0xFE3D, 0xFFD4, 0xFE3D, 0x005D, 0x0001, 0x0004, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x003CB4D4, 0xFE3D, 0x0031, 0xFE3D, 0x0136, 0x0003, 0x0002, 0x0007, 0x0009, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x003CB4EC, 0xFFA8, 0x0031, 0xFFA8, 0x0136, 0x0003, 0x0002, 0x0007, 0x0009, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x003CB504, 0x0176, 0xFE8B, 0x0176, 0x02C0, 0x0004, 0x0000, 0x0001, 0x0003, 0x0009, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x003CB51C, 0xFD5A, 0xFEA2, 0xFD5A, 0x02DE, 0x0003, 0x0005, 0x0006, 0x0008, 0x0000, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBaragoonMoor2 = new EncounterRegion[] {
+             new EncounterRegion(0x003CB48C, 0xFBA8, 0xFE6C, 0xFBA8, 0x01BA, 0x0003, 0x0005, 0x0006, 0x0008, 0x0000, 0x0000, 0x0000, 0x0000),
+             new EncounterRegion(0x003CB4A4, 0xF9A5, 0xFDE0, 0xF9A5, 0x02B8, 0x0005, 0x0005, 0x0006, 0x0008, 0x0004, 0x0002, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBrannoch1 = new EncounterRegion[] {
+             new EncounterRegion(0x007876B8, 0xFFD5, 0xFE2C, 0xFFD5, 0x01DB, 0x0003, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBrannoch2 = new EncounterRegion[] {
+             new EncounterRegion(0x007876D0, 0xFE06, 0xFD76, 0xFE06, 0x02DC, 0x0003, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBrannoch3 = new EncounterRegion[] {
+             new EncounterRegion(0x007876E8, 0xFEE8, 0xFF5C, 0xFEE8, 0x021D, 0x0003, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBrannoch4 = new EncounterRegion[] {
+             new EncounterRegion(0x00787700, 0xFF6F, 0xFDD4, 0xFF6F, 0x0261, 0x0003, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBrannoch5 = new EncounterRegion[] {
+             new EncounterRegion(0x00787718, 0xFE8C, 0xFE2E, 0xFE8C, 0x027F, 0x0003, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsBrannoch6 = new EncounterRegion[] {
+             new EncounterRegion(0x00787730, 0xFFBD, 0xFFBC, 0xFFBD, 0x0132, 0x0003, 0x0000, 0x0001, 0x0002, 0x0000, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsMammon1 = new EncounterRegion[] {
+             new EncounterRegion(0x00853224, 0xFE86, 0xFE62, 0xFE86, 0x0343, 0x0003, 0x0000, 0x0002, 0x0003, 0x0000, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsMammon2 = new EncounterRegion[] {
+             new EncounterRegion(0x0085323C, 0xFE86, 0xFE62, 0xFE86, 0x0343, 0x0004, 0x0000, 0x0001, 0x0002, 0x0003, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsMammon3 = new EncounterRegion[] {
+             new EncounterRegion(0x00853254, 0xFE56, 0xFE5E, 0xFE56, 0x034B, 0x0005, 0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsMammon4 = new EncounterRegion[] {
+             new EncounterRegion(0x0085329C, 0xFE86, 0xFE62, 0xFE86, 0x0343, 0x0004, 0x0000, 0x0002, 0x0003, 0x0004, 0x0000, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsMammon5 = new EncounterRegion[] {
+             new EncounterRegion(0x00853254, 0xFE56, 0xFE5E, 0xFE56, 0x034B, 0x0005, 0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0000, 0x0000),
+        };
+
+        public static EncounterRegion[] regionsMammon6 = new EncounterRegion[] {
+             new EncounterRegion(0x0085326C, 0xFE7E, 0xFDCC, 0xFE7E, 0x03DA, 0x0005, 0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0000, 0x0000),
+        };
+
+        public static Util.AreaEncounterData MapDataHolyPlains = new Util.AreaEncounterData("Holy Plains", allAreaMapData[0], packsHolyPlains, regionsHolyPlains, monsterTables[0]);
+        public static Util.AreaEncounterData MapDataConnorForest = new Util.AreaEncounterData("Connor Forest", allAreaMapData[1], packsConnorForest, regionsConnorForest, monsterTables[1]);
+        public static Util.AreaEncounterData MapDataDondoranFlats = new Util.AreaEncounterData("Dondoran Flats", allAreaMapData[2], packsDondoranFlats, regionsDondoranFlats, monsterTables[1]);
+        public static Util.AreaEncounterData MapDataGlencoeForest = new Util.AreaEncounterData("Glencoe Forest", allAreaMapData[3], packsGlencoeForest, regionsGlencoeForest, monsterTables[1]);
+        public static Util.AreaEncounterData MapDataWestCarmaugh = new Util.AreaEncounterData("West Carmaugh", allAreaMapData[4], packsWestCarmagh, regionsWestCarmaugh, monsterTables[0]);
+        public static Util.AreaEncounterData MapDataCullHazard = new Util.AreaEncounterData("Cull Hazard", allAreaMapData[5], packsCullHazard, regionsCullHazard, monsterTables[2]);
+        public static Util.AreaEncounterData MapDataWindwardForest = new Util.AreaEncounterData("Windward Forest", allAreaMapData[6], packsWindwardForest, regionsWindwardForest, monsterTables[4]);
+        public static Util.AreaEncounterData MapDataBlueCave = new Util.AreaEncounterData("Blue Cave", allAreaMapData[7], packsBlueCave, regionsBlueCave, monsterTables[2]);
+        public static Util.AreaEncounterData MapIsleOfSkye = new Util.AreaEncounterData("Isle of Skye", allAreaMapData[8], packsIsleOfSkye, regionsIsleofSkye, monsterTables[4]);
+        public static Util.AreaEncounterData MapEastLimelin = new Util.AreaEncounterData("East Limelin", allAreaMapData[9], packsEastLimelin, regionsEastLimelin, monsterTables[2]);
+        public static Util.AreaEncounterData MapBaragoonTunnel = new Util.AreaEncounterData("Baragoon Tunnel", allAreaMapData[10], packsBaragoonTunnel, regionsBaragoonTunnel, monsterTables[4]);
+        public static Util.AreaEncounterData MapDindomDries = new Util.AreaEncounterData("Dindom Dries", allAreaMapData[11], packsDindomDries, regionsDindomDries, monsterTables[3]);
+        public static Util.AreaEncounterData MapBoilHole = new Util.AreaEncounterData("Boil Hole", allAreaMapData[12], packsBoilHole, regionsBoilHole, monsterTables[3]);
+
+        public static Util.AreaEncounterData MapBaragoonMoor1 = new Util.AreaEncounterData("Baragoon Moor 1", allAreaMapData[13], packsBaragoonMoor, regionsBaragoonMoor1, monsterTables[3]);
+        public static Util.AreaEncounterData MapBaragoonMoor2 = new Util.AreaEncounterData("Baragoon Moor 2", allAreaMapData[14], packsBaragoonMoor, regionsBaragoonMoor2, monsterTables[3]);
+
+        public static Util.AreaEncounterData MapBrannochCastle1 = new Util.AreaEncounterData("Brannoch Castle 1", allAreaMapData[15], packsBrannochCastle, regionsBrannoch1, monsterTables[3]);
+        public static Util.AreaEncounterData MapBrannochCastle2 = new Util.AreaEncounterData("Brannoch Castle 2", allAreaMapData[16], packsBrannochCastle, regionsBrannoch2, monsterTables[3]);
+        public static Util.AreaEncounterData MapBrannochCastle3 = new Util.AreaEncounterData("Brannoch Castle 3", allAreaMapData[17], packsBrannochCastle, regionsBrannoch3, monsterTables[3]);
+        public static Util.AreaEncounterData MapBrannochCastle4 = new Util.AreaEncounterData("Brannoch Castle 4", allAreaMapData[18], packsBrannochCastle, regionsBrannoch4, monsterTables[3]);
+        public static Util.AreaEncounterData MapBrannochCastle5 = new Util.AreaEncounterData("Brannoch Castle 5", allAreaMapData[19], packsBrannochCastle, regionsBrannoch5, monsterTables[3]);
+        public static Util.AreaEncounterData MapBrannochCastle6 = new Util.AreaEncounterData("Brannoch Castle 6", allAreaMapData[20], packsBrannochCastle, regionsBrannoch6, monsterTables[3]);
+
+        public static Util.AreaEncounterData MapMammonsWorld1 = new Util.AreaEncounterData("Mammon's World 1", allAreaMapData[21], packsMammonsWorld, regionsMammon1, monsterTables[5]);
+        public static Util.AreaEncounterData MapMammonsWorld2 = new Util.AreaEncounterData("Mammon's World 2", allAreaMapData[22], packsMammonsWorld, regionsMammon2, monsterTables[5]);
+        public static Util.AreaEncounterData MapMammonsWorld3 = new Util.AreaEncounterData("Mammon's World 3", allAreaMapData[23], packsMammonsWorld, regionsMammon3, monsterTables[5]);
+        public static Util.AreaEncounterData MapMammonsWorld4 = new Util.AreaEncounterData("Mammon's World 4", allAreaMapData[24], packsMammonsWorld, regionsMammon4, monsterTables[5]);
+        public static Util.AreaEncounterData MapMammonsWorld5 = new Util.AreaEncounterData("Mammon's World 5", allAreaMapData[25], packsMammonsWorld, regionsMammon5, monsterTables[5]);
+        public static Util.AreaEncounterData MapMammonsWorld6 = new Util.AreaEncounterData("Mammon's World 6", allAreaMapData[26], packsMammonsWorld, regionsMammon6, monsterTables[5]);
     }
 }

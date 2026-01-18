@@ -6,7 +6,25 @@ using System.Threading.Tasks;
 
 namespace Merrow.Util
 {
-    public class MonsterPackDefinitions
+    public class AreaEncounterData
+    {
+        public string areaName;
+        public AreaMapData mapData;
+        public MonsterPackDefinition[] packDefinitions;
+        public EncounterRegion[] encounterRegions;
+        public EnemyTable enemyTable;
+
+        public AreaEncounterData(string areaName, AreaMapData mapData, MonsterPackDefinition[] packDefinitions, EncounterRegion[] encounterRegions, EnemyTable enemyTable)
+        {
+            this.areaName = areaName;
+            this.mapData = mapData;
+            this.packDefinitions = packDefinitions;
+            this.encounterRegions = encounterRegions;
+            this.enemyTable = enemyTable;
+        }
+    }
+
+    public class MonsterPackDefinition
     {
         public int ROMAddress { get; private set; }
 
@@ -16,6 +34,17 @@ namespace Merrow.Util
         public EnemyPackMember enemy2;
         public EnemyPackMember enemy3;
         public EnemyPackMember enemy4;
+
+        public MonsterPackDefinition(int rOMAddress, params EnemyPackMember[] enemies)
+        {
+            this.ROMAddress = rOMAddress;
+            this.packCount = enemies.Length;
+
+            if (enemies.Length > 0) this.enemy1 = enemies[0];
+            if (enemies.Length > 1) this.enemy2 = enemies[1];
+            if (enemies.Length > 2) this.enemy3 = enemies[2];
+            if (enemies.Length > 3) this.enemy4 = enemies[3];
+        }
 
         public void CapEnemyIDs(int uniqueEnemyCount)
         {
@@ -50,17 +79,13 @@ namespace Merrow.Util
                     $"{this.extraCount:8X}"
                 };
             }
-        }
 
-        public MonsterPackDefinitions(int rOMAddress, params EnemyPackMember[] enemies)
-        {
-            this.ROMAddress = rOMAddress;
-            this.packCount = enemies.Length;
-
-            if (enemies.Length > 0) this.enemy1 = enemies[0];
-            if (enemies.Length > 1) this.enemy2 = enemies[1];
-            if (enemies.Length > 2) this.enemy3 = enemies[2];
-            if (enemies.Length > 3) this.enemy4 = enemies[3];
+            public EnemyPackMember(int id, int minCount, int extraCount)
+            {
+                this.enemyID = id;
+                this.minCount = minCount;       
+                this.extraCount = extraCount;   
+            }
         }
 
         private static List<string> blocks = new List<string>();
@@ -79,19 +104,21 @@ namespace Merrow.Util
 
     public class AreaMapData
     {
-        public int ROMAddress { get; private set; }
+        public string areaName = "UNASSIGNED";
+        public uint ROMAddress { get; private set; }
 
-        public int unk0;
-        public int ptrDoorData;
-        public int doorCount;
-        public int unk8;
-        public short unk10;
-        public short tableIndex;
-        public int unk14;
+        public uint unk0;
+        public uint ptrDoorData;
+        public uint doorCount;
+        public uint unk8;
+        public ushort unk10;
+        public ushort tableIndex;
+        public uint unk14;
 
-        public AreaMapData(int rOMAddress, int unk0, int ptrDoorData, int doorCount, int unk8, short unk10, short tableIndex, int unk14)
+        public AreaMapData(uint rOMAddress, string areaName, uint unk0, uint ptrDoorData, uint doorCount, uint unk8, ushort unk10, ushort tableIndex, uint unk14)
         {
-            ROMAddress = rOMAddress;
+            this.ROMAddress = rOMAddress;
+            this.areaName = areaName;
             this.unk0 = unk0;
             this.ptrDoorData = ptrDoorData;
             this.doorCount = doorCount;
@@ -103,13 +130,13 @@ namespace Merrow.Util
 
         public void AssignTableIndex(int assignedIndex)
         {
-            this.tableIndex = (short)assignedIndex;
+            this.tableIndex = (ushort)assignedIndex;
         }
 
         public void RandomizeTableIndex(int maxIndexInclusive = 5)
         {
             var rng = new System.Random();
-            this.tableIndex = (short)rng.Next(maxIndexInclusive + 1);
+            this.tableIndex = (ushort)rng.Next(maxIndexInclusive + 1);
         }
 
         public string[] GenerateHexBlock()
@@ -127,7 +154,7 @@ namespace Merrow.Util
         }
     }
 
-    internal class EncounterRegion
+    public class EncounterRegion
     {
         public int ROMAddress { get; private set; }
 
@@ -135,16 +162,18 @@ namespace Merrow.Util
         public int xEnd;
         public int zStart;
         public int zEnd;
+        public int presetCount;
 
         public List<int> encounterPresetIndices = new List<int>();
 
-        public EncounterRegion(int romAddress, int xStart, int xEnd, int zStart, int zEnd, params int[] defaultIndices)
+        public EncounterRegion(int romAddress, int xStart, int xEnd, int zStart, int zEnd, int presetCount, params int[] defaultIndices)
         {
             this.ROMAddress = romAddress;
             this.xStart = xStart;
             this.xEnd = xEnd;
             this.zStart = zStart;
             this.zEnd = zEnd;
+            this.presetCount = presetCount;
             this.encounterPresetIndices = new List<int>(defaultIndices);
         }
         public void RandomizeEncounterPresets(int maxPresetIndex, int presetCount = 7)
@@ -187,6 +216,30 @@ namespace Merrow.Util
                 $"{p4Hex}{p5Hex}",
                 $"{p6Hex}{p7Hex}",
             };
+        }
+    }
+
+    public class EnemyTable
+    {
+        public int ROMAddressStart;
+        public EnemyEntry[] enemies;
+
+        public EnemyTable(int ROMAddressStart, params EnemyEntry[] enemies)
+        {
+            this.ROMAddressStart = ROMAddressStart;
+            this.enemies = enemies;
+        }
+    }
+
+    public class EnemyEntry
+    {
+        public int ROMAddress;
+        public string name;
+
+        public EnemyEntry(int ROMAddress, string name)
+        {
+            this.ROMAddress = ROMAddress;
+            this.name = name;
         }
     }
 }

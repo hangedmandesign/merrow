@@ -79,7 +79,10 @@ namespace Merrow {
                 !rndTextContentToggle.Checked &&
                 !rndDriftToggle.Checked &&
                 !rndMusicShuffleToggle.Checked &&
-                !rndFlyingShuffle.Checked
+                !rndFlyingShuffle.Checked &&
+
+                !checkBoxShuffleEnemyCompositions.Checked &&
+                !checkBoxShuffleEnemyTables.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -1423,6 +1426,12 @@ namespace Merrow {
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Combat EXP display changed to numerical." + Environment.NewLine);
+            }
+
+            // Monster Shuffling
+            if (checkBoxShuffleEnemyTables.Checked)
+            {
+
             }
 
             //FINAL ASSEMBLY/OUTPUT
