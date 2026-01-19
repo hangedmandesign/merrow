@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.1340
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merrow", "Merrow\Merrow.csproj", "{5B3D916A-E8F1-47A6-8339-D01F20CA1553}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerrowTests", "MerrowTests\MerrowTests.csproj", "{F74F45C1-DB9B-481F-9323-52673BDD704D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5B3D916A-E8F1-47A6-8339-D01F20CA1553}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B3D916A-E8F1-47A6-8339-D01F20CA1553}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B3D916A-E8F1-47A6-8339-D01F20CA1553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F74F45C1-DB9B-481F-9323-52673BDD704D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F74F45C1-DB9B-481F-9323-52673BDD704D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F74F45C1-DB9B-481F-9323-52673BDD704D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F74F45C1-DB9B-481F-9323-52673BDD704D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

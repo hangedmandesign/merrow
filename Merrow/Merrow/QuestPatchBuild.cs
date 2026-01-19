@@ -79,7 +79,10 @@ namespace Merrow {
                 !rndTextContentToggle.Checked &&
                 !rndDriftToggle.Checked &&
                 !rndMusicShuffleToggle.Checked &&
-                !rndFlyingShuffle.Checked
+                !rndFlyingShuffle.Checked &&
+
+                !checkBoxShuffleEnemyCompositions.Checked &&
+                !checkBoxShuffleEnemyTables.Checked
                ) { return; }
             //eventually i maybe will replace this with a sort of 'binary state' checker that'll be way less annoying and also have the side of effect of creating enterable shortcodes for option sets
 
@@ -1500,6 +1503,48 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Combat EXP display changed to numerical." + Environment.NewLine);
             }
 
+            // Monster Shuffling
+            //
+            var shuffleTables = this.checkBoxShuffleEnemyTables.Checked;
+            var shuffleComps = this.checkBoxShuffleEnemyCompositions.Checked;
+
+            var willShuffleEnemiesInSomeWay = shuffleTables || shuffleComps;
+            if (willShuffleEnemiesInSomeWay)
+            {
+                var mapData = DataStore.GetMapData();
+
+                if (shuffleTables)
+                {
+                    mapData.RandomizeMonsterTables();
+                }
+
+                if (shuffleComps)
+                {
+                    mapData.RandomizeAllMonsterPresets();
+                }
+
+                // Brannoch and Mammons World share pack definitions across their submaps
+                // so we need to clamp those to whatever the minimum amount of enemies
+                // happened to be across them.
+                //
+                mapData.FixBaragoonMoor();
+                mapData.FixBrannochCastle();
+                mapData.FixMammonsWorld();
+
+                var writeOperations = mapData.GetMapWriteOperations();
+
+                foreach (var writeOperation in writeOperations)
+                {
+                    var romAddress = writeOperation.GetMerrowROMAddress();
+                    var hexLength = writeOperation.GetMerrowWriteLength();
+                    var hexBlock = writeOperation.GetMerrowWriteBlock();
+
+                    patchstrings.Add(romAddress);
+                    patchstrings.Add(hexLength); //main menu logo address/length
+                    patchstrings.Add(hexBlock);
+                }
+            }
+
             //FINAL ASSEMBLY/OUTPUT
 
             //Merrow/Randomizer logo
@@ -1596,7 +1641,7 @@ namespace Merrow {
                 //write updated file bytearray to new file
                 string thisFile = filePath + fileName + ".z64";
                 File.WriteAllBytes(thisFile, rndFileBytes);
-                var crctext = fix_crc(thisFile); //repair checksum
+                var crctext = CRC.FixCrc(thisFile); //repair checksum
                 filePath = filePath.Replace(@"/", @"\");   // explorer doesn't like front slashes
                 System.Diagnostics.Process.Start("explorer.exe", Application.StartupPath + "\\Patches\\");
                 rndErrorLabel.Text = "Z64 file creation complete. CRC repaired.";

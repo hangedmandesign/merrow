@@ -247,6 +247,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.rndMonsterBox = new System.Windows.Forms.GroupBox();
+            this.rndCombatExpToggle = new System.Windows.Forms.CheckBox();
             this.rndEXPBoostValue = new System.Windows.Forms.Label();
             this.rndEncounterLabel2 = new System.Windows.Forms.Label();
             this.rndEXPBoostTrackBar = new System.Windows.Forms.TrackBar();
@@ -266,7 +267,9 @@
             this.rndMonsterStatsToggle = new System.Windows.Forms.CheckBox();
             this.rndExtremityDropdown = new System.Windows.Forms.ComboBox();
             this.quaStatsBox = new System.Windows.Forms.GroupBox();
-            this.rndCombatExpToggle = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxShuffleEnemyCompositions = new System.Windows.Forms.CheckBox();
+            this.checkBoxShuffleEnemyTables = new System.Windows.Forms.CheckBox();
             this.rndHitMPValue = new System.Windows.Forms.Label();
             this.rndHitMPTrackBar = new System.Windows.Forms.TrackBar();
             this.rndMPRegainTrackBar = new System.Windows.Forms.TrackBar();
@@ -490,6 +493,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.rndEncounterTrackBar)).BeginInit();
             this.rndRiskBackPanel.SuspendLayout();
             this.quaStatsBox.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rndHitMPTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rndMPRegainTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rndMPTrackBar)).BeginInit();
@@ -2100,6 +2104,7 @@
             // 
             // rndMonsterBox
             // 
+            this.rndMonsterBox.Controls.Add(this.rndCombatExpToggle);
             this.rndMonsterBox.Controls.Add(this.rndEXPBoostValue);
             this.rndMonsterBox.Controls.Add(this.rndEncounterLabel2);
             this.rndMonsterBox.Controls.Add(this.rndEXPBoostTrackBar);
@@ -2123,6 +2128,22 @@
             this.rndMonsterBox.TabIndex = 26;
             this.rndMonsterBox.TabStop = false;
             this.rndMonsterBox.Text = "MONSTERS";
+            // 
+            // rndCombatExpToggle
+            // 
+            this.rndCombatExpToggle.AutoSize = true;
+            this.rndCombatExpToggle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndCombatExpToggle.Location = new System.Drawing.Point(14, 268);
+            this.rndCombatExpToggle.Name = "rndCombatExpToggle";
+            this.rndCombatExpToggle.Size = new System.Drawing.Size(166, 17);
+            this.rndCombatExpToggle.TabIndex = 45;
+            this.rndCombatExpToggle.Text = "Numerical combat experience";
+            this.rndCombatExpToggle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rndToolTip.SetToolTip(this.rndCombatExpToggle, "Changes the Pause menu Combat experience display value.\r\nInstead of displaying a " +
+        "percentage of progress to next level, \r\nit will display an exact number of requi" +
+        "red experience points.");
+            this.rndCombatExpToggle.UseVisualStyleBackColor = true;
+            this.rndCombatExpToggle.CheckedChanged += new System.EventHandler(this.rndCombatExpToggle_CheckedChanged);
             // 
             // rndEXPBoostValue
             // 
@@ -2386,7 +2407,7 @@
             // 
             // quaStatsBox
             // 
-            this.quaStatsBox.Controls.Add(this.rndCombatExpToggle);
+            this.quaStatsBox.Controls.Add(this.groupBox3);
             this.quaStatsBox.Controls.Add(this.rndHitMPValue);
             this.quaStatsBox.Controls.Add(this.rndHitMPTrackBar);
             this.quaStatsBox.Controls.Add(this.rndMPRegainTrackBar);
@@ -2413,21 +2434,36 @@
             this.quaStatsBox.TabStop = false;
             this.quaStatsBox.Text = "STATS";
             // 
-            // rndCombatExpToggle
+            // groupBox3
             // 
-            this.rndCombatExpToggle.AutoSize = true;
-            this.rndCombatExpToggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndCombatExpToggle.Location = new System.Drawing.Point(6, 313);
-            this.rndCombatExpToggle.Name = "rndCombatExpToggle";
-            this.rndCombatExpToggle.Size = new System.Drawing.Size(166, 17);
-            this.rndCombatExpToggle.TabIndex = 45;
-            this.rndCombatExpToggle.Text = "Numerical combat experience";
-            this.rndCombatExpToggle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rndToolTip.SetToolTip(this.rndCombatExpToggle, "Changes the Pause menu Combat experience display value.\r\nInstead of displaying a " +
-        "percentage of progress to next level, \r\nit will display an exact number of requi" +
-        "red experience points.");
-            this.rndCombatExpToggle.UseVisualStyleBackColor = true;
-            this.rndCombatExpToggle.CheckedChanged += new System.EventHandler(this.rndCombatExpToggle_CheckedChanged);
+            this.groupBox3.Controls.Add(this.checkBoxShuffleEnemyCompositions);
+            this.groupBox3.Controls.Add(this.checkBoxShuffleEnemyTables);
+            this.groupBox3.Location = new System.Drawing.Point(7, 321);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(265, 165);
+            this.groupBox3.TabIndex = 45;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Enemy Table Shuffler";
+            // 
+            // checkBoxShuffleEnemyCompositions
+            // 
+            this.checkBoxShuffleEnemyCompositions.AutoSize = true;
+            this.checkBoxShuffleEnemyCompositions.Location = new System.Drawing.Point(6, 43);
+            this.checkBoxShuffleEnemyCompositions.Name = "checkBoxShuffleEnemyCompositions";
+            this.checkBoxShuffleEnemyCompositions.Size = new System.Drawing.Size(187, 17);
+            this.checkBoxShuffleEnemyCompositions.TabIndex = 1;
+            this.checkBoxShuffleEnemyCompositions.Text = "Shuffle Enemy Pack Compositions";
+            this.checkBoxShuffleEnemyCompositions.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxShuffleEnemyTables
+            // 
+            this.checkBoxShuffleEnemyTables.AutoSize = true;
+            this.checkBoxShuffleEnemyTables.Location = new System.Drawing.Point(6, 20);
+            this.checkBoxShuffleEnemyTables.Name = "checkBoxShuffleEnemyTables";
+            this.checkBoxShuffleEnemyTables.Size = new System.Drawing.Size(204, 17);
+            this.checkBoxShuffleEnemyTables.TabIndex = 0;
+            this.checkBoxShuffleEnemyTables.Text = "Shuffle Enemy Tables Between Areas";
+            this.checkBoxShuffleEnemyTables.UseVisualStyleBackColor = true;
             // 
             // rndHitMPValue
             // 
@@ -4806,6 +4842,8 @@
             this.rndRiskBackPanel.ResumeLayout(false);
             this.quaStatsBox.ResumeLayout(false);
             this.quaStatsBox.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rndHitMPTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rndMPRegainTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rndMPTrackBar)).EndInit();
@@ -5172,6 +5210,9 @@
         private System.Windows.Forms.Button menuOpenShortcut;
         private System.Windows.Forms.Button menuProgressiveShortcut;
         private System.Windows.Forms.Button menuSpellsShortcut;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkBoxShuffleEnemyTables;
+        private System.Windows.Forms.CheckBox checkBoxShuffleEnemyCompositions;
         private System.Windows.Forms.CheckBox rndArchipelagoDewDrop;
         private System.Windows.Forms.GroupBox rleEncodingGroupBox;
         private System.Windows.Forms.TextBox rleEncodeInputTextBox;
