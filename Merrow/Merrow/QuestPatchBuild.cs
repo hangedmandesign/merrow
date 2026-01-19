@@ -1503,47 +1503,47 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Combat EXP display changed to numerical." + Environment.NewLine);
             }
 
-            // Monster Shuffling
-            //
-            var shuffleTables = this.checkBoxShuffleEnemyTables.Checked;
-            var shuffleComps = this.checkBoxShuffleEnemyCompositions.Checked;
+            // // Monster Shuffling
+            // //
+            // var shuffleTables = this.checkBoxShuffleEnemyTables.Checked;
+            // var shuffleComps = this.checkBoxShuffleEnemyCompositions.Checked;
 
-            var willShuffleEnemiesInSomeWay = shuffleTables || shuffleComps;
-            if (willShuffleEnemiesInSomeWay)
-            {
-                var mapData = DataStore.GetMapData();
+            // var willShuffleEnemiesInSomeWay = shuffleTables || shuffleComps;
+            // if (willShuffleEnemiesInSomeWay)
+            // {
+            //     var mapData = DataStore.GetMapData();
 
-                if (shuffleTables)
-                {
-                    mapData.RandomizeMonsterTables();
-                }
+            //     if (shuffleTables)
+            //     {
+            //         mapData.RandomizeMonsterTables();
+            //     }
 
-                if (shuffleComps)
-                {
-                    mapData.RandomizeAllMonsterPresets();
-                }
+            //     if (shuffleComps)
+            //     {
+            //         mapData.RandomizeAllMonsterPresets();
+            //     }
 
-                // Brannoch and Mammons World share pack definitions across their submaps
-                // so we need to clamp those to whatever the minimum amount of enemies
-                // happened to be across them.
-                //
-                mapData.FixBaragoonMoor();
-                mapData.FixBrannochCastle();
-                mapData.FixMammonsWorld();
+            //     // Brannoch and Mammons World share pack definitions across their submaps
+            //     // so we need to clamp those to whatever the minimum amount of enemies
+            //     // happened to be across them.
+            //     //
+            //     mapData.FixBaragoonMoor();
+            //     mapData.FixBrannochCastle();
+            //     mapData.FixMammonsWorld();
 
-                var writeOperations = mapData.GetMapWriteOperations();
+            //     var writeOperations = mapData.GetMapWriteOperations();
 
-                foreach (var writeOperation in writeOperations)
-                {
-                    var romAddress = writeOperation.GetMerrowROMAddress();
-                    var hexLength = writeOperation.GetMerrowWriteLength();
-                    var hexBlock = writeOperation.GetMerrowWriteBlock();
+            //     foreach (var writeOperation in writeOperations)
+            //     {
+            //         var romAddress = writeOperation.GetMerrowROMAddress();
+            //         var hexLength = writeOperation.GetMerrowWriteLength();
+            //         var hexBlock = writeOperation.GetMerrowWriteBlock();
 
-                    patchstrings.Add(romAddress);
-                    patchstrings.Add(hexLength); //main menu logo address/length
-                    patchstrings.Add(hexBlock);
-                }
-            }
+            //         patchstrings.Add(romAddress);
+            //         patchstrings.Add(hexLength); //main menu logo address/length
+            //         patchstrings.Add(hexBlock);
+            //     }
+            // }
 
             //FINAL ASSEMBLY/OUTPUT
 
