@@ -213,10 +213,21 @@ namespace Merrow {
 
                 //Extra Healing
                 if (rndExtraHealingToggle.Checked) {
-                    if (!rndSpellNamesToggle.Checked) { //if you don't have hinted names, add Mending name over SS1
+                    if (!rndSpellNamesToggle.Checked) { //if you don't have hinted names, add Mending name over W1
                         for (int i = 0; i < 3; i++) { patchstrings.Add(library.mendingdata[i]); }
                     }
+
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Extra Healing enabled." + Environment.NewLine);
+                }
+
+                //Bubble SS1, with shuffled spells. Just patch animation, since spell data is handled by shuffle
+                if (rndBubbleToggle.Checked) {
+                    if (!rndSpellNamesToggle.Checked) { //if you don't have hinted names, add Bubble name over SS1
+                        for (int i = 0; i < 3; i++) { patchstrings.Add(library.bubbledata[i]); }
+                    }
+
+                    for (int i = 0; i < 3; i++) { patchstrings.Add(library.bubbleanim[i]); }
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Soul Search Lv1 replaced with Bubble." + Environment.NewLine);
                 }
 
                 //Hinted Spell Names
@@ -326,6 +337,18 @@ namespace Merrow {
                         patchstrings.Add(Convert.ToString(library.avalancheFix[(j * 2) + 10], 16).PadLeft(2, '0'));
                     }
                 }
+            }
+
+            //Bubble SS1, without shuffled spells
+            if (rndBubbleToggle.Checked) {
+                if (!rndSpellToggle.Checked) { //can't check based on hinted names alone because it defaults to true
+                    for (int i = 0; i < 3; i++) { patchstrings.Add(library.bubbledata[i]); }
+                    for (int i = 0; i < 3; i++) { patchstrings.Add(library.bubblecode[i]); }
+                    for (int i = 0; i < 3; i++) { patchstrings.Add(library.bubbleanim[i]); }
+
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Soul Search Lv1 replaced with Bubble." + Environment.NewLine);
+                } 
+                //if it is checked, it's already handled by spell shuffle.
             }
 
             //Spell Combination Fixes: Fix writing
@@ -832,7 +855,8 @@ namespace Merrow {
                     //the old method multiplied the speed value, but the effect of that was logarithmic, not multiplicative.
                     //instead, I've selected hex values that map closely to the number of seconds spent running, which was the intent all along.
                     //for reference, I got these values by testing MP gained while running a set distance.
-                    string[] speeds = new string[5] { "28", "31", "41", "51", "58" }; //40, 49, 65, 81, 88
+                    //V50: the array was backwards. Now it's fixed.
+                    string[] speeds = new string[5] { "58", "51", "41", "31", "28" }; //88, 81, 65, 49, 40
 
                     patchstrings.Add("071B39");
                     patchstrings.Add("0001");
@@ -1108,6 +1132,10 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shannon Hints enabled." + Environment.NewLine);
             }
 
+            //currently, Better Dew Drop is overridden by Archipelago Dew Drop, to avoid issues with descriptions. 25-11-16
+            //descriptions aren't even needed if Archi items never hit the inventory. So this isn't required, only name changes are needed for item 1A and 1B. 25-12-13
+            //if (!rndArchipelagoDewDrop.Checked) { 
+
             //Better Dew Drop
             if (rndBetterDewDrop.Checked) {
                 patchstrings.Add("D86B01"); //function patch
@@ -1127,6 +1155,53 @@ namespace Merrow {
                 patchstrings.Add(library.newdewdropdesc[5]);
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Dew Drop made useful." + Environment.NewLine);
+            }
+            //}
+
+            //will change the checkbox name later
+            if (rndArchipelagoDewDrop.Checked) {
+                patchstrings.Add(library.archiitemsinfo[0]); //new item names
+                patchstrings.Add((library.archiitemsinfo[1].Length / 2).ToString("X4")); //can just get length by dividing byte string length by 2, should do this everywhere
+                patchstrings.Add(library.archiitemsinfo[1]);
+
+                patchstrings.Add(library.archiitemsinfo[2]); //new item pointers
+                patchstrings.Add((library.archiitemsinfo[3].Length / 2).ToString("X4"));
+                patchstrings.Add(library.archiitemsinfo[3]);
+
+                patchstrings.Add(library.archiitemsinfo[4]); //update loop 1
+                patchstrings.Add((library.archiitemsinfo[5].Length / 2).ToString("X4"));
+                patchstrings.Add(library.archiitemsinfo[5]);
+
+                patchstrings.Add(library.archiitemsinfo[6]); //update loop 2
+                patchstrings.Add((library.archiitemsinfo[7].Length / 2).ToString("X4"));
+                patchstrings.Add(library.archiitemsinfo[7]);
+
+                patchstrings.Add(library.archiitemsinfo[8]); //inventory cleanup script
+                patchstrings.Add((library.archiitemsinfo[9].Length / 2).ToString("X4"));
+                patchstrings.Add(library.archiitemsinfo[9]);
+
+                //OLD
+                //patchstrings.Add("D86B01"); //function patch
+                //patchstrings.Add("0003");
+                //patchstrings.Add("0A0005");
+
+                //patchstrings.Add(library.archidewdropinfo[0]); //healing potion, dragon potion, dew drop desc text
+                //patchstrings.Add("005B");
+                //patchstrings.Add(library.archidewdropinfo[1]);
+
+                //patchstrings.Add(library.archidewdropinfo[2]); //healing potion, dragon potion, dew drop desc pointer
+                //patchstrings.Add("000C");
+                //patchstrings.Add(library.archidewdropinfo[3]);
+
+                //patchstrings.Add(library.archidewdropinfo[4]); //healing potion, dragon potion, sidhe's gift name text
+                //patchstrings.Add("0039");
+                //patchstrings.Add(library.archidewdropinfo[5]);
+
+                //patchstrings.Add(library.archidewdropinfo[6]); //healing potion, dragon potion, dew drop name pointer
+                //patchstrings.Add("000C");
+                //patchstrings.Add(library.archidewdropinfo[7]);
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "ARCHIPELAGO TESTING: Added Sidhe's Gift and Sidhe's Boon." + Environment.NewLine);
             }
 
             //Reveal hidden spirits
@@ -1507,6 +1582,37 @@ namespace Merrow {
                         patchstrings.Add(gameloc.ToString("X3"));
                         patchstrings.Add("0010"); 
                         patchstrings.Add(combinedline);
+                    }
+
+                    //temporarily putting archi on title screen here, after last line
+                    if (rndArchipelagoDewDrop.Checked && i == seedints.Length - 1) {
+                        for (int j = 0; j < 16; j++)
+                        { //for each line of the icon
+
+                            string currline = library.archiiconstrings[1].Substring(j * 32, 32);
+                            string combinedline = "";
+                            int currloc = ((i + 1) * 5120) + (j * 320) + 2560 + 8 + 640 + 2; //this is byte location in the background image. skips 16 image lines per character, then 1 per line. adjustments for overscan
+                            int gameloc = 14351232 + currloc; //DAFB80 + current location is byte location in ROM.
+
+                            for (int k = 0; k < 32; k += 2)
+                            { //for each byte of the line
+
+                                if (currline[k] == 'X')
+                                { //if this one starts with X, get the byte chars from the background rather than the icon (transparency)
+                                    combinedline += library.menubg[(currloc * 2) + k];
+                                    combinedline += library.menubg[(currloc * 2) + k + 1];
+                                }
+                                else
+                                { //else, get the byte chars from icondigits
+                                    combinedline += currline[k];
+                                    combinedline += currline[k + 1];
+                                }
+                            }
+
+                            patchstrings.Add(gameloc.ToString("X3"));
+                            patchstrings.Add("0010");
+                            patchstrings.Add(combinedline);
+                        }
                     }
                 }
             }
