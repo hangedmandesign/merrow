@@ -75,7 +75,7 @@ namespace Merrow.Util
                 var data = this.allData[k];
                 var tableIndex = tableIndices[k];
 
-                Console.WriteLine("Randomizing Tables for: {0}", data.areaName);
+                //Console.WriteLine("Randomizing Tables for: {0}", data.areaName);
 
                 var newTable = data.globalEnemyTables[tableIndex];
                 var newTableEnemyCount = newTable.enemies.Length;
@@ -103,7 +103,7 @@ namespace Merrow.Util
             {
                 var data = this.allData[k];
 
-                Console.WriteLine("Randomizing Monster Presets for: {0}", data.areaName);
+                //Console.WriteLine("Randomizing Monster Presets for: {0}", data.areaName);
 
                 data.RandomizeMonsterPresets();
                 data.RandomizeEnemiesWithinPacks();
@@ -116,19 +116,19 @@ namespace Merrow.Util
 
         public void FixBaragoonMoor()
         {
-            Console.WriteLine("Fixing Baragoon Moor Enemy Pack Indices ...");
+            //Console.WriteLine("Fixing Baragoon Moor Enemy Pack Indices ...");
             this.CapEnemyIndicesAmongGroup(BARAGOON_MOOR_INDEX_START, BARAGOON_MOOR_INDEX_LAST);
         }
 
         public void FixBrannochCastle()
         {
-            Console.WriteLine("Fixing Brannoch Castle Enemy Pack Indices ...");
+            //Console.WriteLine("Fixing Brannoch Castle Enemy Pack Indices ...");
             this.CapEnemyIndicesAmongGroup(BRANNOCH_INDEX_START, BRANNOCH_INDEX_LAST);
         }
 
         public void FixMammonsWorld()
         {
-            Console.WriteLine("Fixing Mammons World Enemy Pack  IDs ...");
+            //Console.WriteLine("Fixing Mammons World Enemy Pack  IDs ...");
             this.CapEnemyIndicesAmongGroup(MAMMON_INDEX_START, MAMMON_INDEX_LAST);
         }
         
@@ -145,7 +145,7 @@ namespace Merrow.Util
                     enemyMin = enemyCount;
             }
 
-            Console.WriteLine(" - applying minimum enemy count to {0}", enemyMin);
+            //Console.WriteLine(" - applying minimum enemy count to {0}", enemyMin);
 
             for (int k = indexStart; k <= indexEnd; k++)
             {
@@ -243,7 +243,7 @@ namespace Merrow.Util
 
         public void RandomizeEnemiesWithinPacks()
         {
-            Console.WriteLine(" -- randomizing enemies within packs ...");
+            //Console.WriteLine(" -- randomizing enemies within packs ...");
 
             var packs = this.packDefinitions;
 
@@ -332,7 +332,7 @@ namespace Merrow.Util
             }
             shuffleCache.Shuffle();
 
-            Console.WriteLine("Unique Enemies: {0}, Pack Count: {1}, IDs: {2}", uniqueEnemiesInCurrentTable, this.packCount, string.Join(",", shuffleCache));
+            //Console.WriteLine("Unique Enemies: {0}, Pack Count: {1}, IDs: {2}", uniqueEnemiesInCurrentTable, this.packCount, string.Join(",", shuffleCache));
 
             // The actual usage of enemy blocks is controlled
             // elsewhere in memory, so assigning all values here 

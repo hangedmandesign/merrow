@@ -111,5 +111,40 @@ namespace MerrowTests
                 Assert.AreEqual(normalOp.GetMerrowWriteBlock(), copiedOp.GetMerrowWriteBlock());
             }
         }
+
+
+        [TestMethod]
+        public void Test_EnemyIndicesDoNotExceedTableRanges()
+        {
+            var mapData = DataStore.GetMapData();
+
+            for (int run=0; run < 100_000; run++)
+            {
+                var runData = mapData.Copy();
+
+                runData.RandomizeMonsterTables();
+                runData.RandomizeAllMonsterPresets();
+                runData.FixBaragoonMoor();
+                runData.FixBrannochCastle();
+                runData.FixMammonsWorld();
+
+                for (int a = 0; a<runData.allData.Length; a++)
+                {
+                    var area = runData.allData[a];
+                    var tableIndex = area.mapData.tableIndex;
+                    var enemyCount = area.globalEnemyTables[tableIndex].enemies.Length;
+
+                    for (int p=0; p < area.packDefinitions.Length; p++)
+                    {
+                        var pack = area.packDefinitions[p];
+
+                        Assert.IsTrue(pack.enemy1.enemyID <  enemyCount);
+                        Assert.IsTrue(pack.enemy2.enemyID <  enemyCount);
+                        Assert.IsTrue(pack.enemy3.enemyID <  enemyCount);
+                        Assert.IsTrue(pack.enemy4.enemyID <  enemyCount);
+                    }
+                }
+            }
+        }
     }
 }
