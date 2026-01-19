@@ -3611,35 +3611,72 @@ namespace Merrow {
              new EncounterRegion(0x0085326C, 0xFE7E, 0xFDCC, 0xFE7E, 0x03DA, 0x0005, 0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0000, 0x0000),
         };
 
-        public static Util.AreaEncounterData MapDataHolyPlains = new Util.AreaEncounterData("Holy Plains", allAreaMapData[0], packsHolyPlains, regionsHolyPlains, monsterTables[0]);
-        public static Util.AreaEncounterData MapDataConnorForest = new Util.AreaEncounterData("Connor Forest", allAreaMapData[1], packsConnorForest, regionsConnorForest, monsterTables[1]);
-        public static Util.AreaEncounterData MapDataDondoranFlats = new Util.AreaEncounterData("Dondoran Flats", allAreaMapData[2], packsDondoranFlats, regionsDondoranFlats, monsterTables[1]);
-        public static Util.AreaEncounterData MapDataGlencoeForest = new Util.AreaEncounterData("Glencoe Forest", allAreaMapData[3], packsGlencoeForest, regionsGlencoeForest, monsterTables[1]);
-        public static Util.AreaEncounterData MapDataWestCarmaugh = new Util.AreaEncounterData("West Carmaugh", allAreaMapData[4], packsWestCarmagh, regionsWestCarmaugh, monsterTables[0]);
-        public static Util.AreaEncounterData MapDataCullHazard = new Util.AreaEncounterData("Cull Hazard", allAreaMapData[5], packsCullHazard, regionsCullHazard, monsterTables[2]);
-        public static Util.AreaEncounterData MapDataWindwardForest = new Util.AreaEncounterData("Windward Forest", allAreaMapData[6], packsWindwardForest, regionsWindwardForest, monsterTables[4]);
-        public static Util.AreaEncounterData MapDataBlueCave = new Util.AreaEncounterData("Blue Cave", allAreaMapData[7], packsBlueCave, regionsBlueCave, monsterTables[2]);
-        public static Util.AreaEncounterData MapIsleOfSkye = new Util.AreaEncounterData("Isle of Skye", allAreaMapData[8], packsIsleOfSkye, regionsIsleofSkye, monsterTables[4]);
-        public static Util.AreaEncounterData MapEastLimelin = new Util.AreaEncounterData("East Limelin", allAreaMapData[9], packsEastLimelin, regionsEastLimelin, monsterTables[2]);
-        public static Util.AreaEncounterData MapBaragoonTunnel = new Util.AreaEncounterData("Baragoon Tunnel", allAreaMapData[10], packsBaragoonTunnel, regionsBaragoonTunnel, monsterTables[4]);
-        public static Util.AreaEncounterData MapDindomDries = new Util.AreaEncounterData("Dindom Dries", allAreaMapData[11], packsDindomDries, regionsDindomDries, monsterTables[3]);
-        public static Util.AreaEncounterData MapBoilHole = new Util.AreaEncounterData("Boil Hole", allAreaMapData[12], packsBoilHole, regionsBoilHole, monsterTables[3]);
+        public static Util.AreaEncounterData MapDataHolyPlains = new Util.AreaEncounterData("Holy Plains", allAreaMapData[0], packsHolyPlains, regionsHolyPlains, monsterTables);
+        public static Util.AreaEncounterData MapDataConnorForest = new Util.AreaEncounterData("Connor Forest", allAreaMapData[1], packsConnorForest, regionsConnorForest, monsterTables);
+        public static Util.AreaEncounterData MapDataDondoranFlats = new Util.AreaEncounterData("Dondoran Flats", allAreaMapData[2], packsDondoranFlats, regionsDondoranFlats, monsterTables);
+        public static Util.AreaEncounterData MapDataGlencoeForest = new Util.AreaEncounterData("Glencoe Forest", allAreaMapData[3], packsGlencoeForest, regionsGlencoeForest, monsterTables);
+        public static Util.AreaEncounterData MapDataWestCarmaugh = new Util.AreaEncounterData("West Carmaugh", allAreaMapData[4], packsWestCarmagh, regionsWestCarmaugh, monsterTables);
+        public static Util.AreaEncounterData MapDataCullHazard = new Util.AreaEncounterData("Cull Hazard", allAreaMapData[5], packsCullHazard, regionsCullHazard, monsterTables);
+        public static Util.AreaEncounterData MapDataWindwardForest = new Util.AreaEncounterData("Windward Forest", allAreaMapData[6], packsWindwardForest, regionsWindwardForest, monsterTables);
+        public static Util.AreaEncounterData MapDataBlueCave = new Util.AreaEncounterData("Blue Cave", allAreaMapData[7], packsBlueCave, regionsBlueCave, monsterTables);
+        public static Util.AreaEncounterData MapIsleOfSkye = new Util.AreaEncounterData("Isle of Skye", allAreaMapData[8], packsIsleOfSkye, regionsIsleofSkye, monsterTables);
+        public static Util.AreaEncounterData MapEastLimelin = new Util.AreaEncounterData("East Limelin", allAreaMapData[9], packsEastLimelin, regionsEastLimelin, monsterTables);
+        public static Util.AreaEncounterData MapBaragoonTunnel = new Util.AreaEncounterData("Baragoon Tunnel", allAreaMapData[10], packsBaragoonTunnel, regionsBaragoonTunnel, monsterTables);
+        public static Util.AreaEncounterData MapDindomDries = new Util.AreaEncounterData("Dindom Dries", allAreaMapData[11], packsDindomDries, regionsDindomDries, monsterTables);
+        public static Util.AreaEncounterData MapBoilHole = new Util.AreaEncounterData("Boil Hole", allAreaMapData[12], packsBoilHole, regionsBoilHole, monsterTables);
+        public static Util.AreaEncounterData MapBaragoonMoor1 = new Util.AreaEncounterData("Baragoon Moor 1", allAreaMapData[13], packsBaragoonMoor, regionsBaragoonMoor1, monsterTables);
+        public static Util.AreaEncounterData MapBaragoonMoor2 = new Util.AreaEncounterData("Baragoon Moor 2", allAreaMapData[14], packsBaragoonMoor, regionsBaragoonMoor2, monsterTables);
+        public static Util.AreaEncounterData MapBrannochCastle1 = new Util.AreaEncounterData("Brannoch Castle 1", allAreaMapData[15], packsBrannochCastle, regionsBrannoch1, monsterTables);
+        public static Util.AreaEncounterData MapBrannochCastle2 = new Util.AreaEncounterData("Brannoch Castle 2", allAreaMapData[16], packsBrannochCastle, regionsBrannoch2, monsterTables);
+        public static Util.AreaEncounterData MapBrannochCastle3 = new Util.AreaEncounterData("Brannoch Castle 3", allAreaMapData[17], packsBrannochCastle, regionsBrannoch3, monsterTables);
+        public static Util.AreaEncounterData MapBrannochCastle4 = new Util.AreaEncounterData("Brannoch Castle 4", allAreaMapData[18], packsBrannochCastle, regionsBrannoch4, monsterTables);
+        public static Util.AreaEncounterData MapBrannochCastle5 = new Util.AreaEncounterData("Brannoch Castle 5", allAreaMapData[19], packsBrannochCastle, regionsBrannoch5, monsterTables);
+        public static Util.AreaEncounterData MapBrannochCastle6 = new Util.AreaEncounterData("Brannoch Castle 6", allAreaMapData[20], packsBrannochCastle, regionsBrannoch6, monsterTables);
+        public static Util.AreaEncounterData MapMammonsWorld1 = new Util.AreaEncounterData("Mammon's World 1", allAreaMapData[21], packsMammonsWorld, regionsMammon1, monsterTables);
+        public static Util.AreaEncounterData MapMammonsWorld2 = new Util.AreaEncounterData("Mammon's World 2", allAreaMapData[22], packsMammonsWorld, regionsMammon2, monsterTables);
+        public static Util.AreaEncounterData MapMammonsWorld3 = new Util.AreaEncounterData("Mammon's World 3", allAreaMapData[23], packsMammonsWorld, regionsMammon3, monsterTables);
+        public static Util.AreaEncounterData MapMammonsWorld4 = new Util.AreaEncounterData("Mammon's World 4", allAreaMapData[24], packsMammonsWorld, regionsMammon4, monsterTables);
+        public static Util.AreaEncounterData MapMammonsWorld5 = new Util.AreaEncounterData("Mammon's World 5", allAreaMapData[25], packsMammonsWorld, regionsMammon5, monsterTables);
+        public static Util.AreaEncounterData MapMammonsWorld6 = new Util.AreaEncounterData("Mammon's World 6", allAreaMapData[26], packsMammonsWorld, regionsMammon6, monsterTables);
 
-        public static Util.AreaEncounterData MapBaragoonMoor1 = new Util.AreaEncounterData("Baragoon Moor 1", allAreaMapData[13], packsBaragoonMoor, regionsBaragoonMoor1, monsterTables[3]);
-        public static Util.AreaEncounterData MapBaragoonMoor2 = new Util.AreaEncounterData("Baragoon Moor 2", allAreaMapData[14], packsBaragoonMoor, regionsBaragoonMoor2, monsterTables[3]);
+        public static Util.FullGameMapData GetMapData()
+        {
+            return new FullGameMapData(new AreaEncounterData[]
+            {
+                MapDataHolyPlains.Copy(),
+                MapDataConnorForest.Copy(),
+                MapDataDondoranFlats.Copy(),
+                MapDataGlencoeForest.Copy(),
+                
+                MapDataWestCarmaugh.Copy(),
+                MapDataCullHazard.Copy(),
+                MapDataWindwardForest.Copy(),
+                MapDataBlueCave.Copy(),
+                
+                MapIsleOfSkye.Copy(),
+                MapEastLimelin.Copy(),
+                MapBaragoonTunnel.Copy(),
+                MapDindomDries.Copy(),
+                
+                MapBoilHole.Copy(),
+                MapBaragoonMoor1.Copy(),
+                MapBaragoonMoor2.Copy(),
+                MapBrannochCastle1.Copy(),
 
-        public static Util.AreaEncounterData MapBrannochCastle1 = new Util.AreaEncounterData("Brannoch Castle 1", allAreaMapData[15], packsBrannochCastle, regionsBrannoch1, monsterTables[3]);
-        public static Util.AreaEncounterData MapBrannochCastle2 = new Util.AreaEncounterData("Brannoch Castle 2", allAreaMapData[16], packsBrannochCastle, regionsBrannoch2, monsterTables[3]);
-        public static Util.AreaEncounterData MapBrannochCastle3 = new Util.AreaEncounterData("Brannoch Castle 3", allAreaMapData[17], packsBrannochCastle, regionsBrannoch3, monsterTables[3]);
-        public static Util.AreaEncounterData MapBrannochCastle4 = new Util.AreaEncounterData("Brannoch Castle 4", allAreaMapData[18], packsBrannochCastle, regionsBrannoch4, monsterTables[3]);
-        public static Util.AreaEncounterData MapBrannochCastle5 = new Util.AreaEncounterData("Brannoch Castle 5", allAreaMapData[19], packsBrannochCastle, regionsBrannoch5, monsterTables[3]);
-        public static Util.AreaEncounterData MapBrannochCastle6 = new Util.AreaEncounterData("Brannoch Castle 6", allAreaMapData[20], packsBrannochCastle, regionsBrannoch6, monsterTables[3]);
+                MapBrannochCastle2.Copy(),
+                MapBrannochCastle3.Copy(),
+                MapBrannochCastle4.Copy(),
+                MapBrannochCastle5.Copy(),
+                
+                MapBrannochCastle6.Copy(),
+                MapMammonsWorld1.Copy(),
+                MapMammonsWorld2.Copy(),
+                MapMammonsWorld3.Copy(),
 
-        public static Util.AreaEncounterData MapMammonsWorld1 = new Util.AreaEncounterData("Mammon's World 1", allAreaMapData[21], packsMammonsWorld, regionsMammon1, monsterTables[5]);
-        public static Util.AreaEncounterData MapMammonsWorld2 = new Util.AreaEncounterData("Mammon's World 2", allAreaMapData[22], packsMammonsWorld, regionsMammon2, monsterTables[5]);
-        public static Util.AreaEncounterData MapMammonsWorld3 = new Util.AreaEncounterData("Mammon's World 3", allAreaMapData[23], packsMammonsWorld, regionsMammon3, monsterTables[5]);
-        public static Util.AreaEncounterData MapMammonsWorld4 = new Util.AreaEncounterData("Mammon's World 4", allAreaMapData[24], packsMammonsWorld, regionsMammon4, monsterTables[5]);
-        public static Util.AreaEncounterData MapMammonsWorld5 = new Util.AreaEncounterData("Mammon's World 5", allAreaMapData[25], packsMammonsWorld, regionsMammon5, monsterTables[5]);
-        public static Util.AreaEncounterData MapMammonsWorld6 = new Util.AreaEncounterData("Mammon's World 6", allAreaMapData[26], packsMammonsWorld, regionsMammon6, monsterTables[5]);
+                MapMammonsWorld4.Copy(),
+                MapMammonsWorld5.Copy(),
+                MapMammonsWorld6.Copy(),
+            });
+        }
     }
 }

@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Test_MapData.cs" />
     <Compile Include="Test_CRC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
