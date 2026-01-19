@@ -570,7 +570,7 @@ namespace Merrow.Util
         public uint romAddress;
         public string[] hex32BitStrings;
 
-        public string GetMerrowROMAddress() => this.romAddress.ToString("X8");
+        public string GetMerrowROMAddress() => this.romAddress.ToString("X06");
         public string GetMerrowWriteLength() => (this.hex32BitStrings.Length * 4).ToString("X04");
 
         public string GetMerrowWriteBlock()

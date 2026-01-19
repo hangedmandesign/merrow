@@ -3,6 +3,7 @@ using System;
 using Merrow;
 using Merrow.Util;
 using System.Text;
+using System.CodeDom;
 
 namespace MerrowTests
 {
@@ -143,6 +144,48 @@ namespace MerrowTests
                         Assert.IsTrue(pack.enemy3.enemyID <  enemyCount);
                         Assert.IsTrue(pack.enemy4.enemyID <  enemyCount);
                     }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Test_PatchInstructionsUseCorrectLengths()
+        {
+            var mapData = DataStore.GetMapData();
+
+            for (int run = 0; run < 1_000; run++)
+            {
+                var runData = mapData.Copy();
+
+                runData.RandomizeMonsterTables();
+                runData.RandomizeAllMonsterPresets();
+                runData.FixBaragoonMoor();
+                runData.FixBrannochCastle();
+                runData.FixMammonsWorld();
+
+                var ops = runData.GetMapWriteOperations();
+                
+                for (int k=0; k<ops.Length; k++)
+                {
+                    var op = ops[k];
+
+                    var ipsAddressHex = op.GetMerrowROMAddress();
+                    var ipsLengthHex = op.GetMerrowWriteLength();
+                    var ipsBlockHex = op.GetMerrowWriteBlock();
+
+                    var ipsAddress = Convert.ToInt32(ipsAddressHex, 16);
+                    var ipsLength = Convert.ToInt32(ipsLengthHex, 16);
+
+                    if (ipsAddress < 0x100000)
+                    {
+                        Console.WriteLine(">> BAD ADDRESS: {0}", ipsAddressHex);
+                    }
+
+                    Assert.IsTrue(ipsAddressHex.Length == 6);
+                    Assert.IsTrue(ipsLengthHex.Length == 4);
+                    Assert.IsTrue(ipsBlockHex.Length == ipsLength * 2);
+
+                    //Console.WriteLine("{0:d04}: {1} {2} {3}", k, ipsAddressHex, ipsLengthHex, ipsBlockHex);
                 }
             }
         }
