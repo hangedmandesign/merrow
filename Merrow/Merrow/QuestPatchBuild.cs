@@ -239,16 +239,16 @@ namespace Merrow {
 
                     //spell pointers
                     for (int i = 0; i < playerspells; i++) {
-                        patchstrings.Add(library.shuffleNames[(i * 5) + 3]); //pointer location
+                        patchstrings.Add(library.shuffleNames2[i, 3]); //pointer location
                         patchstrings.Add("0004"); //write four bytes
-                        patchstrings.Add(library.shuffleNames[(i * 5) + 4]); //new pointer data
+                        patchstrings.Add(library.shuffleNames2[i, 4]); //new pointer data
                     }
 
                     //spell names
                     for (int i = 0; i < playerspells; i++) {
                         string temps = ToHex(hintnames[i]);
                         int zeroes = 32 - temps.Length;
-                        patchstrings.Add(library.shuffleNames[(i * 5) + 2]);
+                        patchstrings.Add(library.shuffleNames2[i, 2]);
                         patchstrings.Add("0010");
                         patchcontent = temps;
                         for (int j = 0; j < zeroes; j++) { patchcontent += "0"; }
@@ -275,56 +275,61 @@ namespace Merrow {
                     }
                 }
 
-                //Updated Spell Item Names/Descriptions
-                if (true) { //rndSpellItemsToggle.Checked) { ALWAYS DO, OPTION REMOVED
-                    //name
-                    for (int i = 0; i < 6; i++) {
-                        object[] hintdata = new object[2];
-                        string hintstring = "OOPS%";
+                //Updated spell item names
+                for (int i = 0; i < 6; i++) {
+                    object[] hintdata = new object[2];
+                    string hintstring = "OOPS%";
 
-                        int currelement = 0; //fire
-                        if (newitemspells[i] > 15) { currelement = 1; } //earth
-                        if (newitemspells[i] > 30) { currelement = 2; } //water
-                        if (newitemspells[i] > 45) { currelement = 3; } //wind
+                    int currelement = 0; //fire
+                    if (newitemspells[i] > 15) { currelement = 1; } //earth
+                    if (newitemspells[i] > 30) { currelement = 2; } //water
+                    if (newitemspells[i] > 45) { currelement = 3; } //wind
 
-                        //string is written
-                        hintstring = library.newSpellItemName[(i * 4) + currelement];
+                    //string is written
+                    hintstring = library.newSpellItemName[(i * 4) + currelement];
 
-                        hintdata = TranslateString(hintstring);
+                    hintdata = TranslateString(hintstring);
 
-                        int hintlen = (int)hintdata[1];
-                        //Console.WriteLine(hintdata[0]);
-                        //Console.WriteLine(hintdata[1]);
+                    int hintlen = (int)hintdata[1];
+                    //Console.WriteLine(hintdata[0]);
+                    //Console.WriteLine(hintdata[1]);
 
-                        //string is encoded to patch
-                        patchstrings.Add(library.spellItemNameAddr[i]);
-                        patchstrings.Add(hintlen.ToString("X4"));
-                        patchstrings.Add((string)hintdata[0]);
+                    //string is encoded to patch
+                    patchstrings.Add(library.spellItemNameAddr[i]);
+                    patchstrings.Add(hintlen.ToString("X4"));
+                    patchstrings.Add((string)hintdata[0]);
 
-                        //update capitalcase item list for hints and gifters
-                        library.itemcapitalcase[i + 8] = library.newSpellItemCapCase[(i * 4) + currelement];
-                    }
-                    //desc
-                    for (int i = 0; i < 6; i++) {
-                        object[] hintdata = new object[2];
-                        string hintstring = "OOPS%";
-
-                        //string is written
-                        hintstring = library.newSpellItemDesc[shuffles[library.spellItemIDs[i]]];
-
-                        hintdata = TranslateString(hintstring);
-
-                        int hintlen = (int)hintdata[1];
-                        //Console.WriteLine(hintdata[0]);
-                        //Console.WriteLine(hintdata[1]);
-
-                        //string is encoded to patch
-                        patchstrings.Add(library.spellItemDescAddr[i]);
-                        patchstrings.Add(hintlen.ToString("X4"));
-                        patchstrings.Add((string)hintdata[0]);
-                    }
-                    File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell item names/descriptions updated." + Environment.NewLine);
+                    //update capitalcase item list for hints and gifters
+                    library.itemcapitalcase[i + 8] = library.newSpellItemCapCase[(i * 4) + currelement];
                 }
+
+                //Replacement spell item descriptions
+                if (!rndExtraHealingToggle.Checked) { library.newSpellItemDesc[19] = library.specialSpellItemDesc[0]; }
+                else { library.newSpellItemDesc[19] = library.specialSpellItemDesc[1]; }
+                if (!rndBubbleToggle.Checked) { library.newSpellItemDesc[33] = library.specialSpellItemDesc[2]; }
+                else { library.newSpellItemDesc[33] = library.specialSpellItemDesc[3]; }
+
+                //Updated spell item descriptions
+                for (int i = 0; i < 6; i++) {
+                    object[] hintdata = new object[2];
+                    string hintstring = "OOPS%";
+
+                    //string is written
+                    hintstring = library.newSpellItemDesc[shuffles[library.spellItemIDs[i]]];
+
+                    hintdata = TranslateString(hintstring);
+
+                    int hintlen = (int)hintdata[1];
+                    //Console.WriteLine(hintdata[0]);
+                    //Console.WriteLine(hintdata[1]);
+
+                    //string is encoded to patch
+                    patchstrings.Add(library.spellItemDescAddr[i]);
+                    patchstrings.Add(hintlen.ToString("X4"));
+                    patchstrings.Add((string)hintdata[0]);
+                }
+
+                File.AppendAllText(filePath + fileName + "_spoiler.txt", "Spell item names/descriptions updated." + Environment.NewLine);
             }
 
             //special avalanche fix testing
@@ -348,7 +353,7 @@ namespace Merrow {
 
                     File.AppendAllText(filePath + fileName + "_spoiler.txt", "Soul Search Lv1 replaced with Bubble." + Environment.NewLine);
                 } 
-                //if it is checked, it's already handled by spell shuffle.
+                //if both are checked, it's already handled by spell shuffle.
             }
 
             //Spell Combination Fixes: Fix writing

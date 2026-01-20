@@ -237,28 +237,28 @@ namespace Merrow {
                 if (rndSpellNamesDropdown.SelectedIndex == 1) { fiftyfiftyfiftyfifty = 0; } //"Linear" option
                 switch (fiftyfiftyfiftyfifty) {
                     case 0:
-                        hintnames[i] = library.shuffleNames2[i * 7];
-                        hintnames[i] += " " + library.shuffleNames2[(shuffles[i] * 7) + 2];
+                        hintnames[i] = library.shuffleNames2[i,0];
+                        hintnames[i] += " " + library.shuffleNames2[shuffles[i],2];
                         break;
 
                     case 1:
-                        hintnames[i] = library.shuffleNames2[i * 7];
-                        hintnames[i] += " " + library.shuffleNames2[(shuffles[i] * 7) + 3];
+                        hintnames[i] = library.shuffleNames2[i,0];
+                        hintnames[i] += " " + library.shuffleNames2[shuffles[i],3];
                         break;
 
                     case 2:
-                        hintnames[i] = library.shuffleNames2[shuffles[i] * 7];
-                        hintnames[i] += " " + library.shuffleNames2[(i * 7) + 2];
+                        hintnames[i] = library.shuffleNames2[shuffles[i],0];
+                        hintnames[i] += " " + library.shuffleNames2[i,2];
                         break;
 
                     case 3:
-                        hintnames[i] = library.shuffleNames2[shuffles[i] * 7];
-                        hintnames[i] += " " + library.shuffleNames2[(i * 7) + 3];
+                        hintnames[i] = library.shuffleNames2[shuffles[i],0];
+                        hintnames[i] += " " + library.shuffleNames2[i,3];
                         break;
 
                     default:
-                        hintnames[i] = library.shuffleNames2[i * 7];
-                        hintnames[i] += " " + library.shuffleNames2[(shuffles[i] * 7) + 2];
+                        hintnames[i] = library.shuffleNames2[i,0];
+                        hintnames[i] += " " + library.shuffleNames2[shuffles[i],2];
                         break;
                 }
                 Console.WriteLine(i.ToString() + ": " + hintnames[i]);

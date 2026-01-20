@@ -466,19 +466,16 @@ namespace Merrow {
             //hinted name reference
             for (int i = 0; i < 60; i++) {
                 hintedDataGridView.Rows.Add();
-                for (int j = 0; j < 4; j++) {
+                for (int j = 0; j < 5; j++) {
                     if (j == 0) { //grab spell name
                         hintedDataGridView.Rows[i].Cells[j].Value = library.spelldatatable[i * 6].ToUpper();
                         if (i < 15) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.MistyRose; }
                         if (i >= 15 && i < 30) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Bisque; }
                         if (i >= 30 && i < 45) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Azure; }
                         if (i >= 45) { hintedDataGridView.Rows[i].Cells[j].Style.BackColor = Color.Honeydew; }
-                    }
-                    if (j == 1 || j == 2) { //grab 0,1 hints
-                        hintedDataGridView.Rows[i].Cells[j].Value = library.shuffleNames[(i * 5) + (j - 1)];
-                    }
-                    if (j == 3) { //grab new descriptions
-                        hintedDataGridView.Rows[i].Cells[j].Value = library.spelldescdatatable[i];
+                    } 
+                    else {
+                        hintedDataGridView.Rows[i].Cells[j].Value = library.shuffleNames2[i,j - 1];
                     }
                 }
             }
@@ -1146,34 +1143,18 @@ namespace Merrow {
 
         private void rndExtraHealingToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndExtraHealingToggle.Checked) { //replace the spell's data and the randomized names
-                //library.spells[135] = library.ss1healing[0];
                 library.spells[79] = library.wk1healing[0];
-                //library.shuffleNames[161] = "MEND";
-                //library.shuffleNames[165] = "HEALING";
-                //library.shuffleNames[166] = "HEAL";
-                //library.shuffleNames2[231] = "MENDING";
-                //library.shuffleNames2[232] = "RESPITE";
-                //library.shuffleNames2[233] = "MEND";
-                //library.shuffleNames2[234] = "RESTORE";
-                library.shuffleNames2[133] = "MENDING";
-                library.shuffleNames2[134] = "RESPITE";
-                library.shuffleNames2[135] = "MEND";
-                library.shuffleNames2[136] = "RESTORE";
+                library.shuffleNames2[19, 0] = "MENDING";
+                library.shuffleNames2[19, 1] = "RESPITE";
+                library.shuffleNames2[19, 2] = "MEND";
+                library.shuffleNames2[19, 3] = "RESTORE";
                 library.spells[76] = "Mending Lv1";
             } else {  //return the data to normal
-                //library.spells[135] = library.ss1healing[1];
                 library.spells[79] = library.wk1healing[1];
-                //library.shuffleNames[161] = "HEALING";
-                //library.shuffleNames[165] = "SCAN";
-                //library.shuffleNames[166] = "VISION";
-                //library.shuffleNames2[231] = "SCAN";
-                //library.shuffleNames2[232] = "SOUL";
-                //library.shuffleNames2[233] = "VISION";
-                //library.shuffleNames2[234] = "SENSE";
-                library.shuffleNames2[133] = "WEAKEN";
-                library.shuffleNames2[134] = "CRACKED";
-                library.shuffleNames2[135] = "WEAK";
-                library.shuffleNames2[136] = "CRACK";
+                library.shuffleNames2[19, 0] = "WEAKEN";
+                library.shuffleNames2[19, 1] = "CRACKED";
+                library.shuffleNames2[19, 2] = "WEAK";
+                library.shuffleNames2[19, 3] = "CRACK";
                 library.spells[76] = "Weakness Lv1";
             }
             UpdateCode();
@@ -1244,17 +1225,17 @@ namespace Merrow {
         private void rndBubbleToggle_CheckedChanged(object sender, EventArgs e) {
             if (rndBubbleToggle.Checked) { //replace the spell's data and the randomized names
                 library.spells[135] = library.ss1bubble[0];
-                library.shuffleNames2[231] = "BUBBLE";
-                library.shuffleNames2[232] = "SPLASH";
-                library.shuffleNames2[233] = "BUBBLES";
-                library.shuffleNames2[234] = "POP";
+                library.shuffleNames2[33, 0] = "BUBBLE";
+                library.shuffleNames2[33, 1] = "SPLASH";
+                library.shuffleNames2[33, 2] = "BUBBLES";
+                library.shuffleNames2[33, 3] = "POP";
                 library.spells[132] = "Bubble";
             } else {  //return the data to normal
                 library.spells[135] = library.ss1bubble[1];
-                library.shuffleNames2[231] = "SCAN";
-                library.shuffleNames2[232] = "SOUL";
-                library.shuffleNames2[233] = "VISION";
-                library.shuffleNames2[234] = "SENSE";
+                library.shuffleNames2[33, 0] = "SCAN";
+                library.shuffleNames2[33, 1] = "SOUL";
+                library.shuffleNames2[33, 2] = "VISION";
+                library.shuffleNames2[33, 3] = "SENSE";
                 library.spells[132] = "Soul Searcher Lv1";
             }
             UpdateCode();
