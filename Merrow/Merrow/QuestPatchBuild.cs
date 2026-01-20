@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Security;
 using System.Drawing;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 
 namespace Merrow {
     public partial class MerrowStandard {
@@ -239,16 +240,16 @@ namespace Merrow {
 
                     //spell pointers
                     for (int i = 0; i < playerspells; i++) {
-                        patchstrings.Add(library.shuffleNames2[i, 3]); //pointer location
+                        patchstrings.Add(library.shuffleNames2[i, 5]); //pointer location
                         patchstrings.Add("0004"); //write four bytes
-                        patchstrings.Add(library.shuffleNames2[i, 4]); //new pointer data
+                        patchstrings.Add(library.shuffleNames2[i, 6]); //new pointer data
                     }
 
                     //spell names
                     for (int i = 0; i < playerspells; i++) {
                         string temps = ToHex(hintnames[i]);
                         int zeroes = 32 - temps.Length;
-                        patchstrings.Add(library.shuffleNames2[i, 2]);
+                        patchstrings.Add(library.shuffleNames2[i, 4]);
                         patchstrings.Add("0010");
                         patchcontent = temps;
                         for (int j = 0; j < zeroes; j++) { patchcontent += "0"; }
@@ -548,33 +549,38 @@ namespace Merrow {
 
             //Stat randomization/scaling, Boss order shuffle
             if (rndMonsterStatsToggle.Checked || rndMonsterScaleToggle.Checked || rndBossOrderToggle.Checked || rndEXPBoostTrackBar.Value != 4) {
-                int moncount = 0;
-                for (int i = 0; i < newmonsterstats.Length; i++) {
-                    moncount = (i - (i % 6)) / 6; //monster index counter just to make boss checks smoother
+                for (int i = 0; i < newmonsterstats.Length / 6; i++) {
 
-                    if (moncount < 67 || moncount >= 74) { //V30: changed to >= 73 to exclude Beigis for now //V50: changed to 74 for Beigis
-                        patchstrings.Add(library.monsterstatlocations[i].ToString("X6"));
-                        patchstrings.Add("0002");
-                        patchstrings.Add(newmonsterstats[i].ToString("X4"));
-
-                        if (i % 6 == 0) { //if the current value is HP2, write it again at the HP1 location, offset 04 (HP2 + 2).
-                            patchstrings.Add((library.monsterstatlocations[i] + 2).ToString("X6"));
+                    if (i < 67 || i >= 74) { //V30: changed to >= 73 to exclude Beigis for now //V50: changed to 74 for Beigis
+                        for (int j = 0; j < 6; j++) {
+                            patchstrings.Add(library.monsterstatlocations[i, j]);
                             patchstrings.Add("0002");
-                            patchstrings.Add(newmonsterstats[i].ToString("X4"));
-                        }
+                            patchstrings.Add(newmonsterstats[i * 6 + j].ToString("X4"));
+
+                            if (j == 0)
+                            { //if the current value is HP2, write it again at the HP1 location, offset 04 (HP2 + 2).
+                                int tempint = Convert.ToInt32(library.monsterstatlocations[i, 0], 16);
+                                patchstrings.Add((tempint + 2).ToString("X6"));
+                                patchstrings.Add("0002");
+                                patchstrings.Add(newmonsterstats[i * 6 + j].ToString("X4"));
+                            }
+                        } 
                     }
-                    if (moncount >= 67 && moncount < 74) { //V30: changed to < 73 to exclude Beigis for now //V50: changed to 74 for Beigis
-                        int columnstep = i % 6;
-                        int rowstep = newbossorder[moncount - 67];
-                        patchstrings.Add(library.monsterstatlocations[402 + (rowstep * 6) + columnstep].ToString("X6"));
-                        patchstrings.Add("0002");
-                        patchstrings.Add(newmonsterstats[i].ToString("X4"));
-
-                        if (i % 6 == 0) { //if the current value is HP2, write it again at the HP1 location, offset 04 (HP2 + 2).
-                            patchstrings.Add((library.monsterstatlocations[402 + (rowstep * 6) + columnstep] + 2).ToString("X6"));
+                    if (i >= 67 && i < 74) { //V30: changed to < 73 to exclude Beigis for now //V50: changed to 74 for Beigis
+                        int rowstep = newbossorder[i - 67];
+                        for (int j = 0; j < 6; j++) {
+                            patchstrings.Add(library.monsterstatlocations[67 + rowstep, j]);
                             patchstrings.Add("0002");
-                            patchstrings.Add(newmonsterstats[i].ToString("X4"));
+                            patchstrings.Add(newmonsterstats[i * 6 + j].ToString("X4"));
+
+                            if (j == 0) { //if the current value is HP2, write it again at the HP1 location, offset 04 (HP2 + 2).
+                                int tempint = Convert.ToInt32(library.monsterstatlocations[67 + rowstep, j], 16);
+                                patchstrings.Add((tempint + 2).ToString("X6"));
+                                patchstrings.Add("0002");
+                                patchstrings.Add(newmonsterstats[i * 6 + j].ToString("X4"));
+                            }
                         }
+                        
                     }
                 }
 
@@ -1225,7 +1231,7 @@ namespace Merrow {
             //Monster flying shuffle
             if (rndFlyingShuffle.Checked) {
                 for (int i = 0; i < 74; i++) {
-                    patchstrings.Add(library.monsterflyingvanilla[i * 2].ToString("X6"));
+                    patchstrings.Add(library.monsterflyingvanilla[i * 2]);
                     patchstrings.Add("0002");
                     patchstrings.Add(rndflying[i].ToString("X4"));
                 }

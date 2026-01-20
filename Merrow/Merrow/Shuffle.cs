@@ -261,7 +261,7 @@ namespace Merrow {
                         hintnames[i] += " " + library.shuffleNames2[shuffles[i],2];
                         break;
                 }
-                Console.WriteLine(i.ToString() + ": " + hintnames[i]);
+                //Console.WriteLine(i.ToString() + ": " + hintnames[i]);
             }
 
             //RANDOM CHESTS
