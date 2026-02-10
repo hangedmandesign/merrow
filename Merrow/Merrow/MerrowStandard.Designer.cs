@@ -399,6 +399,11 @@
             this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.refHintedTab = new System.Windows.Forms.TabPage();
             this.hintedDataGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomTab = new System.Windows.Forms.TabPage();
             this.advErrorLabel = new System.Windows.Forms.Label();
             this.advHelpLabel = new System.Windows.Forms.Label();
@@ -463,11 +468,6 @@
             this.menuItemBFR = new System.Windows.Forms.MenuItem();
             this.menuItemCRT = new System.Windows.Forms.MenuItem();
             this.menuItemRLE = new System.Windows.Forms.MenuItem();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.shortcutsBox.SuspendLayout();
@@ -883,9 +883,9 @@
             // 
             this.creditsLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.creditsLinkLabel.LinkArea = new System.Windows.Forms.LinkArea(477, 41);
-            this.creditsLinkLabel.Location = new System.Drawing.Point(36, 15);
+            this.creditsLinkLabel.Location = new System.Drawing.Point(9, 15);
             this.creditsLinkLabel.Name = "creditsLinkLabel";
-            this.creditsLinkLabel.Size = new System.Drawing.Size(513, 69);
+            this.creditsLinkLabel.Size = new System.Drawing.Size(569, 69);
             this.creditsLinkLabel.TabIndex = 7;
             this.creditsLinkLabel.Text = resources.GetString("creditsLinkLabel.Text");
             this.creditsLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4110,6 +4110,38 @@
             this.hintedDataGridView.Size = new System.Drawing.Size(570, 514);
             this.hintedDataGridView.TabIndex = 1;
             // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewTextBoxColumn6.HeaderText = "NAME";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.Width = 63;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "PREFIX 1";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "PREFIX 2";
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "SUFFIX 1";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "SUFFIX 2";
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            // 
             // CustomTab
             // 
             this.CustomTab.BackColor = System.Drawing.Color.Transparent;
@@ -4767,38 +4799,6 @@
             this.menuItemRLE.Shortcut = System.Windows.Forms.Shortcut.F8;
             this.menuItemRLE.Text = "RLE/Quest String Converter";
             this.menuItemRLE.Click += new System.EventHandler(this.menuItemRLE_Click);
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewTextBoxColumn6.HeaderText = "NAME";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            this.dataGridViewTextBoxColumn6.Width = 63;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "PREFIX 1";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "PREFIX 2";
-            this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.HeaderText = "SUFFIX 1";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
-            // 
-            // Column9
-            // 
-            this.Column9.HeaderText = "SUFFIX 2";
-            this.Column9.Name = "Column9";
-            this.Column9.ReadOnly = true;
             // 
             // MerrowStandard
             // 
