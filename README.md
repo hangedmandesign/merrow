@@ -29,15 +29,13 @@ The project is a C# Visual Studio Winforms application. When compiled, it will c
 
 The following classes are kept deliberately separate:
 * *DataStore.cs*, which contains arrays and tables of reference data used for randomizer calculation and generation.
-* *crc64.dll*, a DLL implementation of some old community code for repairing N64 CRCs, modified to work standalone from a filename rather than requiring a bitstream.
+* *CRC.cs*, an implementation of some old community code for repairing N64 CRCs.
 
-The rest of the files (especially *MerrowStandard.Designer.cs*) are auto-generated as part of WPF and should never be manually edited, to avoid future build issues. To edit the visual layout of Merrow, right-click on the *MerrowStandard.cs* file in the Solution Explorer, and select *View Designer*.
-
-The other folder on the root level "crc64" is a C++ Visual Studio DLL project, which compiles into the **crc64.dll** file, which must be included alongside the compiled Merrow.exe for the CRC (checksum) Repair Tool to work. It's unlikely to change, so an up-to-date build of it is provided in the Merrow folder.
+NOTE: The rest of the files (especially *MerrowStandard.Designer.cs*) are auto-generated as part of WPF and should never be manually edited, to avoid future build issues. To edit the visual layout of Merrow, right-click on the *MerrowStandard.cs* file in the Solution Explorer, and select *View Designer*.
 
 # MerrowStandard.cs Code Structure
 This is a short overview of the code structure, contained in the class *MerrowStandard:Form*. Comments in the code explain each section in more detail.
-* Variable declarations. New winforms objects should ideally only be created through the Winforms Toolbox interface in the Designer, so that variable names will auto-update throughout. Large arrays should be stored in DataStore.cs, not here.
+* Variable declarations. New winforms objects should ideally only be created through the Winforms Toolbox interface in the Designer, so that variable names will auto-update throughout. Large arrays or any defined data should be stored in DataStore.cs, not here.
   - "library" is the imported DataStore.cs
   - "fix_crc" is the connected crc64.dll
   - Prefixes "rnd","exp" are winforms objects in the *Quest 64 Randomizer* tab
@@ -45,7 +43,7 @@ This is a short overview of the code structure, contained in the class *MerrowSt
   - Prefix "bin" are winforms objects in the *Binary File Reader* tab
   - Prefix "crc" are winforms objects in the *CRC Repair Tool* tab
 * *MerrowStandard*: initialization functions.
-* General functions not created by Winforms, including *RepairCRC*, which calls the fix_crc dll connection.
+* General functions not created by Winforms, including *RepairCRC*, which invokes CRC.cs.
 * UI interactions, for modifying the interface on interaction and for calling other functions. Roughly ordered by tab. These should ideally only be created through the Winforms Properties interface in the Designer, so that variable names will auto-update throughout. None should be left empty.
 
 # Shuffle.cs Code Structure
