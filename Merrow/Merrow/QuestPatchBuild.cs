@@ -125,7 +125,7 @@ namespace Merrow {
             File.AppendAllText(filePath + fileName + "_spoiler.txt", "Seed: " + rngseed.ToString() + Environment.NewLine);
             File.AppendAllText(filePath + fileName + "_spoiler.txt", "Shortcode: " + rndShortcodeText.Text + Environment.NewLine);
             File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "PSA: You can use the same Controller Pak save file across multiple different rando patches." + Environment.NewLine + "Only inventory, stats, defeated bosses, and collected chests/spirits will be retained." + Environment.NewLine + "Save states override all settings and cannot be used for testing randomization across different patches." + Environment.NewLine);
-            File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "Please report any bugs or quirks (or funny stuff): @JonahD on Twitter, or hangedman#5757 on Discord." + Environment.NewLine);
+            File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "Please report any bugs or quirks (or funny stuff): @JonahD on Bluesky, or hangedman#5757 on Discord." + Environment.NewLine);
             File.AppendAllText(filePath + fileName + "_spoiler.txt", Environment.NewLine + "PATCH MODIFIERS:" + Environment.NewLine);
             patchbuild = "";
             patchcontent = "";
@@ -1405,6 +1405,8 @@ namespace Merrow {
                     patchstrings.Add(decLength.ToString("X4")); //name length in hex bytes
 
                     patchstrings.Add(ToHex(voweled[i]));
+
+                    spoilerextra.Add(voweled[i]);
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Vowel play enabled." + Environment.NewLine);

@@ -721,6 +721,7 @@ namespace Merrow {
 
         private void rndLevelToggle_CheckedChanged(object sender, EventArgs e) {
             rndSpellDropdown.Visible = true;
+            rndArchipelagoDewDrop.Visible = true;
             debugoutput = true;
             UpdateCode();
         }
