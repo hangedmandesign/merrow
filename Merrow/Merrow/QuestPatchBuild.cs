@@ -10,6 +10,7 @@ using System.Security;
 using System.Drawing;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
+using Merrow.Util;
 
 namespace Merrow {
     public partial class MerrowStandard {
@@ -81,6 +82,7 @@ namespace Merrow {
                 !rndDriftToggle.Checked &&
                 !rndMusicShuffleToggle.Checked &&
                 !rndFlyingShuffle.Checked &&
+                !rndBossMpToggle.Checked &&
 
                 !checkBoxShuffleEnemyCompositions.Checked &&
                 !checkBoxShuffleEnemyTables.Checked
@@ -1514,6 +1516,40 @@ namespace Merrow {
                 }
 
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Combat EXP display changed to numerical." + Environment.NewLine);
+            }
+
+            // Boss MP Awards
+            if (rndBossMpToggle.Checked) {
+                var operation = new MapWriteOperation(0xC8B4, new string[]
+                {
+                    "3C028008",
+                    "00056040",
+                    "3C038005",
+                    "2442BA80",
+                    "006C1821",
+                    "9463C2C0",
+                    "944D0006",
+                    "944F000A",
+                    "0003C043",
+                    "01A34021",
+                    "01F84821",
+                    "A4480006",
+                    "A449000A",
+                    "A4480004",
+                    "A4490008",
+                    "8FBF0014",
+                    "27BD0018",
+                    "03E00008",
+                    "00000000"
+                });
+
+                var romAddress = operation.GetMerrowROMAddress();
+                var hexLength = operation.GetMerrowWriteLength();
+                var hexBlock = operation.GetMerrowWriteBlock();
+
+                patchstrings.Add(romAddress);
+                patchstrings.Add(hexLength);
+                patchstrings.Add(hexBlock);
             }
 
             //Lock Backward Door In Mammon's World

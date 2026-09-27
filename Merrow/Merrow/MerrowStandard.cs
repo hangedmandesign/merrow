@@ -1272,6 +1272,7 @@ namespace Merrow {
                 rndTextImprovementsToggle.Checked = true;
                 rndCombatExpToggle.Checked = true;
                 rndMammonDoorToggle.Checked = true;
+                rndBossMpToggle.Checked = true;
             }
 
             if (!rndFrenchVanillaToggle.Checked) {
