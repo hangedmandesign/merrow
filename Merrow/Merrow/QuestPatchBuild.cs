@@ -1719,6 +1719,11 @@ namespace Merrow {
                 enableCompression.AddToPatchStrings(patchstrings);
                 enableSilence.AddToPatchStrings(patchstrings);
                 enableStuns.AddToPatchStrings(patchstrings);
+
+
+                var enableStatusItems = new MapWriteOperation(0x22F10, new string[] { "31CF0101" });
+
+                enableStatusItems.AddToPatchStrings(patchstrings);
             }
 
             if (rndLongerStatusBuffs.Checked)
