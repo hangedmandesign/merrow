@@ -1710,6 +1710,59 @@ namespace Merrow {
                 patchstrings.Add(agiHexBlock);
             }
 
+            if (rndBossesLoseStatusImmunity.Checked)
+            {
+                var enableCompression = new MapWriteOperation(0x17C24, new string[] { "31CF0000" });
+                var enableSilence = new MapWriteOperation(0x17F94, new string[] { "31CF0000" });
+                var enableStuns = new MapWriteOperation(0x17D78, new string[] { "31CF0000" });
+
+                enableCompression.AddToPatchStrings(patchstrings);
+                enableSilence.AddToPatchStrings(patchstrings);
+                enableStuns.AddToPatchStrings(patchstrings);
+            }
+
+            if (rndLongerStatusBuffs.Checked)
+            {
+                // The status max durations are stored at 4D9FC in an array of 12 int32s,
+                // with the following offsets and values:
+                //
+                //      0x00, 0x00000005, Compression
+                //      0x04, 0x00000005, Vampire
+                //      0x08, 0x00000005, Power Staff
+                //      0x0C, 0x00000005, Restriction
+                //      0x10, 0x00000005, Movement
+                //      0x14, 0x00000005, Agility
+                //      0x18, 0x00000005, Silence
+                //      0x1C, 0x00000005, Soul Searcher
+                //      0x20, 0x00000002, Barrier
+                //      0x24, 0x00000005, Confusion
+                //      0x28, 0x00000005, Defense
+                //      0x2C, 0x00000005, Invalidity
+                // 
+                // TODO: Make this configurable, but for now we will just extend the durations to a max of 12 rounds
+                //
+                var moddedStatusDuration = 12;
+                var moddedStatusHex = moddedStatusDuration.ToString("X08");
+
+                var statusDurationOperation = new MapWriteOperation(0x4d9fc, new string[]
+                {
+                    "00000005",      //  Compression
+                    moddedStatusHex, //  Vampire
+                    moddedStatusHex, //  Power Staff
+                    "00000005",      //  Restriction
+                    moddedStatusHex, //  Movement
+                    moddedStatusHex, //  Agility
+                    "00000005",      //  Silence
+                    "00000005",      //  Soul Searcher
+                    "00000002",      //  Barrier
+                    "00000005",      //  Confusion
+                    moddedStatusHex, //  Defense
+                    "00000005",      //  Invalidity
+                });
+
+                statusDurationOperation.AddToPatchStrings(patchstrings);
+            }
+
             //Lock Backward Door In Mammon's World
             if (rndMammonDoorToggle.Checked) {
                 for (int i = 0; i < 3; i++) {

@@ -471,6 +471,8 @@
             this.menuItemCRT = new System.Windows.Forms.MenuItem();
             this.menuItemRLE = new System.Windows.Forms.MenuItem();
             this.rndImprovedBuffs = new System.Windows.Forms.CheckBox();
+            this.rndBossesLoseStatusImmunity = new System.Windows.Forms.CheckBox();
+            this.rndLongerStatusBuffs = new System.Windows.Forms.CheckBox();
             this.tabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.shortcutsBox.SuspendLayout();
@@ -1826,6 +1828,8 @@
             // 
             // rndSpellBox
             // 
+            this.rndSpellBox.Controls.Add(this.rndLongerStatusBuffs);
+            this.rndSpellBox.Controls.Add(this.rndBossesLoseStatusImmunity);
             this.rndSpellBox.Controls.Add(this.rndImprovedBuffs);
             this.rndSpellBox.Controls.Add(this.rndBubbleToggle);
             this.rndSpellBox.Controls.Add(this.rndSpellOverridesToggle);
@@ -4855,6 +4859,31 @@
             this.rndToolTip.SetToolTip(this.rndImprovedBuffs, "If enabled, Spirit Armor and Evade also apply a flat increase and last longer.");
             this.rndImprovedBuffs.UseVisualStyleBackColor = true;
             // 
+            // rndBossesLoseStatusImmunity
+            // 
+            this.rndBossesLoseStatusImmunity.AutoSize = true;
+            this.rndBossesLoseStatusImmunity.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndBossesLoseStatusImmunity.Location = new System.Drawing.Point(6, 329);
+            this.rndBossesLoseStatusImmunity.Name = "rndBossesLoseStatusImmunity";
+            this.rndBossesLoseStatusImmunity.Size = new System.Drawing.Size(159, 17);
+            this.rndBossesLoseStatusImmunity.TabIndex = 32;
+            this.rndBossesLoseStatusImmunity.Text = "Bosses lose status immunity.";
+            this.rndToolTip.SetToolTip(this.rndBossesLoseStatusImmunity, "If enabled, Bosses are susceptible to dangerous status effects like Silence and F" +
+        "reeze.");
+            this.rndBossesLoseStatusImmunity.UseVisualStyleBackColor = true;
+            // 
+            // rndLongerStatusBuffs
+            // 
+            this.rndLongerStatusBuffs.AutoSize = true;
+            this.rndLongerStatusBuffs.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndLongerStatusBuffs.Location = new System.Drawing.Point(6, 352);
+            this.rndLongerStatusBuffs.Name = "rndLongerStatusBuffs";
+            this.rndLongerStatusBuffs.Size = new System.Drawing.Size(162, 17);
+            this.rndLongerStatusBuffs.TabIndex = 33;
+            this.rndLongerStatusBuffs.Text = "Longer status buffs / debuffs";
+            this.rndToolTip.SetToolTip(this.rndLongerStatusBuffs, "If enabled, status buffs like Evade and Power Staff can last much longer.");
+            this.rndLongerStatusBuffs.UseVisualStyleBackColor = true;
+            // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -5287,6 +5316,8 @@
         private System.Windows.Forms.CheckBox rndMammonDoorToggle;
         private System.Windows.Forms.CheckBox rndBossMpToggle;
         private System.Windows.Forms.CheckBox rndImprovedBuffs;
+        private System.Windows.Forms.CheckBox rndBossesLoseStatusImmunity;
+        private System.Windows.Forms.CheckBox rndLongerStatusBuffs;
     }
 }
 
