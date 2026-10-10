@@ -248,6 +248,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.rndMonsterBox = new System.Windows.Forms.GroupBox();
+            this.rndBossMpToggle = new System.Windows.Forms.CheckBox();
             this.rndCombatExpToggle = new System.Windows.Forms.CheckBox();
             this.rndEXPBoostValue = new System.Windows.Forms.Label();
             this.rndEncounterLabel2 = new System.Windows.Forms.Label();
@@ -469,7 +470,7 @@
             this.menuItemBFR = new System.Windows.Forms.MenuItem();
             this.menuItemCRT = new System.Windows.Forms.MenuItem();
             this.menuItemRLE = new System.Windows.Forms.MenuItem();
-            this.rndBossMpToggle = new System.Windows.Forms.CheckBox();
+            this.rndImprovedBuffs = new System.Windows.Forms.CheckBox();
             this.tabsControl.SuspendLayout();
             this.CreditsTab.SuspendLayout();
             this.shortcutsBox.SuspendLayout();
@@ -1825,6 +1826,7 @@
             // 
             // rndSpellBox
             // 
+            this.rndSpellBox.Controls.Add(this.rndImprovedBuffs);
             this.rndSpellBox.Controls.Add(this.rndBubbleToggle);
             this.rndSpellBox.Controls.Add(this.rndSpellOverridesToggle);
             this.rndSpellBox.Controls.Add(this.rndSpellRebalanceToggle);
@@ -2147,6 +2149,21 @@
             this.rndMonsterBox.TabIndex = 26;
             this.rndMonsterBox.TabStop = false;
             this.rndMonsterBox.Text = "MONSTERS";
+            // 
+            // rndBossMpToggle
+            // 
+            this.rndBossMpToggle.AutoSize = true;
+            this.rndBossMpToggle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndBossMpToggle.Location = new System.Drawing.Point(10, 319);
+            this.rndBossMpToggle.Name = "rndBossMpToggle";
+            this.rndBossMpToggle.Size = new System.Drawing.Size(144, 17);
+            this.rndBossMpToggle.TabIndex = 49;
+            this.rndBossMpToggle.Text = "NEW: Bosses Award MP";
+            this.rndBossMpToggle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rndToolTip.SetToolTip(this.rndBossMpToggle, "Changes the Pause menu Combat experience display value.\r\nInstead of displaying a " +
+        "percentage of progress to next level, \r\nit will display an exact number of requi" +
+        "red experience points.");
+            this.rndBossMpToggle.UseVisualStyleBackColor = true;
             // 
             // rndCombatExpToggle
             // 
@@ -4826,27 +4843,24 @@
             this.menuItemRLE.Text = "RLE/Quest String Converter";
             this.menuItemRLE.Click += new System.EventHandler(this.menuItemRLE_Click);
             // 
-            // rndBossMpToggle
+            // rndImprovedBuffs
             // 
-            this.rndBossMpToggle.AutoSize = true;
-            this.rndBossMpToggle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rndBossMpToggle.Location = new System.Drawing.Point(10, 319);
-            this.rndBossMpToggle.Name = "rndBossMpToggle";
-            this.rndBossMpToggle.Size = new System.Drawing.Size(144, 17);
-            this.rndBossMpToggle.TabIndex = 49;
-            this.rndBossMpToggle.Text = "NEW: Bosses Award MP";
-            this.rndBossMpToggle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rndToolTip.SetToolTip(this.rndBossMpToggle, "Changes the Pause menu Combat experience display value.\r\nInstead of displaying a " +
-        "percentage of progress to next level, \r\nit will display an exact number of requi" +
-        "red experience points.");
-            this.rndBossMpToggle.UseVisualStyleBackColor = true;
+            this.rndImprovedBuffs.AutoSize = true;
+            this.rndImprovedBuffs.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.rndImprovedBuffs.Location = new System.Drawing.Point(6, 306);
+            this.rndImprovedBuffs.Name = "rndImprovedBuffs";
+            this.rndImprovedBuffs.Size = new System.Drawing.Size(169, 17);
+            this.rndImprovedBuffs.TabIndex = 31;
+            this.rndImprovedBuffs.Text = "Improved Evade + Spirit Armor";
+            this.rndToolTip.SetToolTip(this.rndImprovedBuffs, "If enabled, Spirit Armor and Evade also apply a flat increase and last longer.");
+            this.rndImprovedBuffs.UseVisualStyleBackColor = true;
             // 
             // MerrowStandard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(624, 601);
+            this.ClientSize = new System.Drawing.Size(624, 580);
             this.Controls.Add(this.helpLabel);
             this.Controls.Add(this.tabsControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -5272,6 +5286,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.CheckBox rndMammonDoorToggle;
         private System.Windows.Forms.CheckBox rndBossMpToggle;
+        private System.Windows.Forms.CheckBox rndImprovedBuffs;
     }
 }
 

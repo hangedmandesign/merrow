@@ -83,6 +83,7 @@ namespace Merrow {
                 !rndMusicShuffleToggle.Checked &&
                 !rndFlyingShuffle.Checked &&
                 !rndBossMpToggle.Checked &&
+                !rndImprovedBuffs.Checked &&
 
                 !checkBoxShuffleEnemyCompositions.Checked &&
                 !checkBoxShuffleEnemyTables.Checked
@@ -1550,6 +1551,163 @@ namespace Merrow {
                 patchstrings.Add(romAddress);
                 patchstrings.Add(hexLength);
                 patchstrings.Add(hexBlock);
+            }
+
+            // Improved Agi / Defense Buffs
+            if (rndImprovedBuffs.Checked) {
+
+                var bonusSpiritArmor1 = 20;
+                var bonusSpiritArmor2 = 40;
+
+                var bonusSpiritArmor1Hex = "24C6" + bonusSpiritArmor1.ToString("X04");
+                var bonusSpiritArmor2Hex = "24C6" + bonusSpiritArmor2.ToString("X04");
+
+                var defenseOperation = new MapWriteOperation(0X180B8, new string[]
+                {
+                    // func_800174B8
+                    // https://decomp.me/scratch/rENVW
+                    //
+                    "27BDFFE0", // addiu
+                    "AFB00018", // sw
+                    "00A08025", // move
+                    "AFBF001C", // sw
+                    "8E020068", // lw
+                    "24010001", // li
+                    "24050400", // li
+                    "944E0000", // lhu
+                    "24070001", // li
+                    "35CF0400", // ori
+                    "A44F0000", // sh
+                    "8E180064", // lw
+                    "24020006", // li
+                    "9703000E", // lhu
+                    "1080000C", // beq
+                    "00603025", // move
+                    "24010002", // li
+                    "1080000D", // beq
+                    "00034083", // sra
+                    "24010003", // li
+                    "1080000E", // beq
+                    "00035043", // sra
+                    "24010004", // li
+                    "50800011", // beql
+                    "00033040", // sll
+                    "10000013", // b
+                    "8E0D0068", // lw
+                    "00033043", // sra
+                    "30D9FFFF", // andi
+                    "1000000E", // b
+                    "03203025", // move
+                    "00683023", // subu
+                    "30C9FFFF", // andi
+                    "1000000A", // b
+                    "01203025", // move
+                    "006A3021", // addu
+                    bonusSpiritArmor1Hex, // addiu
+                    "30CBFFFF", // andi
+                    "10000005", // b
+                    "01603025", // move
+                    "00033040", // sll
+                    bonusSpiritArmor2Hex, // addiu
+                    "30CCFFFF", // andi
+                    "01803025", // move
+                    "8E0D0068", // lw
+                    "02002025", // move
+                    "A5A60088", // sh
+                    "8E180068", // lw
+                    "8E0E0064", // lw
+                    "97190088", // lhu
+                    "95CF000E", // lhu
+                    "000FC86A", // slt
+                    "10200003", // beqz
+                    "00000000", // nop
+                    "10000001", // b
+                    "24020005", // li
+                    "0C007F3E", // jal
+                    "3046FFFF", // andi
+                    "8FBF001C", // lw
+                    "8FB00018", // lw
+                    "27BD0020", // addiu
+                    "03E00008", // jr
+                    "00000000", // nop
+                });
+
+                var defRomAddress = defenseOperation.GetMerrowROMAddress();
+                var defHexLength = defenseOperation.GetMerrowWriteLength();
+                var defHexBlock = defenseOperation.GetMerrowWriteBlock();
+
+                patchstrings.Add(defRomAddress);
+                patchstrings.Add(defHexLength);
+                patchstrings.Add(defHexBlock);
+
+
+                var bonusEvade1 = 50;
+                var bonusEvade2 = 100;
+
+                var bonusEvade1Hex = "252A" + bonusEvade1.ToString("X04");
+                var bonusEvade2Hex = "256C" + bonusEvade2.ToString("X04");
+
+                var agilityOperation = new MapWriteOperation(0x17EA0, new string[]
+                {
+                    // func_800172A0
+                    // https://decomp.me/scratch/fBbGG
+                    //
+                    "27BDFFE0", // addiu
+                    "AFBF0014", // sw
+                    "AFA50024", // sw
+                    "8FAE0024", // lw
+                    "24010001", // li
+                    "24050020", // li
+                    "8DC20068", // lw
+                    "24070001", // li
+                    "944F0000", // lhu
+                    "35F80020", // ori
+                    "A4580000", // sh
+                    "8FB90024", // lw
+                    "24020007", // li
+                    "8F280064", // lw
+                    "10800009", // beq
+                    "9503000C", // lhu
+                    "24010002", // li
+                    "1080000A", // beq
+                    "00035880", // sll
+                    "24010003", // li
+                    "1080000A", // beq
+                    "00036843", // sra
+                    "1000000A", // b
+                    "8FAF0024", // lw
+                    "00034840", // sll
+                    bonusEvade1Hex, // addiu
+                    "10000005", // b
+                    "A7AA001C", // sh
+                    bonusEvade2Hex, // addiu
+                    "10000002", // b
+                    "A7AC001C", // sh
+                    "A7AD001C", // sh
+                    "8FAF0024", // lw
+                    "97AE001C", // lhu
+                    "24010003", // li
+                    "8DF80068", // lw
+                    "14810003", // bne
+                    "A70E0086", // sh
+                    "10000001", // b
+                    "2402000C", // li
+                    "8FA40024", // lw
+                    "0C007F3E", // jal
+                    "3046FFFF", // andi
+                    "8FBF0014", // lw
+                    "27BD0020", // addiu
+                    "03E00008", // jr
+                    "00000000", // nop
+                });
+
+                var agiRomAddress = agilityOperation.GetMerrowROMAddress();
+                var agiHexLength = agilityOperation.GetMerrowWriteLength();
+                var agiHexBlock = agilityOperation.GetMerrowWriteBlock();
+
+                patchstrings.Add(agiRomAddress);
+                patchstrings.Add(agiHexLength);
+                patchstrings.Add(agiHexBlock);
             }
 
             //Lock Backward Door In Mammon's World
