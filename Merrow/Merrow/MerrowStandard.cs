@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using System.Security;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using static Merrow.Util.CloakColoring;
 
 namespace Merrow {
     public partial class MerrowStandard : Form {
@@ -116,7 +117,8 @@ namespace Merrow {
         bool lightdark;
         double hueOffset;
         bool lightdarkicon = true;
-        Color lastcloakpalettecolor;
+        Color lastCloakPaletteColor;
+        Color lastShawlPaletteColor;
         bool crashlockoutput = false;
         int[] hints = new int[5];
         int[] hintcoins = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -508,6 +510,8 @@ namespace Merrow {
                     combatDataGridView.Rows[i].Cells[j].Value = library.combatlvldatatable[i * 6 + j];
                 }
             }
+
+            rndSpecialThemeOptions.DataSource = Enum.GetValues(typeof(BrianColorPreset));
         }
 
         //WINFORMS UI INTERACTIONS-------------------------------------------------------------------
@@ -1131,7 +1135,39 @@ namespace Merrow {
             if (rndCloakViewTextbox.Text != "" && rndCloakViewTextbox.Text != null && loadfinished) {
                 Color currval = System.Drawing.ColorTranslator.FromHtml("#" + rndCloakViewTextbox.Text);
                 rndColourPanelC.BackColor = currval;
-                lastcloakpalettecolor = currval;
+                lastCloakPaletteColor = currval;
+                //Shuffling(true);
+            }
+        }
+
+
+        private void rndShawlPaletteToggle_CheckedChanged(object sender, EventArgs e)
+        {
+            rndShawlPaletteDropdown.Enabled = rndCloakPaletteToggle.Checked;
+            rndShawlViewPanel.Visible = rndCloakPaletteToggle.Checked;
+            UpdateCode();
+        }
+
+        private void rndShawlPaletteDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (rndShawlPaletteDropdown.SelectedIndex == 1) { rndShawlViewTextbox.Enabled = true; }
+            else { rndShawlViewTextbox.Enabled = false; }
+            UpdateCode();
+            Shuffling(true);
+        }
+
+        private void rndShawlViewTextbox_TextChanged(object sender, EventArgs e)
+        {
+            var textboxSender = (TextBox)sender; //restricts to hexadecimal characters only
+            var cursorPosition = textboxSender.SelectionStart;
+            textboxSender.Text = Regex.Replace(textboxSender.Text, "[^0-9a-fA-F]", "");
+            textboxSender.SelectionStart = cursorPosition;
+            //if (rndCloakViewTextbox.Text.Length < 6) { rndCloakViewTextbox.Text = rndCloakViewTextbox.Text.PadLeft(6, 'F'); }
+            if (rndShawlViewTextbox.Text != "" && rndShawlViewTextbox.Text != null && loadfinished)
+            {
+                Color currval = System.Drawing.ColorTranslator.FromHtml("#" + rndShawlViewTextbox.Text);
+                rndColourPanelD.BackColor = currval;
+                lastShawlPaletteColor = currval;
                 //Shuffling(true);
             }
         }
@@ -1805,6 +1841,11 @@ namespace Merrow {
             tabsControl.SelectedIndex = 1;
             rndTabsControl.SelectedIndex = 3;
             rndGiftersDropdown.SelectedIndex = 1;
+        }
+
+        private void rndSpecialThemeOverride_CheckedChanged(object sender, EventArgs e)
+        {
+            this.rndSpecialThemeOptions.Enabled = this.rndSpecialThemeOverride.Checked;
         }
     }
 }

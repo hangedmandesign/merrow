@@ -995,7 +995,7 @@ namespace Merrow {
                 rndColourPanelC.BackColor = System.Drawing.ColorTranslator.FromHtml(randcolor);
             }
 
-            lastcloakpalettecolor = System.Drawing.ColorTranslator.FromHtml(randcolor);
+            lastCloakPaletteColor = System.Drawing.ColorTranslator.FromHtml(randcolor);
 
             //SPELL PALETTE RANDOMIZATION
             for (int i = 0; i < rndspellcolours.Length; i++) {

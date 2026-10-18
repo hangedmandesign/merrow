@@ -2190,7 +2190,12 @@ namespace Merrow {
 
         //cloak vertex colour addresses
         public string[] cloaklocations = {
-            "8713DC","87148C","87153C","8715EC","87169C","87174C"
+            "8713DC",
+            "87148C",
+            "87153C",
+            "8715EC",
+            "87169C",
+            "87174C"
         };
 
         //06B268 (CRC break), to replace "Continue save?"
