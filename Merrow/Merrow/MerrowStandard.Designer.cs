@@ -3354,16 +3354,18 @@
             // 
             // label1
             // 
-            this.label1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(16, 19);
+            this.label1.Location = new System.Drawing.Point(6, 278);
             this.label1.Name = "label1";
             this.label1.Padding = new System.Windows.Forms.Padding(5);
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label1.Size = new System.Drawing.Size(538, 39);
+            this.label1.Size = new System.Drawing.Size(256, 87);
             this.label1.TabIndex = 2;
-            this.label1.Text = resources.GetString("label1.Text");
+            this.label1.Text = "These spell can be freely swapped with regular spells without any extra work to t" +
+    "he spell code.";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel4
             // 
@@ -3392,7 +3394,7 @@
             this.tableLayoutPanel4.Controls.Add(this.label10, 0, 7);
             this.tableLayoutPanel4.Controls.Add(this.label11, 0, 8);
             this.tableLayoutPanel4.Controls.Add(this.label12, 0, 9);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(6, 95);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 11;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -3406,7 +3408,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(548, 256);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(267, 256);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // comboBossSpellLogicFireArrows
