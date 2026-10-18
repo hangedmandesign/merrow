@@ -1453,6 +1453,27 @@ namespace Merrow {
                 File.AppendAllText(filePath + fileName + "_spoiler.txt", "Cloak colour randomized." + Environment.NewLine);
             }
 
+            //if (rndShawlPaletteToggle.Checked)
+            //{
+            //    var applicator = CloakColoring.CloakColorApplicator.FromShawlExplicit()
+            //}
+
+            if (rndSpecialThemeOverride.Checked)
+            {
+                var foundOption = Enum.TryParse<CloakColoring.BrianColorPreset>(rndSpecialThemeOptions.SelectedValue.ToString(), out var selection);
+                if (foundOption)
+                {
+                    var applicator = CloakColoring.CloakColorApplicator.FromSpecialCloakPreset(selection);
+                    applicator.ApplyToPatchStrings(patchstrings);
+
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", $"Cloak Preset assigned: {selection}" + Environment.NewLine);
+                }
+                else
+                {
+                    File.AppendAllText(filePath + fileName + "_spoiler.txt", $"DID NOT APPLY CLOAK PRESET, could not find: {selection}" + Environment.NewLine);
+                }
+            }
+
             //Random BGM
             if (rndMusicShuffleToggle.Checked) {
                 for (int i = 0; i < rndbgms.Length; i++) {

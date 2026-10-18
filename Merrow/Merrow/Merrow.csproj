@@ -88,6 +88,7 @@
     <Compile Include="Shuffle.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Util\CloakColoring.cs" />
     <Compile Include="Util\AreaEncounterData.cs" />
     <Compile Include="Util\ListUtil.cs" />
     <Compile Include="VarFunctions.cs">

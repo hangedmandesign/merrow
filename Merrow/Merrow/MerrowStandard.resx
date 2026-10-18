@@ -151,45 +151,13 @@ Z64 Export will not overwrite your original Z64 file, it will instead export a Z
 However, exports will automatically overwrite any existing file with the same name already in the save location.
 It will also create a 'filename + Spoiler.txt' file in the same directory that lists patch contents, seed, and other information.</value>
   </data>
-  <data name="rndSpellRebalanceToggle.ToolTip" xml:space="preserve">
-    <value>Adjusts damage values for most spells.
-Makes many assorted spells more useful, slightly nerfs the most powerful spells.
-Also causes most multi-level spells to scale inversely: the more precise low-level spells
-will do slightly more damage per hit than the high-level bigger ones with more hits.</value>
-  </data>
-  <data name="rndDistributeSpellsToggle.ToolTip" xml:space="preserve">
-    <value>Distributes the four most powerful combat spells (Avalanche, Magic Barrier, Water Pillar Lv3, Large Cutter)
-so that each is sorted into a different element when shuffled. Also generally tends towards the spells being
-at the higher end of their respective elements, to allow for better race enviroments.</value>
-  </data>
-  <data name="rndExtraHealingToggle.ToolTip" xml:space="preserve">
-    <value>Replaces Soul Search Lv1 with another copy of Healing Lv1, called 'Mending Lv1'.
-This spell will always appear in a different element than the default Healing Lv1.
-
-If "Guarantee early Healing" is enabled, this option will also shuffle Vampire's Touch
-into a different element than Healing and Mending, as a third source of early Healing.</value>
-  </data>
-  <data name="rndElement99Toggle.ToolTip" xml:space="preserve">
-    <value>Element level maximum is increased from 50 to 99.
-No new magic will be acquired past Level 50, but 
-spell and melee power will continue to increase 
-multiplicatively, making single-element strats easier.</value>
-  </data>
-  <data name="rndSoulToggle.ToolTip" xml:space="preserve">
-    <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
-Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.
-[NOTE: Every time the Soul Search effect occurs, to  you or an enemy, Brian will gain an additional MP EXP, 
-due to the way the spell effect is coded. This will cause you to gain MP quicker.]</value>
-  </data>
-  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
-    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
-SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
-&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
-  </data>
-  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
-    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
-Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
-Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
+  <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
+    <value>Changes the text colour palette.
+RANDOM: Generate a palette at random by hue-shifting the original palette randomly by 0-359 degrees. 
+Has a 50-50 chance to be a light/dark palette.
+CUSTOM: Edit the hue-shift and light/dark values below.
+SHUFFLED: Select one of the below four included colours at random.
+&lt;COLOUR&gt;: Use one of four default included colours.</value>
   </data>
   <data name="newLabel.Text" xml:space="preserve">
     <value>● V50b hotfix: Shortened shortcodes further and fixed them not properly saving custom item lists.
@@ -294,7 +262,7 @@ CUSTOM: Drops are randomized as selected below.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADw
-        JQAAAk1TRnQBSQFMAgEBIAEAAUABBQFAAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        JQAAAk1TRnQBSQFMAgEBIAEAAVgBBQFYAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAZADAAEBAQABCAYAASQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -493,6 +461,46 @@ GEMS: Wingsmith items are randomized to be any Elemental Gem.
 WINGS&amp;GEMS: Wingsmith items are randomized to be any wing or Elemental Gem.
 CUSTOM: Wingsmith items are randomized as set in the below menu.</value>
   </data>
+  <data name="rndSpellRebalanceToggle.ToolTip" xml:space="preserve">
+    <value>Adjusts damage values for most spells.
+Makes many assorted spells more useful, slightly nerfs the most powerful spells.
+Also causes most multi-level spells to scale inversely: the more precise low-level spells
+will do slightly more damage per hit than the high-level bigger ones with more hits.</value>
+  </data>
+  <data name="rndDistributeSpellsToggle.ToolTip" xml:space="preserve">
+    <value>Distributes the four most powerful combat spells (Avalanche, Magic Barrier, Water Pillar Lv3, Large Cutter)
+so that each is sorted into a different element when shuffled. Also generally tends towards the spells being
+at the higher end of their respective elements, to allow for better race enviroments.</value>
+  </data>
+  <data name="rndExtraHealingToggle.ToolTip" xml:space="preserve">
+    <value>Replaces Soul Search Lv1 with another copy of Healing Lv1, called 'Mending Lv1'.
+This spell will always appear in a different element than the default Healing Lv1.
+
+If "Guarantee early Healing" is enabled, this option will also shuffle Vampire's Touch
+into a different element than Healing and Mending, as a third source of early Healing.</value>
+  </data>
+  <data name="rndElement99Toggle.ToolTip" xml:space="preserve">
+    <value>Element level maximum is increased from 50 to 99.
+No new magic will be acquired past Level 50, but 
+spell and melee power will continue to increase 
+multiplicatively, making single-element strats easier.</value>
+  </data>
+  <data name="rndSoulToggle.ToolTip" xml:space="preserve">
+    <value>All spells have a chance to trigger the Soul Search effect on hit, revealing enemy details. 
+Also replaces the vanilla Soul Search 'magnifying glass' icon with a more compact one, since you'll be seeing it a lot.
+[NOTE: Every time the Soul Search effect occurs, to  you or an enemy, Brian will gain an additional MP EXP, 
+due to the way the spell effect is coded. This will cause you to gain MP quicker.]</value>
+  </data>
+  <data name="rndSpellToggle.ToolTip" xml:space="preserve">
+    <value>Change the properties of all spells as discrete units, except for unlock level and menu positioning.
+SHUFFLED: Redistribute spell properties randomly, with some crash protection rules.
+&lt;SPELL&gt;: Set all spells to use the specified spell's properties. No crash protection.</value>
+  </data>
+  <data name="rndSpellNamesToggle.ToolTip" xml:space="preserve">
+    <value>Spell names are updated to be a prefix/suffix combination based on the original and modifier spell.
+Ambiguous: Hinted spell names will randomly select whether original or modifier provide prefix or suffix.
+Obvious: Hinted spell names will always be in the format (original prefix, modifier suffix).</value>
+  </data>
   <data name="rndFrenchVanillaToggle.ToolTip" xml:space="preserve">
     <value>FRENCH VANILLA is a set of Quality-of-Life options for improving the vanilla game experience, 
 without changing it too much. Intended for all experience levels. 
@@ -589,14 +597,6 @@ Gems, Book, and Key are no longer required to progress.
 This includes doors, boats, shortcuts, and portals, and also
 unlocks the Crystal Valley Postern, if enabled.
 </value>
-  </data>
-  <data name="rndTextPaletteToggle.ToolTip" xml:space="preserve">
-    <value>Changes the text colour palette.
-RANDOM: Generate a palette at random by hue-shifting the original palette randomly by 0-359 degrees. 
-Has a 50-50 chance to be a light/dark palette.
-CUSTOM: Edit the hue-shift and light/dark values below.
-SHUFFLED: Select one of the below four included colours at random.
-&lt;COLOUR&gt;: Use one of four default included colours.</value>
   </data>
   <data name="crcHelpLabel.ToolTip" xml:space="preserve">
     <value>This is a CRC (N64 file checksum) Repair Tool.
