@@ -1831,6 +1831,10 @@ namespace Merrow {
 
         #endregion
 
+
+        // SAFE BOSS SPELLS
+        //
+        #region Safe Boss Spells
         private void comboBossSpellLogicWindRazor_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.ProcessLogicUpdate(sender as ComboBox, e, SpellNameEnum.ZelseWindRazor);
@@ -1875,6 +1879,48 @@ namespace Merrow {
         {
             this.ProcessLogicUpdate(sender as ComboBox, e, SpellNameEnum.MammonFireArrows);
         }
+        #endregion
+
+        private void comboBossSpellSolvaringBeam_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.ProcessLogicUpdate(sender as ComboBox, e, SpellNameEnum.SolvaringFireBlast);
+        }
+
+        private void comboBossSpellSolvaringSpikes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.ProcessLogicUpdate(sender as ComboBox, e, SpellNameEnum.SolvaringEarthSpikes);
+        }
+
+        private void comboBossSpellNeptyShield_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.ProcessLogicUpdate(sender as ComboBox, e, SpellNameEnum.NeptyBubbleShield);
+        }
+
+        private void comboBossSpellShilfLaser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.ProcessLogicUpdate(sender as ComboBox, e, SpellNameEnum.ShilfLaser);
+        }
+
+        private void comboBossSpellGuiltyPound_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.ProcessLogicUpdate(sender as ComboBox, e, SpellNameEnum.GuiltyGroundPound);
+        }
+
+        private void comboBossSpellGuiltyClaws_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.ProcessLogicUpdate(sender as ComboBox, e, SpellNameEnum.GuiltySlash);
+        }
+
+        private void comboBossSpellBeigisLaser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.ProcessLogicUpdate(sender as ComboBox, e, SpellNameEnum.BeigisGreenLaser);
+        }
+
+        private void comboBossSpellMammonLight_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.ProcessLogicUpdate(sender as ComboBox, e, SpellNameEnum.MammonLightBlast);
+        }
+
 
         private Dictionary<SpellNameEnum, ComboBox> logicControlMapping;
 
@@ -1895,6 +1941,15 @@ namespace Merrow {
                 { SpellNameEnum.BeigisSpiritSword, this.comboBossSpellLogicSpiritSword }, 
                 { SpellNameEnum.MammonFlameWaves, this.comboBossSpellLogicFlameWaves }, 
                 { SpellNameEnum.MammonFireArrows, this.comboBossSpellLogicFireArrows},
+
+                { SpellNameEnum.SolvaringFireBlast, this.comboBossSpellSolvaringBeam },
+                { SpellNameEnum.SolvaringEarthSpikes, this.comboBossSpellSolvaringSpikes},
+                { SpellNameEnum.NeptyBubbleShield, this.comboBossSpellNeptyShield},
+                { SpellNameEnum.ShilfLaser, this.comboBossSpellShilfLaser},
+                { SpellNameEnum.GuiltyGroundPound, this.comboBossSpellGuiltyPound},
+                { SpellNameEnum.GuiltySlash, this.comboBossSpellGuiltyClaws},
+                { SpellNameEnum.BeigisGreenLaser, this.comboBossSpellBeigisLaser},
+                { SpellNameEnum.MammonLightBlast, this.comboBossSpellMammonLight },
             };
 
             return this.logicControlMapping;
@@ -1912,6 +1967,7 @@ namespace Merrow {
             this.bossSpellPresetCache.Add(this.buttonBossSpellPresetRecommended);
             this.bossSpellPresetCache.Add(this.buttonBossSpellPresetReplaceSimilar);
             this.bossSpellPresetCache.Add(this.buttonBossSpellPresetCustom);
+            this.bossSpellPresetCache.Add(this.buttonBossSpellPresetRandom);
 
             return this.bossSpellPresetCache;
         }
@@ -1933,6 +1989,15 @@ namespace Merrow {
             this.logicComboBoxes.Add(this.comboBossSpellLogicSpiritSword);
             this.logicComboBoxes.Add(this.comboBossSpellLogicFlameWaves);
             this.logicComboBoxes.Add(this.comboBossSpellLogicFireArrows);
+
+            this.logicComboBoxes.Add(this.comboBossSpellSolvaringBeam );
+            this.logicComboBoxes.Add(this.comboBossSpellSolvaringSpikes);
+            this.logicComboBoxes.Add(this.comboBossSpellNeptyShield);
+            this.logicComboBoxes.Add(this.comboBossSpellShilfLaser);
+            this.logicComboBoxes.Add(this.comboBossSpellGuiltyPound);
+            this.logicComboBoxes.Add(this.comboBossSpellGuiltyClaws);
+            this.logicComboBoxes.Add(this.comboBossSpellBeigisLaser);
+            this.logicComboBoxes.Add(this.comboBossSpellMammonLight);
 
             return this.logicComboBoxes;
         }
@@ -2067,6 +2132,15 @@ namespace Merrow {
         }
 
 
+        private void buttonBossSpellPresetRandom_Click(object sender, EventArgs e)
+        {
+            if (e == EventArgs.Empty)
+                return;
+
+            this.OnPresetSelected(this.buttonBossSpellPresetRandom, SpellReplacementPreset.Random);
+        }
+
+
         private void ProcessLogicUpdate(ComboBox comboBox, EventArgs e, SpellNameEnum spellName)
         {
             Console.WriteLine($"[Boss Spells] Processing ComboBox Update, event args: {e} ...");
@@ -2083,6 +2157,11 @@ namespace Merrow {
             }
 
             this.replacementWorkflow.SetReplacementLogic(spellName, logicItem.logic);
+        }
+
+        private void rndEnableSpecialBossSpells_CheckedChanged(object sender, EventArgs e)
+        {
+            this.tableSpecialBossSpells.Enabled = this.rndEnableSpecialBossSpells.Checked;
         }
     }
 

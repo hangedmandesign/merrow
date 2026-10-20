@@ -198,13 +198,35 @@ namespace Merrow {
             patchstrings.Add("000C");
             patchstrings.Add("000000060000000100000001");
 
+            if (this.rndEnableSpecialBossSpells.Checked)
+            {
+                var adjustAISpells = BossSpellFunctionReplacements.ReplaceAISpellInit();
+                var adjustBossAnimUpdate = BossSpellFunctionReplacements.ReplaceBossSpellAnimUpdate();
+                var adjustCombatStateMachine = BossSpellFunctionReplacements.ReplaceCombatStateMachine();
 
-            // Pre-Spell Shuffle
+                var adjustBossAnimQueue = BossSpellFunctionReplacements.ReplaceQueueBossSpellAnim();
+                var adjustBrianSpellCast = BossSpellFunctionReplacements.ReplaceBrianSpellCast();
+                var customBrianSpellCastCallback = BossSpellFunctionReplacements.CustomBrianSpellCastCallback();
+
+                adjustAISpells.AddToPatchStrings(patchstrings);
+                adjustBossAnimUpdate.AddToPatchStrings(patchstrings);
+                adjustCombatStateMachine.AddToPatchStrings(patchstrings);
+                adjustBossAnimQueue.AddToPatchStrings(patchstrings);
+                adjustBrianSpellCast.AddToPatchStrings(patchstrings);
+                customBrianSpellCastCallback.AddToPatchStrings(patchstrings);
+
+                var opAllowBossAnimsInRandomBattles = new MapWriteOperation(0x98C0, new string[] { "318D0101" });
+                opAllowBossAnimsInRandomBattles.AddToPatchStrings(patchstrings);
+            }
+
+
+            // Pre-Spell Shuffle to incorporate boss spells
             //
             // Since our boss spell replacement is expected to swap out the original spells with boss spells,
             // handle that here so that we don't replace them for whatever they swapped with below.
             //
-            var spellReplacements = this.replacementWorkflow.GetVerbatimSpellReplacementOperations();
+            var allowSpecialBossSpells = this.rndEnableSpecialBossSpells.Checked;
+            var spellReplacements = this.replacementWorkflow.GetVerbatimSpellReplacementOperations(useSpecialSpells: allowSpecialBossSpells);
             var usersWantsToUseBossSpells = spellReplacements.Count > 0;
             if (usersWantsToUseBossSpells)
             {
@@ -227,13 +249,15 @@ namespace Merrow {
                     var originalSpellText = allSpellText.GetSpellText(spellToReplace);
 
                     var dataOperation = ReplacementOperations.GetSpellDataReplacementOperation(originalSpellData, addedSpellData);
-                    var animOperation = ReplacementOperations.GetSpellAnimReplacementOperation(originalSpellAnim, addedSpellAnim);
 
                     originalSpellText.OverrideText(addedSpellText);
                     originalSpellData.OverrideAttributeData(dataOperation.patchContents);
                     originalSpellData.OverrideSpellName(addedSpellData.DefaultSpellName);
 
                     dataOperation.AddToPatchStrings(this.patchstrings);
+
+
+                    var animOperation = ReplacementOperations.GetSpellAnimReplacementOperation(originalSpellAnim, addedSpellAnim);
                     animOperation.AddToPatchStrings(this.patchstrings);
 
                     Console.WriteLine($"[Boss Spells] Adding {spellToAdd} -> {spellToReplace}");

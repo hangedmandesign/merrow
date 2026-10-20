@@ -21,6 +21,17 @@ namespace Merrow.Util
                 list[n] = value;
             }
         }
+
+        public static bool Contains(this IList<SpellNameEnum> names, SpellNameEnum nameEnum)
+        {
+            for (int k=0; k<names.Count; k++)
+            {
+                if (names[k] == nameEnum)
+                    return true;
+            }
+
+            return false;
+        }
         
 
         public static SpellData GetSpell(this IList<SpellData> definitions, SpellNameEnum nameEnum)

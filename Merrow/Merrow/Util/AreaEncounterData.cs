@@ -591,6 +591,19 @@ namespace Merrow.Util
             this.hex32BitStrings = hex32BitStrings;
         }
 
+        public MapWriteOperation(uint romAddress, string hex32BitString)
+        {
+            this.romAddress = romAddress;
+            this.hex32BitStrings = new string[] { hex32BitString };
+        }
+
+        public void AddToPatchStrings(List<string> patchStrings)
+        {
+            patchStrings.Add(this.GetMerrowROMAddress());
+            patchStrings.Add(this.GetMerrowWriteLength());
+            patchStrings.Add(this.GetMerrowWriteBlock());
+        }
+
         public int ByteLength => this.hex32BitStrings.Length * 4;
     }
 }

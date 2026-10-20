@@ -336,6 +336,27 @@
             this.rndHUDLockToggle = new System.Windows.Forms.CheckBox();
             this.tab3BossSpells = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.rndEnableSpecialBossSpells = new System.Windows.Forms.CheckBox();
+            this.tableSpecialBossSpells = new System.Windows.Forms.TableLayoutPanel();
+            this.comboBossSpellMammonLight = new System.Windows.Forms.ComboBox();
+            this.comboBossSpellBeigisLaser = new System.Windows.Forms.ComboBox();
+            this.comboBossSpellGuiltyClaws = new System.Windows.Forms.ComboBox();
+            this.comboBossSpellGuiltyPound = new System.Windows.Forms.ComboBox();
+            this.comboBossSpellShilfLaser = new System.Windows.Forms.ComboBox();
+            this.comboBossSpellNeptyShield = new System.Windows.Forms.ComboBox();
+            this.comboBossSpellSolvaringSpikes = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.comboBossSpellSolvaringBeam = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBossSpellLogicFireArrows = new System.Windows.Forms.ComboBox();
@@ -359,6 +380,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.buttonBossSpellPresetRandom = new System.Windows.Forms.RadioButton();
             this.buttonBossSpellPresetCustom = new System.Windows.Forms.RadioButton();
             this.buttonBossSpellPresetReplaceSimilar = new System.Windows.Forms.RadioButton();
             this.buttonBossSpellPresetRecommended = new System.Windows.Forms.RadioButton();
@@ -541,6 +563,7 @@
             this.rndGraphicsBox.SuspendLayout();
             this.tab3BossSpells.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.tableSpecialBossSpells.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.tab4Export.SuspendLayout();
@@ -3343,14 +3366,288 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.label23);
+            this.groupBox5.Controls.Add(this.rndEnableSpecialBossSpells);
+            this.groupBox5.Controls.Add(this.tableSpecialBossSpells);
             this.groupBox5.Controls.Add(this.label1);
             this.groupBox5.Controls.Add(this.tableLayoutPanel4);
             this.groupBox5.Location = new System.Drawing.Point(0, 6);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(570, 415);
+            this.groupBox5.Size = new System.Drawing.Size(570, 388);
             this.groupBox5.TabIndex = 24;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Boss Spell Replacement";
+            // 
+            // label23
+            // 
+            this.label23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.label23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label23.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label23.Location = new System.Drawing.Point(285, 278);
+            this.label23.Name = "label23";
+            this.label23.Padding = new System.Windows.Forms.Padding(5);
+            this.label23.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label23.Size = new System.Drawing.Size(256, 100);
+            this.label23.TabIndex = 5;
+            this.label23.Text = resources.GetString("label23.Text");
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // rndEnableSpecialBossSpells
+            // 
+            this.rndEnableSpecialBossSpells.AutoSize = true;
+            this.rndEnableSpecialBossSpells.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rndEnableSpecialBossSpells.Location = new System.Drawing.Point(279, 248);
+            this.rndEnableSpecialBossSpells.Name = "rndEnableSpecialBossSpells";
+            this.rndEnableSpecialBossSpells.Size = new System.Drawing.Size(287, 21);
+            this.rndEnableSpecialBossSpells.TabIndex = 4;
+            this.rndEnableSpecialBossSpells.Text = "Experimental: Enable Special Boss Spells";
+            this.rndEnableSpecialBossSpells.UseVisualStyleBackColor = true;
+            this.rndEnableSpecialBossSpells.CheckedChanged += new System.EventHandler(this.rndEnableSpecialBossSpells_CheckedChanged);
+            // 
+            // tableSpecialBossSpells
+            // 
+            this.tableSpecialBossSpells.ColumnCount = 3;
+            this.tableSpecialBossSpells.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableSpecialBossSpells.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableSpecialBossSpells.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableSpecialBossSpells.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableSpecialBossSpells.Controls.Add(this.comboBossSpellMammonLight, 1, 8);
+            this.tableSpecialBossSpells.Controls.Add(this.comboBossSpellBeigisLaser, 1, 7);
+            this.tableSpecialBossSpells.Controls.Add(this.comboBossSpellGuiltyClaws, 1, 6);
+            this.tableSpecialBossSpells.Controls.Add(this.comboBossSpellGuiltyPound, 1, 5);
+            this.tableSpecialBossSpells.Controls.Add(this.comboBossSpellShilfLaser, 1, 4);
+            this.tableSpecialBossSpells.Controls.Add(this.comboBossSpellNeptyShield, 1, 3);
+            this.tableSpecialBossSpells.Controls.Add(this.comboBossSpellSolvaringSpikes, 1, 2);
+            this.tableSpecialBossSpells.Controls.Add(this.label13, 1, 0);
+            this.tableSpecialBossSpells.Controls.Add(this.label14, 0, 0);
+            this.tableSpecialBossSpells.Controls.Add(this.comboBossSpellSolvaringBeam, 1, 1);
+            this.tableSpecialBossSpells.Controls.Add(this.label15, 0, 1);
+            this.tableSpecialBossSpells.Controls.Add(this.label16, 0, 2);
+            this.tableSpecialBossSpells.Controls.Add(this.label17, 0, 3);
+            this.tableSpecialBossSpells.Controls.Add(this.label18, 0, 4);
+            this.tableSpecialBossSpells.Controls.Add(this.label19, 0, 5);
+            this.tableSpecialBossSpells.Controls.Add(this.label20, 0, 6);
+            this.tableSpecialBossSpells.Controls.Add(this.label21, 0, 7);
+            this.tableSpecialBossSpells.Controls.Add(this.label22, 0, 8);
+            this.tableSpecialBossSpells.Enabled = false;
+            this.tableSpecialBossSpells.Location = new System.Drawing.Point(279, 19);
+            this.tableSpecialBossSpells.Name = "tableSpecialBossSpells";
+            this.tableSpecialBossSpells.RowCount = 11;
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableSpecialBossSpells.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableSpecialBossSpells.Size = new System.Drawing.Size(267, 219);
+            this.tableSpecialBossSpells.TabIndex = 3;
+            // 
+            // comboBossSpellMammonLight
+            // 
+            this.comboBossSpellMammonLight.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBossSpellMammonLight.FormattingEnabled = true;
+            this.comboBossSpellMammonLight.Location = new System.Drawing.Point(129, 198);
+            this.comboBossSpellMammonLight.Name = "comboBossSpellMammonLight";
+            this.comboBossSpellMammonLight.Size = new System.Drawing.Size(121, 21);
+            this.comboBossSpellMammonLight.TabIndex = 26;
+            this.comboBossSpellMammonLight.SelectedIndexChanged += new System.EventHandler(this.comboBossSpellMammonLight_SelectedIndexChanged);
+            // 
+            // comboBossSpellBeigisLaser
+            // 
+            this.comboBossSpellBeigisLaser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBossSpellBeigisLaser.FormattingEnabled = true;
+            this.comboBossSpellBeigisLaser.Location = new System.Drawing.Point(129, 173);
+            this.comboBossSpellBeigisLaser.Name = "comboBossSpellBeigisLaser";
+            this.comboBossSpellBeigisLaser.Size = new System.Drawing.Size(121, 21);
+            this.comboBossSpellBeigisLaser.TabIndex = 24;
+            this.comboBossSpellBeigisLaser.SelectedIndexChanged += new System.EventHandler(this.comboBossSpellBeigisLaser_SelectedIndexChanged);
+            // 
+            // comboBossSpellGuiltyClaws
+            // 
+            this.comboBossSpellGuiltyClaws.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBossSpellGuiltyClaws.FormattingEnabled = true;
+            this.comboBossSpellGuiltyClaws.Location = new System.Drawing.Point(129, 148);
+            this.comboBossSpellGuiltyClaws.Name = "comboBossSpellGuiltyClaws";
+            this.comboBossSpellGuiltyClaws.Size = new System.Drawing.Size(121, 21);
+            this.comboBossSpellGuiltyClaws.TabIndex = 22;
+            this.comboBossSpellGuiltyClaws.SelectedIndexChanged += new System.EventHandler(this.comboBossSpellGuiltyClaws_SelectedIndexChanged);
+            // 
+            // comboBossSpellGuiltyPound
+            // 
+            this.comboBossSpellGuiltyPound.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBossSpellGuiltyPound.FormattingEnabled = true;
+            this.comboBossSpellGuiltyPound.Location = new System.Drawing.Point(129, 123);
+            this.comboBossSpellGuiltyPound.Name = "comboBossSpellGuiltyPound";
+            this.comboBossSpellGuiltyPound.Size = new System.Drawing.Size(121, 21);
+            this.comboBossSpellGuiltyPound.TabIndex = 20;
+            this.comboBossSpellGuiltyPound.SelectedIndexChanged += new System.EventHandler(this.comboBossSpellGuiltyPound_SelectedIndexChanged);
+            // 
+            // comboBossSpellShilfLaser
+            // 
+            this.comboBossSpellShilfLaser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBossSpellShilfLaser.FormattingEnabled = true;
+            this.comboBossSpellShilfLaser.Location = new System.Drawing.Point(129, 98);
+            this.comboBossSpellShilfLaser.Name = "comboBossSpellShilfLaser";
+            this.comboBossSpellShilfLaser.Size = new System.Drawing.Size(121, 21);
+            this.comboBossSpellShilfLaser.TabIndex = 18;
+            this.comboBossSpellShilfLaser.SelectedIndexChanged += new System.EventHandler(this.comboBossSpellShilfLaser_SelectedIndexChanged);
+            // 
+            // comboBossSpellNeptyShield
+            // 
+            this.comboBossSpellNeptyShield.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBossSpellNeptyShield.FormattingEnabled = true;
+            this.comboBossSpellNeptyShield.Location = new System.Drawing.Point(129, 73);
+            this.comboBossSpellNeptyShield.Name = "comboBossSpellNeptyShield";
+            this.comboBossSpellNeptyShield.Size = new System.Drawing.Size(121, 21);
+            this.comboBossSpellNeptyShield.TabIndex = 16;
+            this.comboBossSpellNeptyShield.SelectedIndexChanged += new System.EventHandler(this.comboBossSpellNeptyShield_SelectedIndexChanged);
+            // 
+            // comboBossSpellSolvaringSpikes
+            // 
+            this.comboBossSpellSolvaringSpikes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBossSpellSolvaringSpikes.FormattingEnabled = true;
+            this.comboBossSpellSolvaringSpikes.Location = new System.Drawing.Point(129, 48);
+            this.comboBossSpellSolvaringSpikes.Name = "comboBossSpellSolvaringSpikes";
+            this.comboBossSpellSolvaringSpikes.Size = new System.Drawing.Size(121, 21);
+            this.comboBossSpellSolvaringSpikes.TabIndex = 14;
+            this.comboBossSpellSolvaringSpikes.SelectedIndexChanged += new System.EventHandler(this.comboBossSpellSolvaringSpikes_SelectedIndexChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(129, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(99, 13);
+            this.label13.TabIndex = 10;
+            this.label13.Text = "Replacement Logic";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(56, 13);
+            this.label14.TabIndex = 9;
+            this.label14.Text = "Boss Spell";
+            // 
+            // comboBossSpellSolvaringBeam
+            // 
+            this.comboBossSpellSolvaringBeam.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBossSpellSolvaringBeam.FormattingEnabled = true;
+            this.comboBossSpellSolvaringBeam.Location = new System.Drawing.Point(129, 23);
+            this.comboBossSpellSolvaringBeam.Name = "comboBossSpellSolvaringBeam";
+            this.comboBossSpellSolvaringBeam.Size = new System.Drawing.Size(121, 21);
+            this.comboBossSpellSolvaringBeam.TabIndex = 12;
+            this.comboBossSpellSolvaringBeam.SelectedIndexChanged += new System.EventHandler(this.comboBossSpellSolvaringBeam_SelectedIndexChanged);
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(3, 20);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(120, 25);
+            this.label15.TabIndex = 29;
+            this.label15.Text = "Solvaring - Earth Beam";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label16
+            // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(3, 45);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(120, 25);
+            this.label16.TabIndex = 30;
+            this.label16.Text = "Solvaring - Earth Spikes";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(3, 70);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(120, 25);
+            this.label17.TabIndex = 31;
+            this.label17.Text = "Nepty - Bubble Shield";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(3, 95);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(120, 25);
+            this.label18.TabIndex = 32;
+            this.label18.Text = "Shilf - Laser Beam";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(3, 120);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(120, 25);
+            this.label19.TabIndex = 33;
+            this.label19.Text = "Guilty - Ground Pound";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(3, 145);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(120, 25);
+            this.label20.TabIndex = 34;
+            this.label20.Text = "Guilty - Claws";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(3, 170);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(120, 25);
+            this.label21.TabIndex = 35;
+            this.label21.Text = "Beigis - Green Laser";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(3, 195);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(120, 25);
+            this.label22.TabIndex = 36;
+            this.label22.Text = "Mammon - Light Blast";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label1
             // 
@@ -3361,7 +3658,7 @@
             this.label1.Name = "label1";
             this.label1.Padding = new System.Windows.Forms.Padding(5);
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label1.Size = new System.Drawing.Size(256, 87);
+            this.label1.Size = new System.Drawing.Size(256, 100);
             this.label1.TabIndex = 2;
             this.label1.Text = "These spell can be freely swapped with regular spells without any extra work to t" +
     "he spell code.";
@@ -3638,16 +3935,30 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.buttonBossSpellPresetRandom);
             this.groupBox4.Controls.Add(this.buttonBossSpellPresetCustom);
             this.groupBox4.Controls.Add(this.buttonBossSpellPresetReplaceSimilar);
             this.groupBox4.Controls.Add(this.buttonBossSpellPresetRecommended);
             this.groupBox4.Controls.Add(this.buttonBossSpellPresetNone);
-            this.groupBox4.Location = new System.Drawing.Point(0, 427);
+            this.groupBox4.Location = new System.Drawing.Point(0, 400);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(570, 77);
+            this.groupBox4.Size = new System.Drawing.Size(570, 104);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Presets";
+            // 
+            // buttonBossSpellPresetRandom
+            // 
+            this.buttonBossSpellPresetRandom.Appearance = System.Windows.Forms.Appearance.Button;
+            this.buttonBossSpellPresetRandom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBossSpellPresetRandom.Location = new System.Drawing.Point(6, 62);
+            this.buttonBossSpellPresetRandom.Name = "buttonBossSpellPresetRandom";
+            this.buttonBossSpellPresetRandom.Size = new System.Drawing.Size(100, 40);
+            this.buttonBossSpellPresetRandom.TabIndex = 4;
+            this.buttonBossSpellPresetRandom.Text = "Random";
+            this.buttonBossSpellPresetRandom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.buttonBossSpellPresetRandom.UseVisualStyleBackColor = true;
+            this.buttonBossSpellPresetRandom.Click += new System.EventHandler(this.buttonBossSpellPresetRandom_Click);
             // 
             // buttonBossSpellPresetCustom
             // 
@@ -5280,6 +5591,9 @@
             this.rndGraphicsBox.PerformLayout();
             this.tab3BossSpells.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.tableSpecialBossSpells.ResumeLayout(false);
+            this.tableSpecialBossSpells.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -5669,6 +5983,28 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TableLayoutPanel tableSpecialBossSpells;
+        private System.Windows.Forms.ComboBox comboBossSpellMammonLight;
+        private System.Windows.Forms.ComboBox comboBossSpellBeigisLaser;
+        private System.Windows.Forms.ComboBox comboBossSpellGuiltyClaws;
+        private System.Windows.Forms.ComboBox comboBossSpellGuiltyPound;
+        private System.Windows.Forms.ComboBox comboBossSpellShilfLaser;
+        private System.Windows.Forms.ComboBox comboBossSpellNeptyShield;
+        private System.Windows.Forms.ComboBox comboBossSpellSolvaringSpikes;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox comboBossSpellSolvaringBeam;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.CheckBox rndEnableSpecialBossSpells;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.RadioButton buttonBossSpellPresetRandom;
     }
 }
 

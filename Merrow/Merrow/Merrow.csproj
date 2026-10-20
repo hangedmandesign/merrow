@@ -170,6 +170,8 @@
     <None Include="Resources\items\Rotate_Sprite.png" />
     <Content Include="Resources\merrowbar.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Util\FuncReplacement\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
